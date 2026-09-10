@@ -269,9 +269,12 @@ test("eight nine-stage cycles, scientific names, distinct growth stills and quie
         await peek.click();
         await expect(page.getByRole("dialog")).toBeVisible();
         await expect(page.locator(".photo-zoom img")).toBeVisible();
-        await expect(page.locator(".peek-context")).toContainText(
-          id === "division" ? "не выбранного этапа" : "этой стадии",
-        );
+        if (id === "division") {
+          await expect(page.locator(".peek-context")).toHaveCount(0);
+          await expect(page.locator(".peek-caption")).not.toBeEmpty();
+        } else {
+          await expect(page.locator(".peek-context")).toContainText("этой стадии");
+        }
         await expect(
           page.getByRole("dialog").locator(".photo-credit a").first(),
         ).toHaveAttribute("href", /commons.wikimedia.org/);

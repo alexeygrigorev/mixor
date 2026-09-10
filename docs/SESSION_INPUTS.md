@@ -1,11 +1,11 @@
 # Session input audit — 2026-09-10
 
-This is a source audit, not a reconstruction from an assistant summary. It preserves every submitted input for session `01a08a5f-9498-7212-ade6-7cee67aca745` through 2026-09-10 11:29:41 UTC. Repeated submissions, the bundled feedback message and goal commands are retained.
+This is a source audit, not a reconstruction from an assistant summary. It preserves every submitted input for session `01a08a5f-9498-7212-ade6-7cee67aca745` through 2026-09-10 12:28:19 UTC. Repeated submissions, the bundled feedback message and goal commands are retained. Original wording is preserved; insignificant trailing spaces are omitted in Markdown.
 
 ## Sources and reconciliation
 
-- Submission source: `~/.codex/history.jsonl`, filtered by the exact session ID: **49 entries**.
-- Delivery cross-check: `~/.codex/sessions/2026/09/10/rollout-2026-09-10T10-11-54-01a08a5f-9498-7212-ade6-7cee67aca745.jsonl`: **35 actual user-text response items**. Environment messages, subagent reports, assistant output and interruption markers are not user feedback.
+- Submission source: `~/.codex/history.jsonl`, filtered by the exact session ID: **57 entries** (49 in the initial audit, plus U50–U57 during implementation).
+- Delivery cross-check: `~/.codex/sessions/2026/09/10/rollout-2026-09-10T10-11-54-01a08a5f-9498-7212-ade6-7cee67aca745.jsonl`: **43 actual user-text response items**. Environment messages, subagent reports, assistant output and interruption markers are not user feedback.
 - Session metadata confirms the working directory `/home/alexey/git/mixer` and the original clone request.
 - **U23–U31 are present in the submission history but absent as user-text items in the inspected rollout.** These include the missing navigation, framing, weather, scene-dependent audio and discovery requests. The files establish this discrepancy; they do not establish why delivery was missing.
 - Three repeated submissions (U33, U42, U48) match the same delivered text as their predecessors. U46 and U49 are goal commands, not ordinary delivered user-text items.
@@ -348,3 +348,71 @@ Source: history line 17536; goal command; no ordinary user-text rollout item. Ch
 
 > /goal resume
 
+### U50 — 12:21:49 UTC
+
+Source: history line 17552; rollout line 3674. Checklist: ART-02, FIND-03, PROCESS-02.
+
+> this looks weird
+>
+> Attached files:
+> - ~/.pocketshell/attachments/mixer/mixer-game/20260910-142143-01-clipboard.png
+
+The screenshot was inspected. It shows the current first woodland with three found circles and “Узнать” actions. The specific objection (organism rendering, circle presentation or both) is not yet stated; clarification was requested. Do not treat the independent review of the previous submission as acceptance of this new feedback, and do not infer permission to remove the explicitly requested circles.
+
+### U51 — 12:24:04 UTC
+
+Source: history line 17553; rollout line 3717. Checklist: FIND-03.
+
+> i think also this should be more subtle it's really disruptive now let's think how to make these circles more subtle
+>
+> Attached files:
+> - ~/.pocketshell/attachments/mixer/mixer-game/20260910-142346-01-clipboard.png
+
+The attachment is a four-byte text file, not a decodable image. U50's valid screenshot and U51's explicit text establish the circle concern; no additional annotations are inferred. Subtler-circle proposals are not an approved replacement interaction yet.
+
+### U52 — 12:24:32 UTC
+
+Source: history line 17554; rollout line 3725. Checklist: AUDIO-02.
+
+> and plase change this electronic sound when clicking to something more closer to nature
+
+### U53 — 12:24:44 UTC
+
+Source: history line 17555; rollout line 3738. Checklist: WEATHER-02, AUDIO-06.
+
+> also make the rain more natural
+
+Clarification requested: visible rain, rain sound or both. The preceding visibility and 130-second-loop tests do not resolve this new naturalness request.
+
+### U54 — 12:26:12 UTC
+
+Source: history line 17556; rollout line 3756. Checklist: DEV-02, PROCESS-03.
+
+> it also feels that first steps are the same pictures in development of mixomicets. llaunch subagent to fix tha t
+
+### U55 — 12:26:43 UTC
+
+Source: history line 17557; rollout line 3768. Checklist: DEV-01, GAME-01.
+
+> rework this interface to make it more game-like more inline with the rest
+>
+> Attached files:
+> - ~/.pocketshell/attachments/mixer/mixer-game/20260910-142628-01-clipboard.png
+
+The valid attachment was inspected: Tubifera ferruginosa's mature stage, narrow central image on a mostly plain dark background, numbered rail and two oversized rectangular navigation buttons. This explicitly authorizes reworking development's presentation, not an unrelated activity.
+
+### U56 — 12:27:09 UTC
+
+Source: history line 17558; rollout line 3777. Checklist: PHOTO-02.
+
+> Фото вида, не выбранного этапа развития. Это не последовательность одного экземпляра.
+>
+>  this is not needed remove this text
+
+### U57 — 12:28:19 UTC
+
+Source: history line 17559; rollout line 3807. Checklist: DEV-03.
+
+> and the step from молодой плазмодий к плазмодий too abrupt could there be someting between? like it's one cell with 4 cores and then suddenly a whole thing
+
+The implementation plan adds two gradual growth views between young plasmodium and developed network for all eight taxa. Eleven total stages is an implementation choice responding to the gap, not a user-specified count. Keep one continuous multinucleate cell and biological scope honest.

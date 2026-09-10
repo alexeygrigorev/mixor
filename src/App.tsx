@@ -1007,11 +1007,9 @@ export default function App() {
       {overlay === "photos" && (
         <Panel title={taxon.latinName} close={closeOverlay} wide>
           <div className="photo-peek-content">
-            <p className="peek-context">
-              {photo.id === stagePhoto?.id
-                ? "Настоящее фото этой стадии · другой экземпляр"
-                : "Фото вида, не выбранного этапа развития. Это не последовательность одного экземпляра."}
-            </p>
+            {photo.id === stagePhoto?.id && (
+              <p className="peek-context">Настоящее фото этой стадии · другой экземпляр</p>
+            )}
             <div className="peek-photo">
               <Photo key={photo.id} photo={photo} />
             </div>

@@ -31,9 +31,8 @@ test("focused keyboard, photo focus return, rotation, large text and reduced mot
   await peek.focus();
   await page.keyboard.press("Enter");
   await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(page.locator(".peek-context")).toContainText(
-    "не выбранного этапа",
-  );
+  await expect(page.getByText("Фото вида, не выбранного этапа развития.", { exact: false })).toHaveCount(0);
+  await expect(page.locator(".peek-caption")).not.toBeEmpty();
   for (let i = 0; i < 12; i++) await page.keyboard.press("Tab");
   expect(
     await page.evaluate(() =>
