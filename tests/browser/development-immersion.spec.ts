@@ -4,11 +4,14 @@ import { lifeCycles, stageSequence, stageBrief } from "../../src/life-data";
 
 async function start(page: Page, path: string) {
   await page.goto(path);
+  // Wait for React's scene and welcome markup, not just the document load.
+  // A native dialog can exist before its showModal effect makes it visible.
+  await expect(page.locator("main.scene")).toBeVisible();
   const enter = page.getByRole("button", {
     name: "Начать в тишине",
     exact: true,
   });
-  if (await enter.isVisible()) await enter.click();
+  if (await enter.count()) await enter.click();
 }
 
 async function capture(page: Page, info: TestInfo, name: string) {
@@ -25,10 +28,51 @@ async function capture(page: Page, info: TestInfo, name: string) {
 
 async function composition(page: Page) {
   const viewport = page.viewportSize()!;
-  const art = page.locator(".development-image .art");
-  const image = (await art.boundingBox())!;
-  const caption = (await page.locator(".development-caption").boundingBox())!;
-  const controls = (await page.locator(".development-controls").boundingBox())!;
+  // Keep Playwright's visible-control selection, but read all geometry in one
+  // browser round trip instead of locating each button separately per stage.
+  const snapshot = await page.locator(".development-focus button:visible").evaluateAll(async (buttons) => {
+    const ratios = new Map<Element, number>();
+    if (buttons.length) await new Promise<void>((resolve) => {
+      // Native intersection ratios also account for ancestor clipping, unlike
+      // a viewport-bounds-only approximation of toBeInViewport().
+      const observer = new IntersectionObserver((entries) => {
+        for (const entry of entries) ratios.set(entry.target, entry.intersectionRatio);
+        if (ratios.size === buttons.length) {
+          observer.disconnect();
+          resolve();
+        }
+      });
+      for (const button of buttons) observer.observe(button);
+      requestAnimationFrame(() => {});
+    });
+    const required = (selector: string) => {
+      const element = document.querySelector(selector);
+      if (!element) throw new Error(`Missing composition element: ${selector}`);
+      return element;
+    };
+    const box = (element: Element) => {
+      if (!element.getClientRects().length)
+        throw new Error(`Missing layout box: ${element.className}`);
+      const { x, y, width, height } = element.getBoundingClientRect();
+      return { x, y, width, height };
+    };
+    const art = required(".development-image .art");
+    const focus = required(".development-focus");
+    return {
+      image: box(art),
+      caption: box(required(".development-caption")),
+      controls: box(required(".development-controls")),
+      aspect: Number(getComputedStyle(art).getPropertyValue("--tile-aspect")),
+      buttons: buttons.map((button) => ({
+        ...box(button),
+        label: button.getAttribute("aria-label") || button.textContent,
+        ratio: ratios.get(button)!,
+      })),
+      arrows: [...document.querySelectorAll(".step-button")].map(box),
+      noOverflow: focus.scrollWidth <= focus.clientWidth + 1,
+    };
+  });
+  const { image, caption, controls, aspect } = snapshot;
   expect(image.x).toBeGreaterThanOrEqual(0);
   expect(image.y).toBeGreaterThanOrEqual(0);
   expect(image.x + image.width).toBeLessThanOrEqual(viewport.width + 1);
@@ -36,27 +80,18 @@ async function composition(page: Page) {
   expect(image.width * image.height).toBeGreaterThan(
     caption.width * caption.height,
   );
-  const aspect = await art.evaluate((element) =>
-    Number(getComputedStyle(element).getPropertyValue("--tile-aspect")),
-  );
   expect(image.width / image.height).toBeCloseTo(aspect, 2);
   expect(caption.y + caption.height).toBeLessThanOrEqual(controls.y + 1);
-  for (const control of await page
-    .locator(".development-focus button:visible")
-    .all()) {
-    const bounds = (await control.boundingBox())!;
-    expect(bounds.width).toBeGreaterThanOrEqual(48);
-    expect(bounds.height).toBeGreaterThanOrEqual(48);
-    await expect(control).toBeInViewport({ ratio: 0.99 });
+  for (const control of snapshot.buttons) {
+    expect(control.width, control.label ?? "control width").toBeGreaterThanOrEqual(48);
+    expect(control.height, control.label ?? "control height").toBeGreaterThanOrEqual(48);
+    // Same native ratio predicate/tolerance as Playwright toBeInViewport(.99).
+    expect(control.ratio, control.label ?? "control viewport ratio").toBeGreaterThan(0.99 - 1e-9);
   }
-  for (const arrow of await page.locator(".step-button").all()) {
-    expect((await arrow.boundingBox())!.width).toBeLessThanOrEqual(64);
+  for (const arrow of snapshot.arrows) {
+    expect(arrow.width).toBeLessThanOrEqual(64);
   }
-  expect(
-    await page
-      .locator(".development-focus")
-      .evaluate((element) => element.scrollWidth <= element.clientWidth + 1),
-  ).toBe(true);
+  expect(snapshot.noOverflow).toBe(true);
   await expect(page.locator(".development-stage-picker")).toBeHidden();
   await expect(
     page.locator(".hud, .game-nav, .stage-notes, .material-switch"),
