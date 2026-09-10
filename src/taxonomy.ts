@@ -20,7 +20,7 @@ export const taxonomySources = [
 ];
 export const scientificNames: Record<
   TaxonId,
-  { name: string; synonym?: string; genus: string }
+  { name: string; synonym?: string; genus: string; genusProvisional?: boolean; placementNote?: string }
 > = {
   physarum: {
     name: "Badhamia polycephala",
@@ -30,7 +30,13 @@ export const scientificNames: Record<
   arcyria: { name: "Arcyria denudata", genus: "Arcyria" },
   fuligo: { name: "Fuligo septica", genus: "Fuligo" },
   lycogala: { name: "Lycogala epidendrum", genus: "Lycogala" },
-  stemonitis: { name: "Stemonitis axifera", genus: "Stemonitis" },
+  stemonitis: {
+    name: "Stemonitis axifera",
+    genus: "Stemonitis",
+    genusProvisional: true,
+    placementNote:
+      "Stemonitis axifera: родовая принадлежность не установлена (Shchepin et al., 2026). Название Stemonitis сохранено в широком, временном смысле; вид включён в Stemonitidaceae incertae sedis. Это не подтверждённая ветвь рода Stemonitis в узком смысле.",
+  },
   trichia: {
     name: "Hemitrichia decipiens",
     synonym: "Trichia decipiens",
@@ -49,7 +55,9 @@ export type TaxonomyNode = {
 function genus(id: TaxonId): TaxonomyNode {
   return {
     name: scientificNames[id].genus,
-    rank: "род",
+    rank: scientificNames[id].genusProvisional
+      ? "род · временное размещение"
+      : "род",
     children: [{ name: scientificNames[id].name, rank: "вид", taxon: id }],
   };
 }

@@ -102,7 +102,14 @@ These are independent review findings, not additional requests invented on the u
 
 - **REVIEW-01:** Verify development at 200% text. Rail/control wrapping was corrected, but the scientific-name header also needs a fresh rendered check for clipping.
 - **REVIEW-02:** Make real-photo credit links comfortably readable and at least 48px touch targets inside the optional photo view. The earlier review measured 8px type / 11px-high links.
-- **REVIEW-03:** Qualify the conventional Stemonitis axifera genus placement in the source note and taxonomy data. The chosen 2026 source treats its generic affiliation as unresolved; do not invent a replacement genus. Recheck the primary source before editing the scientific record.
+- **REVIEW-03:** Data qualification added after rechecking [Shchepin et al. (2026), “Species incertae sedis”](https://www.bioacad.com/article/doi.org/10.65390/fdiv.2026.136015): Stemonitis axifera has unresolved generic affiliation within Stemonitidaceae. Keep its conventional name with a provisional-placement flag and note, not a fabricated replacement genus. Content test covers that qualification; visible source-note/branch review remains pending.
+
+## Work log after the source audit
+
+- `7023c06`: committed 49 verbatim submissions and the corrected source-linked checklist. A source comparison subsequently verified all 49 entries, including attachments and duplicates.
+- Taxonomy data: rechecked the primary 2026 publication; marked Stemonitis placement provisional and added an explicit note. `node --test tests/content.test.mjs`: 3 passed. This does not close the entire tree/UI requirement.
+- Live development server responded HTTP 200 on `http://127.0.0.1:4173/` during this pass. Physical phone/tablet access is not inferred from that check.
+- A full browser run overlapped active UI/audio edits and therefore is not final regression evidence. Rerun after the implementation batch is stable.
 
 Current review evidence is in `tmp/focused-review/ROUND1_REVIEW.md`; those scratch files may not survive another environment, so the actionable findings are recorded here. The old published `REDESIGN_REVIEW.md` concerns the earlier version and does not close this checklist.
 

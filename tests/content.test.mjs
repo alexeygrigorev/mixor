@@ -57,6 +57,8 @@ test("classification has species leaves under real intermediate groups", () => {
   assert(paths.get("lycogala").includes("Reticulariaceae"));
   assert(paths.get("didymium").includes("Didymiaceae"));
   assert(paths.get("stemonitis").includes("Stemonitidales"));
+  assert.equal(scientificNames.stemonitis.genusProvisional, true);
+  assert.match(scientificNames.stemonitis.placementNote, /incertae sedis/);
 });
 test("five unique environments cover all taxa; corrupted search data is contained", () => {
   assert.equal(woodlands.length, 5);
