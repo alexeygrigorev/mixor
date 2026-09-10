@@ -233,6 +233,7 @@ export default function App() {
   const [photoIndex, setPhotoIndex] = useState(0);
   const [finds, setFinds] = useState(readFinds);
   const [searchSessionOnly, setSearchSessionOnly] = useState(false);
+  const previousSearchRoute = useRef(route);
   const [soundPreferences, setSoundPreferences] = useState(readSoundPreferences);
   const soundPreferencesRef = useRef(soundPreferences);
   soundPreferencesRef.current = soundPreferences;
@@ -284,6 +285,19 @@ export default function App() {
       document.removeEventListener("fullscreenchange", full);
     };
   }, []);
+  useEffect(() => {
+    const previous = previousSearchRoute.current;
+    previousSearchRoute.current = route;
+    // An explicit activity exit (including browser Back) starts a new search
+    // next time. Information returns, scene changes and reloads are not exits.
+    if (previous.place !== "world" || route.place !== "woods") return;
+    const exitingIds = new Set(findWoodland(previous.stage).spots.map((spot) => spot.id));
+    setFinds((current) => {
+      const next = current.filter((id) => !exitingIds.has(id));
+      if (!writeFinds(next)) setSearchSessionOnly(true);
+      return next;
+    });
+  }, [route]);
   useEffect(() => {
     audioManager.setScene(ambientScene);
   }, [ambientScene]);

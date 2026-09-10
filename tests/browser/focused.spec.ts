@@ -60,7 +60,7 @@ async function readyToCapture(page: Page) {
   });
 }
 
-test("five places, quiet scene navigation, circular discoveries and persistent finds through rotation", async ({
+test("five places, embedded clues, selected circles and replay after woodland exit", async ({
   page,
 }, testInfo) => {
   test.setTimeout(90000);
@@ -111,50 +111,39 @@ test("five places, quiet scene navigation, circular discoveries and persistent f
       const target = page.locator(`[data-find="${spot.id}"]`);
       await expect(target).toHaveAccessibleName(`Осмотреть: ${spot.label}`);
       await expect(target).toHaveCSS("border-radius", "50%");
-      await expect(target.locator(".search-lens")).toHaveCSS(
+      expect((await target.boundingBox())!.width).toBe(56);
+      expect(
+        (await target.locator(".search-clue").boundingBox())!.width,
+      ).toBeLessThan(56);
+      await expect(target).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+      await target.tap();
+      await expect(target).toHaveAttribute("aria-pressed", "true");
+      await expect(target).toHaveAttribute("aria-expanded", "true");
+      await expect(target).toHaveAccessibleName(
+        `Рассмотреть находку: ${scientificNames[spot.taxon].name}`,
+      );
+      await expect(page.getByRole("dialog")).toHaveAccessibleName(
+        scientificNames[spot.taxon].name,
+      );
+      await expect(page.locator(".search-magnified-image > .art")).toHaveCSS(
         "border-radius",
         "50%",
       );
-      await expect(target.locator(".natural-cover")).toHaveCSS("opacity", "1");
-      await expect(target.locator(".natural-cover")).toHaveCSS(
-        "clip-path",
-        "none",
-      );
-      await expect(target.locator(".hidden-organism")).toHaveCSS(
-        "opacity",
-        "0",
-      );
-      await expect(target.locator(".hidden-organism")).toHaveCSS(
+      await expect(page.locator(".search-magnified-image > .art")).toHaveCSS(
         "mask-image",
         "none",
       );
-      // U51 reduces the oversized portraits but keeps readable circular lenses,
-      // not tiny markers or a new expand-before-learning interaction.
-      expect((await target.boundingBox())!.width).toBeGreaterThan(120);
-      expect((await target.boundingBox())!.width).toBeLessThanOrEqual(184);
-      await expect(target).toHaveCSS("padding", "1px");
-      await expect(target).toHaveCSS("background-image", "none");
-      await target.tap();
-      await expect(target).toHaveAttribute("aria-pressed", "true");
-      await expect(target).toHaveAccessibleName(
-        `Узнать больше: ${scientificNames[spot.taxon].name}`,
-      );
-      await expect(target.locator(".natural-cover")).toHaveCSS("opacity", "0");
-      await expect(target.locator(".hidden-organism")).toHaveCSS(
-        "opacity",
-        "1",
-      );
-      await expect(target.locator(".hidden-organism .art")).toHaveCSS(
-        "filter",
-        "none",
-      );
       await expect(page.locator(".search-scene [role=status]")).toHaveText(
-        `Найдено: ${scientificNames[spot.taxon].name}. Коснись ещё раз, чтобы узнать больше.`,
+        `Найдено: ${scientificNames[spot.taxon].name}. Открыто увеличение.`,
       );
-      await expect(target.locator(".search-found-invitation")).toHaveText(
-        "Узнать",
-      );
+      await page
+        .getByRole("button", { name: "Закрыть увеличение", exact: true })
+        .click();
+      await expect(target).toBeFocused();
       await target.tap();
+      await page
+        .getByRole("button", { name: "Узнать больше", exact: true })
+        .click();
       await expect(page.locator(".portrait-scene h1")).toHaveText(
         scientificNames[spot.taxon].name,
       );
@@ -162,6 +151,7 @@ test("five places, quiet scene navigation, circular discoveries and persistent f
         .getByRole("button", { name: `Назад: ${woodland.title}`, exact: true })
         .click();
       await expect(target).toHaveAttribute("aria-pressed", "true");
+      await expect(target).toBeFocused();
     }
     await circlesFit(page);
     await page.screenshot({
@@ -178,14 +168,18 @@ test("five places, quiet scene navigation, circular discoveries and persistent f
     await expect(page.locator(".hiding-place.is-found")).toHaveCount(3);
     await page.getByRole("button", { name: "Назад к выбору места" }).click();
     await expect(page.locator(".woodland-chooser")).toBeVisible();
+    expect(
+      await page.evaluate(() =>
+        JSON.parse(localStorage.getItem("mixor-search-v1")!),
+      ),
+    ).toEqual([]);
     await page.getByRole("button", { name: "Назад на главный экран" }).click();
     await expect(page.locator(".activity-home")).toBeVisible();
   }
   const stored = await page.evaluate(() =>
     JSON.parse(localStorage.getItem("mixor-search-v1")!),
   );
-  expect(stored).toHaveLength(15);
-  expect(new Set(stored).size).toBe(15);
+  expect(stored).toHaveLength(0);
   expect(errors).toEqual([]);
 });
 
@@ -205,12 +199,13 @@ test("forest circles uncover with keyboard and reduced motion", async ({
     await expect(circle).toHaveCSS("outline-style", "solid");
     await page.keyboard.press(index === 1 ? "Space" : "Enter");
     await expect(circle).toHaveAttribute("aria-pressed", "true");
-    await expect(circle.locator(".natural-cover")).toHaveCSS("opacity", "0");
-    await expect(circle.locator(".hidden-organism")).toHaveCSS("opacity", "1");
-    await expect(circle.locator(".hidden-organism")).toHaveCSS(
-      "transition-duration",
-      "0s",
-    );
+    await expect(
+      page.getByRole("button", { name: "Закрыть увеличение" }),
+    ).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await expect(circle).toBeFocused();
+    await expect(circle).toHaveAttribute("aria-pressed", "true");
     await page.keyboard.press("Tab");
   }
   await expect(
@@ -278,7 +273,9 @@ test("eight eleven-stage cycles, scientific names, distinct growth stills and qu
           await expect(page.locator(".peek-context")).toHaveCount(0);
           await expect(page.locator(".peek-caption")).not.toBeEmpty();
         } else {
-          await expect(page.locator(".peek-context")).toContainText("этой стадии");
+          await expect(page.locator(".peek-context")).toContainText(
+            "этой стадии",
+          );
         }
         await expect(
           page.getByRole("dialog").locator(".photo-credit a").first(),
@@ -289,7 +286,10 @@ test("eight eleven-stage cycles, scientific names, distinct growth stills and qu
       }
       await page
         .getByRole("button", {
-          name: index === stageSequence.length - 1 ? "Снова к споре" : "Следующий этап",
+          name:
+            index === stageSequence.length - 1
+              ? "Снова к споре"
+              : "Следующий этап",
           exact: true,
         })
         .click();

@@ -66,6 +66,10 @@ test("in-mode scene switching wraps both ways, retains finds and returns through
   await expect(page.locator(".woodland-chooser")).toBeVisible();
   await page.goForward();
   await forest(page, 0);
+  await expect(page.locator(".hiding-place").first()).toHaveAttribute(
+    "aria-pressed",
+    "false",
+  );
   await page
     .getByRole("button", { name: "Назад к выбору места", exact: true })
     .click();
@@ -78,7 +82,7 @@ test("in-mode scene switching wraps both ways, retains finds and returns through
     await page.evaluate(
       () => JSON.parse(localStorage.getItem("mixor-search-v1")!).length,
     ),
-  ).toBe(5);
+  ).toBe(4);
 });
 
 test("found information, photos and development preserve originating woodland through reload and browser Back", async ({
@@ -101,8 +105,11 @@ test("found information, photos and development preserve originating woodland th
   await page.keyboard.press("Enter");
   await expect(circle).toHaveAttribute("aria-pressed", "true");
   await expect(circle).toHaveAccessibleName(
-    `Узнать больше: ${scientificNames[spot.taxon].name}`,
+    `Рассмотреть находку: ${scientificNames[spot.taxon].name}`,
   );
+  await page
+    .getByRole("button", { name: "Узнать больше", exact: true })
+    .focus();
   await page.keyboard.press("Space");
   await expect(page.locator(".portrait-scene h1")).toHaveText(
     scientificNames[spot.taxon].name,
@@ -146,6 +153,9 @@ test("found information, photos and development preserve originating woodland th
   await expect(circle).toHaveAttribute("aria-pressed", "true");
   await expect(circle).toBeFocused();
   await circle.tap();
+  await page
+    .getByRole("button", { name: "Узнать больше", exact: true })
+    .click();
   await page.reload();
   await page
     .getByRole("button", { name: `Назад: ${woodland.title}`, exact: true })
@@ -264,7 +274,7 @@ test("woodland ambience continues through found information and photos, and unco
     uncover: before.uncover + 1,
     tap: before.tap,
   });
-  await page.locator(".hiding-place").first().tap();
+  await page.getByRole("button", { name: "Узнать больше", exact: true }).tap();
   await expect(page.locator(".portrait-scene")).toBeVisible();
   await page
     .getByRole("button", { name: "Настоящее фото", exact: true })
@@ -394,8 +404,12 @@ test("enlarged search controls and discovered information remain reachable", asy
       for (const [element, size] of sizes)
         element.style.fontSize = `${size * 2}px`;
     });
-  for (const circle of await page.locator(".hiding-place").all())
+  for (const circle of await page.locator(".hiding-place").all()) {
     await circle.tap();
+    await page
+      .getByRole("button", { name: "Закрыть увеличение", exact: true })
+      .click();
+  }
   await enlarge();
   const back = (await page
     .getByRole("button", { name: "Назад к выбору места", exact: true })
@@ -407,6 +421,9 @@ test("enlarged search controls and discovered information remain reachable", asy
   );
   await shot(page, info, "search-text200");
   await page.locator(".hiding-place").first().tap();
+  await page
+    .getByRole("button", { name: "Узнать больше", exact: true })
+    .click();
   await enlarge();
   const name = page.locator(".portrait-scene h1");
   await expect(name).toBeInViewport({ ratio: 1 });

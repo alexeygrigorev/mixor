@@ -108,10 +108,16 @@ try {
       .first()
       .getAttribute("aria-pressed")) === "true",
   );
-  await page.locator(".hiding-place").first().click();
+  await page.getByRole("button", { name: "Узнать больше", exact: true }).click();
   await page.locator(".portrait-scene").waitFor();
   await page.getByRole("button", { name: "Назад: В тени берёзы", exact: true }).click();
   assert.equal(await page.locator(".hiding-place.is-found").count(), 1);
+  await page.getByRole("button", { name: "Назад к выбору места", exact: true }).click();
+  await page.getByRole("button", { name: "Искать: В тени берёзы", exact: true }).click();
+  assert.equal(await page.locator(".hiding-place.is-found").count(), 0);
+  await page.locator(".hiding-place").first().click();
+  await page.locator(".search-magnifier").waitFor();
+  await page.getByRole("button", { name: "Закрыть увеличение", exact: true }).click();
   await page.getByRole("button", { name: /^Следующее место:/ }).click();
   assert.equal(await page.locator(".scene-weather").getAttribute("data-weather"), "clear");
   const missing = await page.evaluate(async () => {

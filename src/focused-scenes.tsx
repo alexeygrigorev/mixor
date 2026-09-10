@@ -193,6 +193,41 @@ export function SearchScene({
   const [size, setSize] = useState({ width: 1536, height: 1024 });
   const [announcement, setAnnouncement] = useState("");
   const [failed, setFailed] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const magnifier = useRef<HTMLDivElement>(null);
+  const dismissButton = useRef<HTMLButtonElement>(null);
+  const [lensSize, setLensSize] = useState({ width: 300, height: 370 });
+  const selected = woodland.spots.find((spot) => spot.id === selectedId);
+  const dismiss = () => {
+    setSelectedId(null);
+    host.current
+      ?.querySelector<HTMLButtonElement>(`[data-find="${selectedId}"]`)
+      ?.focus({ preventScroll: true });
+  };
+  useLayoutEffect(() => {
+    if (!selectedId || !magnifier.current) return;
+    dismissButton.current?.focus({ preventScroll: true });
+    const observer = new ResizeObserver(([entry]) => {
+      const box = entry.target.getBoundingClientRect();
+      setLensSize({ width: box.width, height: box.height });
+    });
+    observer.observe(magnifier.current);
+    return () => observer.disconnect();
+  }, [selectedId]);
+  useEffect(() => {
+    if (!selectedId) return;
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setSelectedId(null);
+        host.current
+          ?.querySelector<HTMLButtonElement>(`[data-find="${selectedId}"]`)
+          ?.focus({ preventScroll: true });
+      }
+    };
+    window.addEventListener("keydown", escape);
+    return () => window.removeEventListener("keydown", escape);
+  }, [selectedId]);
   useLayoutEffect(() => {
     const el = host.current!;
     const observer = new ResizeObserver(([entry]) => {
@@ -205,19 +240,30 @@ export function SearchScene({
     return () => observer.disconnect();
   }, []);
   const worldWidth = Math.max(size.width, size.height * 1.5);
-  const portrait = size.width < size.height;
-  const diameter = Math.max(
-    48,
+  const worldHeight = worldWidth / 1.5;
+  // The clue and its support share the SAME source-to-screen transform.
+  // Only the deliberately opened magnifier is clamped into the viewport.
+  const project = (spot: Woodland["spots"][number]) => ({
+    x: (worldWidth * spot.x) / 100 - (worldWidth - size.width) / 2,
+    y: (worldHeight * spot.y) / 100 - (worldHeight - size.height) / 2,
+  });
+  const origin = selected ? project(selected) : { x: 0, y: 0 };
+  const lensLeft = Math.max(
+    16,
     Math.min(
-      portrait ? 164 : 184,
-      size.width * (portrait ? 0.35 : 0.16),
-      size.height * (portrait ? 0.18 : 0.24),
+      size.width - lensSize.width - 16,
+      origin.x < size.width / 2
+        ? origin.x + 42
+        : origin.x - lensSize.width - 42,
     ),
   );
-  const verticalOrder = [...woodland.spots].sort((a, b) => a.y - b.y);
-  // The lenses enlarge the source patches; their layout belongs to the viewport,
-  // so cropping the forest on rotation cannot hide an interactive circle.
-  const inset = diameter / 2 + 20;
+  const lensTop = Math.max(
+    84,
+    Math.min(
+      size.height - lensSize.height - 16,
+      origin.y - lensSize.height / 2,
+    ),
+  );
   const woodlandIndex = woodlands.findIndex(
     (place) => place.id === woodland.id,
   );
@@ -244,67 +290,98 @@ export function SearchScene({
       <SceneWeather weather={woodland.weather} />
       {woodland.spots.map((spot) => {
         const found = finds.includes(spot.id);
-        const x = 50 + (spot.x - 50) * (portrait ? 1.7 : 2.4);
-        const y = portrait ? 25 + verticalOrder.indexOf(spot) * 25 : spot.y;
-        const lensWidth = (diameter * 100) / spot.size;
+        const point = project(spot);
+        const isSelected = spot.id === selectedId;
         return (
           <button
             key={spot.id}
             data-find={spot.id}
-            className={`hiding-place ${found ? "is-found" : ""}`}
+            className={`hiding-place ${found ? "is-found" : ""} ${isSelected ? "is-selected" : ""}`}
             aria-label={
               found
-                ? `Узнать больше: ${scientificNames[spot.taxon].name}`
+                ? `Рассмотреть находку: ${scientificNames[spot.taxon].name}`
                 : `Осмотреть: ${spot.label}`
             }
             aria-pressed={found}
+            aria-expanded={isSelected}
+            aria-controls={isSelected ? "search-magnifier" : undefined}
             aria-describedby="search-material"
             style={{
-              left: Math.max(
-                inset,
-                Math.min(size.width - inset, (size.width * x) / 100),
-              ),
-              top: Math.max(
-                inset + 60,
-                Math.min(size.height - inset, (size.height * y) / 100),
-              ),
-              width: diameter,
-              height: diameter,
+              left: point.x,
+              top: point.y,
             }}
             onClick={() => {
               if (!found) {
                 reveal(spot.id);
                 setAnnouncement(
-                  `Найдено: ${scientificNames[spot.taxon].name}. Коснись ещё раз, чтобы узнать больше.`,
+                  `Найдено: ${scientificNames[spot.taxon].name}. Открыто увеличение.`,
                 );
-              } else inspect(spot.taxon, spot.id);
+              }
+              setSelectedId(spot.id);
             }}
           >
-            <span className="search-lens" aria-hidden="true">
-              <span className="hidden-organism">
-                <Art taxon={spot.taxon} label="" />
-              </span>
-              <span
-                className="natural-cover"
-                style={{
-                  backgroundImage: `url(${woodland.image})`,
-                  backgroundSize: `${lensWidth}px ${lensWidth / 1.5}px`,
-                  backgroundPosition: `${diameter / 2 - (lensWidth * spot.x) / 100}px ${diameter / 2 - ((lensWidth / 1.5) * spot.y) / 100}px`,
-                }}
-              />
+            <span
+              className="search-clue"
+              aria-hidden="true"
+              style={{
+                width: Math.max(
+                  24,
+                  Math.min(44, (worldWidth * spot.size) / 2800),
+                ),
+                transform: `rotate(${spot.turn}deg)`,
+              }}
+            >
+              <Art taxon={spot.taxon} label="" />
             </span>
-            {found ? (
-              <span className="search-found-invitation" aria-hidden="true">
-                Узнать <Icon name="next" size={16} />
-              </span>
-            ) : (
-              <span className="search-lens-cue" aria-hidden="true">
-                <Icon name="lens" size={18} />
-              </span>
-            )}
+            {found && <span className="search-clue-found" aria-hidden="true" />}
           </button>
         );
       })}
+      {selected && (
+        <>
+          <svg className="search-origin-line" aria-hidden="true">
+            <line
+              x1={origin.x}
+              y1={origin.y}
+              x2={lensLeft + lensSize.width / 2}
+              y2={lensTop + lensSize.height / 2}
+            />
+          </svg>
+          <div
+            ref={magnifier}
+            className="search-magnifier"
+            id="search-magnifier"
+            role="dialog"
+            aria-modal="false"
+            aria-label={scientificNames[selected.taxon].name}
+            style={{ left: lensLeft, top: lensTop }}
+          >
+            <div className="search-magnified-image">
+              <Art
+                taxon={selected.taxon}
+                label={`${scientificNames[selected.taxon].name}: увеличение, иллюстрация ИИ`}
+              />
+              <button
+                ref={dismissButton}
+                className="search-dismiss"
+                onClick={dismiss}
+                aria-label="Закрыть увеличение"
+              >
+                <Icon name="close" />
+              </button>
+            </div>
+            <div className="search-magnified-caption">
+              <i>{scientificNames[selected.taxon].name}</i>
+              <button
+                className="search-learn"
+                onClick={() => inspect(selected.taxon, selected.id)}
+              >
+                Узнать больше <Icon name="next" size={20} />
+              </button>
+            </div>
+          </div>
+        </>
+      )}
       <BackButton back={back} label="Назад к выбору места" />
       <nav
         className="search-places"
@@ -327,8 +404,8 @@ export function SearchScene({
         </button>
       </nav>
       <span className="sr-only" id="search-material">
-        Учебная иллюстрация ИИ. Первое касание открывает организм, следующее —
-        сведения о нём.
+        Коснись детали, чтобы рассмотреть организм в увеличении. Сведения — по
+        кнопке «Узнать больше». Закрыть увеличение — Escape.
       </span>
       <span className="sr-only" role="status">
         {announcement}
