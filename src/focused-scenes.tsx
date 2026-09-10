@@ -372,21 +372,49 @@ export function DevelopmentScene({
 }) {
   const stages = cycle.stages.filter((s) => s.id !== "rest");
   const rail = useRef<HTMLDivElement>(null);
+  const controls = useRef<HTMLDivElement>(null);
+  const pickerButton = useRef<HTMLButtonElement>(null);
+  const [pickingStage, setPickingStage] = useState(false);
   const gesture = useRef<{ x: number; y: number } | null>(null);
   useEffect(() => {
+    if (!pickingStage) return;
     const selected = rail.current?.querySelector<HTMLElement>(
       '[aria-current="step"]',
     );
-    if (selected && rail.current)
+    if (selected && rail.current) {
       rail.current.scrollLeft =
         selected.offsetLeft -
         rail.current.offsetWidth / 2 +
         selected.offsetWidth / 2;
-  }, [stage.id]);
+      selected.focus({ preventScroll: true });
+    }
+  }, [stage.id, pickingStage]);
+  useEffect(() => {
+    if (!pickingStage) return;
+    const outside = (event: PointerEvent) => {
+      if (
+        event.target instanceof Node &&
+        !controls.current?.contains(event.target)
+      )
+        setPickingStage(false);
+    };
+    document.addEventListener("pointerdown", outside);
+    return () => document.removeEventListener("pointerdown", outside);
+  }, [pickingStage]);
+  function closePicker() {
+    setPickingStage(false);
+    pickerButton.current?.focus({ preventScroll: true });
+  }
   return (
     <section
       className="development-focus"
       aria-label={`Развитие ${taxon.latinName}`}
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && pickingStage) {
+          event.preventDefault();
+          closePicker();
+        }
+      }}
     >
       <div className="development-top">
         <BackButton back={back} label={backLabel} />
@@ -431,64 +459,116 @@ export function DevelopmentScene({
           label={`${stage.label}. Учебная реконструкция ИИ, не фотография`}
         />
       </div>
-      <div
-        className="development-caption"
-        key={`${taxon.id}/${stage.id}`}
-        aria-live="polite"
-      >
-        <h1>{stage.label}</h1>
-        <p>{stageBrief[stage.id]}</p>
-        <button
-          className="model-note"
-          onClick={details}
-          aria-label="О реконструкции и источниках"
-        >
-          Реконструкция ИИ ·{" "}
-          {index < 6 ? "схема группы" : "условные форма и цвет"} · разные
-          масштабы <Icon name="info" size={14} />
-        </button>
-      </div>
-      <div className="development-controls">
+      <div className="development-observation">
         <div
-          className="development-rail"
-          ref={rail}
-          aria-label="Этапы развития"
+          className="development-caption"
+          key={`${taxon.id}/${stage.id}`}
+          aria-live="polite"
         >
-          {stages.map((s, i) => (
-            <button
-              key={s.id}
-              aria-label={`Этап ${i + 1}: ${s.shortLabel}`}
-              aria-current={i === index ? "step" : undefined}
-              onClick={() => select(s.id)}
-            >
-              <span>{i + 1}</span>
-              <small>{s.shortLabel}</small>
-            </button>
-          ))}
+          <h1>{stage.label}</h1>
+          <p>{stageBrief[stage.id]}</p>
+          <button
+            className="model-note"
+            onClick={details}
+            aria-label="О реконструкции и источниках"
+          >
+            <span>
+              Реконструкция ИИ ·{" "}
+              {index < stages.findIndex((s) => s.id === "network")
+                ? "схема группы"
+                : "условные форма и цвет"}{" "}
+              · разные масштабы
+            </span>
+            <Icon name="info" size={16} />
+          </button>
         </div>
-        <div className="development-stepper">
-          <button
-            className="step-button"
-            disabled={index === 0}
-            onClick={() => select(stages[index - 1].id)}
-            aria-label="Предыдущий этап"
+        <div className="development-controls" ref={controls}>
+          <div className="development-stepper">
+            <button
+              className="step-button"
+              disabled={index === 0}
+              onClick={() => select(stages[index - 1].id)}
+              aria-label="Предыдущий этап"
+            >
+              <Icon name="back" />
+            </button>
+            <button
+              ref={pickerButton}
+              className="stage-picker-toggle"
+              aria-label={`Выбрать этап. Сейчас ${index + 1} из ${stages.length}: ${stage.shortLabel}`}
+              aria-expanded={pickingStage}
+              aria-controls="development-stage-picker"
+              onClick={() => setPickingStage((open) => !open)}
+            >
+              <span className="stage-position">
+                {index + 1} / {stages.length}
+              </span>
+              <span className="stage-picker-label">Этапы</span>
+            </button>
+            <button
+              className="step-button next-stage"
+              onClick={() => select(stages[(index + 1) % stages.length].id)}
+              aria-label={
+                index === stages.length - 1 ? "Снова к споре" : "Следующий этап"
+              }
+            >
+              <Icon name={index === stages.length - 1 ? "cycle" : "next"} />
+            </button>
+          </div>
+          <div
+            id="development-stage-picker"
+            className="development-stage-picker"
+            hidden={!pickingStage}
           >
-            <Icon name="back" />
-            <span>Раньше</span>
-          </button>
-          <span className="stage-position">
-            {index + 1} / {stages.length}
-          </span>
-          <button
-            className="step-button next-stage"
-            onClick={() => select(stages[(index + 1) % stages.length].id)}
-            aria-label={
-              index === stages.length - 1 ? "Снова к споре" : "Следующий этап"
-            }
-          >
-            <span>{index === stages.length - 1 ? "К споре" : "Дальше"}</span>
-            <Icon name={index === stages.length - 1 ? "cycle" : "next"} />
-          </button>
+            <div
+              className="development-rail"
+              ref={rail}
+              role="group"
+              aria-label="Этапы развития"
+              onKeyDown={(event) => {
+                if (event.key !== "ArrowLeft" && event.key !== "ArrowRight")
+                  return;
+                const buttons = [
+                  ...event.currentTarget.querySelectorAll("button"),
+                ];
+                const focused = buttons.indexOf(
+                  document.activeElement as HTMLButtonElement,
+                );
+                const next =
+                  buttons[
+                    Math.max(
+                      0,
+                      Math.min(
+                        buttons.length - 1,
+                        focused + (event.key === "ArrowRight" ? 1 : -1),
+                      ),
+                    )
+                  ];
+                event.preventDefault();
+                next?.focus({ preventScroll: true });
+                if (next)
+                  event.currentTarget.scrollLeft =
+                    next.offsetLeft -
+                    event.currentTarget.clientWidth / 2 +
+                    next.clientWidth / 2;
+              }}
+            >
+              {stages.map((s, i) => (
+                <button
+                  key={s.id}
+                  aria-label={`Этап ${i + 1}: ${s.shortLabel}`}
+                  aria-current={i === index ? "step" : undefined}
+                  onClick={() => {
+                    select(s.id);
+                    closePicker();
+                  }}
+                >
+                  <span>{i + 1}</span>
+                  <small>{s.shortLabel}</small>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

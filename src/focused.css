@@ -385,23 +385,27 @@
 .game.scene-life > .scene {
   padding: 0;
 }
-.scene-life .forest-background {
-  opacity: 0.12;
+.game.scene-life .forest-background {
+  opacity: 0.72;
+  filter: blur(9px);
 }
-.scene-life .forest-shade {
-  background: #10271fde;
+.game.scene-life .forest-shade {
+  background: linear-gradient(105deg, #081b168c, #081b16d9 72%);
 }
 .development-focus {
   height: 100%;
   min-height: 0;
   display: grid;
-  grid-template-rows: max-content minmax(150px, 1fr) max-content max-content;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 30%);
+  grid-template-rows: max-content minmax(min-content, 1fr);
+  gap: 12px clamp(20px, 4vw, 64px);
   padding: max(12px, env(safe-area-inset-top))
-    max(20px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom))
+    max(20px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom))
     max(20px, env(safe-area-inset-left));
   overflow-y: auto;
 }
 .development-top {
+  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
@@ -436,7 +440,8 @@
   background: #e8e3d012;
 }
 .development-image {
-  min-height: 150px;
+  min-height: 280px;
+  min-width: 0;
   position: relative;
   display: flex;
   justify-content: center;
@@ -444,50 +449,76 @@
   width: 100%;
   overflow: hidden;
   touch-action: pan-y;
+  container-type: size;
 }
 .development-image .art {
-  height: 100%;
-  width: auto;
-  aspect-ratio: 1;
+  width: min(100cqw, calc(100cqh * var(--tile-aspect)));
+  height: auto;
+  aspect-ratio: var(--tile-aspect);
   max-width: 100%;
-  border-radius: 0;
-  mask-image: radial-gradient(
-    ellipse at center,
-    black 45%,
-    #000e 65%,
-    transparent 91%
-  );
+  max-height: 100%;
+  flex: none;
+  border-radius: 20px;
+  mask-image: none;
+  box-shadow: 0 12px 48px #06181066;
+}
+.development-observation {
+  min-width: 0;
+  width: 100%;
+  max-width: 420px;
+  align-self: center;
+  justify-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 12px 0;
 }
 .development-caption {
-  text-align: center;
-  padding: 7px 6px 0;
+  min-width: 0;
+  text-align: left;
 }
 .development-caption h1 {
-  font-size: clamp(22px, 2.5vw, 30px);
-  line-height: 1.2;
+  font-size: clamp(26px, 2.6vw, 38px);
+  line-height: 1.18;
   letter-spacing: -0.015em;
+  overflow-wrap: anywhere;
 }
 .development-caption > p {
-  font-size: 15px;
+  font-size: 16px;
   color: #eee7d2;
-  margin: 7px auto 0;
-  max-width: 750px;
-  line-height: 1.4;
+  margin: 14px 0 0;
+  line-height: 1.5;
 }
 .model-note {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 6px;
-  color: #c5cfb7;
-  font-size: 11px;
-  line-height: 1.25;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  margin-top: 8px;
+  color: #cbd4c1;
+  font-size: 12px;
+  line-height: 1.4;
   min-height: 48px;
+  text-align: inherit;
+}
+.model-note > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.model-note svg {
+  flex: none;
 }
 .development-controls {
-  width: min(960px, 100%);
-  margin: 0 auto;
+  width: 100%;
+  min-width: 0;
+}
+.development-stage-picker {
+  margin-top: 12px;
+  border-top: 1px solid #d4dfc352;
+}
+.development-stage-picker[hidden] {
+  display: none;
 }
 .development-rail {
   display: flex;
@@ -495,40 +526,28 @@
   overflow-x: auto;
   scrollbar-width: thin;
   scrollbar-color: #697b68 transparent;
-  scroll-behavior: smooth;
-  gap: 0;
-  padding: 3px 4px;
+  scroll-behavior: auto;
+  gap: 6px;
+  padding: 10px 4px;
+  min-width: 0;
+  max-width: 100%;
 }
 .development-rail > button {
   position: relative;
-  flex: 1 0 88px;
-  padding: 0 2px 4px;
+  flex: 0 0 max(76px, 5em);
+  min-width: 48px;
+  min-height: 48px;
+  padding: 4px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 7px;
 }
-.development-rail > button::before {
-  content: "";
-  position: absolute;
-  height: 1px;
-  background: #b3b59b73;
-  top: 19px;
-  left: 0;
-  right: 0;
-  z-index: -1;
-}
-.development-rail > button:first-child::before {
-  left: 50%;
-}
-.development-rail > button:last-child::before {
-  right: 50%;
-}
 .development-rail > button > span {
   display: grid;
   place-items: center;
-  width: 38px;
-  height: 38px;
+  min-width: 2.75em;
+  min-height: 2.75em;
   border-radius: 50%;
   border: 1px solid #9aab91;
   background: #142d23;
@@ -537,9 +556,10 @@
 }
 .development-rail small {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.2;
-  max-width: 96px;
+  width: 100%;
+  overflow-wrap: anywhere;
   color: #d0d4be;
 }
 .development-rail > button[aria-current="step"] > span {
@@ -554,31 +574,48 @@
 }
 .development-stepper {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  gap: 16px;
-  padding-top: 6px;
+  gap: 12px;
 }
 .step-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  min-width: 125px;
-  border: 1px solid #a7b39a77;
-  border-radius: 12px;
-  padding: 10px 18px;
+  width: 52px;
+  height: 52px;
+  min-width: 48px;
+  min-height: 48px;
+  flex: none;
+  border: 1px solid #c3ceb294;
+  border-radius: 50%;
+  padding: 12px;
+  background: #10281fd9;
 }
 .next-stage {
-  color: #162d22;
-  background: #eddaa4;
-  border-color: #eddaa4;
-  font-weight: 750;
+  color: #f3deb0;
+  border-color: #e1c786;
+}
+.stage-picker-toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 76px;
+  min-height: 52px;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+.stage-picker-label {
+  color: #d0d4be;
+  font-size: 12px;
 }
 .stage-position {
-  font-size: 13px;
-  color: #d0d4be;
+  font-size: 17px;
+  color: #f3e6c3;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 .material-peek {
   align-self: center;
@@ -875,7 +912,9 @@
   .development-focus {
     padding-left: 12px;
     padding-right: 12px;
-    grid-template-rows: max-content minmax(220px, 1fr) max-content max-content;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: max-content minmax(280px, 1fr) max-content;
+    gap: 10px;
   }
   .development-top {
     gap: 4px;
@@ -900,45 +939,28 @@
   .development-top .quiet-photo span {
     display: none;
   }
-  .development-image .art {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1;
-    max-height: 100%;
+  .development-observation {
+    max-width: none;
+    gap: 8px;
+    padding: 0;
   }
   .development-caption {
-    padding-top: 6px;
+    text-align: center;
   }
   .development-caption h1 {
     font-size: 23px;
   }
   .development-caption > p {
     font-size: 14px;
-    max-width: 350px;
+    margin: 8px auto 0;
+    max-width: 28em;
   }
   .model-note {
-    font-size: 10px;
-  }
-  .development-rail > button {
-    flex-basis: 72px;
-  }
-  .development-rail small {
-    font-size: 10px;
-    max-width: 69px;
-  }
-  .development-rail > button > span {
-    width: 33px;
-    height: 33px;
-  }
-  .development-rail > button::before {
-    top: 16px;
+    margin-top: 4px;
+    justify-content: center;
   }
   .development-stepper {
-    gap: 7px;
-  }
-  .step-button {
-    min-width: 115px;
-    padding: 10px 13px;
+    justify-content: center;
   }
   .classification-heading {
     align-items: flex-start;
@@ -1046,25 +1068,20 @@
     padding-top: 12px;
   }
   .development-focus {
-    grid-template-columns: 1.15fr 1fr;
-    grid-template-rows: max-content minmax(min-content, 1fr) max-content;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    grid-template-rows: max-content minmax(min-content, 1fr);
     column-gap: 18px;
-  }
-  .development-top {
-    grid-column: 1 / -1;
+    padding-bottom: 12px;
+    row-gap: 4px;
   }
   .development-name {
     font-size: 17px;
   }
   .development-image {
-    grid-column: 1;
-    grid-row: 2 / 4;
-    min-height: 180px;
+    min-height: 240px;
   }
-  .development-caption {
-    grid-column: 2;
-    grid-row: 2;
-    align-self: center;
+  .development-observation {
+    gap: 4px;
     padding: 0;
   }
   .development-caption h1 {
@@ -1073,20 +1090,8 @@
   .development-caption > p {
     font-size: 13px;
   }
-  .development-controls {
-    grid-column: 2;
-    grid-row: 3;
-    min-width: 0;
-  }
-  .development-rail {
-    display: none;
-  }
   .model-note {
-    font-size: 10px;
-  }
-  .step-button {
-    min-width: 112px;
-    padding: 8px 10px;
+    margin-top: 2px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1104,57 +1109,6 @@
 }
 .calm .development-rail {
   scroll-behavior: auto;
-}
-.development-top,
-.development-image,
-.development-caption,
-.development-controls {
-  min-width: 0;
-}
-.development-rail {
-  min-width: 0;
-  max-width: 100%;
-}
-.development-rail > button {
-  flex-basis: max(84px, 5.5em);
-}
-.development-rail small {
-  max-width: none;
-  width: 100%;
-  overflow-wrap: anywhere;
-}
-.development-rail > button > span {
-  min-width: 2.75em;
-  min-height: 2.75em;
-}
-.development-stepper {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-}
-.step-button {
-  min-width: 48px;
-  width: 100%;
-  flex-wrap: wrap;
-}
-.stage-position {
-  white-space: nowrap;
-}
-@media (max-width: 700px) {
-  .step-button {
-    padding: 10px;
-    font-size: 14px;
-    gap: 5px;
-  }
-}
-.development-image {
-  container-type: size;
-}
-.development-image .art {
-  width: min(100cqw, calc(100cqh * var(--tile-aspect)));
-  height: auto;
-  aspect-ratio: var(--tile-aspect);
-  max-height: 100%;
-  flex: none;
 }
 @media (min-width: 701px) {
   .classification-branches::before {

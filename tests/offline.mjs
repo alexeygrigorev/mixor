@@ -39,9 +39,18 @@ try {
   assert(keys.includes("/assets/audio/sfx/uncover-mix.mp3"));
   assert(keys.includes("/assets/art/search-bark.webp"));
   assert(keys.includes("/assets/art/growth-early.webp"));
+  const earlyArt = ["physarum", "arcyria", "fuligo", "lycogala", "stemonitis", "trichia", "tubifera", "didymium"];
+  for (const id of earlyArt) assert(keys.includes(`/assets/art/early-${id}-v3.webp`));
   assert(!keys.some((path) => /observations|private|outbox/.test(path)));
   await context.setOffline(true);
   await page.reload();
+  const decodedEarlyArt = await page.evaluate(async (ids) => Promise.all(ids.map(async (id) => {
+    const img = new Image();
+    img.src = `/assets/art/early-${id}-v3.webp`;
+    await img.decode();
+    return img.naturalWidth / img.naturalHeight;
+  })), earlyArt);
+  assert(decodedEarlyArt.every((aspect) => aspect === 2), "All eight early plates decode offline");
   const uncoverOffline = await page.evaluate(async () => {
     const response = await fetch("/assets/audio/sfx/uncover-mix.mp3");
     return {
@@ -70,6 +79,7 @@ try {
       exact: true,
     })
     .click();
+  await page.getByRole("button", { name: /^Выбрать этап\./ }).click();
   await page
     .getByRole("button", { name: /^Этап \d+: Плазмодий$/ })
     .first()
