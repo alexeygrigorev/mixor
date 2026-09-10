@@ -479,7 +479,7 @@ test("actual stage, lens and save clicks play one new rustle without legacy cues
   await changeRoute(page, "#life/physarum/spore");
   await clickOneRustle("Следующий этап");
   await changeRoute(page, "#portrait/physarum/spore");
-  await clickOneRustle("Сделать открытие");
+  await clickOneRustle("Наблюдать");
   await clickOneRustle("Не различаю");
   await clickOneRustle("Записать открытие");
   await expect(page.locator(".discovery-page")).toContainText("Не различаю");

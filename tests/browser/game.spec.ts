@@ -37,7 +37,7 @@ test("observe a real photo, save an educational discovery and revisit after relo
   await start(page);
   await page.goto("/#portrait/physarum/spore");
   await page
-    .getByRole("button", { name: "Сделать открытие", exact: true })
+    .getByRole("button", { name: "Наблюдать", exact: true })
     .click();
   await expect(page.locator(".photo-zoom img")).toBeVisible();
   await page.getByRole("button", { name: "Иллюстрация", exact: true }).click();
@@ -48,7 +48,7 @@ test("observe a real photo, save an educational discovery and revisit after relo
     page.getByRole("button", { name: "Не различаю", exact: true }),
   ).not.toBeVisible();
   await page
-    .getByRole("button", { name: "Сделать открытие", exact: true })
+    .getByRole("button", { name: "Наблюдать", exact: true })
     .click();
   await page
     .getByRole("button", { name: "Увеличить фото", exact: true })

@@ -658,43 +658,28 @@ export default function App() {
           />
         )}
         {route.place === "portrait" && (
-          <section className="portrait-scene">
-            <div className="scene-heading">
-              <div>
-                <p className="eyebrow">
-                  {investigating
-                    ? "ТВОЁ НАБЛЮДЕНИЕ"
-                    : "ЗНАКОМСТВО С ОБИТАТЕЛЕМ"}
-                </p>
-                <h1>{taxon.commonName}</h1>
-                {scientificNames[taxon.id].synonym && (
-                  <i className="latin">
-                    Также: {scientificNames[taxon.id].synonym}
-                  </i>
-                )}
-              </div>
-              <button
-                className="icon-button"
-                onClick={() => go("tree")}
-                aria-label="Выбрать другой вид"
-              >
-                <Icon name="tree" />
-              </button>
-            </div>
+          <section className={`portrait-scene ${real ? "portrait-real" : ""}`}>
             <div
               className={`portrait-content ${investigating ? "investigating" : ""}`}
             >
+              <header className="portrait-identity">
+                <div>
+                  <h1>{taxon.commonName}</h1>
+                  {scientificNames[taxon.id].synonym && (
+                    <i className="latin">
+                      Также: {scientificNames[taxon.id].synonym}
+                    </i>
+                  )}
+                </div>
+                <button
+                  className="icon-button"
+                  onClick={() => go("tree")}
+                  aria-label="Выбрать другой вид"
+                >
+                  <Icon name="tree" />
+                </button>
+              </header>
               <div className="specimen-view">
-                <MaterialToggle
-                  real={real}
-                  change={(value) => {
-                    setReal(value);
-                    if (!value) {
-                      setInvestigating(false);
-                      setAnswer("");
-                    }
-                  }}
-                />
                 <div className="portrait-picture">
                   {real && photo ? (
                     <Photo key={photo.id} photo={photo} />
@@ -705,9 +690,20 @@ export default function App() {
                     />
                   )}
                 </div>
+                <MaterialToggle
+                  real={real}
+                  change={(value) => {
+                    setReal(value);
+                    if (!value) {
+                      setInvestigating(false);
+                      setAnswer("");
+                    }
+                  }}
+                />
                 {real && photo ? (
                   <>
                     <Credit photo={photo} />
+                    <p className="portrait-photo-caption">{photo.caption}</p>
                     <div
                       className="photo-select"
                       aria-label="Другие реальные снимки"
@@ -730,15 +726,10 @@ export default function App() {
                   </>
                 ) : null}
               </div>
-              <div className="specimen-notes scroll-panel">
+              <div className="specimen-notes">
                 {investigating ? (
                   <>
-                    <p className="eyebrow">ПОСМОТРИ ВНИМАТЕЛЬНО</p>
                     <h2>{question}</h2>
-                    <p>
-                      Увеличь снимок или выбери другой ракурс. Здесь можно
-                      сомневаться.
-                    </p>
                     <div className="answer-options">
                       {[
                         "Сеть с разветвлениями",
@@ -778,37 +769,32 @@ export default function App() {
                   </>
                 ) : (
                   <>
-                    <p className="eyebrow">ПРИСМОТРИСЬ</p>
-                    <h2>
-                      {taxon.id === "physarum"
-                        ? "Одна клетка. Целый мир."
-                        : "У леса много маленьких тайн."}
-                    </h2>
-                    <p>{taxon.summary}</p>
-                    {real && photo && (
-                      <p className="photo-caption">{photo.caption}</p>
-                    )}
+                    <p className="portrait-summary">{taxon.summary}</p>
+                    <div className="portrait-actions">
+                      <button
+                        className="portrait-action portrait-development"
+                        aria-label="Как он развивается?"
+                        onClick={() => go("life", taxon.id, "spore")}
+                      >
+                        <Icon name="cycle" /> <span>Как он развивается?</span>
+                      </button>
+                      <button
+                        className="portrait-action"
+                        onClick={() => {
+                          setReal(true);
+                          setInvestigating(true);
+                          audioManager.playSfx("lens-open");
+                        }}
+                      >
+                        <Icon name="lens" /> Наблюдать
+                      </button>
+                    </div>
                     <button
-                      className="primary"
-                      onClick={() => {
-                        setReal(true);
-                        setInvestigating(true);
-                        audioManager.playSfx("lens-open");
-                      }}
-                    >
-                      <Icon name="lens" /> Сделать открытие
-                    </button>
-                    <button
-                      className="secondary"
-                      onClick={() => go("life", taxon.id, "spore")}
-                    >
-                      <Icon name="cycle" /> Как он развивается?
-                    </button>
-                    <button
-                      className="text-button"
+                      className="text-button portrait-sources"
+                      aria-label="Источники и точность"
                       onClick={() => setOverlay("sources")}
                     >
-                      <Icon name="info" size={18} /> Источники и точность
+                      <Icon name="info" size={18} /> Источники
                     </button>
                   </>
                 )}
