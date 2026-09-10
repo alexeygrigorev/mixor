@@ -9,3 +9,5 @@ Preferences use `mixor-sound-settings-v3`. Custom levels, including zeros, are r
 Main independently ran all 28 audio browser cases in Chromium (29.5s) and WebKit (39.9s): both passed. Checks include actual media events/progression, distinct uncover versus tap, no same-click duplicate cue, zero effects, quiet reload, custom migration, default-on startup, modeled autoplay refusal followed by real native playback, hidden-tab pause/resume and continuing music through modals. A modeled refusal test is not proof of every physical browser's autoplay policy.
 
 Physical speaker/headphone audibility, remaining buzz and naturalness still need listening. No subjective acceptance is inferred from decoding, numeric volume or passing playback tests.
+
+Completion recheck on `9dac70e`: all 28 audio cases passed again in Chromium (1.4 minutes) and WebKit (1.7 minutes), with no failures/skips. All seven runtime recording hashes match the existing mastering report. Playback/source inspection did not establish a new audio defect; no levels or recordings were changed. [Remaining verification and next input](FEEDBACK_COMPLETION_AUDIT.md).

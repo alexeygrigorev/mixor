@@ -24,7 +24,7 @@ At this checkpoint the source audit contained 72 submissions and 58 delivered us
 - [x] **PORTRAIT-01** — All-eight organism screens are image-led, with compact actions, useful species text and optional photos (U66), committed in `17d05b1`. Observation/answer/journal, development and contextual returns remain. Independent R2 ACCEPT follows correction of a visible/spoken-name mismatch; 44 affected Chromium checks pass. [Evidence](PORTRAIT_REVIEW.md).
 - [x] **COPY-01** — Five specified visible notes removed from chooser, tree, settings, home and portrait (U62, U67–U69, U71), committed in `52ec65b`. Both phone/tablet removal tests pass; actual-photo credits and optional sources remain.
 - [x] **DEV-04** — Previous/next development controls retain position across stages (U72), committed in `3ae8624`. All eight × eleven × four position checks pass in Chromium and WebKit; 200% text checks pass after a counter-width correction. Independent four-frame composition spot-check accepts the bounded layout. [Evidence](STABLE_CONTROLS.md).
-- [ ] **DEVICE-01 amendment** — Explicit phone finding request U70. Test all five scenes and selected magnification on phone, tablet and short landscape; Linux Chromium/WebKit results do not imply physical iOS/Android acceptance.
+- [x] **DEVICE-01 amendment — browser/layout coverage.** Explicit phone finding request U70: all five scenes and selected magnification verified on phone, tablet and short landscape, including 320/360px phone actions and 200% text. R9 accepts the bounded finding layout. Physical iOS/Android behavior remains separately open under DEVICE-01; this check does not claim a real-device test.
 
 ## Source-linked working checklist
 
@@ -68,6 +68,8 @@ Checked means the objective fact was verified or the documentation step complete
 - [x] **PROCESS-04** — Commit regularly (U45). Audit `7023c06`, taxonomy `e11d535`, scenes/weather `1a7f261`, all-species art `431ffec`, navigation/audio `8697696`, long rain `e3206b3`, notice removal `5742ae7`, leaf cue `2308cb9`, distinct early art/eleven stages `3a53ec8`; continue verified fix batches. No push or unrelated changes.
 
 Status vocabulary: **implemented** means present in the working tree, not user-approved; **in progress** means being changed; **open** means not resolved. Automated playback is not a listening test. Do not mark an item accepted just because a build passes.
+
+The [completion audit after `9dac70e`](FEEDBACK_COMPLETION_AUDIT.md) separates completed implementation from remaining sound/device evidence. Fresh audio reruns passed all 28 cases in each browser; seven installed file hashes match the mastering report. No further sound change was made without establishing a current defect. The user was asked whether the buzz remains in the updated game and on which device/output.
 
 ## Current priorities
 
