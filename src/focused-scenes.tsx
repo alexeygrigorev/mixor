@@ -2,7 +2,12 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Art } from "./art";
 import { Icon, type IconName } from "./icons";
 import { taxa, type TaxonId, type Taxon } from "./data";
-import { stageBrief, type LifeCycle, type LifeStage } from "./life-data";
+import {
+  stageBrief,
+  stageSequence,
+  type LifeCycle,
+  type LifeStage,
+} from "./life-data";
 import { woodlands, type Woodland } from "./search-data";
 import { scientificNames, taxonomyTree, type TaxonomyNode } from "./taxonomy";
 import { SceneWeather } from "./weather";
@@ -161,7 +166,7 @@ export function SpeciesChooser({
                   new Set(visited.filter((id) => id.startsWith(`${t.id}/`)))
                     .size
                 }{" "}
-                / 9 этапов
+                / {stageSequence.length} этапов
               </small>
             </span>
             <Icon name="next" size={20} />

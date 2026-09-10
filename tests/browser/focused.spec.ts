@@ -215,7 +215,7 @@ test("forest circles uncover with keyboard and reduced motion", async ({
   await expect(page.locator(".woodland-chooser")).toBeVisible();
 });
 
-test("eight nine-stage cycles, scientific names, distinct growth stills and quiet photo peek", async ({
+test("eight eleven-stage cycles, scientific names, distinct growth stills and quiet photo peek", async ({
   page,
 }) => {
   test.setTimeout(90000);
@@ -237,7 +237,7 @@ test("eight nine-stage cycles, scientific names, distinct growth stills and quie
         taxon.latinName,
       );
       await expect(page.locator(".stage-position")).toHaveText(
-        `${index + 1} / 9`,
+        `${index + 1} / ${stageSequence.length}`,
       );
       await expect(
         page.locator(".hud, .game-nav, .stage-notes, .material-switch"),
@@ -284,12 +284,12 @@ test("eight nine-stage cycles, scientific names, distinct growth stills and quie
       }
       await page
         .getByRole("button", {
-          name: index === 8 ? "Снова к споре" : "Следующий этап",
+          name: index === stageSequence.length - 1 ? "Снова к споре" : "Следующий этап",
           exact: true,
         })
         .click();
     }
-    expect(views.size).toBe(9);
+    expect(views.size).toBe(stageSequence.length);
     await expect(page).toHaveURL(new RegExp(`life/${taxon.id}/spore$`));
     await page.getByRole("button", { name: "Назад к выбору вида" }).click();
     await expect(page.locator(".species-chooser")).toBeVisible();
@@ -301,7 +301,7 @@ test("eight nine-stage cycles, scientific names, distinct growth stills and quie
       () =>
         JSON.parse(localStorage.getItem("mixor-journey-v2")!).visited.length,
     ),
-  ).toBe(72);
+  ).toBe(taxa.length * stageSequence.length);
   expect(errors).toEqual([]);
 });
 

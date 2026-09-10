@@ -71,7 +71,7 @@ try {
     })
     .click();
   await page
-    .getByRole("button", { name: "Этап 7: Плазмодий", exact: true })
+    .getByRole("button", { name: /^Этап \d+: Плазмодий$/ })
     .first()
     .click();
   await page

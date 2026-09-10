@@ -3,8 +3,441 @@
   "createdAt": "2026-09-10",
   "tool": "built-in image_gen",
   "typeLabel": "Учебная иллюстрация · создана с ИИ",
-  "scope": "Generated educational reconstructions at different unspecified scales, not specimen photographs, measurements, identification keys or time-lapse. Habitat scenes use natural photographic styling; early microscopic stages are shared group-level models.",
+  "scope": "Generated educational reconstructions at different unspecified scales, not specimen photographs, measurements, identification keys or time-lapse. Habitat scenes use natural photographic styling. Each taxon now has a separately generated early-development plate; early biology remains a group-level reconstruction, not species-diagnostic anatomy.",
   "assets": [
+    {
+      "id": "early-physarum-v3",
+      "taxonId": "physarum",
+      "runtimePath": "public/assets/art/early-physarum-v3.webp",
+      "sourcePath": "content/artwork/early-physarum-v3.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: EIGHT-panel raster microscopy-inspired stage atlas for a biology exploration game. Precisely FOUR columns by TWO rows, eight equal SQUARE tiles. Whole image aspect 2:1, preferred 2048x1024. NO margins, NO gutters, NO border lines, NO labels, numbers, text, scales, arrows or watermark. Each tile a separate complete view with the subject within its central 72%, nothing crosses tile boundaries.\nPrimary request: an independently composed eight-stage educational reconstruction of the early sexual myxomycete life cycle, followed by gradually spreading plasmodium and sparse vein formation. NOT a documentary time series and NOT a species identification key. The organism remains ONE continuous cell after fusion, not a colony of joined separate cells.\nStyle: photorealistic natural transmitted-light optical microscopy appearance, slightly uneven neutral illumination, restrained grey-cream colour, fine granular translucent cytoplasm, softly focused tiny detritus, natural imperfect organic contours. Nuclei are darker muted grey roundish internal structures and clearly distinguishable from the much smaller cytoplasmic granules. No cartoon outline, no rendered glass, no CGI jelly or gel droplets, no glowing rims, no decorative bubbles, no jewel-like spores or perfect spheres.\nEight tiles in exact reading order:\nTOP LEFT 1: one finely textured nearly round spore wall opens with one tiny irregular amoeboid cell emerging; restrained subtle roughness, not exaggerated spines, no ornate diagnostic netting.\nTOP SECOND 2: two clearly SEPARATE motile forms in the same optical field: one uneven lobed amoeba with one nucleus and one elongated swimmer with one nucleus and two delicate flagella. They are alternatives, not a dividing cell.\nTOP THIRD 3: two compatible lobed cells beginning to fuse, their unequal lobes touching via a short narrow cytoplasmic bridge. One nucleus in each lobe, TWO nuclei total. This fusion silhouette must be unmistakably different from tile5, which is a unified broad cell.\nTOP RIGHT 4: a SINGLE compact irregular oval zygote after nuclear fusion, exactly ONE distinct nucleus inside it. No bridge, no split, no wall between cells.\nBOTTOM LEFT 5: same cell now somewhat larger and broadly oval with shallow uneven margins, exactly TWO clearly separated nuclei in ONE uninterrupted cytoplasm; no cleavage furrow or waist, no septum, no joining pair of lobes. It is nuclear division without cell division.\nBOTTOM SECOND 6: a larger young plasmodium, ONE cell with exactly FOUR visible nuclei and several short broad irregular pseudopodial lobes. No dense mature network yet. The four are an explanatory count, not a mature organism's nucleus limit.\nBOTTOM THIRD 7: wider field of the same organism spreading out into a broad asymmetrical thin sheet with generous rounded lobes, ONE continuous cytoplasm, no separate amoebae. More numerous much smaller nuclei are now only faint internal granules, NOT four large balls. Show growth and scale transition, still mainly a sheet with NO complex vein network.\nBOTTOM RIGHT 8: same broadened sheet begins forming a few connected thicker cytoplasmic channels, only three or four sparse branching paths and one or two joining loops, joined to broad expanding margins. Continuous living cytoplasm throughout, not separate worms, roots or independent cells. Substantial open spaces but not yet a dense mature mesh. Small nuclei no longer individually emphasized at this wider scale.\nBiological continuity: tiles4–8 have related irregular contours that spread progressively rather than suddenly changing into another object; each step is visibly distinct even at phone size. Same illumination and medium across all eight panels. Magnification changes are explanatory, not measured; no invented labels or species-specific microscopic diagnostic characters.\nPlate identity: Badhamia polycephala (synonym Physarum polycephalum). This is a distinct composition for this species' educational route, not a claim its early microscopic cells have uniquely identifiable anatomy. Composition variations for this plate: neutral pale grey-beige transmitted field; cell emerges toward lower right; amoeba lies left of diagonally upward swimmer; fusion lies diagonally lower-left to upper-right; compact zygote is a slightly triangular oval; spreading cell extends a broad scalloped fan toward the upper right; sparse vein paths make an asymmetric fork opening upper right. Render all eight panels as newly composed subjects, not recolours or repeated crops.",
+      "tool": "built-in image_gen",
+      "provider": "OpenAI",
+      "createdAt": "2026-09-10",
+      "revision": "distinct-eight-stage-optical-v3",
+      "scope": "Independently generated group-level early-development educational reconstruction for this taxon's route. Distinct composition is not species-diagnostic microscopic anatomy. Not a specimen photograph, measured scale, compulsory timetable or observed time series. Nuclear counts are explanatory. Spreading and first veins subdivide continuous plasmodial growth, not separately defined universal life-cycle phases.",
+      "license": "Generated artwork",
+      "builtinOutput": "exec-2f50bf69-0c8d-4e1b-bad3-7281336a4755.png",
+      "stageIds": [
+        "spore",
+        "cells",
+        "fusion",
+        "zygote",
+        "division",
+        "young",
+        "spreading",
+        "veins"
+      ],
+      "layout": {
+        "columns": 4,
+        "rows": 2,
+        "tileAspect": 1
+      },
+      "dimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "inputImages": [],
+      "sourceRefs": [
+        "https://pubmed.ncbi.nlm.nih.gov/2398347/",
+        "https://www.jstage.jst.go.jp/article/biophysico/22/1/22_e220002/_pdf",
+        "https://mycosphere.org/pdf/Mycosphere_7_2_1.pdf"
+      ],
+      "scienceNotes": "Bailey et al. 1990 studied sexual fusion and nuclear division without cytokinesis in Physarum. Sato et al. 2025 measured vein formation in a cytoplasmic droplet from an existing Physarum plasmodium: it supports the sheet-to-channels mechanism, not a zygote-to-adult or all-species time series. Clark & Haskins 2016 supplies group context and reproductive exceptions. No source figures were used as image inputs.",
+      "feedbackSourceIds": [
+        "U04",
+        "U08",
+        "U15",
+        "U20",
+        "U22",
+        "U54",
+        "U57"
+      ],
+      "sourceSha256": "36b5903609a1fe9c8ac47df5c0f5b314ef1f1bbf6040498b75ac8c5d2ffd29f3",
+      "runtimeSha256": "12704cf826cbf4b83edf64a6e6620d737676e1ddc33f1fb2201c2166adae459a",
+      "sourceBytes": 2442481,
+      "runtimeBytes": 150688,
+      "runtimePreparation": "ImageMagick WebP quality 88, strip metadata; no cropping, recolouring or compositing. Source PNG unchanged."
+    },
+    {
+      "id": "early-arcyria-v3",
+      "taxonId": "arcyria",
+      "runtimePath": "public/assets/art/early-arcyria-v3.webp",
+      "sourcePath": "content/artwork/early-arcyria-v3.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: EIGHT-panel raster microscopy-inspired stage atlas for a biology exploration game. Precisely FOUR columns by TWO rows, eight equal SQUARE tiles. Whole image aspect 2:1, preferred 2048x1024. NO margins, NO gutters, NO border lines, NO labels, numbers, text, scales, arrows or watermark. Each tile a separate complete view with the subject within its central 72%, nothing crosses tile boundaries.\nPrimary request: an independently composed eight-stage educational reconstruction of the early sexual myxomycete life cycle, followed by gradually spreading plasmodium and sparse vein formation. NOT a documentary time series and NOT a species identification key. The organism remains ONE continuous cell after fusion, not a colony of joined separate cells.\nStyle: photorealistic natural transmitted-light optical microscopy appearance, slightly uneven neutral illumination, restrained grey-cream colour, fine granular translucent cytoplasm, softly focused tiny detritus, natural imperfect organic contours. Nuclei are darker muted grey roundish internal structures and clearly distinguishable from the much smaller cytoplasmic granules. No cartoon outline, no rendered glass, no CGI jelly or gel droplets, no glowing rims, no decorative bubbles, no jewel-like spores or perfect spheres.\nEight tiles in exact reading order:\nTOP LEFT 1: one finely textured nearly round spore wall opens with one tiny irregular amoeboid cell emerging; restrained subtle roughness, not exaggerated spines, no ornate diagnostic netting.\nTOP SECOND 2: two clearly SEPARATE motile forms in the same optical field: one uneven lobed amoeba with one nucleus and one elongated swimmer with one nucleus and two delicate flagella. They are alternatives, not a dividing cell.\nTOP THIRD 3: two compatible lobed cells beginning to fuse, their unequal lobes touching via a short narrow cytoplasmic bridge. One nucleus in each lobe, TWO nuclei total. This fusion silhouette must be unmistakably different from tile5, which is a unified broad cell.\nTOP RIGHT 4: a SINGLE compact irregular oval zygote after nuclear fusion, exactly ONE distinct nucleus inside it. No bridge, no split, no wall between cells.\nBOTTOM LEFT 5: same cell now somewhat larger and broadly oval with shallow uneven margins, exactly TWO clearly separated nuclei in ONE uninterrupted cytoplasm; no cleavage furrow or waist, no septum, no joining pair of lobes. It is nuclear division without cell division.\nBOTTOM SECOND 6: a larger young plasmodium, ONE cell with exactly FOUR visible nuclei and several short broad irregular pseudopodial lobes. No dense mature network yet. The four are an explanatory count, not a mature organism's nucleus limit.\nBOTTOM THIRD 7: wider field of the same organism spreading out into a broad asymmetrical thin sheet with generous rounded lobes, ONE continuous cytoplasm, no separate amoebae. More numerous much smaller nuclei are now only faint internal granules, NOT four large balls. Show growth and scale transition, still mainly a sheet with NO complex vein network.\nBOTTOM RIGHT 8: same broadened sheet begins forming a few connected thicker cytoplasmic channels, only three or four sparse branching paths and one or two joining loops, joined to broad expanding margins. Continuous living cytoplasm throughout, not separate worms, roots or independent cells. Substantial open spaces but not yet a dense mature mesh. Small nuclei no longer individually emphasized at this wider scale.\nBiological continuity: tiles4–8 have related irregular contours that spread progressively rather than suddenly changing into another object; each step is visibly distinct even at phone size. Same illumination and medium across all eight panels. Magnification changes are explanatory, not measured; no invented labels or species-specific microscopic diagnostic characters.\nPlate identity: Arcyria denudata. This is a distinct composition for this species' educational route, not a claim its early microscopic cells have uniquely identifiable anatomy. Composition variations for this plate: soft cool stone-grey transmitted field, sparse minute out-of-focus dust only; cell emerges toward upper left; swimmer lies left of the small amoeba; fusion has an almost vertical orientation with unequal lobes; compact zygote is a squat lopsided oval; spreading sheet has two unequal broad fans opening downward and right; sparse paths form a loose off-centre Y with one irregular joined loop. Render all eight panels as newly composed subjects, not recolours or repeated crops.",
+      "tool": "built-in image_gen",
+      "provider": "OpenAI",
+      "createdAt": "2026-09-10",
+      "revision": "distinct-eight-stage-optical-v3",
+      "scope": "Independently generated group-level early-development educational reconstruction for this taxon's route. Distinct composition is not species-diagnostic microscopic anatomy. Not a specimen photograph, measured scale, compulsory timetable or observed time series. Nuclear counts are explanatory. Spreading and first veins subdivide continuous plasmodial growth, not separately defined universal life-cycle phases.",
+      "license": "Generated artwork",
+      "builtinOutput": "exec-5ca090fc-a2c0-4e2f-ad38-ff901893c960.png",
+      "stageIds": [
+        "spore",
+        "cells",
+        "fusion",
+        "zygote",
+        "division",
+        "young",
+        "spreading",
+        "veins"
+      ],
+      "layout": {
+        "columns": 4,
+        "rows": 2,
+        "tileAspect": 1
+      },
+      "dimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "inputImages": [],
+      "sourceRefs": [
+        "https://pubmed.ncbi.nlm.nih.gov/2398347/",
+        "https://www.jstage.jst.go.jp/article/biophysico/22/1/22_e220002/_pdf",
+        "https://mycosphere.org/pdf/Mycosphere_7_2_1.pdf"
+      ],
+      "scienceNotes": "Bailey et al. 1990 studied sexual fusion and nuclear division without cytokinesis in Physarum. Sato et al. 2025 measured vein formation in a cytoplasmic droplet from an existing Physarum plasmodium: it supports the sheet-to-channels mechanism, not a zygote-to-adult or all-species time series. Clark & Haskins 2016 supplies group context and reproductive exceptions. No source figures were used as image inputs.",
+      "feedbackSourceIds": [
+        "U04",
+        "U08",
+        "U15",
+        "U20",
+        "U22",
+        "U54",
+        "U57"
+      ],
+      "sourceSha256": "880cc94f6a57747cd76df1d2bc88cd392a1565c7a9ac8d76dace84ddf91db1df",
+      "runtimeSha256": "0d198a11b96d016b1e01f957c089d179e8f84448a7121dbe5d5e6e4539dbcb85",
+      "sourceBytes": 2438409,
+      "runtimeBytes": 154412,
+      "runtimePreparation": "ImageMagick WebP quality 88, strip metadata; no cropping, recolouring or compositing. Source PNG unchanged."
+    },
+    {
+      "id": "early-fuligo-v3",
+      "taxonId": "fuligo",
+      "runtimePath": "public/assets/art/early-fuligo-v3.webp",
+      "sourcePath": "content/artwork/early-fuligo-v3.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: EIGHT-panel raster microscopy-inspired stage atlas for a biology exploration game. Precisely FOUR columns by TWO rows, eight equal SQUARE tiles. Whole image aspect 2:1, preferred 2048x1024. NO margins, NO gutters, NO border lines, NO labels, numbers, text, scales, arrows or watermark. Each tile a separate complete view with the subject within its central 72%, nothing crosses tile boundaries.\nPrimary request: an independently composed eight-stage educational reconstruction of the early sexual myxomycete life cycle, followed by gradually spreading plasmodium and sparse vein formation. NOT a documentary time series and NOT a species identification key. The organism remains ONE continuous cell after fusion, not a colony of joined separate cells.\nStyle: photorealistic natural transmitted-light optical microscopy appearance, slightly uneven neutral illumination, restrained grey-cream colour, fine granular translucent cytoplasm, softly focused tiny detritus, natural imperfect organic contours. Nuclei are darker muted grey roundish internal structures and clearly distinguishable from the much smaller cytoplasmic granules. No cartoon outline, no rendered glass, no CGI jelly or gel droplets, no glowing rims, no decorative bubbles, no jewel-like spores or perfect spheres.\nEight tiles in exact reading order:\nTOP LEFT 1: one finely textured nearly round spore wall opens with one tiny irregular amoeboid cell emerging; restrained subtle roughness, not exaggerated spines, no ornate diagnostic netting.\nTOP SECOND 2: two clearly SEPARATE motile forms in the same optical field: one uneven lobed amoeba with one nucleus and one elongated swimmer with one nucleus and two delicate flagella. They are alternatives, not a dividing cell.\nTOP THIRD 3: two compatible lobed cells beginning to fuse, their unequal lobes touching via a short narrow cytoplasmic bridge. One nucleus in each lobe, TWO nuclei total. This fusion silhouette must be unmistakably different from tile5, which is a unified broad cell.\nTOP RIGHT 4: a SINGLE compact irregular oval zygote after nuclear fusion, exactly ONE distinct nucleus inside it. No bridge, no split, no wall between cells.\nBOTTOM LEFT 5: same cell now somewhat larger and broadly oval with shallow uneven margins, exactly TWO clearly separated nuclei in ONE uninterrupted cytoplasm; no cleavage furrow or waist, no septum, no joining pair of lobes. It is nuclear division without cell division.\nBOTTOM SECOND 6: a larger young plasmodium, ONE cell with exactly FOUR visible nuclei and several short broad irregular pseudopodial lobes. No dense mature network yet. The four are an explanatory count, not a mature organism's nucleus limit.\nBOTTOM THIRD 7: wider field of the same organism spreading out into a broad asymmetrical thin sheet with generous rounded lobes, ONE continuous cytoplasm, no separate amoebae. More numerous much smaller nuclei are now only faint internal granules, NOT four large balls. Show growth and scale transition, still mainly a sheet with NO complex vein network.\nBOTTOM RIGHT 8: same broadened sheet begins forming a few connected thicker cytoplasmic channels, only three or four sparse branching paths and one or two joining loops, joined to broad expanding margins. Continuous living cytoplasm throughout, not separate worms, roots or independent cells. Substantial open spaces but not yet a dense mature mesh. Small nuclei no longer individually emphasized at this wider scale.\nBiological continuity: tiles4–8 have related irregular contours that spread progressively rather than suddenly changing into another object; each step is visibly distinct even at phone size. Same illumination and medium across all eight panels. Magnification changes are explanatory, not measured; no invented labels or species-specific microscopic diagnostic characters.\nPlate identity: Fuligo septica. This is a distinct composition for this species' educational route, not a claim its early microscopic cells have uniquely identifiable anatomy. Composition variations for this plate: soft neutral warm grey transmitted field; spore toward upper-centre with cell emerging downward; one amoeba near lower-left and diagonal swimmer near upper-right; fusing cells overlap on a shallow descending diagonal; zygote a broad off-centre oval; expanding cell grows into a wide low scalloped sheet with a rounded upper-left margin; sparse channels form a loose shallow arch with two unequal connected crosspaths. Render all eight panels as newly composed subjects, not recolours or repeated crops.",
+      "tool": "built-in image_gen",
+      "provider": "OpenAI",
+      "createdAt": "2026-09-10",
+      "revision": "distinct-eight-stage-optical-v3",
+      "scope": "Independently generated group-level early-development educational reconstruction for this taxon's route. Distinct composition is not species-diagnostic microscopic anatomy. Not a specimen photograph, measured scale, compulsory timetable or observed time series. Nuclear counts are explanatory. Spreading and first veins subdivide continuous plasmodial growth, not separately defined universal life-cycle phases.",
+      "license": "Generated artwork",
+      "builtinOutput": "exec-1acdeaab-0a73-4ca0-8508-90406b1b57f1.png",
+      "stageIds": [
+        "spore",
+        "cells",
+        "fusion",
+        "zygote",
+        "division",
+        "young",
+        "spreading",
+        "veins"
+      ],
+      "layout": {
+        "columns": 4,
+        "rows": 2,
+        "tileAspect": 1
+      },
+      "dimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "inputImages": [],
+      "sourceRefs": [
+        "https://pubmed.ncbi.nlm.nih.gov/2398347/",
+        "https://www.jstage.jst.go.jp/article/biophysico/22/1/22_e220002/_pdf",
+        "https://mycosphere.org/pdf/Mycosphere_7_2_1.pdf"
+      ],
+      "scienceNotes": "Bailey et al. 1990 studied sexual fusion and nuclear division without cytokinesis in Physarum. Sato et al. 2025 measured vein formation in a cytoplasmic droplet from an existing Physarum plasmodium: it supports the sheet-to-channels mechanism, not a zygote-to-adult or all-species time series. Clark & Haskins 2016 supplies group context and reproductive exceptions. No source figures were used as image inputs.",
+      "feedbackSourceIds": [
+        "U04",
+        "U08",
+        "U15",
+        "U20",
+        "U22",
+        "U54",
+        "U57"
+      ],
+      "sourceSha256": "ac99cf0f3d3ec5c943fe3fd6b461f86af8147fc8c5be48d659253f9b829b684f",
+      "runtimeSha256": "92ca195a2eaa6fbc44b633b02c967af2204e9cbfaa284d92d272668802a5c0f2",
+      "sourceBytes": 2366290,
+      "runtimeBytes": 153990,
+      "runtimePreparation": "ImageMagick WebP quality 88, strip metadata; no cropping, recolouring or compositing. Source PNG unchanged."
+    },
+    {
+      "id": "early-lycogala-v3",
+      "taxonId": "lycogala",
+      "runtimePath": "public/assets/art/early-lycogala-v3.webp",
+      "sourcePath": "content/artwork/early-lycogala-v3.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: EIGHT-panel raster microscopy-inspired stage atlas for a biology exploration game. Precisely FOUR columns by TWO rows, eight equal SQUARE tiles. Whole image aspect 2:1, preferred 2048x1024. NO margins, NO gutters, NO border lines, NO labels, numbers, text, scales, arrows or watermark. Each tile a separate complete view with the subject within its central 72%, nothing crosses tile boundaries.\nPrimary request: an independently composed eight-stage educational reconstruction of the early sexual myxomycete life cycle, followed by gradually spreading plasmodium and sparse vein formation. NOT a documentary time series and NOT a species identification key. The organism remains ONE continuous cell after fusion, not a colony of joined separate cells.\nStyle: photorealistic natural transmitted-light optical microscopy appearance, slightly uneven neutral illumination, restrained grey-cream colour, fine granular translucent cytoplasm, softly focused tiny detritus, natural imperfect organic contours. Nuclei are darker muted grey roundish internal structures and clearly distinguishable from the much smaller cytoplasmic granules. No cartoon outline, no rendered glass, no CGI jelly or gel droplets, no glowing rims, no decorative bubbles, no jewel-like spores or perfect spheres.\nEight tiles in exact reading order:\nTOP LEFT 1: one finely textured nearly round spore wall opens with one tiny irregular amoeboid cell emerging; restrained subtle roughness, not exaggerated spines, no ornate diagnostic netting.\nTOP SECOND 2: two clearly SEPARATE motile forms in the same optical field: one uneven lobed amoeba with one nucleus and one elongated swimmer with one nucleus and two delicate flagella. They are alternatives, not a dividing cell.\nTOP THIRD 3: two compatible lobed cells beginning to fuse, their unequal lobes touching via a short narrow cytoplasmic bridge. One nucleus in each lobe, TWO nuclei total. This fusion silhouette must be unmistakably different from tile5, which is a unified broad cell.\nTOP RIGHT 4: a SINGLE compact irregular oval zygote after nuclear fusion, exactly ONE distinct nucleus inside it. No bridge, no split, no wall between cells.\nBOTTOM LEFT 5: same cell now somewhat larger and broadly oval with shallow uneven margins, exactly TWO clearly separated nuclei in ONE uninterrupted cytoplasm; no cleavage furrow or waist, no septum, no joining pair of lobes. It is nuclear division without cell division.\nBOTTOM SECOND 6: a larger young plasmodium, ONE cell with exactly FOUR visible nuclei and several short broad irregular pseudopodial lobes. No dense mature network yet. The four are an explanatory count, not a mature organism's nucleus limit.\nBOTTOM THIRD 7: wider field of the same organism spreading out into a broad asymmetrical thin sheet with generous rounded lobes, ONE continuous cytoplasm, no separate amoebae. More numerous much smaller nuclei are now only faint internal granules, NOT four large balls. Show growth and scale transition, still mainly a sheet with NO complex vein network.\nBOTTOM RIGHT 8: same broadened sheet begins forming a few connected thicker cytoplasmic channels, only three or four sparse branching paths and one or two joining loops, joined to broad expanding margins. Continuous living cytoplasm throughout, not separate worms, roots or independent cells. Substantial open spaces but not yet a dense mature mesh. Small nuclei no longer individually emphasized at this wider scale.\nBiological continuity: tiles4–8 have related irregular contours that spread progressively rather than suddenly changing into another object; each step is visibly distinct even at phone size. Same illumination and medium across all eight panels. Magnification changes are explanatory, not measured; no invented labels or species-specific microscopic diagnostic characters.\nPlate identity: Lycogala epidendrum. This is a distinct composition for this species' educational route, not a claim its early microscopic cells have uniquely identifiable anatomy. Composition variations for this plate: neutral silver-grey transmitted field with slight ordinary optical vignetting only; cell emerges leftward from spore at right; swimmer lies above an asymmetrical amoeba; fusion pair oriented horizontally with larger left lobe; zygote a compact oblique bean-like oval without deep waist; young cell has a prominent short left lobe; spreading sheet grows leftward in three unequal broad lobes; sparse channels bend around one off-centre open space. Render all eight panels as newly composed subjects, not recolours or repeated crops.",
+      "tool": "built-in image_gen",
+      "provider": "OpenAI",
+      "createdAt": "2026-09-10",
+      "revision": "distinct-eight-stage-optical-v3",
+      "scope": "Independently generated group-level early-development educational reconstruction for this taxon's route. Distinct composition is not species-diagnostic microscopic anatomy. Not a specimen photograph, measured scale, compulsory timetable or observed time series. Nuclear counts are explanatory. Spreading and first veins subdivide continuous plasmodial growth, not separately defined universal life-cycle phases.",
+      "license": "Generated artwork",
+      "builtinOutput": "exec-d2f252f6-96a1-4f61-aaf0-88cd3de9d747.png",
+      "stageIds": [
+        "spore",
+        "cells",
+        "fusion",
+        "zygote",
+        "division",
+        "young",
+        "spreading",
+        "veins"
+      ],
+      "layout": {
+        "columns": 4,
+        "rows": 2,
+        "tileAspect": 1
+      },
+      "dimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "inputImages": [],
+      "sourceRefs": [
+        "https://pubmed.ncbi.nlm.nih.gov/2398347/",
+        "https://www.jstage.jst.go.jp/article/biophysico/22/1/22_e220002/_pdf",
+        "https://mycosphere.org/pdf/Mycosphere_7_2_1.pdf"
+      ],
+      "scienceNotes": "Bailey et al. 1990 studied sexual fusion and nuclear division without cytokinesis in Physarum. Sato et al. 2025 measured vein formation in a cytoplasmic droplet from an existing Physarum plasmodium: it supports the sheet-to-channels mechanism, not a zygote-to-adult or all-species time series. Clark & Haskins 2016 supplies group context and reproductive exceptions. No source figures were used as image inputs.",
+      "feedbackSourceIds": [
+        "U04",
+        "U08",
+        "U15",
+        "U20",
+        "U22",
+        "U54",
+        "U57"
+      ],
+      "sourceSha256": "620f5511092300125fa3edce02397fa314dbc309e62cf9381ebd23bc5bf50dee",
+      "runtimeSha256": "eb233f18af7156d985996bdd03a775f87bec6d613d7b71c55472ec35dc273a2c",
+      "sourceBytes": 2591889,
+      "runtimeBytes": 172844,
+      "runtimePreparation": "ImageMagick WebP quality 88, strip metadata; no cropping, recolouring or compositing. Source PNG unchanged."
+    },
+    {
+      "id": "early-stemonitis-v3",
+      "taxonId": "stemonitis",
+      "runtimePath": "public/assets/art/early-stemonitis-v3.webp",
+      "sourcePath": "content/artwork/early-stemonitis-v3.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: EIGHT-panel raster microscopy-inspired stage atlas for a biology exploration game. Precisely FOUR columns by TWO rows, eight equal SQUARE tiles. Whole image aspect 2:1, preferred 2048x1024. NO margins, NO gutters, NO border lines, NO labels, numbers, text, scales, arrows or watermark. Each tile a separate complete view with the subject within its central 72%, nothing crosses tile boundaries.\nPrimary request: an independently composed eight-stage educational reconstruction of the early sexual myxomycete life cycle, followed by gradually spreading plasmodium and sparse vein formation. NOT a documentary time series and NOT a species identification key. The organism remains ONE continuous cell after fusion, not a colony of joined separate cells.\nStyle: photorealistic natural transmitted-light optical microscopy appearance, slightly uneven neutral illumination, restrained grey-cream colour, fine granular translucent cytoplasm, softly focused tiny detritus, natural imperfect organic contours. Nuclei are darker muted grey roundish internal structures and clearly distinguishable from the much smaller cytoplasmic granules. No cartoon outline, no rendered glass, no CGI jelly or gel droplets, no glowing rims, no decorative bubbles, no jewel-like spores or perfect spheres.\nEight tiles in exact reading order:\nTOP LEFT 1: one finely textured nearly round spore wall opens with one tiny irregular amoeboid cell emerging; restrained subtle roughness, not exaggerated spines, no ornate diagnostic netting.\nTOP SECOND 2: two clearly SEPARATE motile forms in the same optical field: one uneven lobed amoeba with one nucleus and one elongated swimmer with one nucleus and two delicate flagella. They are alternatives, not a dividing cell.\nTOP THIRD 3: two compatible lobed cells beginning to fuse, their unequal lobes touching via a short narrow cytoplasmic bridge. One nucleus in each lobe, TWO nuclei total. This fusion silhouette must be unmistakably different from tile5, which is a unified broad cell.\nTOP RIGHT 4: a SINGLE compact irregular oval zygote after nuclear fusion, exactly ONE distinct nucleus inside it. No bridge, no split, no wall between cells.\nBOTTOM LEFT 5: same cell now somewhat larger and broadly oval with shallow uneven margins, exactly TWO clearly separated nuclei in ONE uninterrupted cytoplasm; no cleavage furrow or waist, no septum, no joining pair of lobes. It is nuclear division without cell division.\nBOTTOM SECOND 6: a larger young plasmodium, ONE cell with exactly FOUR visible nuclei and several short broad irregular pseudopodial lobes. No dense mature network yet. The four are an explanatory count, not a mature organism's nucleus limit.\nBOTTOM THIRD 7: wider field of the same organism spreading out into a broad asymmetrical thin sheet with generous rounded lobes, ONE continuous cytoplasm, no separate amoebae. More numerous much smaller nuclei are now only faint internal granules, NOT four large balls. Show growth and scale transition, still mainly a sheet with NO complex vein network.\nBOTTOM RIGHT 8: same broadened sheet begins forming a few connected thicker cytoplasmic channels, only three or four sparse branching paths and one or two joining loops, joined to broad expanding margins. Continuous living cytoplasm throughout, not separate worms, roots or independent cells. Substantial open spaces but not yet a dense mature mesh. Small nuclei no longer individually emphasized at this wider scale.\nBiological continuity: tiles4–8 have related irregular contours that spread progressively rather than suddenly changing into another object; each step is visibly distinct even at phone size. Same illumination and medium across all eight panels. Magnification changes are explanatory, not measured; no invented labels or species-specific microscopic diagnostic characters.\nPlate identity: Stemonitis axifera. This is a distinct composition for this species' educational route, not a claim its early microscopic cells have uniquely identifiable anatomy. Composition variations for this plate: pale grey transmitted field with muted slate undertone; emerging amoeba extends upward from spore at lower left; swimmer stands diagonally on right while amoeba sits higher left; fusing pair aligned upper-left to lower-right; zygote a compact slightly tilted oval with one shallow notch; growing body extends longer broad fingers obliquely downward; sparse channels make elongated irregular arcs with one connecting side branch and one loop. Render all eight panels as newly composed subjects, not recolours or repeated crops.",
+      "tool": "built-in image_gen",
+      "provider": "OpenAI",
+      "createdAt": "2026-09-10",
+      "revision": "distinct-eight-stage-optical-v3",
+      "scope": "Independently generated group-level early-development educational reconstruction for this taxon's route. Distinct composition is not species-diagnostic microscopic anatomy. Not a specimen photograph, measured scale, compulsory timetable or observed time series. Nuclear counts are explanatory. Spreading and first veins subdivide continuous plasmodial growth, not separately defined universal life-cycle phases.",
+      "license": "Generated artwork",
+      "builtinOutput": "exec-8edd94c2-27a1-41b0-8be7-8b01109f614b.png",
+      "stageIds": [
+        "spore",
+        "cells",
+        "fusion",
+        "zygote",
+        "division",
+        "young",
+        "spreading",
+        "veins"
+      ],
+      "layout": {
+        "columns": 4,
+        "rows": 2,
+        "tileAspect": 1
+      },
+      "dimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "inputImages": [],
+      "sourceRefs": [
+        "https://pubmed.ncbi.nlm.nih.gov/2398347/",
+        "https://www.jstage.jst.go.jp/article/biophysico/22/1/22_e220002/_pdf",
+        "https://mycosphere.org/pdf/Mycosphere_7_2_1.pdf"
+      ],
+      "scienceNotes": "Bailey et al. 1990 studied sexual fusion and nuclear division without cytokinesis in Physarum. Sato et al. 2025 measured vein formation in a cytoplasmic droplet from an existing Physarum plasmodium: it supports the sheet-to-channels mechanism, not a zygote-to-adult or all-species time series. Clark & Haskins 2016 supplies group context and reproductive exceptions. No source figures were used as image inputs.",
+      "feedbackSourceIds": [
+        "U04",
+        "U08",
+        "U15",
+        "U20",
+        "U22",
+        "U54",
+        "U57"
+      ],
+      "sourceSha256": "8b38ae59920d63cea14a1878827bf41f3fb29d6a9d27133dcd195fd532ec6f6a",
+      "runtimeSha256": "ce4be65e9b9fe8f0a8f8c257620f8db34b6a568e6b0007c2e8d7585b0f276774",
+      "sourceBytes": 2955322,
+      "runtimeBytes": 528344,
+      "runtimePreparation": "ImageMagick WebP quality 88, strip metadata; no cropping, recolouring or compositing. Source PNG unchanged."
+    },
+    {
+      "id": "early-trichia-v3",
+      "taxonId": "trichia",
+      "runtimePath": "public/assets/art/early-trichia-v3.webp",
+      "sourcePath": "content/artwork/early-trichia-v3.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: EIGHT-panel raster microscopy-inspired stage atlas for a biology exploration game. Precisely FOUR columns by TWO rows, eight equal SQUARE tiles. Whole image aspect 2:1, preferred 2048x1024. NO margins, NO gutters, NO border lines, NO labels, numbers, text, scales, arrows or watermark. Each tile a separate complete view with the subject within its central 72%, nothing crosses tile boundaries.\nPrimary request: an independently composed eight-stage educational reconstruction of the early sexual myxomycete life cycle, followed by gradually spreading plasmodium and sparse vein formation. NOT a documentary time series and NOT a species identification key. The organism remains ONE continuous cell after fusion, not a colony of joined separate cells.\nStyle: photorealistic natural transmitted-light optical microscopy appearance, slightly uneven neutral illumination, restrained grey-cream colour, fine granular translucent cytoplasm, softly focused tiny detritus, natural imperfect organic contours. Nuclei are darker muted grey roundish internal structures and clearly distinguishable from the much smaller cytoplasmic granules. No cartoon outline, no rendered glass, no CGI jelly or gel droplets, no glowing rims, no decorative bubbles, no jewel-like spores or perfect spheres.\nEight tiles in exact reading order:\nTOP LEFT 1: one finely textured nearly round spore wall opens with one tiny irregular amoeboid cell emerging; restrained subtle roughness, not exaggerated spines, no ornate diagnostic netting.\nTOP SECOND 2: two clearly SEPARATE motile forms in the same optical field: one uneven lobed amoeba with one nucleus and one elongated swimmer with one nucleus and two delicate flagella. They are alternatives, not a dividing cell.\nTOP THIRD 3: two compatible lobed cells beginning to fuse, their unequal lobes touching via a short narrow cytoplasmic bridge. One nucleus in each lobe, TWO nuclei total. This fusion silhouette must be unmistakably different from tile5, which is a unified broad cell.\nTOP RIGHT 4: a SINGLE compact irregular oval zygote after nuclear fusion, exactly ONE distinct nucleus inside it. No bridge, no split, no wall between cells.\nBOTTOM LEFT 5: same cell now somewhat larger and broadly oval with shallow uneven margins, exactly TWO clearly separated nuclei in ONE uninterrupted cytoplasm; no cleavage furrow or waist, no septum, no joining pair of lobes. It is nuclear division without cell division.\nBOTTOM SECOND 6: a larger young plasmodium, ONE cell with exactly FOUR visible nuclei and several short broad irregular pseudopodial lobes. No dense mature network yet. The four are an explanatory count, not a mature organism's nucleus limit.\nBOTTOM THIRD 7: wider field of the same organism spreading out into a broad asymmetrical thin sheet with generous rounded lobes, ONE continuous cytoplasm, no separate amoebae. More numerous much smaller nuclei are now only faint internal granules, NOT four large balls. Show growth and scale transition, still mainly a sheet with NO complex vein network.\nBOTTOM RIGHT 8: same broadened sheet begins forming a few connected thicker cytoplasmic channels, only three or four sparse branching paths and one or two joining loops, joined to broad expanding margins. Continuous living cytoplasm throughout, not separate worms, roots or independent cells. Substantial open spaces but not yet a dense mature mesh. Small nuclei no longer individually emphasized at this wider scale.\nBiological continuity: tiles4–8 have related irregular contours that spread progressively rather than suddenly changing into another object; each step is visibly distinct even at phone size. Same illumination and medium across all eight panels. Magnification changes are explanatory, not measured; no invented labels or species-specific microscopic diagnostic characters.\nPlate identity: Hemitrichia decipiens (synonym Trichia decipiens). This is a distinct composition for this species' educational route, not a claim its early microscopic cells have uniquely identifiable anatomy. Composition variations for this plate: soft warm pearl-grey transmitted field; spore toward left with emerging amoeba pointing upper-right; amoeba upper right and diagonally curved swimmer below left; fusion is diagonally upward with smaller lower lobe; zygote is a compact irregular rounded trapezoid; young cell extends several short unequal lobes; spreading sheet widens toward left and upper edge in a crescent-like fan; sparse vein paths make a loose curved branching fan with a single small joined loop. Render all eight panels as newly composed subjects, not recolours or repeated crops.",
+      "tool": "built-in image_gen",
+      "provider": "OpenAI",
+      "createdAt": "2026-09-10",
+      "revision": "distinct-eight-stage-optical-v3",
+      "scope": "Independently generated group-level early-development educational reconstruction for this taxon's route. Distinct composition is not species-diagnostic microscopic anatomy. Not a specimen photograph, measured scale, compulsory timetable or observed time series. Nuclear counts are explanatory. Spreading and first veins subdivide continuous plasmodial growth, not separately defined universal life-cycle phases.",
+      "license": "Generated artwork",
+      "builtinOutput": "exec-4def9784-f117-4112-bfb9-90341da1ab30.png",
+      "stageIds": [
+        "spore",
+        "cells",
+        "fusion",
+        "zygote",
+        "division",
+        "young",
+        "spreading",
+        "veins"
+      ],
+      "layout": {
+        "columns": 4,
+        "rows": 2,
+        "tileAspect": 1
+      },
+      "dimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "inputImages": [],
+      "sourceRefs": [
+        "https://pubmed.ncbi.nlm.nih.gov/2398347/",
+        "https://www.jstage.jst.go.jp/article/biophysico/22/1/22_e220002/_pdf",
+        "https://mycosphere.org/pdf/Mycosphere_7_2_1.pdf"
+      ],
+      "scienceNotes": "Bailey et al. 1990 studied sexual fusion and nuclear division without cytokinesis in Physarum. Sato et al. 2025 measured vein formation in a cytoplasmic droplet from an existing Physarum plasmodium: it supports the sheet-to-channels mechanism, not a zygote-to-adult or all-species time series. Clark & Haskins 2016 supplies group context and reproductive exceptions. No source figures were used as image inputs.",
+      "feedbackSourceIds": [
+        "U04",
+        "U08",
+        "U15",
+        "U20",
+        "U22",
+        "U54",
+        "U57"
+      ],
+      "sourceSha256": "f3b0efe1b59651cf8681d1a7a16ca8da30805a149cf4751464a2cceae4ad25a0",
+      "runtimeSha256": "a5e294f860cfcb8fc4bf5ed4feb2492c1a5ee1f99ead343bf3b7af35f26dae2e",
+      "sourceBytes": 2377928,
+      "runtimeBytes": 132456,
+      "runtimePreparation": "ImageMagick WebP quality 88, strip metadata; no cropping, recolouring or compositing. Source PNG unchanged."
+    },
+    {
+      "id": "early-tubifera-v3",
+      "taxonId": "tubifera",
+      "runtimePath": "public/assets/art/early-tubifera-v3.webp",
+      "sourcePath": "content/artwork/early-tubifera-v3.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: EIGHT-panel raster microscopy-inspired stage atlas for a biology exploration game. Precisely FOUR columns by TWO rows, eight equal SQUARE tiles. Whole image aspect 2:1, preferred 2048x1024. NO margins, NO gutters, NO border lines, NO labels, numbers, text, scales, arrows or watermark. Each tile a separate complete view with the subject within its central 72%, nothing crosses tile boundaries.\nPrimary request: an independently composed eight-stage educational reconstruction of the early sexual myxomycete life cycle, followed by gradually spreading plasmodium and sparse vein formation. NOT a documentary time series and NOT a species identification key. The organism remains ONE continuous cell after fusion, not a colony of joined separate cells.\nStyle: photorealistic natural transmitted-light optical microscopy appearance, slightly uneven neutral illumination, restrained grey-cream colour, fine granular translucent cytoplasm, softly focused tiny detritus, natural imperfect organic contours. Nuclei are darker muted grey roundish internal structures and clearly distinguishable from the much smaller cytoplasmic granules. No cartoon outline, no rendered glass, no CGI jelly or gel droplets, no glowing rims, no decorative bubbles, no jewel-like spores or perfect spheres.\nEight tiles in exact reading order:\nTOP LEFT 1: one finely textured nearly round spore wall opens with one tiny irregular amoeboid cell emerging; restrained subtle roughness, not exaggerated spines, no ornate diagnostic netting.\nTOP SECOND 2: two clearly SEPARATE motile forms in the same optical field: one uneven lobed amoeba with one nucleus and one elongated swimmer with one nucleus and two delicate flagella. They are alternatives, not a dividing cell.\nTOP THIRD 3: two compatible lobed cells beginning to fuse, their unequal lobes touching via a short narrow cytoplasmic bridge. One nucleus in each lobe, TWO nuclei total. This fusion silhouette must be unmistakably different from tile5, which is a unified broad cell.\nTOP RIGHT 4: a SINGLE compact irregular oval zygote after nuclear fusion, exactly ONE distinct nucleus inside it. No bridge, no split, no wall between cells.\nBOTTOM LEFT 5: same cell now somewhat larger and broadly oval with shallow uneven margins, exactly TWO clearly separated nuclei in ONE uninterrupted cytoplasm; no cleavage furrow or waist, no septum, no joining pair of lobes. It is nuclear division without cell division.\nBOTTOM SECOND 6: a larger young plasmodium, ONE cell with exactly FOUR visible nuclei and several short broad irregular pseudopodial lobes. No dense mature network yet. The four are an explanatory count, not a mature organism's nucleus limit.\nBOTTOM THIRD 7: wider field of the same organism spreading out into a broad asymmetrical thin sheet with generous rounded lobes, ONE continuous cytoplasm, no separate amoebae. More numerous much smaller nuclei are now only faint internal granules, NOT four large balls. Show growth and scale transition, still mainly a sheet with NO complex vein network.\nBOTTOM RIGHT 8: same broadened sheet begins forming a few connected thicker cytoplasmic channels, only three or four sparse branching paths and one or two joining loops, joined to broad expanding margins. Continuous living cytoplasm throughout, not separate worms, roots or independent cells. Substantial open spaces but not yet a dense mature mesh. Small nuclei no longer individually emphasized at this wider scale.\nBiological continuity: tiles4–8 have related irregular contours that spread progressively rather than suddenly changing into another object; each step is visibly distinct even at phone size. Same illumination and medium across all eight panels. Magnification changes are explanatory, not measured; no invented labels or species-specific microscopic diagnostic characters.\nPlate identity: Tubifera ferruginosa. This is a distinct composition for this species' educational route, not a claim its early microscopic cells have uniquely identifiable anatomy. Composition variations for this plate: muted neutral beige-grey transmitted field, very sparse soft detritus; spore above centre with emerging amoeba toward lower-left; swimmer lower right and amoeba upper left; fusing pair nearly vertical with larger bottom lobe; zygote compact irregular pear-like oval with a broad end, not a perfect egg; growing young cell extends broad lobes toward right; expanding sheet has three uneven rightward fingers linked at a wide base; sparse channels run to those lobes with two irregular joining paths. Render all eight panels as newly composed subjects, not recolours or repeated crops.",
+      "tool": "built-in image_gen",
+      "provider": "OpenAI",
+      "createdAt": "2026-09-10",
+      "revision": "distinct-eight-stage-optical-v3",
+      "scope": "Independently generated group-level early-development educational reconstruction for this taxon's route. Distinct composition is not species-diagnostic microscopic anatomy. Not a specimen photograph, measured scale, compulsory timetable or observed time series. Nuclear counts are explanatory. Spreading and first veins subdivide continuous plasmodial growth, not separately defined universal life-cycle phases.",
+      "license": "Generated artwork",
+      "builtinOutput": "exec-cd535fc8-8706-4e2d-a76a-59f10583f473.png",
+      "stageIds": [
+        "spore",
+        "cells",
+        "fusion",
+        "zygote",
+        "division",
+        "young",
+        "spreading",
+        "veins"
+      ],
+      "layout": {
+        "columns": 4,
+        "rows": 2,
+        "tileAspect": 1
+      },
+      "dimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "inputImages": [],
+      "sourceRefs": [
+        "https://pubmed.ncbi.nlm.nih.gov/2398347/",
+        "https://www.jstage.jst.go.jp/article/biophysico/22/1/22_e220002/_pdf",
+        "https://mycosphere.org/pdf/Mycosphere_7_2_1.pdf"
+      ],
+      "scienceNotes": "Bailey et al. 1990 studied sexual fusion and nuclear division without cytokinesis in Physarum. Sato et al. 2025 measured vein formation in a cytoplasmic droplet from an existing Physarum plasmodium: it supports the sheet-to-channels mechanism, not a zygote-to-adult or all-species time series. Clark & Haskins 2016 supplies group context and reproductive exceptions. No source figures were used as image inputs.",
+      "feedbackSourceIds": [
+        "U04",
+        "U08",
+        "U15",
+        "U20",
+        "U22",
+        "U54",
+        "U57"
+      ],
+      "sourceSha256": "560825bedc0dfd3c0f29ca2643cb51c797e5f2381150b3da695f17f99bca8663",
+      "runtimeSha256": "986763815250be3b865fe063a8034e04fc13f7f2c8bb352d1c6995886818ee35",
+      "sourceBytes": 2967418,
+      "runtimeBytes": 452110,
+      "runtimePreparation": "ImageMagick WebP quality 88, strip metadata; no cropping, recolouring or compositing. Source PNG unchanged."
+    },
+    {
+      "id": "early-didymium-v3",
+      "taxonId": "didymium",
+      "runtimePath": "public/assets/art/early-didymium-v3.webp",
+      "sourcePath": "content/artwork/early-didymium-v3.png",
+      "prompt": "Use case: scientific-educational.\nAsset type: EIGHT-panel raster microscopy-inspired stage atlas for a biology exploration game. Precisely FOUR columns by TWO rows, eight equal SQUARE tiles. Whole image aspect 2:1, preferred 2048x1024. NO margins, NO gutters, NO border lines, NO labels, numbers, text, scales, arrows or watermark. Each tile a separate complete view with the subject within its central 72%, nothing crosses tile boundaries.\nPrimary request: an independently composed eight-stage educational reconstruction of the early sexual myxomycete life cycle, followed by gradually spreading plasmodium and sparse vein formation. NOT a documentary time series and NOT a species identification key. The organism remains ONE continuous cell after fusion, not a colony of joined separate cells.\nStyle: photorealistic natural transmitted-light optical microscopy appearance, slightly uneven neutral illumination, restrained grey-cream colour, fine granular translucent cytoplasm, softly focused tiny detritus, natural imperfect organic contours. Nuclei are darker muted grey roundish internal structures and clearly distinguishable from the much smaller cytoplasmic granules. No cartoon outline, no rendered glass, no CGI jelly or gel droplets, no glowing rims, no decorative bubbles, no jewel-like spores or perfect spheres.\nEight tiles in exact reading order:\nTOP LEFT 1: one finely textured nearly round spore wall opens with one tiny irregular amoeboid cell emerging; restrained subtle roughness, not exaggerated spines, no ornate diagnostic netting.\nTOP SECOND 2: two clearly SEPARATE motile forms in the same optical field: one uneven lobed amoeba with one nucleus and one elongated swimmer with one nucleus and two delicate flagella. They are alternatives, not a dividing cell.\nTOP THIRD 3: two compatible lobed cells beginning to fuse, their unequal lobes touching via a short narrow cytoplasmic bridge. One nucleus in each lobe, TWO nuclei total. This fusion silhouette must be unmistakably different from tile5, which is a unified broad cell.\nTOP RIGHT 4: a SINGLE compact irregular oval zygote after nuclear fusion, exactly ONE distinct nucleus inside it. No bridge, no split, no wall between cells.\nBOTTOM LEFT 5: same cell now somewhat larger and broadly oval with shallow uneven margins, exactly TWO clearly separated nuclei in ONE uninterrupted cytoplasm; no cleavage furrow or waist, no septum, no joining pair of lobes. It is nuclear division without cell division.\nBOTTOM SECOND 6: a larger young plasmodium, ONE cell with exactly FOUR visible nuclei and several short broad irregular pseudopodial lobes. No dense mature network yet. The four are an explanatory count, not a mature organism's nucleus limit.\nBOTTOM THIRD 7: wider field of the same organism spreading out into a broad asymmetrical thin sheet with generous rounded lobes, ONE continuous cytoplasm, no separate amoebae. More numerous much smaller nuclei are now only faint internal granules, NOT four large balls. Show growth and scale transition, still mainly a sheet with NO complex vein network.\nBOTTOM RIGHT 8: same broadened sheet begins forming a few connected thicker cytoplasmic channels, only three or four sparse branching paths and one or two joining loops, joined to broad expanding margins. Continuous living cytoplasm throughout, not separate worms, roots or independent cells. Substantial open spaces but not yet a dense mature mesh. Small nuclei no longer individually emphasized at this wider scale.\nBiological continuity: tiles4–8 have related irregular contours that spread progressively rather than suddenly changing into another object; each step is visibly distinct even at phone size. Same illumination and medium across all eight panels. Magnification changes are explanatory, not measured; no invented labels or species-specific microscopic diagnostic characters.\nPlate identity: Didymium squamulosum. This is a distinct composition for this species' educational route, not a claim its early microscopic cells have uniquely identifiable anatomy. Composition variations for this plate: soft neutral pale slate-grey transmitted field; spore at lower right with cell emerging upper-left; swimmer upper left and amoeba lower right; two fusing cells meet along a descending left-to-right diagonal; zygote a compact broad oval with a subtly flattened lower edge; young cell has uneven broad lobes toward upper left; spreading sheet has a broad low fan and a single longer rounded lobe above; sparse connected veins form a bent open fork and one off-centre loop. Render all eight panels as newly composed subjects, not recolours or repeated crops.",
+      "tool": "built-in image_gen",
+      "provider": "OpenAI",
+      "createdAt": "2026-09-10",
+      "revision": "distinct-eight-stage-optical-v3",
+      "scope": "Independently generated group-level early-development educational reconstruction for this taxon's route. Distinct composition is not species-diagnostic microscopic anatomy. Not a specimen photograph, measured scale, compulsory timetable or observed time series. Nuclear counts are explanatory. Spreading and first veins subdivide continuous plasmodial growth, not separately defined universal life-cycle phases.",
+      "license": "Generated artwork",
+      "builtinOutput": "exec-fff04fc3-1033-47d6-8b41-272f3d17fdba.png",
+      "stageIds": [
+        "spore",
+        "cells",
+        "fusion",
+        "zygote",
+        "division",
+        "young",
+        "spreading",
+        "veins"
+      ],
+      "layout": {
+        "columns": 4,
+        "rows": 2,
+        "tileAspect": 1
+      },
+      "dimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "inputImages": [],
+      "sourceRefs": [
+        "https://pubmed.ncbi.nlm.nih.gov/2398347/",
+        "https://www.jstage.jst.go.jp/article/biophysico/22/1/22_e220002/_pdf",
+        "https://mycosphere.org/pdf/Mycosphere_7_2_1.pdf"
+      ],
+      "scienceNotes": "Bailey et al. 1990 studied sexual fusion and nuclear division without cytokinesis in Physarum. Sato et al. 2025 measured vein formation in a cytoplasmic droplet from an existing Physarum plasmodium: it supports the sheet-to-channels mechanism, not a zygote-to-adult or all-species time series. Clark & Haskins 2016 supplies group context and reproductive exceptions. No source figures were used as image inputs.",
+      "feedbackSourceIds": [
+        "U04",
+        "U08",
+        "U15",
+        "U20",
+        "U22",
+        "U54",
+        "U57"
+      ],
+      "sourceSha256": "4f0429e67e69a05db1ec5a9889aa60f1a0968639c14e400bf8a2de95cfa7c873",
+      "runtimeSha256": "dc0d15ea09adb0842274adc774029490bf1b5d2b00f1065d4bb00d4ac85e7cda",
+      "sourceBytes": 2333234,
+      "runtimeBytes": 137110,
+      "runtimePreparation": "ImageMagick WebP quality 88, strip metadata; no cropping, recolouring or compositing. Source PNG unchanged.",
+      "reviewNote": "Count rechecked against the unchanged source PNG and rendered tablet crop: four emphasized nuclei at approximate whole-plate coordinates (620,596), (704,630), (618,700), (734,695). Earlier worker report of five was a counting error; no fifth nucleus identified and no image edit needed. This check is not user visual acceptance."
+    },
     {
       "id": "forest-world",
       "runtimePath": "public/assets/art/forest-world.webp",

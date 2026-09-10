@@ -31,6 +31,8 @@ export function Art({
     zygote: 3,
     division: 4,
     young: 5,
+    spreading: 6,
+    veins: 7,
     network: portraits[taxon],
     forming: portraits[taxon],
     fruit: portraits[taxon],
@@ -39,13 +41,13 @@ export function Art({
   const index = stage ? stages[stage] : (portraits[taxon] ?? 0);
   const early =
     stage &&
-    ["spore", "cells", "fusion", "zygote", "division", "young"].includes(stage);
-  const columns = early ? 3 : 4;
+    ["spore", "cells", "fusion", "zygote", "division", "young", "spreading", "veins"].includes(stage);
+  const columns = 4;
   const single = false;
   const file = !stage
     ? "organisms-v2"
     : early
-      ? "growth-early"
+      ? `early-${taxon}-v3`
       : stage === "forming"
         ? "growth-forming"
         : stage === "fruit"

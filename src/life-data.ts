@@ -7,6 +7,8 @@ export type LifeIllustration =
   | "zygote"
   | "division"
   | "young"
+  | "spreading"
+  | "veins"
   | "network"
   | "forming"
   | "fruit"
@@ -284,6 +286,9 @@ const preparedCycles = {
 
 const growthSource =
   "https://www.tandfonline.com/doi/full/10.1080/15592324.2015.1074368";
+const sexualDevelopmentSource = "https://pubmed.ncbi.nlm.nih.gov/2398347/";
+const veinDevelopmentSource =
+  "https://www.jstage.jst.go.jp/article/biophysico/22/1/22_e220002/_pdf";
 const morphologySource =
   "https://mushrooms.linnaeus.naturalis.nl/linnaeus_ng/app/views/species/taxon.php?id=99672";
 const sequence = [
@@ -293,6 +298,8 @@ const sequence = [
   "zygote",
   "division",
   "young",
+  "spreading",
+  "veins",
   "network",
   "forming",
   "fruit",
@@ -309,7 +316,7 @@ const growthStages: LifeStage[] = [
       "После слияния клеток и их ядер образуется зигота. Это пока маленькая клетка с одним ядром, а не готовая сеть. Рисунок показывает общий половой путь миксомицетов, не микрофотографию конкретного вида.",
     question: "Где проходит общая граница клетки?",
     kind: "diagram",
-    sourceUrls: [growthSource, amoeboflagellates],
+    sourceUrls: [sexualDevelopmentSource, growthSource, amoeboflagellates],
   },
   {
     id: "division",
@@ -320,7 +327,7 @@ const growthStages: LifeStage[] = [
       "Зигота питается и растёт. Ядро делится внутри той же клетки: сначала два ядра, затем их становится больше. Между ними не образуются клеточные перегородки. Число ядер на рисунке иллюстрирует принцип, а не обязательный срок развития.",
     question: "Два ядра — это две клетки?",
     kind: "diagram",
-    sourceUrls: [growthSource, amoeboflagellates],
+    sourceUrls: [sexualDevelopmentSource, growthSource, amoeboflagellates],
   },
   {
     id: "young",
@@ -332,6 +339,28 @@ const growthStages: LifeStage[] = [
     question: "Найди край одной непрерывной клетки.",
     kind: "diagram",
     sourceUrls: [growthSource, amoeboflagellates],
+  },
+  {
+    id: "spreading",
+    illustration: "spreading",
+    label: "Плазмодий распластывается",
+    shortLabel: "Разрастание",
+    description:
+      "Растущая клетка занимает всё больше поверхности: её край расширяется широкими лопастями. Ядер становится больше, но при переходе к общему виду они уже не показаны по отдельности. Это учебное приближение постепенного роста, а не отдельная обязательная стадия с фиксированной формой. Механизм показан по исследованиям Physarum; для остальных видов это модель группы.",
+    question: "Как расширяется общий край клетки?",
+    kind: "diagram",
+    sourceUrls: [veinDevelopmentSource, growthSource],
+  },
+  {
+    id: "veins",
+    illustration: "veins",
+    label: "Появляются первые тяжи",
+    shortLabel: "Первые тяжи",
+    description:
+      "В распластанном плазмодии выделяются соединённые тяжи, по которым перемещается содержимое клетки. Между растущими участками пока немного связей; сеть продолжает перестраиваться. Это части одной клетки, не собравшиеся вместе амёбы. Реконструкция опирается на наблюдение образования каналов в Physarum, не на съёмку раннего развития каждого вида.",
+    question: "Можешь пройти по тяжу от одного растущего края до другого?",
+    kind: "diagram",
+    sourceUrls: [veinDevelopmentSource, growthSource],
   },
   {
     id: "forming",
@@ -426,6 +455,8 @@ function makeCycle(id: TaxonId): LifeCycle {
       ...new Set([
         ...(prepared?.sourceUrls ?? [amoeboflagellates, morphologySource]),
         growthSource,
+        sexualDevelopmentSource,
+        veinDevelopmentSource,
       ]),
     ],
     transitions: [
@@ -466,6 +497,10 @@ export const stageBrief: Record<string, string> = {
     "Ядро делится. Два ядра остаются внутри одной клетки — без перегородки.",
   young:
     "Ядер становится больше. Та же клетка растёт и вытягивает первые выросты.",
+  spreading:
+    "Край одной клетки расширяется широкими лопастями. На общем плане ядра уже не показаны по отдельности.",
+  veins:
+    "Внутри той же клетки появляются соединённые тяжи. Связей пока немного — сеть только складывается.",
   network:
     "Плазмодий распространяется по субстрату. Это всё ещё одна многоядерная клетка.",
   forming: "Плазмодий перестраивается в зачатки спороносных структур.",
