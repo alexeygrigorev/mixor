@@ -63,6 +63,42 @@ async function composition(page: Page) {
   ).toHaveCount(0);
 }
 
+test("development arrows stay anchored throughout every cycle", async ({ page }) => {
+  test.setTimeout(180000);
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 1024, height: 768 },
+    { width: 844, height: 390 },
+    { width: 1536, height: 864 },
+  ]) {
+    await page.setViewportSize(viewport);
+    for (const taxon of taxa) {
+      await start(page, `/#life/${taxon.id}/spore`);
+      await page.evaluate(() => document.fonts.ready);
+      const initial = await page.locator(".step-button").evaluateAll((buttons) =>
+        buttons.map((button) => {
+          const { x, y, width, height } = button.getBoundingClientRect();
+          return { x, y, width, height };
+        }),
+      );
+      for (let step = 1; step <= 11; step++) {
+        await expect(page.locator(".stage-position")).toHaveText(`${step} / 11`);
+        const current = await page.locator(".step-button").evaluateAll((buttons) =>
+          buttons.map((button) => {
+            const { x, y, width, height } = button.getBoundingClientRect();
+            return { x, y, width, height };
+          }),
+        );
+        for (let arrow = 0; arrow < 2; arrow++) {
+          for (const axis of ["x", "y", "width", "height"] as const)
+            expect(Math.abs(current[arrow][axis] - initial[arrow][axis])).toBeLessThanOrEqual(1);
+        }
+        await page.locator(".next-stage").click();
+      }
+    }
+  }
+});
+
 test("every supplied stage in all eight cycles stays image-led with compact manual controls", async ({
   page,
 }, info) => {
@@ -111,7 +147,7 @@ test("every supplied stage in all eight cycles stays image-led with compact manu
   expect(errors).toEqual([]);
 });
 
-test("stage chooser, keyboard, swipe, deep links and optional views preserve the current stage", async ({
+test("stage chooser, keyboard, pointer swipe, deep links and optional views preserve the current stage", async ({
   page,
 }, info) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -181,32 +217,6 @@ test("stage chooser, keyboard, swipe, deep links and optional views preserve the
   );
   await page.mouse.up();
   await expect(page).toHaveURL(/life\/didymium\/cells$/);
-  const touch = await page.context().newCDPSession(page);
-  async function swipe(from: number, to: number) {
-    const bounds = (await page.locator(".development-image").boundingBox())!;
-    const y = bounds.y + bounds.height / 2;
-    await touch.send("Input.dispatchTouchEvent", {
-      type: "touchStart",
-      touchPoints: [{ x: bounds.x + bounds.width * from, y }],
-    });
-    for (let step = 1; step <= 8; step++) {
-      await touch.send("Input.dispatchTouchEvent", {
-        type: "touchMove",
-        touchPoints: [
-          { x: bounds.x + bounds.width * (from + ((to - from) * step) / 8), y },
-        ],
-      });
-    }
-    await touch.send("Input.dispatchTouchEvent", {
-      type: "touchEnd",
-      touchPoints: [],
-    });
-  }
-  await swipe(0.75, 0.25);
-  await expect(page).toHaveURL(/life\/didymium\/fusion$/);
-  await swipe(0.25, 0.75);
-  await expect(page).toHaveURL(/life\/didymium\/cells$/);
-  await touch.detach();
   await page.reload();
   await expect(page).toHaveURL(/life\/didymium\/cells$/);
   const photo = page.getByRole("button", {
@@ -232,6 +242,40 @@ test("stage chooser, keyboard, swipe, deep links and optional views preserve the
     .getByRole("button", { name: "Назад к выбору вида", exact: true })
     .click();
   await expect(page.locator(".species-chooser")).toBeVisible();
+});
+
+test("native touch swipes preserve the current stage (Chromium CDP)", async ({ page, browserName }) => {
+  // Playwright provides native touch-swipe injection through Chromium CDP only.
+  // Do not substitute synthetic DOM events and report those as WebKit swipes.
+  test.skip(browserName !== "chromium", "Native touch-swipe injection requires CDP; physical iOS swipe remains unverified.");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await start(page, "/#life/didymium/cells");
+  const touch = await page.context().newCDPSession(page);
+  async function swipe(from: number, to: number) {
+    const bounds = (await page.locator(".development-image").boundingBox())!;
+    const y = bounds.y + bounds.height / 2;
+    await touch.send("Input.dispatchTouchEvent", {
+      type: "touchStart",
+      touchPoints: [{ x: bounds.x + bounds.width * from, y }],
+    });
+    for (let step = 1; step <= 8; step++) {
+      await touch.send("Input.dispatchTouchEvent", {
+        type: "touchMove",
+        touchPoints: [
+          { x: bounds.x + bounds.width * (from + ((to - from) * step) / 8), y },
+        ],
+      });
+    }
+    await touch.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+  }
+  try {
+    await swipe(0.75, 0.25);
+    await expect(page).toHaveURL(/life\/didymium\/fusion$/);
+    await swipe(0.25, 0.75);
+    await expect(page).toHaveURL(/life\/didymium\/cells$/);
+  } finally {
+    await touch.detach();
+  }
 });
 
 test("wide and short-landscape representative cycles keep image and controls usable together", async ({

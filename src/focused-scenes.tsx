@@ -453,6 +453,27 @@ export function DevelopmentScene({
         />
       </div>
       <div className="development-observation">
+        <div className="development-caption-space">
+          {/* Reserve the tallest caption in this cycle, including font scaling,
+              so advancing never moves the controls under a finger. */}
+          <div className="development-caption-measure" aria-hidden="true">
+            {stages.map((item, itemIndex) => (
+              <section key={item.id}>
+                <h1>{item.label}</h1>
+                <p>{stageBrief[item.id]}</p>
+                <span className="model-note-measure">
+                  <span>
+                    Реконструкция ИИ ·{" "}
+                    {itemIndex < stages.findIndex((s) => s.id === "network")
+                      ? "схема группы"
+                      : "условные форма и цвет"}{" "}
+                    · разные масштабы
+                  </span>
+                  <Icon name="info" size={16} />
+                </span>
+              </section>
+            ))}
+          </div>
         <div
           className="development-caption"
           key={`${taxon.id}/${stage.id}`}
@@ -474,6 +495,7 @@ export function DevelopmentScene({
             </span>
             <Icon name="info" size={16} />
           </button>
+        </div>
         </div>
         <div className="development-controls" ref={controls}>
           <div className="development-stepper">
