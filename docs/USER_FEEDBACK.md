@@ -11,6 +11,8 @@ The actual session logs have been inspected: [all 75 submitted inputs, with sour
 
 All three new attachments were opened and inspected. The source audit retains their exact text, submission times and delivered source lines. The earlier search ACCEPT is historical for these newly rejected dimensions; matching and placement now require a fresh bounded visual review.
 
+Current correction: one shared local composition replaces mismatched clue/lens framing, and ten anchors move onto suitable pictured surfaces. Independent review cleared a Stemonitis carrier artifact, then caught Didymium bodies erased by alpha separation and residual ground around Hemitrichia. Those four finds and two subpixel landscape safety-margin regressions are being corrected before final acceptance. [Implementation, support map and actual test limits](SEARCH_FIDELITY.md).
+
 ## Latest corrections U60–U72
 
 At this checkpoint the source audit contained 72 submissions and 58 delivered user-text items. These corrections remain in force except where U73–U75 explicitly reopen search appearance.
