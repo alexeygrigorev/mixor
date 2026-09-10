@@ -1,29 +1,56 @@
 import { test, expect, type Page } from "@playwright/test";
+import { migrateSoundPreferences, defaultSoundLevels, soundPreferencesKey } from "../../src/audio-preferences";
 
-// Observe real media elements, never replace decoding or play() with mocks.
-async function instrument(page: Page) {
+// Observe native media events. The opt-in autoplay-rejection model below never
+// synthesizes successful playback; every successful play still uses real media.
+async function observeAudio(page: Page, blockUntilGesture = false) {
   // No personal draft is entered in these tests; accept the existing capture
   // discard confirmation without changing the app's protection.
   page.on("dialog", (dialog) => dialog.accept());
-  await page.addInitScript(() => {
+  await page.addInitScript((blockUntilGesture) => {
     const state = {
       media: [] as HTMLMediaElement[],
       plays: [] as string[],
       pauses: [] as string[],
+      playback: [] as { src: string; loop: boolean; volume: number; events: string[]; maxTime: number; readyState: number; maxConcurrentSfx: number }[],
     };
     (window as any).__audioTest = state;
     const play = HTMLMediaElement.prototype.play;
     const pause = HTMLMediaElement.prototype.pause;
+    let unlocked = false;
+    document.addEventListener("click", (event) => { if (event.isTrusted) unlocked = true; }, true);
+    const latest = new WeakMap<HTMLMediaElement, (typeof state.playback)[number]>();
     HTMLMediaElement.prototype.play = function () {
-      if (!state.media.includes(this)) state.media.push(this);
+      if (!state.media.includes(this)) {
+        state.media.push(this);
+        for (const name of ["playing", "timeupdate", "ended"]) this.addEventListener(name, () => {
+          const record = latest.get(this);
+          if (!record) return;
+          record.events.push(name);
+          record.maxTime = Math.max(record.maxTime, this.currentTime);
+          record.readyState = Math.max(record.readyState, this.readyState);
+          record.maxConcurrentSfx = Math.max(record.maxConcurrentSfx, state.media.filter((a) => !a.loop && !a.paused && !a.ended).length);
+        });
+      }
       state.plays.push(this.src);
+      const record = { src: this.src, loop: this.loop, volume: this.volume, events: [] as string[], maxTime: 0, readyState: 0, maxConcurrentSfx: 0 };
+      state.playback.push(record);
+      latest.set(this, record);
+      if (blockUntilGesture && this.loop && !unlocked)
+        return Promise.reject(new DOMException("Test model: browser requires a trusted gesture", "NotAllowedError"));
       return play.call(this);
     };
     HTMLMediaElement.prototype.pause = function () {
       state.pauses.push(this.src);
       return pause.call(this);
     };
-  });
+  }, blockUntilGesture);
+}
+async function instrument(page: Page) {
+  // These continuity tests begin with an explicitly quiet legacy preference.
+  // Fresh/default-on behavior is tested separately below.
+  await page.addInitScript(() => localStorage.setItem("mixor-muted", "true"));
+  await observeAudio(page);
   await page.goto("/");
   await page
     .getByRole("button", { name: "Начать в тишине", exact: true })
@@ -31,6 +58,10 @@ async function instrument(page: Page) {
   expect(await page.evaluate(() => (window as any).__audioTest.plays)).toEqual(
     [],
   );
+}
+async function decodedCue(page: Page, afterPlay: number, file = "leaf-friction-v3-mix") {
+  await expect.poll(() => page.evaluate(({ afterPlay, file }) => (window as any).__audioTest.playback.slice(afterPlay).some((p: any) =>
+    p.src.includes(file) && p.events.includes("playing") && p.maxTime > 0 && p.readyState >= 2), { afterPlay, file })).toBe(true);
 }
 async function enable(page: Page) {
   await page
@@ -141,7 +172,7 @@ test("taps and forest uncovering decode, have separate cues, and obey effects an
             a.src.includes("leaf-friction-v3-mix") &&
             a.readyState >= 2 &&
             a.currentTime > 0 &&
-            a.volume > 0.1,
+            Math.abs(a.volume - 0.36 * 0.65 * 0.3) < 0.0001,
         ),
       ),
     )
@@ -169,6 +200,7 @@ test("taps and forest uncovering decode, have separate cues, and obey effects an
         src.includes("uncover-mix"),
       ).length,
   );
+  await page.getByRole("button", { name: "Закрыть увеличение", exact: true }).click();
   await page.locator('.hiding-place[aria-pressed="true"]').first().click();
   expect(
     await page.evaluate(
@@ -257,8 +289,8 @@ test("leaf friction and distinct uncover files decode within digital signal boun
     try {
       const measured = [];
       for (const [file, gain] of [
-        ["leaf-friction-v3-mix", 0.18 * 0.65],
-        ["uncover-mix", 0.18 * 0.9],
+        ["leaf-friction-v3-mix", 0.36 * 0.65 * 0.3],
+        ["uncover-mix", 0.36 * 0.9],
       ] as const) {
         const response = await fetch(`/assets/audio/sfx/${file}.mp3`);
         if (!response.ok) throw new Error(`Missing cue: ${file}`);
@@ -293,13 +325,19 @@ test("leaf friction and distinct uncover files decode within digital signal boun
   for (const cue of measurements) {
     expect(cue.seconds).toBeGreaterThan(0.2);
     expect(cue.seconds).toBeLessThan(1.6);
-    expect(cue.defaultPeakDb).toBeGreaterThan(-36);
+    expect(cue.defaultPeakDb).toBeGreaterThan(cue.file === "leaf-friction-v3-mix" ? -48 : -36);
     expect(cue.defaultPeakDb).toBeLessThan(-20);
-    expect(cue.defaultRmsDb).toBeGreaterThan(-60);
+    expect(cue.defaultRmsDb).toBeGreaterThan(cue.file === "leaf-friction-v3-mix" ? -70 : -60);
     if (cue.file === "leaf-friction-v3-mix") {
       expect(cue.seconds).toBeGreaterThanOrEqual(0.25);
       expect(cue.seconds).toBeLessThanOrEqual(0.5);
-    } else expect(cue.seconds).toBeCloseTo(1.2, 2);
+    } else {
+      // Chromium trims MP3 encoder delay/padding; Linux WebKit retains it.
+      // This file has 1.2s of source audio and a 1.227755s MP3 duration.
+      // Keep a tight bound around both, independently of the loudness guards.
+      expect(cue.seconds).toBeGreaterThanOrEqual(1.19);
+      expect(cue.seconds).toBeLessThanOrEqual(1.24);
+    }
   }
   // These digital-signal bounds catch the previous near-silent files;
   // they do not certify perceived loudness through physical speakers.
@@ -389,9 +427,11 @@ test("visible scene weather and discovery return context drive the actual rain l
     await expect.poll(async () => (await loops(page)).some((a: any) => a.src.includes("canopy-rain-v2") && !a.paused && a.time > 0)).toBe(weather === "rain");
   }
   const spot = page.locator('.hiding-place[aria-pressed="false"]').first();
-  await spot.click();
   const before = await loops(page);
-  await page.locator('.hiding-place[aria-pressed="true"]').first().click();
+  await spot.click();
+  await expect(page.locator(".search-magnifier")).toBeVisible();
+  await expect.poll(async () => (await loops(page)).every((a: any, i: number) => !a.paused && a.src === before[i].src && a.time > before[i].time)).toBe(true);
+  await page.getByRole("button", { name: "Узнать больше", exact: true }).click();
   await expect(page.locator(".search-scene")).toHaveCount(0);
   await expect.poll(async () => (await loops(page)).every((a: any, i: number) => !a.paused && a.src === before[i].src && a.time > before[i].time)).toBe(true);
   await page.getByRole("button", { name: /Назад/ }).first().click();
@@ -414,15 +454,12 @@ test("generic, lens, discovery and save rustles suppress same-event duplicate ta
       const before = state.plays.length;
       audioManager.playSfx(cue);
       audioManager.playSfx("ui-press");
-      return { plays: state.plays.slice(before) };
+      return { before, plays: state.plays.slice(before) };
     }, id);
     expect(result.plays).toHaveLength(1);
     expect(result.plays[0]).toContain("leaf-friction-v3-mix");
-    await expect.poll(() => page.evaluate(() => {
-      const clips = (window as any).__audioTest.media.filter((a: HTMLMediaElement) => !a.loop && a.src.includes("leaf-friction-v3-mix"));
-      return clips.some((clip: HTMLMediaElement) => !clip.paused && clip.readyState >= 2 && clip.currentTime > 0);
-    })).toBe(true);
-    expect(await page.evaluate(() => (window as any).__audioTest.media.filter((a: HTMLMediaElement) => !a.loop && !a.paused && !a.ended).length)).toBe(1);
+    await decodedCue(page, result.before);
+    expect(await page.evaluate((offset) => (window as any).__audioTest.playback[offset].maxConcurrentSfx, result.before)).toBe(1);
     await expect.poll(() => page.evaluate(() => (window as any).__audioTest.media.filter((a: HTMLMediaElement) => !a.loop).every((a: HTMLMediaElement) => a.paused || a.ended))).toBe(true);
   }
 });
@@ -437,7 +474,7 @@ test("actual stage, lens and save clicks play one new rustle without legacy cues
     const cues = await page.evaluate((offset) => (window as any).__audioTest.plays.slice(offset).filter((src: string) => src.includes("/sfx/")), before);
     expect(cues).toHaveLength(1);
     expect(cues[0]).toContain("leaf-friction-v3-mix");
-    await expect.poll(() => page.evaluate(() => (window as any).__audioTest.media.some((a: HTMLMediaElement) => !a.loop && !a.paused && a.readyState >= 2 && a.currentTime > 0 && a.src.includes("leaf-friction-v3-mix")))).toBe(true);
+    await decodedCue(page, before);
   };
   await changeRoute(page, "#life/physarum/spore");
   await clickOneRustle("Следующий этап");
@@ -447,4 +484,96 @@ test("actual stage, lens and save clicks play one new rustle without legacy cues
   await clickOneRustle("Записать открытие");
   await expect(page.locator(".discovery-page")).toContainText("Не различаю");
   expect(await page.evaluate(() => (window as any).__audioTest.plays.some((src: string) => /fingertip-wood|ui-press-soft|lens-open\.mp3|save-local\.mp3|discovery\.mp3/.test(src)))).toBe(false);
+});
+
+test("audio preference migration preserves explicit choices and documents legacy assumptions", () => {
+  expect(migrateSoundPreferences(null, null, null)).toMatchObject({ sound: "on", soundOrigin: "default", levels: defaultSoundLevels, levelsMode: "default" });
+  expect(migrateSoundPreferences(null, { music: 12, nature: 45, effects: 18 }, null).levels).toEqual(defaultSoundLevels);
+  for (const levels of [{ music: 0, nature: 45, effects: 18 }, { music: 70, nature: 15, effects: 2 }, { music: 0, nature: 0, effects: 0 }]) {
+    expect(migrateSoundPreferences(null, levels, true)).toMatchObject({ sound: "off", soundOrigin: "legacy", levels, levelsMode: "custom" });
+  }
+  const explicit = { version: 3 as const, sound: "off" as const, soundOrigin: "explicit" as const, levelsMode: "custom" as const, levels: { music: 12, nature: 45, effects: 18 } };
+  expect(migrateSoundPreferences(explicit, null, false)).toEqual(explicit);
+  for (const invalid of [null, [], "bad", { music: NaN, nature: 30, effects: 20 }, { music: 101, nature: 30, effects: 20 }, { music: 0, nature: 30 }])
+    expect(migrateSoundPreferences(null, invalid, false).levels).toEqual(defaultSoundLevels);
+});
+
+async function expectThreePlaying(page: Page) {
+  await expect.poll(async () => (await loops(page)).filter((a: any) => !a.paused && a.time > 0).length).toBe(3);
+}
+async function savedSound(page: Page) {
+  return page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? "null"), soundPreferencesKey);
+}
+
+test("untouched returning defaults are louder and on, with first normal tap sufficient", async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem("mixor-entered-v2", "true");
+    localStorage.setItem("mixor-sound-levels-v2", JSON.stringify({ music: 12, nature: 45, effects: 18 }));
+  });
+  await observeAudio(page);
+  await page.goto("/");
+  await expect.poll(() => savedSound(page)).toMatchObject({ sound: "on", levels: defaultSoundLevels, levelsMode: "default" });
+  await expect.poll(() => page.evaluate(() => (window as any).__audioTest.plays.length)).toBeGreaterThan(0);
+  // Whether native autoplay is allowed or refused, no separate Unmute is used.
+  await page.getByRole("button", { name: "Настройки", exact: true }).click();
+  await expectThreePlaying(page);
+  for (const [name, value] of [["Музыка", "36"], ["Ветер и птицы", "90"], ["Касания и инструменты", "36"]])
+    await expect(page.getByRole("slider", { name, exact: true })).toHaveValue(value);
+  const volumes = await page.evaluate(() => (window as any).__audioTest.media.filter((a: HTMLMediaElement) => a.loop).map((a: HTMLMediaElement) => a.volume));
+  for (const [i, expected] of [0.36 * 0.45, 0.9 * 0.38 * 0.45, 0.9 * 0.25 * 0.55].entries()) expect(volumes[i]).toBeCloseTo(expected, 4);
+  expect((await loops(page)).length).toBe(3);
+});
+
+test("modeled autoplay refusal never saves mute; first trusted tap retries real playback", async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("mixor-entered-v2", "true"));
+  await observeAudio(page, true);
+  await page.goto("/");
+  await expect.poll(() => page.evaluate(async () => {
+    const modulePath = performance.getEntriesByType("resource").map((e) => e.name).find((url) => new URL(url).pathname === "/src/audio.ts");
+    if (!modulePath) return null;
+    return (await import(modulePath)).audioManager.getPlaybackState();
+  })).toBe("blocked");
+  expect(await savedSound(page)).toMatchObject({ sound: "on", soundOrigin: "default" });
+  expect(await page.evaluate(() => localStorage.getItem("mixor-muted"))).toBeNull();
+  expect((await loops(page)).every((a: any) => a.paused)).toBe(true);
+  await page.getByRole("button", { name: "Настройки", exact: true }).click();
+  await expectThreePlaying(page);
+  const calls = await page.evaluate(() => (window as any).__audioTest.plays.filter((src: string) => !src.includes("/sfx/")).length);
+  await page.getByRole("button", { name: "Закрыть", exact: true }).click();
+  expect(await page.evaluate(() => (window as any).__audioTest.plays.filter((src: string) => !src.includes("/sfx/")).length)).toBe(calls);
+  expect((await loops(page)).length).toBe(3);
+});
+
+test("explicit quiet entry cancels first-gesture unlock and persists across reload", async ({ page }) => {
+  await observeAudio(page, true);
+  await page.goto("/");
+  await page.getByRole("button", { name: "Начать в тишине", exact: true }).click();
+  expect(await savedSound(page)).toMatchObject({ sound: "off", soundOrigin: "explicit" });
+  await page.getByRole("button", { name: "Настройки", exact: true }).click();
+  expect((await loops(page)).every((a: any) => a.paused)).toBe(true);
+  expect(await page.evaluate(() => (window as any).__audioTest.playback.some((p: any) => p.events.includes("playing")))).toBe(false);
+  await page.reload();
+  await page.getByRole("button", { name: "Настройки", exact: true }).click();
+  expect(await page.evaluate(() => (window as any).__audioTest.plays.length)).toBe(0);
+});
+
+test("legacy custom levels and zeros survive migration, edits and explicit mute reload", async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem("mixor-entered-v2", "true");
+    localStorage.setItem("mixor-muted", "true");
+    localStorage.setItem("mixor-sound-levels-v2", JSON.stringify({ music: 0, nature: 55, effects: 0 }));
+  });
+  await observeAudio(page);
+  await page.goto("/");
+  await page.getByRole("button", { name: "Настройки", exact: true }).click();
+  expect(await savedSound(page)).toMatchObject({ sound: "off", soundOrigin: "legacy", levelsMode: "custom", levels: { music: 0, nature: 55, effects: 0 } });
+  expect(await page.evaluate(() => (window as any).__audioTest.plays.length)).toBe(0);
+  await page.getByRole("slider", { name: "Музыка", exact: true }).fill("24");
+  await page.getByRole("button", { name: "Включить звуки леса", exact: true }).click();
+  await expectThreePlaying(page);
+  await page.getByRole("button", { name: "Выключить весь звук", exact: true }).click();
+  await page.reload();
+  await page.getByRole("button", { name: "Настройки", exact: true }).click();
+  expect(await savedSound(page)).toMatchObject({ sound: "off", soundOrigin: "explicit", levelsMode: "custom", levels: { music: 24, nature: 55, effects: 0 } });
+  expect(await page.evaluate(() => (window as any).__audioTest.plays.length)).toBe(0);
 });

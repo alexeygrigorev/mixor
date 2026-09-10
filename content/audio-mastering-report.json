@@ -4470,12 +4470,16 @@
             "hz": 2000
           }
         },
-        "defaultRuntimeGain": 0.11699999999999999,
-        "defaultRmsDbfs": -50.20228276507677,
-        "defaultTruePeakDbfs": -33.53628276507677
+        "defaultRuntimeGain": 0.0702,
+        "defaultRmsDbfs": -54.6392577574039,
+        "defaultTruePeakDbfs": -37.97325775740389
       },
       "feedback": {
         "request": "U52",
+        "volumeRequest": "U58",
+        "speakerDefaultsRequest": "U60",
+        "defaultEffectsPercent": 36,
+        "runtimeMultiplierOfPrevious": 0.3,
         "previousCue": "sfx/fingertip-wood-v2-mix.mp3",
         "previousCueStatus": "user-rejected",
         "acceptance": "pending user listening"

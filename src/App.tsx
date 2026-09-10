@@ -4,7 +4,8 @@ import { lifeCycles } from "./life-data";
 import { Art } from "./art";
 import { Icon, type IconName } from "./icons";
 import { Panel, Capture, BlobPhoto } from "./panels";
-import { audioManager, defaultSoundLevels, type SoundLevels } from "./audio";
+import { audioManager, type SoundLevels } from "./audio";
+import { readSoundPreferences, writeSoundPreferences, type SoundPreferences } from "./audio-preferences";
 import { readJourney, writeJourney, type Discovery } from "./game-store";
 import { listObservations, type StoredObservation } from "./storage";
 import "./styles.css";
@@ -232,15 +233,11 @@ export default function App() {
   const [photoIndex, setPhotoIndex] = useState(0);
   const [finds, setFinds] = useState(readFinds);
   const [searchSessionOnly, setSearchSessionOnly] = useState(false);
-  const [muted, setMuted] = useState(true);
-  const [levels, setLevels] = useState<SoundLevels>(() => {
-    const candidate = pref("mixor-sound-levels-v2", defaultSoundLevels);
-    return ["music", "nature", "effects"].every(
-      (key) => typeof candidate[key as keyof SoundLevels] === "number",
-    )
-      ? candidate
-      : defaultSoundLevels;
-  });
+  const [soundPreferences, setSoundPreferences] = useState(readSoundPreferences);
+  const soundPreferencesRef = useRef(soundPreferences);
+  soundPreferencesRef.current = soundPreferences;
+  const muted = soundPreferences.sound === "off";
+  const levels = soundPreferences.levels;
   const [calm, setCalm] = useState(() => pref("mixor-calm-v2", false));
   const [fullscreen, setFullscreen] = useState(false);
   const [toast, setToast] = useState("");
@@ -311,8 +308,13 @@ export default function App() {
   }, [route.stage, route.place]);
   useEffect(() => {
     audioManager.setLevels(levels);
-    setPref("mixor-sound-levels-v2", levels);
-  }, [levels]);
+    writeSoundPreferences(soundPreferences);
+  }, [soundPreferences, levels]);
+  useEffect(() => {
+    if (soundPreferences.sound === "on") void audioManager.enable();
+    else audioManager.setMuted(true);
+  }, [soundPreferences.sound]);
+  useEffect(() => () => audioManager.disable(), []);
   useEffect(() => {
     if (route.place !== "life" || !stage || !entered) return;
     const id = `${taxon.id}/${stage.id}`;
@@ -420,24 +422,32 @@ export default function App() {
     }
   }
   async function toggleSound() {
-    if (!muted) {
+    await chooseSound(soundPreferencesRef.current.sound === "off");
+  }
+  function saveSoundPreferences(next: SoundPreferences) {
+    soundPreferencesRef.current = next;
+    setSoundPreferences(next);
+    writeSoundPreferences(next);
+  }
+  function setLevels(update: (current: SoundLevels) => SoundLevels) {
+    saveSoundPreferences({ ...soundPreferencesRef.current, levelsMode: "custom", levels: update(soundPreferencesRef.current.levels) });
+  }
+  async function chooseSound(on: boolean) {
+    saveSoundPreferences({ ...soundPreferencesRef.current, sound: on ? "on" : "off", soundOrigin: "explicit" });
+    if (!on) {
       audioManager.setMuted(true);
-      setMuted(true);
-      setPref("mixor-muted", true);
     } else {
       const started = await audioManager.enable();
-      setMuted(!started);
-      setPref("mixor-muted", !started);
-      if (!started)
-        setToast(
-          "Звук не запустился. Можно продолжить в тишине и попробовать ещё раз.",
-        );
+      if (!started && audioManager.getPlaybackState() === "blocked")
+        setToast("Звук начнётся при первом касании.");
+      else if (!started && audioManager.getPlaybackState() === "failed")
+        setToast("Не удалось загрузить звук. Можно продолжить играть.");
     }
   }
-  function enter(withSound: boolean) {
+  function enter(withSound?: boolean) {
     setEntered(true);
     setPref("mixor-entered-v2", true);
-    if (withSound) void toggleSound();
+    if (withSound !== undefined) void chooseSound(withSound);
   }
   async function toggleFullscreen() {
     try {
@@ -958,7 +968,7 @@ export default function App() {
       {!entered && (
         <Panel
           title="Добро пожаловать в микромир"
-          close={() => enter(false)}
+          close={() => enter()}
           wide
         >
           <div className="welcome">

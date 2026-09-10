@@ -124,8 +124,8 @@ for (const cue of candidates) {
       selection: { startSeconds: 0.38, endSeconds: 0.8, seconds: 0.42, reason: "Use the later friction/rustle section; exclude the strongest raw contact transient at 0.10–0.25 seconds." },
       recipe: { reproduce: "node scripts/master-audio.mjs leaf-friction-v3", filter: cue.appliedFilter, fixedGainDb: cue.gainDb, encoder: "libmp3lame", bitrate: "128k" },
       output: { ...cue.measurements, path: cue.final },
-      signalComparison: { rejectedWood: cueShape("public/assets/audio/sfx/fingertip-wood-v2-mix.mp3"), replacement: cue.shape, defaultRuntimeGain: 0.18 * 0.65, defaultRmsDbfs: cue.measurements.rmsDbfs + 20 * Math.log10(0.18 * 0.65), defaultTruePeakDbfs: cue.measurements.truePeakDbfs + 20 * Math.log10(0.18 * 0.65) },
-      feedback: { request: "U52", previousCue: "sfx/fingertip-wood-v2-mix.mp3", previousCueStatus: "user-rejected", acceptance: "pending user listening" },
+      signalComparison: { rejectedWood: cueShape("public/assets/audio/sfx/fingertip-wood-v2-mix.mp3"), replacement: cue.shape, defaultRuntimeGain: 0.36 * 0.65 * 0.3, defaultRmsDbfs: cue.measurements.rmsDbfs + 20 * Math.log10(0.36 * 0.65 * 0.3), defaultTruePeakDbfs: cue.measurements.truePeakDbfs + 20 * Math.log10(0.36 * 0.65 * 0.3) },
+      feedback: { request: "U52", volumeRequest: "U58", speakerDefaultsRequest: "U60", defaultEffectsPercent: 36, runtimeMultiplierOfPrevious: 0.3, previousCue: "sfx/fingertip-wood-v2-mix.mp3", previousCueStatus: "user-rejected", acceptance: "pending user listening" },
       physicalAudition: false, userAccepted: false,
       limits: ["Numeric signal bounds do not establish natural timbre, absence of an audible impact/tone, or audibility on physical speakers.", "Derived from an existing generated raw, not a newly recorded field sound; no new API generation."],
     };

@@ -153,10 +153,11 @@ test("native dialog, originals persisted, rotation", async ({
   await inViewport(page);
 });
 
-test("silent by default, real audio decoding, mute pauses every track, failures stay playable", async ({
+test("explicit quiet choice, real audio decoding, mute pauses every track, failures stay playable", async ({
   page,
 }) => {
   await page.addInitScript(() => {
+    localStorage.setItem("mixor-muted", "true");
     const original = HTMLMediaElement.prototype.play;
     (window as any).__played = [];
     HTMLMediaElement.prototype.play = function () {

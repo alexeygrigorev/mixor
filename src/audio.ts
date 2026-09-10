@@ -5,8 +5,9 @@ export type SfxId =
   | "lens-open"
   | "discovery"
   | "save-local";
-export type SoundLevels = { music: number; nature: number; effects: number };
-export const defaultSoundLevels: SoundLevels = { music: 12, nature: 45, effects: 18 };
+import { defaultSoundLevels, type SoundLevels } from "./audio-preferences";
+export { defaultSoundLevels, type SoundLevels } from "./audio-preferences";
+export type PlaybackState = "off" | "paused" | "idle" | "starting" | "playing" | "blocked" | "failed";
 
 type LoopId = "music" | "wind" | "birds" | "rain";
 type SceneId = "forest" | "stump" | "leaves" | "roots" | "bark";
@@ -45,11 +46,16 @@ class AudioManager {
   private levels: SoundLevels = { ...defaultSoundLevels };
   private lastPress = -Infinity;
   private lastSfx: SfxId | null = null;
+  private blockedLoops = new Set<LoopId>();
+  private failedLoops = new Set<LoopId>();
 
   constructor() {
     document.addEventListener("visibilitychange", this.handleVisibility);
     window.addEventListener("pagehide", this.handlePageHide);
     window.addEventListener("pageshow", this.handlePageShow);
+    // Bubble after the app's explicit Quiet/Mute handlers. Never unlock on
+    // pointerdown before those controls can record their contrary choice.
+    document.addEventListener("click", this.handleGesture);
   }
 
   // The caller supplies the VISIBLE woodland, including behind a discovery
@@ -68,9 +74,8 @@ class AudioManager {
     if (!this.canPlay()) return false;
     const results = await this.playLoops();
     if (!this.canPlay()) return false;
-    const playing = results.length === 0 || results.some((r) => r.status === "fulfilled");
-    if (!playing) this.muted = true;
-    return playing;
+    // A browser refusal is playback state, never a user's mute preference.
+    return results.some((r) => r.status === "fulfilled") && this.getPlaybackState() === "playing";
   }
 
   disable(): void {
@@ -79,6 +84,17 @@ class AudioManager {
   }
 
   isMuted(): boolean { return this.muted; }
+
+  getPlaybackState(): PlaybackState {
+    if (!this.enabled || this.muted) return "off";
+    if (document.hidden || this.pageHidden) return "paused";
+    const wanted = [...this.loops.values()].filter((loop) => this.wants(loop));
+    if (wanted.some(({ audio }) => !audio.paused && audio.readyState >= 2)) return "playing";
+    if (wanted.some((loop) => loop.pending)) return "starting";
+    if (wanted.some((loop) => this.blockedLoops.has(loop.id))) return "blocked";
+    if (wanted.some((loop) => this.failedLoops.has(loop.id))) return "failed";
+    return "idle";
+  }
 
   setMuted(muted: boolean): void {
     this.muted = muted;
@@ -129,7 +145,9 @@ class AudioManager {
   }
 
   private effectVolume(id: SfxId): number {
-    return (this.levels.effects / 100) * (id === "uncover" ? 0.9 : id === "journal-open" ? 0.4 : 0.65);
+    // U58: tap/click cues at 30% of their previous level; preserve the separate
+    // bark/leaf uncovering cue, paper sound and music/nature balance.
+    return (this.levels.effects / 100) * (id === "uncover" ? 0.9 : id === "journal-open" ? 0.4 : 0.65 * 0.3);
   }
 
   private mix(): SceneMix { return this.scene ? SCENES[this.scene] : HOME; }
@@ -167,9 +185,13 @@ class AudioManager {
       if (!loop.audio.paused) return Promise.resolve();
       let cancelled = false;
       loop.pending = loop.audio.play().then(() => {
+        this.blockedLoops.delete(id);
+        this.failedLoops.delete(id);
         if (!this.wants(loop)) loop.audio.pause();
       }).catch((error: unknown) => {
         cancelled = error instanceof DOMException && error.name === "AbortError";
+        if (error instanceof DOMException && error.name === "NotAllowedError") this.blockedLoops.add(id);
+        else if (!cancelled) this.failedLoops.add(id);
         throw error;
       }).finally(() => {
         loop.pending = undefined;
@@ -198,6 +220,10 @@ class AudioManager {
     this.pageHidden = false;
     void this.playLoops();
   };
+  private handleGesture = (event: MouseEvent): void => {
+    if (event.isTrusted && this.canPlay() && [...this.loops.values()].some((loop) => this.wants(loop) && this.blockedLoops.has(loop.id)))
+      void this.playLoops();
+  };
 
   dispose(): void {
     this.enabled = false;
@@ -205,6 +231,7 @@ class AudioManager {
     document.removeEventListener("visibilitychange", this.handleVisibility);
     window.removeEventListener("pagehide", this.handlePageHide);
     window.removeEventListener("pageshow", this.handlePageShow);
+    document.removeEventListener("click", this.handleGesture);
     for (const audio of [...this.loops.values()].map((l) => l.audio).concat([...this.sfx.values()])) {
       audio.removeAttribute("src");
       audio.load();
