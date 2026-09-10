@@ -44,6 +44,7 @@ class AudioManager {
   private scene: SceneId | null = null;
   private levels: SoundLevels = { ...defaultSoundLevels };
   private lastPress = -Infinity;
+  private lastSfx: SfxId | null = null;
 
   constructor() {
     document.addEventListener("visibilitychange", this.handleVisibility);
@@ -103,16 +104,20 @@ class AudioManager {
     if (id === "ui-press") {
       if (performance.now() - this.lastPress < 120) return;
     }
+    // Saving already has its own cue; its immediate navigation into the
+    // journal must not add a second sound to the same click.
+    if (id === "journal-open" && this.lastSfx === "save-local" && performance.now() - this.lastPress < 120) return;
     // A specific handler runs before the app's generic bubbling tap handler.
     // Stamp every accepted cue immediately, before play() settles, so that
     // generic ui-press cannot stack the same foley on lens/save/etc.
     this.lastPress = performance.now();
+    this.lastSfx = id;
     let audio = this.sfx.get(id);
     if (!audio) {
-      // Navigation, lens/stage changes and save use physical fingertip foley.
-      // Do not revive the rejected pitched electronic/glass reward cues.
+      // Navigation, lens/stage changes and save use a later leaf/bark friction
+      // excerpt, not the user-rejected wood contact or pitched reward cues.
       const file = id === "uncover" ? "uncover-mix"
-        : id === "journal-open" ? "journal-open" : "fingertip-wood-v2-mix";
+        : id === "journal-open" ? "journal-open" : "leaf-friction-v3-mix";
       audio = new Audio("/assets/audio/sfx/" + file + ".mp3");
       this.sfx.set(id, audio);
     }

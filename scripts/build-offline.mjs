@@ -33,7 +33,7 @@ files.push(
     "ambience/dry-leaves-v2-long",
     "ambience/distant-birds-long",
     "ambience/canopy-rain-v2-loop",
-    "sfx/fingertip-wood-v2-mix",
+    "sfx/leaf-friction-v3-mix",
     "sfx/uncover-mix",
     "sfx/journal-open",
   ].map((name) => `/assets/audio/${name}.mp3`),

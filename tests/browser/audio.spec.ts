@@ -138,7 +138,7 @@ test("taps and forest uncovering decode, have separate cues, and obey effects an
       page.evaluate(() =>
         (window as any).__audioTest.media.some(
           (a: HTMLMediaElement) =>
-            a.src.includes("fingertip-wood-v2-mix") &&
+            a.src.includes("leaf-friction-v3-mix") &&
             a.readyState >= 2 &&
             a.currentTime > 0 &&
             a.volume > 0.1,
@@ -248,7 +248,7 @@ test("hidden document pauses and resumes the same loops, without overriding mute
   expect((await loops(page)).every((a: any) => a.paused)).toBe(true);
 });
 
-test("new physical tap and uncover files decode within digital signal bounds", async ({
+test("leaf friction and distinct uncover files decode within digital signal bounds", async ({
   page,
 }) => {
   await instrument(page);
@@ -257,7 +257,7 @@ test("new physical tap and uncover files decode within digital signal bounds", a
     try {
       const measured = [];
       for (const [file, gain] of [
-        ["fingertip-wood-v2-mix", 0.18 * 0.65],
+        ["leaf-friction-v3-mix", 0.18 * 0.65],
         ["uncover-mix", 0.18 * 0.9],
       ] as const) {
         const response = await fetch(`/assets/audio/sfx/${file}.mp3`);
@@ -296,6 +296,10 @@ test("new physical tap and uncover files decode within digital signal bounds", a
     expect(cue.defaultPeakDb).toBeGreaterThan(-36);
     expect(cue.defaultPeakDb).toBeLessThan(-20);
     expect(cue.defaultRmsDb).toBeGreaterThan(-60);
+    if (cue.file === "leaf-friction-v3-mix") {
+      expect(cue.seconds).toBeGreaterThanOrEqual(0.25);
+      expect(cue.seconds).toBeLessThanOrEqual(0.5);
+    } else expect(cue.seconds).toBeCloseTo(1.2, 2);
   }
   // These digital-signal bounds catch the previous near-silent files;
   // they do not certify perceived loudness through physical speakers.
@@ -397,11 +401,11 @@ test("visible scene weather and discovery return context drive the actual rain l
   await expect.poll(async () => (await loops(page)).filter((a: any) => a.src.includes("rain")).every((a: any) => a.paused)).toBe(true);
 });
 
-test("specific lens and save foley suppress the same event's generic bubbling tap", async ({ page }) => {
+test("generic, lens, discovery and save rustles suppress same-event duplicate taps", async ({ page }) => {
   await instrument(page);
   await enable(page);
   await expect.poll(() => page.evaluate(() => (window as any).__audioTest.media.filter((a: HTMLMediaElement) => !a.loop).every((a: HTMLMediaElement) => a.paused || a.ended))).toBe(true);
-  for (const id of ["lens-open", "save-local"]) {
+  for (const id of ["ui-press", "lens-open", "discovery", "save-local"]) {
     const result = await page.evaluate(async (cue) => {
       const modulePath = performance.getEntriesByType("resource").map((entry) => entry.name).find((url) => new URL(url).pathname === "/src/audio.ts");
       if (!modulePath) throw new Error("Application audio module was not loaded");
@@ -413,13 +417,34 @@ test("specific lens and save foley suppress the same event's generic bubbling ta
       return { plays: state.plays.slice(before) };
     }, id);
     expect(result.plays).toHaveLength(1);
-    expect(result.plays[0]).toContain("fingertip-wood-v2-mix");
+    expect(result.plays[0]).toContain("leaf-friction-v3-mix");
     await expect.poll(() => page.evaluate(() => {
-      const clips = (window as any).__audioTest.media.filter((a: HTMLMediaElement) => !a.loop && a.src.includes("fingertip-wood-v2-mix"));
-      const latest = clips.at(-1);
-      return Boolean(latest && latest.readyState >= 2 && latest.currentTime > 0);
+      const clips = (window as any).__audioTest.media.filter((a: HTMLMediaElement) => !a.loop && a.src.includes("leaf-friction-v3-mix"));
+      return clips.some((clip: HTMLMediaElement) => !clip.paused && clip.readyState >= 2 && clip.currentTime > 0);
     })).toBe(true);
     expect(await page.evaluate(() => (window as any).__audioTest.media.filter((a: HTMLMediaElement) => !a.loop && !a.paused && !a.ended).length)).toBe(1);
     await expect.poll(() => page.evaluate(() => (window as any).__audioTest.media.filter((a: HTMLMediaElement) => !a.loop).every((a: HTMLMediaElement) => a.paused || a.ended))).toBe(true);
   }
+});
+
+test("actual stage, lens and save clicks play one new rustle without legacy cues", async ({ page }) => {
+  await instrument(page);
+  await enable(page);
+  const clickOneRustle = async (name: string) => {
+    await expect.poll(() => page.evaluate(() => (window as any).__audioTest.media.filter((a: HTMLMediaElement) => !a.loop).every((a: HTMLMediaElement) => a.paused || a.ended))).toBe(true);
+    const before = await page.evaluate(() => (window as any).__audioTest.plays.length);
+    await page.getByRole("button", { name, exact: true }).click();
+    const cues = await page.evaluate((offset) => (window as any).__audioTest.plays.slice(offset).filter((src: string) => src.includes("/sfx/")), before);
+    expect(cues).toHaveLength(1);
+    expect(cues[0]).toContain("leaf-friction-v3-mix");
+    await expect.poll(() => page.evaluate(() => (window as any).__audioTest.media.some((a: HTMLMediaElement) => !a.loop && !a.paused && a.readyState >= 2 && a.currentTime > 0 && a.src.includes("leaf-friction-v3-mix")))).toBe(true);
+  };
+  await changeRoute(page, "#life/physarum/spore");
+  await clickOneRustle("Следующий этап");
+  await changeRoute(page, "#portrait/physarum/spore");
+  await clickOneRustle("Сделать открытие");
+  await clickOneRustle("Не различаю");
+  await clickOneRustle("Записать открытие");
+  await expect(page.locator(".discovery-page")).toContainText("Не различаю");
+  expect(await page.evaluate(() => (window as any).__audioTest.plays.some((src: string) => /fingertip-wood|ui-press-soft|lens-open\.mp3|save-local\.mp3|discovery\.mp3/.test(src)))).toBe(false);
 });

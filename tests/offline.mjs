@@ -30,11 +30,12 @@ try {
     "music/forest-acoustic-v2-long",
     "ambience/dry-leaves-v2-long",
     "ambience/canopy-rain-v2-loop",
-    "sfx/fingertip-wood-v2-mix",
+    "sfx/leaf-friction-v3-mix",
   ];
   for (const file of freshAudio) assert(keys.includes(`/assets/audio/${file}.mp3`));
   assert(!keys.includes("/assets/audio/music/forest-stillness-long.mp3"));
   assert(!keys.includes("/assets/audio/sfx/ui-press-soft-mix.mp3"));
+  assert(!keys.includes("/assets/audio/sfx/fingertip-wood-v2-mix.mp3"));
   assert(keys.includes("/assets/audio/sfx/uncover-mix.mp3"));
   assert(keys.includes("/assets/art/search-bark.webp"));
   assert(keys.includes("/assets/art/growth-early.webp"));

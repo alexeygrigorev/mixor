@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "id": "leaf-friction-v3",
+  "kind": "local-derived-foley",
+  "isGenerated": true,
+  "sourcePath": "public/assets/audio/sfx/uncover.mp3",
+  "sourceSha256": "6f2d9bf9899102448fd7fad498ba5c6d981c53a47c06e78ea75be53c1e240e13",
+  "sourceProvenance": {
+    "provider": "Existing ElevenLabs-generated bark/leaf uncover raw",
+    "promptDefinitionFile": "scripts/generate-mixor-audio.mjs",
+    "originalApiReceiptAvailable": false,
+    "newApiRequests": 0
+  },
+  "selection": {
+    "startSeconds": 0.38,
+    "endSeconds": 0.8,
+    "seconds": 0.42,
+    "reason": "Use the later friction/rustle section; exclude the strongest raw contact transient at 0.10–0.25 seconds."
+  },
+  "recipe": {
+    "reproduce": "node scripts/master-audio.mjs leaf-friction-v3",
+    "filter": "atrim=start_sample=16758:end_sample=35280,asetpts=PTS-STARTPTS,highpass=f=500:p=2,lowpass=f=3800:p=2,afade=t=in:d=0.08:curve=tri,afade=t=out:st=0.28:d=0.14:curve=tri,volume=32.10dB",
+    "fixedGainDb": 32.1,
+    "encoder": "libmp3lame",
+    "bitrate": "128k"
+  },
+  "output": {
+    "path": "public/assets/audio/sfx/leaf-friction-v3-mix.mp3",
+    "sha256": "3201c8becb81834cd6c4201535db53f27e7f04397cb38ef761c9a9b1e37b05d1",
+    "bytes": 7985,
+    "codec": "mp3",
+    "sampleRate": 44100,
+    "channels": 2,
+    "containerSeconds": 0.470204,
+    "decodedSeconds": 0.42,
+    "integratedLufs": -25.2,
+    "loudnessRangeLu": 0,
+    "truePeakDbfs": -14.9,
+    "rmsDbfs": -31.566,
+    "samplePeakDbfs": -15.312,
+    "dcOffset": -5.56283769922521e-7,
+    "level": {
+      "windowSeconds": 1,
+      "rmsDbfs": [
+        -32.31
+      ],
+      "p10Dbfs": -32.31,
+      "p50Dbfs": -32.31,
+      "p90Dbfs": -32.31,
+      "fraction100msBelowMinus60Dbfs": 0
+    },
+    "seam": {
+      "boundaryJumpDbfs": -68.923,
+      "adjacentDifferenceRmsDbfs": -34.331,
+      "largestInternalJumpDbfs": -18.243,
+      "head100msRmsDbfs": -35.745,
+      "tail100msRmsDbfs": -40.28
+    }
+  },
+  "signalComparison": {
+    "rejectedWood": {
+      "method": "Full-clip arithmetic stereo mean decoded at 16 kHz; normalized autocorrelation for integer lags 8–160 (100–2000 Hz). A periodicity indicator, not a pitch/timbre or subjective acceptance test.",
+      "first20msRmsDbfs": -34.9240594425174,
+      "body80to280msRmsDbfs": -28.69853479438141,
+      "last20msRmsDbfs": -85.51639511431335,
+      "periodicity": {
+        "correlation": 0.6799303304948121,
+        "hz": 200
+      }
+    },
+    "replacement": {
+      "method": "Full-clip arithmetic stereo mean decoded at 16 kHz; normalized autocorrelation for integer lags 8–160 (100–2000 Hz). A periodicity indicator, not a pitch/timbre or subjective acceptance test.",
+      "first20msRmsDbfs": -47.78890518473361,
+      "body80to280msRmsDbfs": -29.864730095914727,
+      "last20msRmsDbfs": -50.052376828152376,
+      "periodicity": {
+        "correlation": 0.09348304592764095,
+        "hz": 2000
+      }
+    },
+    "defaultRuntimeGain": 0.11699999999999999,
+    "defaultRmsDbfs": -50.20228276507677,
+    "defaultTruePeakDbfs": -33.53628276507677
+  },
+  "feedback": {
+    "request": "U52",
+    "previousCue": "sfx/fingertip-wood-v2-mix.mp3",
+    "previousCueStatus": "user-rejected",
+    "acceptance": "pending user listening"
+  },
+  "physicalAudition": false,
+  "userAccepted": false,
+  "limits": [
+    "Numeric signal bounds do not establish natural timbre, absence of an audible impact/tone, or audibility on physical speakers.",
+    "Derived from an existing generated raw, not a newly recorded field sound; no new API generation."
+  ]
+}

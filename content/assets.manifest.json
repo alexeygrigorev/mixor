@@ -1405,6 +1405,8 @@
     },
     {
       "id": "sfx-fingertip-wood-v2-mix",
+      "runtimeActive": false,
+      "feedback": "U52 explicitly rejects this cue as electronic-sounding; preserved for comparison, replaced by a leaf/bark friction excerpt. No subjective acceptance claimed.",
       "kind": "sfx",
       "status": "prepared_local_demo",
       "path": "public/assets/audio/sfx/fingertip-wood-v2-mix.mp3",
@@ -1418,6 +1420,26 @@
         "receipts": ["content/audio/fingertip-wood-v2.source.json"]
       },
       "rights": { "licenseReview": "Verify the active ElevenLabs account terms before public distribution." },
+      "science": null,
+      "physicalAudition": false,
+      "userAccepted": false
+    },
+    {
+      "id": "sfx-leaf-friction-v3-mix",
+      "runtimeActive": true,
+      "kind": "sfx",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/sfx/leaf-friction-v3-mix.mp3",
+      "isGenerated": true,
+      "checksum": "3201c8becb81834cd6c4201535db53f27e7f04397cb38ef761c9a9b1e37b05d1",
+      "bytes": 7985,
+      "source": {
+        "provider": "Local excerpt of an existing ElevenLabs-generated bark/leaf raw",
+        "rawPath": "public/assets/audio/sfx/uncover.mp3",
+        "masteringFile": "scripts/master-audio.mjs",
+        "receipts": ["content/audio/leaf-friction-v3.derived.json"]
+      },
+      "rights": { "licenseReview": "Same underlying source; verify the active ElevenLabs account terms before distribution." },
       "science": null,
       "physicalAudition": false,
       "userAccepted": false

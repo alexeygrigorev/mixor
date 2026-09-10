@@ -254,7 +254,7 @@ test("woodland ambience continues through found information and photos, and unco
         .navigationPlays;
       return {
         uncover: plays.filter((src) => src.endsWith("/uncover-mix.mp3")).length,
-        tap: plays.filter((src) => src.endsWith("/fingertip-wood-v2-mix.mp3"))
+        tap: plays.filter((src) => src.endsWith("/leaf-friction-v3-mix.mp3"))
           .length,
       };
     });

@@ -47,7 +47,9 @@ const requests = [
 ];
 
 const selected = process.argv[2];
-const batch = selected === "feedback-v2" ? requests
+// The rejected wood contact remains available by exact legacy ID only.
+// Active generic cues are derived locally from the preserved uncover raw.
+const batch = selected === "feedback-v2" ? requests.filter((r) => r.id !== "fingertip-wood-v2")
   : selected === "rain-extension-v2" ? requests.filter((r) => /^canopy-rain-v2-[b-e]$/.test(r.id))
   : requests.filter((r) => r.id === selected);
 if (!batch.length || process.argv.length !== 3) throw new Error("Choose feedback-v2, rain-extension-v2 or one exact asset ID; no force/overwrite option.");

@@ -165,13 +165,14 @@ const reportFile = `${scratch}/report.json`;
 writeFileSync(reportFile, `${JSON.stringify(report, null, 2)}\n`);
 if (install) {
   // Keep a compact durable report; full spectral bins/commands remain in scratch.
-  const retained = previous?.retained ?? ["ambience/distant-birds-long", "sfx/fingertip-wood-v2-mix", "sfx/uncover-mix", "sfx/journal-open"].map((name) => compact(analyzeAudio(`public/assets/audio/${name}.mp3`, { spectral: !name.startsWith("sfx/") })));
+  const retained = previous?.retained ?? ["ambience/distant-birds-long", "sfx/leaf-friction-v3-mix", "sfx/uncover-mix", "sfx/journal-open"].map((name) => compact(analyzeAudio(`public/assets/audio/${name}.mp3`, { spectral: !name.startsWith("sfx/") })));
   const provenance = ["forest-acoustic-v2", "dry-leaves-v2-a", "dry-leaves-v2-b", "fingertip-wood-v2", "canopy-rain-v2", "canopy-rain-v2-b", "canopy-rain-v2-c", "canopy-rain-v2-d", "canopy-rain-v2-e"].map((id) => JSON.parse(readFileSync(`content/audio/${id}.source.json`, "utf8")));
   writeFileSync("content/audio-mastering-report.json", `${JSON.stringify({
     schemaVersion: 3, ffmpeg: report.ffmpeg, physicalAudition: false, userAccepted: false, limits: report.limits,
     reproduce: "npm run audio:master", sources: { ...previous?.sources, ...report.sources }, provenance,
     tracks: [...unchangedTracks, ...report.tracks.map((track) => ({ kind: track.kind, path: track.final, processing: track.processing, arrangement: track.arrangement, loop: track.loop, measurements: { ...compact(track.measurements), path: track.final } }))],
-    retained, sceneWeather: { forest: "clear", stump: "overcast", leaves: "overcast", roots: "rain", bark: "rain" },
+    retained, derivedCues: [JSON.parse(readFileSync("content/audio/leaf-friction-v3.derived.json", "utf8"))],
+    sceneWeather: { forest: "clear", stump: "overcast", leaves: "overcast", roots: "rain", bark: "rain" },
   }, null, 2)}\n`);
 }
 console.log(`${install ? "Installed" : "Preview only"}; report: ${reportFile}`);
