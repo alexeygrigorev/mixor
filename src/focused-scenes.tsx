@@ -216,9 +216,9 @@ export function SearchScene({
   const diameter = Math.max(
     48,
     Math.min(
-      portrait ? 224 : 256,
-      size.width * (portrait ? 0.44 : 0.2),
-      size.height * (portrait ? 0.22 : 0.28),
+      portrait ? 164 : 184,
+      size.width * (portrait ? 0.35 : 0.16),
+      size.height * (portrait ? 0.18 : 0.24),
     ),
   );
   const verticalOrder = [...woodland.spots].sort((a, b) => a.y - b.y);

@@ -128,7 +128,12 @@ test("five places, quiet scene navigation, circular discoveries and persistent f
         "mask-image",
         "none",
       );
-      expect((await target.boundingBox())!.width).toBeGreaterThan(150);
+      // U51 reduces the oversized portraits but keeps readable circular lenses,
+      // not tiny markers or a new expand-before-learning interaction.
+      expect((await target.boundingBox())!.width).toBeGreaterThan(120);
+      expect((await target.boundingBox())!.width).toBeLessThanOrEqual(184);
+      await expect(target).toHaveCSS("padding", "1px");
+      await expect(target).toHaveCSS("background-image", "none");
       await target.tap();
       await expect(target).toHaveAttribute("aria-pressed", "true");
       await expect(target).toHaveAccessibleName(
