@@ -704,11 +704,7 @@ export default function App() {
                       ))}
                     </div>
                   </>
-                ) : (
-                  <p className="material-label">
-                    Учебная иллюстрация · создана с ИИ · без масштаба
-                  </p>
-                )}
+                ) : null}
               </div>
               <div className="specimen-notes scroll-panel">
                 {investigating ? (
@@ -1085,12 +1081,6 @@ export default function App() {
             <Icon name="expand" />
             {fullscreen ? "Выйти из полного экрана" : "На весь экран"}
           </button>
-          <p className="fineprint">
-            При скрытии вкладки звук приостанавливается. Открытие окон не
-            прерывает музыку. После перезагрузки звук включается только
-            нажатием. Фон и иллюстрации созданы с ИИ; аудио — ElevenLabs. Это
-            локальная игровая версия.
-          </p>
         </Panel>
       )}
       {overlay === "sources" && (

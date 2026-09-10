@@ -80,9 +80,6 @@ export function ActivityHome({
           </button>
         ))}
       </nav>
-      <p className="home-provenance">
-        Рисованный мир · настоящие фотографии внутри
-      </p>
     </section>
   );
 }
@@ -173,10 +170,6 @@ export function SpeciesChooser({
           </button>
         ))}
       </div>
-      <p className="chooser-note">
-        Учебные реконструкции, не съёмка одного экземпляра. Ранние этапы общие
-        для группы; развитие зависит от условий.
-      </p>
     </section>
   );
 }
@@ -677,10 +670,6 @@ export function ClassificationTree({
             <TaxonomyBranch key={node.name} node={node} select={select} />
           ))}
         </ul>
-        <p className="classification-note">
-          Ветви классификации, не стадии развития. Показаны только восемь видов
-          коллекции; длины ветвей не означают время или степень родства.
-        </p>
       </div>
     </section>
   );

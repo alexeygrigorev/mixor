@@ -1,11 +1,11 @@
 # Session input audit — 2026-09-10
 
-This is a source audit, not a reconstruction from an assistant summary. It preserves every submitted input for session `01a08a5f-9498-7212-ade6-7cee67aca745` through 2026-09-10 12:28:19 UTC. Repeated submissions, the bundled feedback message and goal commands are retained. Original wording is preserved; insignificant trailing spaces are omitted in Markdown.
+This is a source audit, not a reconstruction from an assistant summary. It preserves every submitted input for session `01a08a5f-9498-7212-ade6-7cee67aca745` through 2026-09-10 13:44:32 UTC. Repeated submissions, the bundled feedback message and goal commands are retained. Original wording is preserved; insignificant trailing spaces are omitted in Markdown.
 
 ## Sources and reconciliation
 
-- Submission source: `~/.codex/history.jsonl`, filtered by the exact session ID: **57 entries** (49 in the initial audit, plus U50–U57 during implementation).
-- Delivery cross-check: `~/.codex/sessions/2026/09/10/rollout-2026-09-10T10-11-54-01a08a5f-9498-7212-ade6-7cee67aca745.jsonl`: **43 actual user-text response items**. Environment messages, subagent reports, assistant output and interruption markers are not user feedback.
+- Submission source: `~/.codex/history.jsonl`, filtered by the exact session ID: **72 entries** (49 in the initial audit, plus U50–U72 during implementation).
+- Delivery cross-check: `~/.codex/sessions/2026/09/10/rollout-2026-09-10T10-11-54-01a08a5f-9498-7212-ade6-7cee67aca745.jsonl`: **58 actual user-text response items**. Environment messages, subagent reports, assistant output and interruption markers are not user feedback.
 - Session metadata confirms the working directory `/home/alexey/git/mixer` and the original clone request.
 - **U23–U31 are present in the submission history but absent as user-text items in the inspected rollout.** These include the missing navigation, framing, weather, scene-dependent audio and discovery requests. The files establish this discrepancy; they do not establish why delivery was missing.
 - Three repeated submissions (U33, U42, U48) match the same delivered text as their predecessors. U46 and U49 are goal commands, not ordinary delivered user-text items.
@@ -416,3 +416,144 @@ Source: history line 17559; rollout line 3807. Checklist: DEV-03.
 > and the step from молодой плазмодий к плазмодий too abrupt could there be someting between? like it's one cell with 4 cores and then suddenly a whole thing
 
 The implementation plan adds two gradual growth views between young plasmodium and developed network for all eight taxa. Eleven total stages is an implementation choice responding to the gap, not a user-specified count. Keep one continuous multinucleate cell and biological scope honest.
+
+### U58 — 13:30:25 UTC
+
+Source: history line 17568; rollout line 4645. Checklist: AUDIO-02.
+
+> make click sounds 30% of the current one
+
+Apply a 0.3 multiplier to the current tap/click level, not a 30% reduction to 70%. Main stated that music, nature and the distinct uncovering cue stay unchanged. This numeric request does not establish subjective approval of the timbre or buzz.
+
+### U59 — 13:31:00 UTC
+
+Source: history line 17569; rollout line 4662. Checklist: FIND-03, ART-02, GAME-01.
+
+> it's still not embedded into the picture. like in the very first version - check how was it and I want something similar but withou changing the current background picture
+>
+> Attached files:
+> - ~/.pocketshell/attachments/mixer/mixer-game/20260910-153032-01-clipboard.png
+
+The valid attachment was inspected: current first forest, three revealed circular portraits still appearing detached from the environment. Compare the actual first playable version and its screenshots. Preserve the current background image; making circles smaller alone did not satisfy embedding. This latest direction supersedes the earlier unresolved single-expanded-selection proposal. Do not restore old backgrounds, invented names or removed dashboard chrome along with the visual reference.
+
+### U60 — 13:38:34 UTC
+
+Source: history line 17570; rollout line 4745. Checklist: AUDIO-07.
+
+> let's actually make the sounds louder by default. when I'm without headphones I cna't hear anything
+
+Implementation choice: speaker-friendly defaults music 36%, nature 90%, effects 36%, retaining U58's relative tap multiplier. Preserve custom values and zero settings; migrate the exact old default tuple only. Listening acceptance remains separate.
+
+
+### U61 — 13:39:06 UTC
+
+Source: history line 17571; rollout line 4761. Checklist: AUDIO-08.
+
+> and it should play music by defalt not only after I click unmute
+
+Sound intent defaults on. Try autoplay; when blocked by the browser, retry on the first trusted gesture without requiring a separate unmute. Preserve explicit Quiet/Mute and do not store autoplay rejection as a mute choice. This supersedes silent-by-default behavior.
+
+
+### U62 — 13:39:50 UTC
+
+Source: history line 17572; rollout line 4763. Checklist: COPY-01.
+
+> Учебные реконструкции, не съёмка одного экземпляра. Ранние этапы общие для группы; развитие зависит от условий. remove this part
+
+
+### U63 — 13:40:49 UTC
+
+Source: history line 17573; rollout line 4789. Checklist: FIND-05.
+
+> also when we go back let's reset these things so we can find them again
+>
+> Attached files:
+> - ~/.pocketshell/attachments/mixer/mixer-game/20260910-154038-01-clipboard.png
+
+The attachment is not a decodable image. Bounded implementation interpretation: Back out of a woodland resets only that place's search finds/selection. Information→originating woodland Back retains context. Preserve other places, journal/photos and development progress.
+
+
+### U64 — 13:41:18 UTC
+
+Source: history line 17574; rollout line 4799. Checklist: FIND-03, FIND-04.
+
+> I think I want to make it a bit more subtle again so you try to find it, but when you click on it, it shwos you the magnified thing
+
+Explicitly authorizes subtle resting clues, then a selected magnified view on tap. Supersedes the old requirement for three persistent enlarged portraits; current backgrounds remain unchanged.
+
+
+### U65 — 13:41:22 UTC
+
+Source: history line 17575; rollout line 4801. Checklist: FIND-03, FIND-04.
+
+> lte's do it this way
+
+Confirms U64's interaction direction.
+
+
+### U66 — 13:41:37 UTC
+
+Source: history line 17576; rollout line 4803. Checklist: PORTRAIT-01, GAME-01.
+
+> I also want to rework this screen
+>
+> Attached files:
+> - ~/.pocketshell/attachments/mixer/mixer-game/20260910-154130-01-clipboard.png
+
+Valid attachment inspected: Arcyria's organism-information page, with a large arched portrait, generic filler and oversized rectangular actions. Rework this page into an image-led encounter while retaining observation, development, photos and contextual Back.
+
+
+### U67 — 13:41:47 UTC
+
+Source: history line 17577; rollout line 4805. Checklist: COPY-01.
+
+> Ветви классификации, не стадии развития. Показаны только восемь видов коллекции; длины ветвей не означают время или степень родства. remove that
+
+
+### U68 — 13:42:07 UTC
+
+Source: history line 17578; rollout line 4821. Checklist: COPY-01.
+
+> При скрытии вкладки звук приостанавливается. Открытие окон не прерывает музыку. После перезагрузки звук включается только нажатием. Фон и иллюстрации созданы с ИИ; аудио — ElevenLabs. Это локальная игровая версия. remove
+
+
+### U69 — 13:42:21 UTC
+
+Source: history line 17579; rollout line 4823. Checklist: COPY-01.
+
+> Рисованный мир · настоящие фотографии внутриremove
+
+
+### U70 — 13:43:02 UTC
+
+Source: history line 17580; rollout line 4833. Checklist: DEVICE-01, FIND-03.
+
+> should also work on the phone
+>
+> Attached files:
+> - ~/.pocketshell/attachments/mixer/mixer-game/20260910-154256-01-clipboard.png
+
+Valid 988×1500 attachment inspected: finding screen with three stacked floating portraits. Apply phone-safe clue placement, magnifier bounds and touch targets to the new interaction.
+
+
+### U71 — 13:43:17 UTC
+
+Source: history line 17581; rollout line 4862. Checklist: COPY-01.
+
+> Учебная иллюстрация · создана с ИИ · без масштаба
+>
+> remove
+
+Remove the visible portrait label; do not restore it as a replacement notice. Existing photo credits and optional sources remain.
+
+
+### U72 — 13:44:32 UTC
+
+Source: history line 17582; rollout line 4865. Checklist: DEV-04.
+
+> make sure the controls < > don't change their position as you go though it
+>
+> Attached files:
+> - ~/.pocketshell/attachments/mixer/mixer-game/20260910-154417-01-clipboard.png
+
+Valid attachment inspected: Arcyria development stage 11/11. Previous/next controls must not shift horizontally or vertically as stage text changes, including the last-stage restart control.

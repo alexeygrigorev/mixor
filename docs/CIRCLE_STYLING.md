@@ -2,6 +2,8 @@
 
 2026-09-10. This is a bounded styling correction to the user's explicit request for less disruptive circles. It does not implement the separately proposed single-expanded-selection interaction or infer approval from an automatic goal continuation. All three circular covers/portraits remain visible; first tap reveals and repeated tap opens information.
 
+**Superseded by U59:** the user says this still is not embedded in the picture and requests the first playable visual treatment with the current background preserved. This document records the `3224617` styling checkpoint, not acceptance or completion of that newer request.
+
 ## Changes and inspected evidence
 
 - Reduced typical circle diameter from 171.6 to 136.5px at 390×844 and from 204.8 to 163.84px at 1024×768. Runtime still enforces at least 48px, with viewport-based placement and separation.
