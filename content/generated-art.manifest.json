@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-10",
+  "tool": "built-in image_gen",
+  "typeLabel": "Учебная иллюстрация · создана с ИИ",
+  "scope": "Illustrations are symbolic, at different unspecified scales, not photographs, measurements, identification keys or time-lapse.",
+  "assets": [
+    {
+      "id": "forest-world",
+      "runtimePath": "public/assets/art/forest-world.webp",
+      "sourcePath": "content/artwork/forest-world.png",
+      "prompt": "Use case: illustration-story. Asset type: full-screen exploration game woodland environment, landscape 1536x1024. A lovingly handcrafted painterly miniature forest floor, viewed close to ground at a gentle 3/4 angle, an ancient decaying log crossing the middle, velvety emerald moss, tiny ferns, ochre fallen leaves, winding roots, warm shafts of morning light in hazy dark teal forest. Foreground lower-left: a small closed naturalist field notebook with blank worn canvas cover; lower-right a brass magnifying glass leaning against root. A quiet welcoming hidden micro-world, tangible gouache and softly painted 3D storybook texture, botanical detail, cinematic depth, restrained gold/forest green palette. Center log has clear dark wood surfaces for separate interactive specimen illustrations overlay later. Balanced landscape composition with important log and clearings in central 60% so usable on phone portrait crop. Pure background artwork, no giant mushrooms, no characters, no lettering, no typography, no buttons, no interface, no panels, no logo. Match a beautiful family nature exploration game, sophisticated not cartoon flat, gentle not scary."
+    },
+    {
+      "id": "life-stages",
+      "runtimePath": "public/assets/art/life-stages-v2.webp",
+      "sourcePath": "content/artwork/life-stages-v2.png",
+      "prompt": "Use case: precise-object-edit scientific-educational. Input Image1 is edit target: life-stage sprite atlas. Keep exact three columns by two rows, all equal squares, framing, forest-green backgrounds, warm sidelight and same rich painterly miniature botanical style. Preserve top middle amoeboid/flagellate cells, top right cell fusion, bottom left yellow plasmodium network and bottom right red Arcyria sporocarps unchanged. Correct only TWO panels. TOP LEFT spores: show three spherical symbolic spores with uniformly fine, subtle granular roughness or tiny warts. REMOVE the conspicuous polygonal mesh and connecting ridges completely. No large reticulate net ornament on any sphere; fine understated texture, not smooth shiny balls. BOTTOM MIDDLE Physarum polycephalum sporocarps: replace the incorrect uniform round bead heads with IRREGULAR MULTILOBED yellow-ochre or pale olive crusted heads on delicate thin stalks, lobes clustered/fused into asymmetric convoluted heads, accurate to supporting Image2 actual morphology reference. Heads must visibly have several uneven lobes, not a cluster of simple spherical mushrooms. Image2 is morphology reference, not style; re-render painted in style of Image1 with dark woodland background. No caps or gills, no faces, no text, no labels or lines, no added elements. This remains a schematic plate of different scales, not photographs.",
+      "discardedInitialPrompt": "Use case: scientific-educational. Asset type: a single precisely aligned 3-column by 2-row sprite atlas for a slime mould life-cycle exploration game, 1536x1024. Six SQUARE illustrated panels each exactly one third of width and one half of height. No margins, no gutters, no borders, no text, no arrows. Each panel's subject centered with 15% internal breathing room, dark forest-green softly blurred backdrop and same beautiful painterly gouache botanical miniature style, soft golden sidelight, restrained natural colors. TOP LEFT: magnified group of three spherical microscopic spores with finely textured brown-gold walls, floating against muted dark background, no bark because microscopic scale. TOP MIDDLE: magnified translucent pale-cream amoeboid cells with lobed pseudopodia and one flagellate cell with two delicate flagella, tiny food bacteria, microscopic water film, scientifically explanatory, no faces. TOP RIGHT: two compatible pale translucent amoeboid cells fusing at their touching membranes, two nuclei visible, early union, educational microscopic view not eggs. BOTTOM LEFT: macro view of a golden yellow Physarum polycephalum plasmodium forming a branching network of fine veins connecting thicker areas on damp dark decaying bark; no mushrooms or distinct individual worms. BOTTOM MIDDLE: macro view of mature Physarum polycephalum sporocarps, very small clustered stalked dark grey brown bead-like heads on fine stalks arising from decaying bark, not gilled mushrooms. BOTTOM RIGHT: macro view of Arcyria denudata sporocarps, a cluster of delicate brick-red elongated cottony cylindrical spore-bearing net structures on tiny stalks on dead wood. Same illustration style in EVERY panel, realistic species-inspired morphology but unmistakably painted, not photographs. Scientifically restrained: no magical particles, no faces, no fake labels, no scales. This is a symbolic educational plate of different scales not a time-lapse or same specimen.",
+      "referencePhotos": [
+        "physarum-macro"
+      ],
+      "referenceManifest": "content/assets.manifest.json",
+      "adaptationLicense": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "changeNote": "AI educational adaptation using Katja Schulz's Physarum polycephalum photograph for morphology. Replaced coarse reticulate spores with fine roughness and simple spherical heads with irregular multilobed sporocarps. Other panels retain the original generated style."
+    },
+    {
+      "id": "arcyria-network",
+      "runtimePath": "public/assets/art/arcyria-network.webp",
+      "sourcePath": "content/artwork/arcyria-network.png",
+      "prompt": "Use case: scientific-educational. Asset type: square botanical stage illustration for the same game. Input reference is STYLE ONLY: rich painterly miniature woodland, golden side light, dark emerald moss, textured damp bark, not a photograph. Subject: Arcyria denudata white plasmodium, symbolic educational macro view on damp decaying dark wood: an ivory-white delicate branching vein network spreading into small thin fan-shaped lobed growing margins, no separate fruiting bodies, no red or yellow organism, no mushrooms. Plasmodium is one continuous spreading cell with connected veins, not roots or worms. Main subject fills central70%, a little moss in corners, soft forest background. Fine painterly botanical detail matching reference style. No text no labels no borders no scale bar, no human objects, no arrows, no glitter. This illustrates the reported white growing plasmodium rather than documenting an actual specimen."
+    },
+    {
+      "id": "organisms-v2",
+      "runtimePath": "public/assets/art/organisms-v2.webp",
+      "sourcePath": "content/artwork/organisms-v2.png",
+      "prompt": "Use case: precise-object-edit scientific-educational. Edit target Image1: eight-panel organism sprite atlas. Keep exact four-column two-row square-panel grid, same forest background, lighting, palette, botanical illustration style and ALL FIVE OTHER panels unchanged. Correct ONLY three bottom-row panels: bottom second Trichia decipiens, bottom third Tubifera ferruginosa, bottom fourth Didymium squamulosum. Supporting images2,3,4 are real reference PHOTOS for morphology, not style; render painted matching target, don't paste photos. Bottom second Trichia: small smooth bright orange ROUND TO PEAR-SHAPED sporangia with rounded TOPS and lower taper toward very short stalks or close to bark as Image4, absolutely NO horns or pointy protrusions at TOP, no droplets upside down. Bottom third Tubifera: dense low mound of tightly packed tiny orange-pink elongated tubular structures with CLOSED ROUNDED tops like Image3, glistening small bead tops, absolutely no open pipes, no wide hollow tubes, no coral. Bottom fourth Didymium: a few dark charcoal globose to slightly flattened sporangia with irregular chalky white lime crust flecks over their closed spherical surfaces, short slender pale stalks like Image2, NOT open cups and NOT mushroom caps, no radial gills, no petal shapes. Accurate morphology matters. Preserve same framing and soft warm morning light all panels, no text, no scale.",
+      "initialPrompt": "Use case: scientific-educational. Asset type: ONE 4-column by 2-row game sprite atlas, landscape 2048x1024, eight exactly square adjacent panels, no borders no gaps, each panel 512x512. Input image is style reference only: match its richly textured painterly miniature woodland lighting and dark damp bark, moss, sophisticated forest-green/ochre palette. Paint eight distinct beautiful macro portraits of slime moulds, NOT photographs. Each organism centered occupying middle 70% of its own square, no parts crossing panels, background dark and calm. Panel order strictly left-to-right top row then bottom row. TOP LEFT Physarum polycephalum: vibrant yellow branching vein network plasmodium spreading over dark decaying wood. TOP SECOND Arcyria denudata: clustered tiny brick-red elongated cottony cylindrical capillitium structures on small thin stalks. TOP THIRD Fuligo septica: one irregular cushion-like bright yellow foamy aethalium on damp bark, not veins and not gilled fungus. TOP FOURTH Lycogala epidendrum: small round matte salmon pink puffball-like aethalia grouped directly on decaying wood, no stalks, varied sizes. BOTTOM LEFT Stemonitis axifera: forest of narrow tall slender rusty-brown cylindrical sporocarps on very thin dark stalks. BOTTOM SECOND Trichia decipiens: group of small pear-shaped glossy orange sporocarps with tapered lower body and slender stalks, not gilled mushrooms. BOTTOM THIRD Tubifera ferruginosa: dense close-packed colony of salmon-red upright tubular sporangia, a raspberry-like mound with individual elongated tubes, no separate stalks. BOTTOM FOURTH Didymium squamulosum: tiny flattened whitish lime-encrusted discoid sporangia on short pale stalks, lightly chalky white, on dead leaf. Same precise botanical painterly game style every square. Species-inspired educational illustration, no claim of exact scale. No text, no letters, no UI, no watermark, no arrows, no eyes or faces.",
+      "referencePhotos": [
+        "didymium-portrait",
+        "tubifera-portrait",
+        "trichia-portrait"
+      ],
+      "referenceManifest": "content/assets.manifest.json",
+      "adaptationLicense": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "changeNote": "AI re-rendering in a unified woodland style; anatomical reference corrections to three panels. Attribution remains with the original reference photographs."
+    }
+  ],
+  "spriteMap": {
+    "organisms": {
+      "columns": 4,
+      "rows": 2,
+      "order": [
+        "physarum",
+        "arcyria",
+        "fuligo",
+        "lycogala",
+        "stemonitis",
+        "trichia",
+        "tubifera",
+        "didymium"
+      ]
+    },
+    "lifeStages": {
+      "columns": 3,
+      "rows": 2,
+      "order": [
+        "spore",
+        "cells",
+        "fusion",
+        "physarum-network",
+        "physarum-fruit",
+        "arcyria-fruit"
+      ]
+    }
+  }
+}

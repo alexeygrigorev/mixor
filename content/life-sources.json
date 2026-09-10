@@ -1,0 +1,895 @@
+{
+  "schemaVersion": 1,
+  "editorialVersion": "0.2.0-science-demo",
+  "reviewedAt": "2026-09-10",
+  "reviewMethod": "Primary publication/university/museum reading; Commons original-file metadata through MediaWiki imageinfo and revision API; visual inspection of all 20 local reference photographs. No independent taxonomic expert review.",
+  "sources": [
+    {
+      "id": "mnhn-physarum",
+      "title": "Qu’est-ce qu’un blob ?",
+      "publisher": "Muséum national d’Histoire naturelle",
+      "url": "https://www.mnhn.fr/fr/blob",
+      "scope": "Physarum polycephalum: plasmodium, sexual fusion, sporulation and germination.",
+      "limits": "Museum overview; no universal timing, mating-type count or field identification rule is imported."
+    },
+    {
+      "id": "geneseo-physarum",
+      "title": "Physarum: a plasmodial slime mold — Inanimate Life",
+      "publisher": "SUNY Geneseo, Milne Open Textbooks",
+      "url": "https://milnepublishing.geneseo.edu/botany/chapter/physarum/",
+      "scope": "Structure of a multinucleate plasmodium and sexual-cycle order.",
+      "limits": "Used for biology, not as a source of photographs or the current taxonomic placement."
+    },
+    {
+      "id": "warwick-life-cycle",
+      "title": "Slime Mould Facts",
+      "publisher": "University of Warwick, School of Life Sciences",
+      "url": "https://warwick.ac.uk/fac/sci/lifesci/outreach/slimemold/facts/",
+      "scope": "Amoeboid/flagellate forms, cysts, fusion and reversible plasmodial sclerotium.",
+      "limits": "Group-level educational account illustrated with Physarum. Its resting branch is not evidence that any pictured Arcyria specimen formed a sclerotium."
+    },
+    {
+      "id": "clark-haskins-2016",
+      "title": "Mycosphere Essays 3. Myxomycete spore and amoeboflagellate biology: a review",
+      "authors": [
+        "Jim Clark",
+        "Edward F. Haskins"
+      ],
+      "publisher": "Mycosphere 7(2):86–101",
+      "url": "https://mycosphere.org/pdf/Mycosphere_7_2_1.pdf",
+      "doi": "10.5943/mycosphere/7/2/1",
+      "scope": "Spore germination; feeding/dividing myxamoebae; alternative flagellate and cyst phases; sexual fusion and nuclear division without cell division.",
+      "limits": "Typical heterothallic pathway; the review explicitly describes other nuclear cycles. Swimming forms are not described as dividing without first reverting to amoebae. No blanket species-level mating claim."
+    },
+    {
+      "id": "phate-arcyria-2023",
+      "title": "Agar Cultivation of Myxomycetes Arcyria denudata (L.) Wettst. — A potential source of secondary metabolites",
+      "authors": [
+        "Preeti Vinayak Phate"
+      ],
+      "publisher": "Journal of Bioresearch 2(2):46–50 (2023)",
+      "url": "https://jbior.org/uploads/online_first/18/18-OF6.pdf",
+      "doi": "10.17605/OSF.IO/QR5TC",
+      "scope": "Species description and cultured germination, myxamoebae, white veined plasmodium and sporocarps; figure 2 and Results, p.48.",
+      "limits": "A single cultivation report, not a field timing model. The cultured sporocarps were poorly developed and stalkless, unlike the field description. We do not generalize the paper’s durations, temperatures, colour changes or morphology to every individual. Fusion and resting branches are supported separately at group level. No images reproduced from this paper."
+    },
+    {
+      "id": "clark-haskins-2014",
+      "title": "Sporophore morphology and development in the myxomycetes: a review",
+      "authors": [
+        "Jim Clark",
+        "Edward F. Haskins"
+      ],
+      "publisher": "Mycosphere 5(1):153–170",
+      "url": "https://www.mycosphere.org/pdf/Mycosphere_5_1_7.pdf",
+      "doi": "10.5943/mycosphere/5/1/7",
+      "scope": "Sporocarps, sporangia, stalks, spore-bearing structures; resistant sclerotium versus sporulation; environmental variation in sporocarp form.",
+      "limits": "Anatomical terminology only. Historical classification in the review is not adopted as a current classification tree; Ceratiomyxa’s external spore formation is not merged into these cycles."
+    },
+    {
+      "id": "physarales-revision-2023",
+      "title": "Multigene phylogeny of the order Physarales (Myxomycetes, Amoebozoa): shedding light on the dark-spored clade",
+      "publisher": "Persoonia 51 (2023); Naturalis repository",
+      "url": "https://repository.naturalis.nl/pub/800436/PERS2023051001002-A.pdf",
+      "scope": "Badhamia polycephala, new combination, MycoBank MB 846262; basionym Physarum polycephalum, p.113.",
+      "limits": "The atlas retains the educational/source name Physarum polycephalum and discloses the new combination, without changing source determinations or constructing an unsourced phylogeny."
+    },
+    {
+      "id": "ncbi-5791",
+      "title": "NCBI Taxonomy: Badhamia polycephala",
+      "publisher": "NCBI",
+      "url": "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=5791",
+      "scope": "Database currently displays Badhamia polycephala and the basionym Physarum polycephalum.",
+      "limits": "Corroborating database, not the sole nomenclatural authority; see the primary revision above."
+    }
+  ],
+  "cycleEvidence": {
+    "physarum": {
+      "scope": "Simplified sexual-cycle example for Physarum polycephalum (Badhamia polycephala).",
+      "mainStageIds": [
+        "spore",
+        "cells",
+        "fusion",
+        "network",
+        "fruit"
+      ],
+      "sideStageIds": [
+        "rest"
+      ],
+      "sourceIds": [
+        "mnhn-physarum",
+        "geneseo-physarum",
+        "warwick-life-cycle",
+        "clark-haskins-2016"
+      ],
+      "limits": [
+        "The stages are an order, not elapsed time.",
+        "Photos are different specimens; no morphing or slideshow is observational time-lapse.",
+        "Amoeboid and swimming cells are alternatives; microcysts are distinct from the plasmodial sclerotium.",
+        "Other reproductive routes exist and are outside this simplified sexual path."
+      ]
+    },
+    "arcyria": {
+      "scope": "General heterothallic myxomycete pattern, explicitly contextualized for Arcyria denudata.",
+      "mainStageIds": [
+        "spore",
+        "cells",
+        "fusion",
+        "network",
+        "fruit"
+      ],
+      "sideStageIds": [
+        "rest"
+      ],
+      "sourceIds": [
+        "clark-haskins-2016",
+        "phate-arcyria-2023",
+        "warwick-life-cycle"
+      ],
+      "limits": [
+        "The cultivation paper supports germination, amoebal cells, plasmodial growth and fruiting, not every illustrated transition.",
+        "Fusion and sclerotium are group-level explanations, not observations of the photographed individuals.",
+        "No verified reference photograph of the Arcyria plasmodium is in the local collection.",
+        "The pale arcyria-detail image is excluded as a stage reference."
+      ]
+    }
+  },
+  "unpreparedSpeciesCycles": [
+    "fuligo",
+    "lycogala",
+    "stemonitis",
+    "trichia",
+    "tubifera",
+    "didymium"
+  ],
+  "illustrationGuidance": {
+    "type": "Clearly labelled educational illustration, including any generated artwork; never a reference photograph.",
+    "spore": "Schematic cell and protective wall; surface sculpture and physical scale are not calibrated.",
+    "cells": "Show amoeboid and flagellated forms as alternatives, not two obligatory successive stages. A microcyst is a resting unicellular form.",
+    "fusion": "Two compatible cells and their nuclei unite in the sexual pathway; do not show a many-cell aggregation or Dictyostelium slug.",
+    "network": "One multinucleate plasmodium; nuclei are symbolic. Yellow Physarum imagery must not be treated as observed Arcyria anatomy or colour.",
+    "fruit": "Physarum and Arcyria have separately depicted sporocarps. A sporocarp contains many spores; its size is not the size of a spore.",
+    "rest": "Optional plasmodial sclerotium branch returning to plasmodium; never present it as an obligatory stage after fruiting."
+  },
+  "photoObservations": [
+    {
+      "id": "physarum-macro",
+      "url": "https://www.inaturalist.org/observations/8100308",
+      "photoUrl": "https://www.inaturalist.org/photos/10744588",
+      "currentName": "Badhamia polycephala",
+      "note": "The original observation discusses mature sporocarps. Its current name differs from the historical Commons file label; the nomenclatural relation is verified in the 2023 paper."
+    },
+    {
+      "id": "arcyria-detail",
+      "url": "https://www.inaturalist.org/observations/13081063",
+      "photoUrl": "https://www.inaturalist.org/photos/19055009",
+      "currentName": "Arcyria denudata",
+      "note": "The observer suggests that white, cottony and brown forms may be successive stages. This is a hypothesis, not a verified developmental series, so the pale file is not assigned to an early or resting stage."
+    }
+  ],
+  "photos": [
+    {
+      "id": "physarum-blob",
+      "taxonId": "physarum",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Blob (Physarum polycephalum).jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Blob_(Physarum_polycephalum).jpg",
+        "revisionId": "825783361",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=825783361",
+        "retrievedAt": "2026-09-10"
+      },
+      "sourceDescription": "Physarum polycephalum gefunden an einem gefällten Stamm im Grunewald (Berlin).",
+      "sourceCredit": "Own work",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Physarum polycephalum",
+        "stage": "unknown",
+        "context": "wild",
+        "reviewNotes": "The author names a fallen trunk in Grunewald. The photographed yellow mass is not assigned a precise developmental stage.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "Le Bernemi",
+        "licenseId": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "attribution": "Blob (Physarum polycephalum) — Le Bernemi / Wikimedia Commons / CC BY-SA 4.0",
+        "modifications": [
+          "Existing JPEG-to-WebP preparation; this review records the current bytes and dimensions. The earlier preparation recipe has not been independently audited."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "physarum-petri",
+      "taxonId": "physarum",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Physarum polycephalum.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Physarum_polycephalum.jpg",
+        "revisionId": "860232092",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=860232092",
+        "retrievedAt": "2026-09-10"
+      },
+      "sourceDescription": "plasmodium",
+      "sourceCredit": "Own work",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Physarum polycephalum",
+        "stage": "plasmodium",
+        "context": "unknown",
+        "reviewNotes": "The original description explicitly says plasmodium. Bark/wood is visible; culture conditions are unknown. The legacy file ID does not describe its context.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "HelenGinger",
+        "licenseId": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "attribution": "Physarum polycephalum — HelenGinger / Wikimedia Commons / CC BY-SA 3.0",
+        "modifications": [
+          "Existing JPEG-to-WebP preparation; this review records the current bytes and dimensions. The earlier preparation recipe has not been independently audited."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "physarum-macro",
+      "taxonId": "physarum",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Physarum polycephalum 10744588.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Physarum_polycephalum_10744588.jpg",
+        "revisionId": "1109093120",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1109093120",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.inaturalist.org/photos/10744588"
+      },
+      "sourceDescription": "Many-Headed Slime (Physarum polycephalum)",
+      "sourceCredit": "https://www.inaturalist.org/photos/10744588",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Physarum polycephalum",
+        "stage": "fruiting",
+        "context": "unknown",
+        "reviewNotes": "Stalked sporocarps are visible and discussed in the linked original observation. Commons retains Physarum polycephalum; iNaturalist currently uses Badhamia polycephala.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "Katja Schulz",
+        "licenseId": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "attribution": "Physarum polycephalum 10744588 — Katja Schulz / Wikimedia Commons / CC BY 4.0",
+        "modifications": [
+          "Existing JPEG-to-WebP preparation; this review records the current bytes and dimensions. The earlier preparation recipe has not been independently audited."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "physarum-plasmodium",
+      "taxonId": "physarum",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Physarum polycephalum plasmodium.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Physarum_polycephalum_plasmodium.jpg",
+        "revisionId": "1265458414",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1265458414",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/frankenstoen/5846951405/in/photostream/"
+      },
+      "sourceDescription": "плазмодій слизовика виду Physarum polycephalum",
+      "sourceCredit": "flickr",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Physarum polycephalum",
+        "stage": "plasmodium",
+        "context": "unknown",
+        "reviewNotes": "The source explicitly identifies a plasmodium on tree bark.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "frankenstoen",
+        "licenseId": "CC BY 2.5",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.5/",
+        "attribution": "Physarum polycephalum plasmodium — frankenstoen / Wikimedia Commons / CC BY 2.5",
+        "modifications": [
+          "Existing JPEG-to-WebP preparation; this review records the current bytes and dimensions. The earlier preparation recipe has not been independently audited."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "arcyria-habitat",
+      "taxonId": "arcyria",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Arcyria denudata (45131851675).jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Arcyria_denudata_(45131851675).jpg",
+        "revisionId": "1064806672",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1064806672",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/99278910@N00/45131851675/"
+      },
+      "sourceDescription": "Arcyria denudata",
+      "sourceCredit": "Arcyria denudata",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Arcyria denudata",
+        "stage": "fruiting",
+        "context": "unknown",
+        "reviewNotes": "Visible stalked red sporocarps; stage interpreted from morphology alongside the published species description. Species name is the source determination.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "Lukas from London, England",
+        "licenseId": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "attribution": "Arcyria denudata — Lukas from London, England / Wikimedia Commons / CC BY-SA 2.0",
+        "modifications": [
+          "Existing JPEG-to-WebP preparation; this review records the current bytes and dimensions. The earlier preparation recipe has not been independently audited."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "arcyria-pink",
+      "taxonId": "arcyria",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Arcyria denudata 103374798.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Arcyria_denudata_103374798.jpg",
+        "revisionId": "1030111327",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1030111327",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.inaturalist.org/photos/103374798"
+      },
+      "sourceDescription": "carnival candy slime mold (Arcyria denudata)",
+      "sourceCredit": "https://www.inaturalist.org/photos/103374798",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Arcyria denudata",
+        "stage": "fruiting",
+        "context": "unknown",
+        "reviewNotes": "Visible pink-red sporocarps. Exact maturity is not assigned.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "Erik",
+        "licenseId": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attribution": "Arcyria denudata 103374798 — Erik / Wikimedia Commons / CC0",
+        "modifications": [
+          "Existing JPEG-to-WebP preparation; this review records the current bytes and dimensions. The earlier preparation recipe has not been independently audited."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "arcyria-detail",
+      "taxonId": "arcyria",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Arcyria denudata 19055009.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Arcyria_denudata_19055009.jpg",
+        "revisionId": "1034291061",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1034291061",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.inaturalist.org/photos/19055009"
+      },
+      "sourceDescription": "carnival candy slime mold (Arcyria denudata)",
+      "sourceCredit": "https://www.inaturalist.org/photos/19055009",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Arcyria denudata",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Mostly pale structures beside brownish forms. The original observer's comment only proposes a sequence; it does not establish the stage or identity of every structure. Excluded from cycle-stage photography.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "cwwood",
+        "licenseId": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "attribution": "Arcyria denudata 19055009 — cwwood / Wikimedia Commons / CC BY-SA 4.0",
+        "modifications": [
+          "Existing JPEG-to-WebP preparation; this review records the current bytes and dimensions. The earlier preparation recipe has not been independently audited."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "arcyria-cluster",
+      "taxonId": "arcyria",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Arcyria denudata 25025847.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Arcyria_denudata_25025847.jpg",
+        "revisionId": "1031486478",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1031486478",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.inaturalist.org/photos/25025847"
+      },
+      "sourceDescription": "carnival candy slime mold (Arcyria denudata)",
+      "sourceCredit": "https://www.inaturalist.org/photos/25025847",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Arcyria denudata",
+        "stage": "fruiting",
+        "context": "unknown",
+        "reviewNotes": "Visible orange-red sporocarps on dark wood. No time-series relation is asserted.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "Sarah Culliton",
+        "licenseId": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "attribution": "Arcyria denudata 25025847 — Sarah Culliton / Wikimedia Commons / CC BY 4.0",
+        "modifications": [
+          "Existing JPEG-to-WebP preparation; this review records the current bytes and dimensions. The earlier preparation recipe has not been independently audited."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "fuligo-portrait",
+      "taxonId": "fuligo",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:2011-01-16 Fuligo septica.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:2011-01-16_Fuligo_septica.jpg",
+        "revisionId": "1153815635",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1153815635",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/frankenstoen/5962999546/"
+      },
+      "sourceDescription": "yellow slime mold colony",
+      "sourceCredit": "yellow slime mold colony",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Fuligo septica",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "frankenstoen from Port Washington, Ohio",
+        "licenseId": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+        "attribution": "2011-01-16 Fuligo septica.jpg — frankenstoen from Port Washington, Ohio / Wikimedia Commons / CC BY 2.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "fuligo-detail",
+      "taxonId": "fuligo",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Dog vomit slime mold - Flickr - brewbooks.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Dog_vomit_slime_mold_-_Flickr_-_brewbooks.jpg",
+        "revisionId": "972308888",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=972308888",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/brewbooks/28271449190/"
+      },
+      "sourceDescriptionSummary": "The photographer identifies Fuligo septica and reports this record from the Rampart Ridge trail in Mount Rainier National Park.",
+      "sourceCredit": "Dog vomit slime mold",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Fuligo septica",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "brewbooks from near Seattle, USA",
+        "licenseId": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "attribution": "Dog vomit slime mold - Flickr - brewbooks.jpg — brewbooks from near Seattle, USA / Wikimedia Commons / CC BY-SA 2.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "lycogala-portrait",
+      "taxonId": "lycogala",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Lycogala epidendrum (19614125611).jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Lycogala_epidendrum_(19614125611).jpg",
+        "revisionId": "1176656471",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1176656471",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/acryptozoo/19614125611/"
+      },
+      "sourceDescription": "Rentschler Forest Metropark, Fairfield, Ohio",
+      "sourceCredit": "Wolf's Milk (Lycogala epidendrum)",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Lycogala epidendrum",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "Andrew C",
+        "licenseId": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+        "attribution": "Lycogala epidendrum (19614125611).jpg — Andrew C / Wikimedia Commons / CC BY 2.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "lycogala-detail",
+      "taxonId": "lycogala",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Lycogala epidendrum (2022).jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Lycogala_epidendrum_(2022).jpg",
+        "revisionId": "1156883705",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1156883705",
+        "retrievedAt": "2026-09-10"
+      },
+      "sourceDescription": "Lycogala epidendrium on a tree",
+      "sourceCredit": "Own work",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Lycogala epidendrum",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "Давид Андронов",
+        "licenseId": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "attribution": "Lycogala epidendrum (2022).jpg — Давид Андронов / Wikimedia Commons / CC BY 4.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "stemonitis-portrait",
+      "taxonId": "stemonitis",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Stemonitis axifera.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Stemonitis_axifera.jpg",
+        "revisionId": "860231158",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=860231158",
+        "retrievedAt": "2026-09-10"
+      },
+      "sourceDescription": "Schleimpilz (Stemonitis axifera)",
+      "sourceCredit": "Own work",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Stemonitis axifera",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "Lebrac",
+        "licenseId": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "attribution": "Stemonitis axifera.jpg — Lebrac / Wikimedia Commons / CC BY-SA 3.0",
+        "modifications": [],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "stemonitis-fruit",
+      "taxonId": "stemonitis",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Stemonitis axifera 55573699.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Stemonitis_axifera_55573699.jpg",
+        "revisionId": "1271649379",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1271649379",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.inaturalist.org/photos/55573699"
+      },
+      "sourceDescription": "Stemonitis axifera",
+      "sourceCredit": "https://www.inaturalist.org/photos/55573699",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Stemonitis axifera",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "bjoerns",
+        "licenseId": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "attribution": "Stemonitis axifera 55573699.jpg — bjoerns / Wikimedia Commons / CC BY-SA 4.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "trichia-portrait",
+      "taxonId": "trichia",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Trichia decipiens (25563535374).jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Trichia_decipiens_(25563535374).jpg",
+        "revisionId": "1178816070",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1178816070",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/40948266@N04/25563535374/"
+      },
+      "sourceDescription": "Trichia decipiens",
+      "sourceCredit": "Trichia decipiens",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Trichia decipiens",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "Björn S...",
+        "licenseId": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "attribution": "Trichia decipiens (25563535374).jpg — Björn S... / Wikimedia Commons / CC BY-SA 2.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "trichia-detail",
+      "taxonId": "trichia",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Trichia decipiens (49251741308).jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Trichia_decipiens_(49251741308).jpg",
+        "revisionId": "1028051013",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1028051013",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/philgar/49251741308/"
+      },
+      "sourceDescription": "Trichia decipiens",
+      "sourceCredit": "Trichia decipiens",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Trichia decipiens",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "Philippe Garcelon",
+        "licenseId": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+        "attribution": "Trichia decipiens (49251741308).jpg — Philippe Garcelon / Wikimedia Commons / CC BY 2.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "tubifera-portrait",
+      "taxonId": "tubifera",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Tubifera ferruginosa (27663631133).jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Tubifera_ferruginosa_(27663631133).jpg",
+        "revisionId": "1004397328",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1004397328",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/40948266@N04/27663631133/"
+      },
+      "sourceDescription": "Tubifera ferruginosa",
+      "sourceCredit": "Tubifera ferruginosa",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Tubifera ferruginosa",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "Björn S...",
+        "licenseId": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "attribution": "Tubifera ferruginosa (27663631133).jpg — Björn S... / Wikimedia Commons / CC BY-SA 2.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "tubifera-detail",
+      "taxonId": "tubifera",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Tubifera ferruginosa (28233865066).jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Tubifera_ferruginosa_(28233865066).jpg",
+        "revisionId": "1181986946",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1181986946",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/40948266@N04/28233865066/"
+      },
+      "sourceDescription": "Tubifera ferruginosa",
+      "sourceCredit": "Tubifera ferruginosa",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Tubifera ferruginosa",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "Björn S...",
+        "licenseId": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "attribution": "Tubifera ferruginosa (28233865066).jpg — Björn S... / Wikimedia Commons / CC BY-SA 2.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "didymium-portrait",
+      "taxonId": "didymium",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Didymium squamulosum 12947597.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Didymium_squamulosum_12947597.jpg",
+        "revisionId": "1030127289",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1030127289",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.inaturalist.org/photos/12947597"
+      },
+      "sourceDescription": "Didymium squamulosum",
+      "sourceCredit": "https://www.inaturalist.org/photos/12947597",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Didymium squamulosum",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "Thomas Laxton",
+        "licenseId": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "attribution": "Didymium squamulosum 12947597.jpg — Thomas Laxton / Wikimedia Commons / CC BY-SA 4.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    },
+    {
+      "id": "didymium-detail",
+      "taxonId": "didymium",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Didymium squamulosum 30679733.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Didymium_squamulosum_30679733.jpg",
+        "revisionId": "1040619075",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1040619075",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.inaturalist.org/photos/30679733"
+      },
+      "sourceDescription": "Didymium squamulosum",
+      "sourceCredit": "https://www.inaturalist.org/photos/30679733",
+      "determination": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Didymium squamulosum",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "rights": {
+        "author": "Thomas Laxton",
+        "licenseId": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "attribution": "Didymium squamulosum 30679733.jpg — Thomas Laxton / Wikimedia Commons / CC BY-SA 4.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "physicalScale": null,
+      "observationSeriesId": null
+    }
+  ],
+  "limits": [
+    "All Russian common names are descriptive teaching labels, not verified official vernacular names.",
+    "Commons file names and community determinations are preserved as source labels, not promoted to expert verification.",
+    "New atlas entries describe only visible features and pictured substrate, not a complete species diagnosis, distribution or diet.",
+    "Species names are not a sourced contemporary classification tree; family/genus relationships are not inferred from visual similarity.",
+    "Original metadata may contain uncertainties and spelling differences, including Lycogala epidendrium in one source description; these are preserved here.",
+    "Generated art and renderer integration are handled separately; this registry does not claim those images have passed a scientific visual review.",
+    "No physical-device test or expert microscopy was performed."
+  ]
+}

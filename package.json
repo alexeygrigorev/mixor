@@ -1,0 +1,33 @@
+{
+  "name": "mixor",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A calm, photo-first field game about slime moulds and small discoveries.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build && node scripts/build-offline.mjs",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/domain.test.mjs && playwright test",
+    "test:browser": "playwright test",
+    "test:offline": "node tests/offline.mjs",
+    "audio:master": "node scripts/master-audio.mjs",
+    "assets:validate": "node scripts/validate-assets.mjs",
+    "audio:generate": "node --env-file=../red-stamp/.env scripts/generate-mixor-audio.mjs all"
+  },
+  "dependencies": {
+    "@fontsource-variable/literata": "5.3.0",
+    "@fontsource-variable/nunito-sans": "5.3.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "typescript": "7.0.2",
+    "vite": "8.2.2"
+  }
+}

@@ -1,0 +1,233 @@
+openapi: 3.1.0
+info:
+  title: Mixor family API
+  version: 0.1.0
+  description: >-
+    Baseline contract for the next cloud stage. The first playable local slice
+    uses the same observation shape but does not claim cloud synchronization.
+paths:
+  /v1/me:
+    get:
+      summary: Return the current membership and client capabilities
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200':
+          description: Current user context
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MeResponse' }
+  /v1/observations:
+    get:
+      summary: List family observations
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - { $ref: '#/components/parameters/Limit' }
+        - { $ref: '#/components/parameters/NextCursor' }
+      responses:
+        '200':
+          description: A bounded page of observations
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ObservationPage' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+    post:
+      summary: Create a draft observation with a client-owned id
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreateObservation' }
+      responses:
+        '201':
+          description: Created observation
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ObservationResponse' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /v1/observations/{observationId}:
+    parameters:
+      - name: observationId
+        in: path
+        required: true
+        schema: { type: string, minLength: 1 }
+    get:
+      summary: Read one family observation
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200':
+          description: Observation detail
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ObservationResponse' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    patch:
+      summary: Update editable fields with optimistic version check
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - { $ref: '#/components/parameters/IfMatch' }
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/UpdateObservation' }
+      responses:
+        '200':
+          description: Updated observation
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ObservationResponse' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '412': { $ref: '#/components/responses/VersionConflict' }
+  /v1/changes:
+    get:
+      summary: Read the family change feed after an opaque cursor
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: cursor
+          in: query
+          schema: { type: string, nullable: true }
+        - { $ref: '#/components/parameters/Limit' }
+      responses:
+        '200':
+          description: Ordered change events
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ChangePage' }
+        '410':
+          description: Cursor retention expired; client must snapshot without discarding outbox
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      schema: { type: integer, minimum: 1, maximum: 100, default: 50 }
+    NextCursor:
+      name: cursor
+      in: query
+      schema: { type: string }
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema: { type: string, minLength: 8, maxLength: 128 }
+    IfMatch:
+      name: If-Match
+      in: header
+      required: true
+      schema: { type: string, pattern: '^"[0-9]+"$' }
+  responses:
+    BadRequest:
+      description: Invalid input
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    Unauthorized:
+      description: Login required
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    Conflict:
+      description: Idempotency or business conflict
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    VersionConflict:
+      description: Entity version changed on another device
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    NotFound:
+      description: Resource not found or not visible to this family
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+  schemas:
+    MeResponse:
+      type: object
+      required: [userId, familyId, role, capabilities]
+      properties:
+        userId: { type: string }
+        familyId: { type: string }
+        role: { type: string, enum: [parent, child] }
+        capabilities: { type: object, additionalProperties: { type: boolean } }
+    ObservedTime:
+      type: object
+      required: [precision, source]
+      properties:
+        precision: { type: string, enum: [instant, day, month, year, unknown] }
+        date: { type: [string, 'null'], format: date }
+        source: { type: string, enum: [photo_exif, device_capture, manual, unknown] }
+        timezoneUnknown: { type: boolean }
+    Location:
+      type: object
+      required: [latitude, longitude, source]
+      properties:
+        latitude: { type: number, minimum: -90, maximum: 90 }
+        longitude: { type: number, minimum: -180, maximum: 180 }
+        accuracyMeters: { type: [number, 'null'], minimum: 0 }
+        source: { type: string, enum: [photo_exif, device_capture, device_now, manual] }
+        placeLabel: { type: [string, 'null'] }
+    CreateObservation:
+      type: object
+      required: [id, context, observed]
+      additionalProperties: false
+      properties:
+        id: { type: string }
+        title: { type: [string, 'null'] }
+        context: { type: string, enum: [wild, culture, unknown] }
+        observed: { $ref: '#/components/schemas/ObservedTime' }
+        location: { oneOf: [{ $ref: '#/components/schemas/Location' }, { type: 'null' }] }
+        initialNote: { type: [string, 'null'], minLength: 1 }
+        attachmentIntents: { type: array, maxItems: 20, items: { type: object } }
+    UpdateObservation:
+      type: object
+      additionalProperties: false
+      properties:
+        title: { type: [string, 'null'] }
+        observed: { $ref: '#/components/schemas/ObservedTime' }
+        location: { oneOf: [{ $ref: '#/components/schemas/Location' }, { type: 'null' }] }
+        note: { type: string }
+    Observation:
+      type: object
+      required: [id, familyId, version, context, observed, mediaIds, createdAt, updatedAt]
+      properties:
+        id: { type: string }
+        familyId: { type: string }
+        version: { type: integer, minimum: 1 }
+        title: { type: [string, 'null'] }
+        context: { type: string, enum: [wild, culture, unknown] }
+        observed: { $ref: '#/components/schemas/ObservedTime' }
+        location: { oneOf: [{ $ref: '#/components/schemas/Location' }, { type: 'null' }] }
+        mediaIds: { type: array, items: { type: string } }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+    ObservationResponse:
+      type: object
+      required: [resource]
+      properties:
+        resource: { $ref: '#/components/schemas/Observation' }
+    ObservationPage:
+      type: object
+      required: [resources, nextCursor]
+      properties:
+        resources: { type: array, items: { $ref: '#/components/schemas/Observation' } }
+        nextCursor: { type: [string, 'null'] }
+    ChangePage:
+      type: object
+      required: [events, nextCursor, hasMore]
+      properties:
+        events: { type: array, items: { type: object } }
+        nextCursor: { type: string }
+        hasMore: { type: boolean }
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message, requestId]
+          properties:
+            code: { type: string }
+            message: { type: string }
+            requestId: { type: string }

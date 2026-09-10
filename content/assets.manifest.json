@@ -1,0 +1,1299 @@
+{
+  "schemaVersion": 1,
+  "contentVersion": "0.2.0-woodland",
+  "generatedAt": "2026-09-10",
+  "assets": [
+    {
+      "id": "fuligo-portrait",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "fuligo",
+      "role": "hero",
+      "path": "public/assets/photos/fuligo-portrait.jpg",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:2011-01-16 Fuligo septica.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:2011-01-16_Fuligo_septica.jpg",
+        "revisionId": "1153815635",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1153815635",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/frankenstoen/5962999546/"
+      },
+      "rights": {
+        "author": "frankenstoen from Port Washington, Ohio",
+        "licenseId": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+        "attribution": "2011-01-16 Fuligo septica.jpg — frankenstoen from Port Washington, Ohio / Wikimedia Commons / CC BY 2.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Fuligo septica",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "2011-01-16 Fuligo septica.jpg",
+      "caption": "Жёлтые разветвлённые массы покрывают древесную щепу. Файл источника подписан Fuligo septica; точная стадия отдельно не установлена.",
+      "alt": "Жёлтые бугристые и разветвлённые массы на тёмной щепе, за ними двор",
+      "isGenerated": false,
+      "mime": "image/jpeg",
+      "width": 1280,
+      "height": 960,
+      "bytes": 408400,
+      "checksum": "01731c6bcea8f59099409f0f1c2fce8cef6c51f588c1fff1d1b7382626b47a52",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/2/2d/2011-01-16_Fuligo_septica.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 2848,
+        "height": 2136,
+        "bytes": 1207428,
+        "commonsSha1": "009bdad0973eaf3fabe752fb05c71df45b909a09"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "fuligo-detail",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "fuligo",
+      "role": "detail",
+      "path": "public/assets/photos/fuligo-detail.jpg",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Dog vomit slime mold - Flickr - brewbooks.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Dog_vomit_slime_mold_-_Flickr_-_brewbooks.jpg",
+        "revisionId": "972308888",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=972308888",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/brewbooks/28271449190/"
+      },
+      "rights": {
+        "author": "brewbooks from near Seattle, USA",
+        "licenseId": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "attribution": "Dog vomit slime mold - Flickr - brewbooks.jpg — brewbooks from near Seattle, USA / Wikimedia Commons / CC BY-SA 2.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Fuligo septica",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Dog vomit slime mold - Flickr - brewbooks.jpg",
+      "caption": "Светлая бугристая масса с жёлтыми и сетчатыми участками на разрушенном пне. Автор подписывает Fuligo septica; снимок показывает отдельную находку.",
+      "alt": "Светло-жёлтая бугристая масса и тонкие сетчатые участки на тёмном пне",
+      "isGenerated": false,
+      "mime": "image/jpeg",
+      "width": 1280,
+      "height": 960,
+      "bytes": 411412,
+      "checksum": "66b75060c50b173654807b6e2ee1406d00b01ea8195ca369d69d6dead911a935",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/9/94/Dog_vomit_slime_mold_-_Flickr_-_brewbooks.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 4608,
+        "height": 3456,
+        "bytes": 4270725,
+        "commonsSha1": "894800f1bbe875a4927766a2f635e8392a2b4c06"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "lycogala-portrait",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "lycogala",
+      "role": "hero",
+      "path": "public/assets/photos/lycogala-portrait.jpg",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Lycogala epidendrum (19614125611).jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Lycogala_epidendrum_(19614125611).jpg",
+        "revisionId": "1176656471",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1176656471",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/acryptozoo/19614125611/"
+      },
+      "rights": {
+        "author": "Andrew C",
+        "licenseId": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+        "attribution": "Lycogala epidendrum (19614125611).jpg — Andrew C / Wikimedia Commons / CC BY 2.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Lycogala epidendrum",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Lycogala epidendrum (19614125611).jpg",
+      "caption": "Оранжевые округлые плодовые тела на растительном субстрате. Имя Lycogala epidendrum взято из источника; по цвету вид не устанавливается.",
+      "alt": "Оранжевые округлые плодовые тела среди тёмных древесных волокон",
+      "isGenerated": false,
+      "mime": "image/jpeg",
+      "width": 1280,
+      "height": 853,
+      "bytes": 267531,
+      "checksum": "25e84f5757895f457d80540d1ff6a0782e883d9016cad898e0c1c69c36e060cb",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Lycogala_epidendrum_%2819614125611%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 3343,
+        "height": 2229,
+        "bytes": 3943810,
+        "commonsSha1": "38e34f1515837c68ab7229d0cb099f1136eb67e5"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "lycogala-detail",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "lycogala",
+      "role": "detail",
+      "path": "public/assets/photos/lycogala-detail.jpg",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Lycogala epidendrum (2022).jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Lycogala_epidendrum_(2022).jpg",
+        "revisionId": "1156883705",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1156883705",
+        "retrievedAt": "2026-09-10"
+      },
+      "rights": {
+        "author": "Давид Андронов",
+        "licenseId": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "attribution": "Lycogala epidendrum (2022).jpg — Давид Андронов / Wikimedia Commons / CC BY 4.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Lycogala epidendrum",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Lycogala epidendrum (2022).jpg",
+      "caption": "Серо-коричневые округлые формы на древесине. В исходном описании написано «Lycogala epidendrium», в заголовке — Lycogala epidendrum. Связь с первым кадром в одну историю развития не установлена.",
+      "alt": "Серо-коричневые шаровидные структуры группой на древесине",
+      "isGenerated": false,
+      "mime": "image/jpeg",
+      "width": 1280,
+      "height": 960,
+      "bytes": 285229,
+      "checksum": "5b5b4146260f5d21fa0525c733fa899ebea2d93126a0b4f087d184a129b898e9",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Lycogala_epidendrum_%282022%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 5152,
+        "height": 3864,
+        "bytes": 7196153,
+        "commonsSha1": "b50ea85df4fe2d7457ade6c65b0907e993ccbfd6"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "stemonitis-portrait",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "stemonitis",
+      "role": "hero",
+      "path": "public/assets/photos/stemonitis-portrait.jpg",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Stemonitis axifera.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Stemonitis_axifera.jpg",
+        "revisionId": "860231158",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=860231158",
+        "retrievedAt": "2026-09-10"
+      },
+      "rights": {
+        "author": "Lebrac",
+        "licenseId": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "attribution": "Stemonitis axifera.jpg — Lebrac / Wikimedia Commons / CC BY-SA 3.0",
+        "modifications": [],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Stemonitis axifera",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Stemonitis axifera.jpg",
+      "caption": "Белые вытянутые структуры на тонких чёрных ножках. Автор подписывает Stemonitis axifera; время и степень зрелости из этого фото не устанавливаются.",
+      "alt": "Пучок белых вытянутых структур на блестящих чёрных ножках",
+      "isGenerated": false,
+      "mime": "image/jpeg",
+      "width": 1000,
+      "height": 667,
+      "bytes": 342682,
+      "checksum": "d6eda95e2545aa79de88aef8badecfbd9175ac79c2fef14b230141ffc990fdb5",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Stemonitis_axifera.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 1000,
+        "height": 667,
+        "bytes": 342682,
+        "commonsSha1": "6e5f22451587c106e1f75811d2f1cc3eaa5abfe8"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "stemonitis-fruit",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "stemonitis",
+      "role": "detail",
+      "path": "public/assets/photos/stemonitis-fruit.jpg",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Stemonitis axifera 55573699.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Stemonitis_axifera_55573699.jpg",
+        "revisionId": "1271649379",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1271649379",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.inaturalist.org/photos/55573699"
+      },
+      "rights": {
+        "author": "bjoerns",
+        "licenseId": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "attribution": "Stemonitis axifera 55573699.jpg — bjoerns / Wikimedia Commons / CC BY-SA 4.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Stemonitis axifera",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Stemonitis axifera 55573699.jpg",
+      "caption": "Микроскопический кадр из записи Stemonitis axifera: тонкая сеть и округлые частицы вокруг тёмной оси. Калибровка и окрашивание в выбранных метаданных не указаны.",
+      "alt": "Тёмная ось, тонкая сетка нитей и множество округлых коричневатых частиц на светлом фоне",
+      "isGenerated": false,
+      "mime": "image/jpeg",
+      "width": 1280,
+      "height": 853,
+      "bytes": 198775,
+      "checksum": "4426caac8ec98559b04e3042fe72b4f73d6b63feeff4fb37f9f5cb77630740dc",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Stemonitis_axifera_55573699.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 2048,
+        "height": 1365,
+        "bytes": 1013221,
+        "commonsSha1": "3c9182fd61ae95eda32fda193063baca6941769a"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "trichia-portrait",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "trichia",
+      "role": "hero",
+      "path": "public/assets/photos/trichia-portrait.jpg",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Trichia decipiens (25563535374).jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Trichia_decipiens_(25563535374).jpg",
+        "revisionId": "1178816070",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1178816070",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/40948266@N04/25563535374/"
+      },
+      "rights": {
+        "author": "Björn S...",
+        "licenseId": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "attribution": "Trichia decipiens (25563535374).jpg — Björn S... / Wikimedia Commons / CC BY-SA 2.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Trichia decipiens",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Trichia decipiens (25563535374).jpg",
+      "caption": "Оранжевые округлые структуры на тёмной древесине. Автор называет Trichia decipiens; одна окраска не подтверждает вид или степень зрелости.",
+      "alt": "Группы гладких оранжевых округлых структур на тёмной древесине",
+      "isGenerated": false,
+      "mime": "image/jpeg",
+      "width": 1280,
+      "height": 853,
+      "bytes": 278065,
+      "checksum": "cb9366e1f319f765ed4373c60c9d9332e1ebd340145866b15406cf50ca2365c3",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Trichia_decipiens_%2825563535374%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 5184,
+        "height": 3456,
+        "bytes": 6707391,
+        "commonsSha1": "3009dfdcaffb69baa8e1113fe046eb09a28f22f6"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "trichia-detail",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "trichia",
+      "role": "detail",
+      "path": "public/assets/photos/trichia-detail.jpg",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Trichia decipiens (49251741308).jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Trichia_decipiens_(49251741308).jpg",
+        "revisionId": "1028051013",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1028051013",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/philgar/49251741308/"
+      },
+      "rights": {
+        "author": "Philippe Garcelon",
+        "licenseId": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+        "attribution": "Trichia decipiens (49251741308).jpg — Philippe Garcelon / Wikimedia Commons / CC BY 2.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Trichia decipiens",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Trichia decipiens (49251741308).jpg",
+      "caption": "Близкий кадр оранжевых головок на светлых основаниях. Имя Trichia decipiens взято из источника; это самостоятельный снимок без подтверждённой связи с первым.",
+      "alt": "Блестящие оранжевые головки на белёсых вытянутых основаниях",
+      "isGenerated": false,
+      "mime": "image/jpeg",
+      "width": 1280,
+      "height": 522,
+      "bytes": 194388,
+      "checksum": "7e321fdf2b56d0b9148ceab2c64509ea2268b7d31634756b2c6c789545eea9bf",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Trichia_decipiens_%2849251741308%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 2600,
+        "height": 1061,
+        "bytes": 1723240,
+        "commonsSha1": "696c59ef24d1b634c04439969151fc574af42c3f"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "tubifera-portrait",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "tubifera",
+      "role": "hero",
+      "path": "public/assets/photos/tubifera-portrait.jpg",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Tubifera ferruginosa (27663631133).jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Tubifera_ferruginosa_(27663631133).jpg",
+        "revisionId": "1004397328",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1004397328",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/40948266@N04/27663631133/"
+      },
+      "rights": {
+        "author": "Björn S...",
+        "licenseId": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "attribution": "Tubifera ferruginosa (27663631133).jpg — Björn S... / Wikimedia Commons / CC BY-SA 2.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Tubifera ferruginosa",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Tubifera ferruginosa (27663631133).jpg",
+      "caption": "Плотная оранжевая группа с различимыми округлыми концами коротких трубочек. Имя Tubifera ferruginosa — по источнику; сроки развития не установлены.",
+      "alt": "Оранжевые округлые концы тесно расположенных трубочек над мхом",
+      "isGenerated": false,
+      "mime": "image/jpeg",
+      "width": 1280,
+      "height": 853,
+      "bytes": 182825,
+      "checksum": "982dd07db84cae145c8ef8321b3f6fb4e0316a9c00086f57ba9e99fb2a418a6e",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Tubifera_ferruginosa_%2827663631133%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 5184,
+        "height": 3456,
+        "bytes": 6727974,
+        "commonsSha1": "ba8fd639463533e3268bd36c1c0710e66eafb0cd"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "tubifera-detail",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "tubifera",
+      "role": "detail",
+      "path": "public/assets/photos/tubifera-detail.jpg",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Tubifera ferruginosa (28233865066).jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Tubifera_ferruginosa_(28233865066).jpg",
+        "revisionId": "1181986946",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1181986946",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/40948266@N04/28233865066/"
+      },
+      "rights": {
+        "author": "Björn S...",
+        "licenseId": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "attribution": "Tubifera ferruginosa (28233865066).jpg — Björn S... / Wikimedia Commons / CC BY-SA 2.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Tubifera ferruginosa",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Tubifera ferruginosa (28233865066).jpg",
+      "caption": "Оранжевое скопление над мхом, рядом растительные остатки. Другой снимок из коллекции автора; последовательность развития по этим двум кадрам не задаётся.",
+      "alt": "Широкое оранжевое скопление мелких округлых структур на мху",
+      "isGenerated": false,
+      "mime": "image/jpeg",
+      "width": 1280,
+      "height": 853,
+      "bytes": 216892,
+      "checksum": "8946eff8db321cc551b50657790aa0e29f4e46b1140bd10d390c0c4aff06455a",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/6/66/Tubifera_ferruginosa_%2828233865066%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 5184,
+        "height": 3456,
+        "bytes": 7709874,
+        "commonsSha1": "2f9f8afcd531b39f821fcf0a2353f50958c7de75"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "didymium-portrait",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "didymium",
+      "role": "hero",
+      "path": "public/assets/photos/didymium-portrait.jpg",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Didymium squamulosum 12947597.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Didymium_squamulosum_12947597.jpg",
+        "revisionId": "1030127289",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1030127289",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.inaturalist.org/photos/12947597"
+      },
+      "rights": {
+        "author": "Thomas Laxton",
+        "licenseId": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "attribution": "Didymium squamulosum 12947597.jpg — Thomas Laxton / Wikimedia Commons / CC BY-SA 4.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Didymium squamulosum",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Didymium squamulosum 12947597.jpg",
+      "caption": "Светлые округлые плодовые тела с тёмными участками поверхности. Источник подписывает Didymium squamulosum; степень сохранности отдельных структур различается.",
+      "alt": "Группа белёсых округлых плодовых тел с тёмными раскрытыми участками",
+      "isGenerated": false,
+      "mime": "image/jpeg",
+      "width": 1280,
+      "height": 916,
+      "bytes": 258111,
+      "checksum": "7b233afd2ffb9d656d066fb8fc90e60dd7d3f1d92371d7fbe3fdcc035ecb06fe",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/d/df/Didymium_squamulosum_12947597.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 2048,
+        "height": 1465,
+        "bytes": 2020850,
+        "commonsSha1": "4d1187a9d170d507748239299fca95ad2a979980"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "didymium-detail",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "didymium",
+      "role": "detail",
+      "path": "public/assets/photos/didymium-detail.jpg",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Didymium squamulosum 30679733.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Didymium_squamulosum_30679733.jpg",
+        "revisionId": "1040619075",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1040619075",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.inaturalist.org/photos/30679733"
+      },
+      "rights": {
+        "author": "Thomas Laxton",
+        "licenseId": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "attribution": "Didymium squamulosum 30679733.jpg — Thomas Laxton / Wikimedia Commons / CC BY-SA 4.0",
+        "modifications": [
+          "Reduced-size JPEG supplied by Wikimedia Commons; no further image editing by Mixor."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Didymium squamulosum",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Caption describes the downloaded image. Species label is copied from the source; no independent identification, developmental timing, or physical scale is inferred.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Didymium squamulosum 30679733.jpg",
+      "caption": "Отдельное светлое плодовое тело на ножке; на поверхности видны тёмные точки. Определение Didymium squamulosum взято из источника, физический масштаб не указан.",
+      "alt": "Светлая округлая головка на ножке с неровной поверхностью и тёмными точками",
+      "isGenerated": false,
+      "mime": "image/jpeg",
+      "width": 1280,
+      "height": 1353,
+      "bytes": 261175,
+      "checksum": "ccddb619f3eba1e3d3fc3cac7f72a02ed7310cc19bc97ff114321bcc2a545279",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/81/Didymium_squamulosum_30679733.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 1937,
+        "height": 2048,
+        "bytes": 2369726,
+        "commonsSha1": "dea10b455bc14b64c7e11748f4c6377a9d83065c"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "physarum-blob",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "physarum",
+      "role": "hero",
+      "path": "public/assets/images/physarum-blob.webp",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Blob (Physarum polycephalum).jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Blob_(Physarum_polycephalum).jpg",
+        "revisionId": "825783361",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=825783361",
+        "retrievedAt": "2026-09-10"
+      },
+      "rights": {
+        "author": "Le Bernemi",
+        "licenseId": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "attribution": "Blob (Physarum polycephalum) — Le Bernemi / Wikimedia Commons / CC BY-SA 4.0",
+        "modifications": [
+          "Existing JPEG-to-WebP preparation; this review records the current bytes and dimensions. The earlier preparation recipe has not been independently audited."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Physarum polycephalum",
+        "stage": "unknown",
+        "context": "wild",
+        "reviewNotes": "The author names a fallen trunk in Grunewald. The photographed yellow mass is not assigned a precise developmental stage.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Blob (Physarum polycephalum)",
+      "caption": "Жёлтая масса с сетчатыми участками на срубленном стволе. Автор указывает Груневальд в Берлине; название вида взято из источника.",
+      "alt": "Бугристая жёлтая масса и тонкие сетчатые участки на тёмной коре",
+      "isGenerated": false,
+      "mime": "image/webp",
+      "width": 1600,
+      "height": 900,
+      "bytes": 189350,
+      "checksum": "7b4b413a55a975f7ab1c84d7b81ea6db92c157e66a7ff4d8e1dbf4196ac572d5",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/5/58/Blob_%28Physarum_polycephalum%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 3840,
+        "height": 2160,
+        "bytes": 2103383,
+        "commonsSha1": "0469abaa7e3a09a89ed28c5abc7bb682da7e880c"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "physarum-petri",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "physarum",
+      "role": "habitat",
+      "path": "public/assets/images/physarum-petri.webp",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Physarum polycephalum.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Physarum_polycephalum.jpg",
+        "revisionId": "860232092",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=860232092",
+        "retrievedAt": "2026-09-10"
+      },
+      "rights": {
+        "author": "HelenGinger",
+        "licenseId": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "attribution": "Physarum polycephalum — HelenGinger / Wikimedia Commons / CC BY-SA 3.0",
+        "modifications": [
+          "Existing JPEG-to-WebP preparation; this review records the current bytes and dimensions. The earlier preparation recipe has not been independently audited."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Physarum polycephalum",
+        "stage": "plasmodium",
+        "context": "unknown",
+        "reviewNotes": "The original description explicitly says plasmodium. Bark/wood is visible; culture conditions are unknown. The legacy file ID does not describe its context.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Physarum polycephalum",
+      "caption": "Плазмодий на древесине. Стадия названа в исходном описании; условия культивирования не указаны.",
+      "alt": "Жёлто-оранжевый плазмодий образует сетку на коричневой древесине",
+      "isGenerated": false,
+      "mime": "image/webp",
+      "width": 1600,
+      "height": 1066,
+      "bytes": 140424,
+      "checksum": "64e7aed2d73f2e1568df97325b948c6c18faf8ec863029ab338edf26ce3f1dcf",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Physarum_polycephalum.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 1799,
+        "height": 1199,
+        "bytes": 166688,
+        "commonsSha1": "69354af42a7f605cbd55e24e8717ce2dfeb18fcb"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "physarum-macro",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "physarum",
+      "role": "detail",
+      "path": "public/assets/images/physarum-macro.webp",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Physarum polycephalum 10744588.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Physarum_polycephalum_10744588.jpg",
+        "revisionId": "1109093120",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1109093120",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.inaturalist.org/photos/10744588"
+      },
+      "rights": {
+        "author": "Katja Schulz",
+        "licenseId": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "attribution": "Physarum polycephalum 10744588 — Katja Schulz / Wikimedia Commons / CC BY 4.0",
+        "modifications": [
+          "Existing JPEG-to-WebP preparation; this review records the current bytes and dimensions. The earlier preparation recipe has not been independently audited."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Physarum polycephalum",
+        "stage": "fruiting",
+        "context": "unknown",
+        "reviewNotes": "Stalked sporocarps are visible and discussed in the linked original observation. Commons retains Physarum polycephalum; iNaturalist currently uses Badhamia polycephala.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Physarum polycephalum 10744588",
+      "caption": "Плодовые тела с изогнутыми головками на тонких ножках. Commons сохраняет имя Physarum polycephalum; исходная запись iNaturalist теперь использует Badhamia polycephala.",
+      "alt": "Желтоватые лопастные головки плодовых тел на тонких коричневых ножках",
+      "isGenerated": false,
+      "mime": "image/webp",
+      "width": 1600,
+      "height": 1200,
+      "bytes": 105656,
+      "checksum": "019662f23bfcce32bc148cf3fa383d57a647aa80127f707c49ab8fe1d56807ab",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Physarum_polycephalum_10744588.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 2048,
+        "height": 1536,
+        "bytes": 851364,
+        "commonsSha1": "f36bff83db7f08fb020c5430ba9c32092dde17ec"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "physarum-plasmodium",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "physarum",
+      "role": "stage",
+      "path": "public/assets/images/physarum-plasmodium.webp",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Physarum polycephalum plasmodium.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Physarum_polycephalum_plasmodium.jpg",
+        "revisionId": "1265458414",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1265458414",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/frankenstoen/5846951405/in/photostream/"
+      },
+      "rights": {
+        "author": "frankenstoen",
+        "licenseId": "CC BY 2.5",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.5/",
+        "attribution": "Physarum polycephalum plasmodium — frankenstoen / Wikimedia Commons / CC BY 2.5",
+        "modifications": [
+          "Existing JPEG-to-WebP preparation; this review records the current bytes and dimensions. The earlier preparation recipe has not been independently audited."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Physarum polycephalum",
+        "stage": "plasmodium",
+        "context": "unknown",
+        "reviewNotes": "The source explicitly identifies a plasmodium on tree bark.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Physarum polycephalum plasmodium",
+      "caption": "Источник подписывает плазмодий Physarum polycephalum на коре. Видны толстые тяжи и тонкая сеть; связи с другими снимками в одну серию нет.",
+      "alt": "Тонкая жёлтая сеть плазмодия на субстрате",
+      "isGenerated": false,
+      "mime": "image/webp",
+      "width": 1024,
+      "height": 768,
+      "bytes": 130146,
+      "checksum": "a5937de65e62b93413ef99f72643bfdeac45b076368982dc9c035f37eabc72b3",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Physarum_polycephalum_plasmodium.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 1024,
+        "height": 768,
+        "bytes": 563357,
+        "commonsSha1": "05d1aaa12a3ff3e768132dc6dfaef9c8445db390"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "arcyria-habitat",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "arcyria",
+      "role": "habitat",
+      "path": "public/assets/images/arcyria-habitat.webp",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Arcyria denudata (45131851675).jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Arcyria_denudata_(45131851675).jpg",
+        "revisionId": "1064806672",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1064806672",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.flickr.com/photos/99278910@N00/45131851675/"
+      },
+      "rights": {
+        "author": "Lukas from London, England",
+        "licenseId": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+        "attribution": "Arcyria denudata — Lukas from London, England / Wikimedia Commons / CC BY-SA 2.0",
+        "modifications": [
+          "Existing JPEG-to-WebP preparation; this review records the current bytes and dimensions. The earlier preparation recipe has not been independently audited."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Arcyria denudata",
+        "stage": "fruiting",
+        "context": "unknown",
+        "reviewNotes": "Visible stalked red sporocarps; stage interpreted from morphology alongside the published species description. Species name is the source determination.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Arcyria denudata",
+      "caption": "Красные вытянутые плодовые тела на коротких ножках. Древесный субстрат виден; определение Arcyria denudata взято из подписи автора.",
+      "alt": "Группа красных плодовых тел Arcyria denudata на тёмном стволе",
+      "isGenerated": false,
+      "mime": "image/webp",
+      "width": 1600,
+      "height": 1065,
+      "bytes": 185330,
+      "checksum": "7a878703c205290313f35b97dca3be00220d8880e895f0c5dfb387554fdd8406",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Arcyria_denudata_%2845131851675%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 1770,
+        "height": 1178,
+        "bytes": 694001,
+        "commonsSha1": "c96f4f6dbbd7f0d0ece69f775d8d713706e94a0e"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "arcyria-pink",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "arcyria",
+      "role": "hero",
+      "path": "public/assets/images/arcyria-pink.webp",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Arcyria denudata 103374798.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Arcyria_denudata_103374798.jpg",
+        "revisionId": "1030111327",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1030111327",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.inaturalist.org/photos/103374798"
+      },
+      "rights": {
+        "author": "Erik",
+        "licenseId": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "attribution": "Arcyria denudata 103374798 — Erik / Wikimedia Commons / CC0",
+        "modifications": [
+          "Existing JPEG-to-WebP preparation; this review records the current bytes and dimensions. The earlier preparation recipe has not been independently audited."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Arcyria denudata",
+        "stage": "fruiting",
+        "context": "unknown",
+        "reviewNotes": "Visible pink-red sporocarps. Exact maturity is not assigned.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Arcyria denudata 103374798",
+      "caption": "Розово-красные плодовые тела на светлой древесине; часть поверхности рыхлая. Вид указан источником; степень зрелости отдельно не установлена.",
+      "alt": "Розовые плодовые тела Arcyria denudata на коре",
+      "isGenerated": false,
+      "mime": "image/webp",
+      "width": 1200,
+      "height": 1600,
+      "bytes": 89434,
+      "checksum": "caa4ef007882f5236b536529e957f378f3eae2dfc28dfc161aaeff3a3320509c",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Arcyria_denudata_103374798.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 1536,
+        "height": 2048,
+        "bytes": 573293,
+        "commonsSha1": "294c321c003796ffff6c848f29066b6728bc9814"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "arcyria-detail",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "arcyria",
+      "role": "detail",
+      "path": "public/assets/images/arcyria-detail.webp",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Arcyria denudata 19055009.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Arcyria_denudata_19055009.jpg",
+        "revisionId": "1034291061",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1034291061",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.inaturalist.org/photos/19055009"
+      },
+      "rights": {
+        "author": "cwwood",
+        "licenseId": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "attribution": "Arcyria denudata 19055009 — cwwood / Wikimedia Commons / CC BY-SA 4.0",
+        "modifications": [
+          "Existing JPEG-to-WebP preparation; this review records the current bytes and dimensions. The earlier preparation recipe has not been independently audited."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Arcyria denudata",
+        "stage": "unknown",
+        "context": "unknown",
+        "reviewNotes": "Mostly pale structures beside brownish forms. The original observer's comment only proposes a sequence; it does not establish the stage or identity of every structure. Excluded from cycle-stage photography.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Arcyria denudata 19055009",
+      "caption": "Белёсые вытянутые структуры рядом с буроватыми. Источник называет Arcyria denudata; предположение автора о последовательности стадий не подтверждает стадию каждой структуры.",
+      "alt": "Множество белёсых вытянутых структур и отдельные буроватые группы на древесине",
+      "isGenerated": false,
+      "mime": "image/webp",
+      "width": 1600,
+      "height": 1396,
+      "bytes": 344286,
+      "checksum": "221770ca3726802d9164b292eae40e29315a8ce0f583395dbecfa3541baeded2",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/3a/Arcyria_denudata_19055009.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 2048,
+        "height": 1787,
+        "bytes": 748854,
+        "commonsSha1": "4281022759df3b83b70b57b3b9f742447e625643"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "arcyria-cluster",
+      "kind": "reference_photo",
+      "status": "approved_for_demo",
+      "taxonId": "arcyria",
+      "role": "stage",
+      "path": "public/assets/images/arcyria-cluster.webp",
+      "source": {
+        "provider": "Wikimedia Commons",
+        "recordId": "File:Arcyria denudata 25025847.jpg",
+        "pageUrl": "https://commons.wikimedia.org/wiki/File:Arcyria_denudata_25025847.jpg",
+        "revisionId": "1031486478",
+        "revisionUrl": "https://commons.wikimedia.org/w/index.php?oldid=1031486478",
+        "retrievedAt": "2026-09-10",
+        "originalSourceUrl": "https://www.inaturalist.org/photos/25025847"
+      },
+      "rights": {
+        "author": "Sarah Culliton",
+        "licenseId": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+        "attribution": "Arcyria denudata 25025847 — Sarah Culliton / Wikimedia Commons / CC BY 4.0",
+        "modifications": [
+          "Existing JPEG-to-WebP preparation; this review records the current bytes and dimensions. The earlier preparation recipe has not been independently audited."
+        ],
+        "reviewedAt": "2026-09-10"
+      },
+      "science": {
+        "determinationLevel": "source-labeled",
+        "sourceName": "Arcyria denudata",
+        "stage": "fruiting",
+        "context": "unknown",
+        "reviewNotes": "Visible orange-red sporocarps on dark wood. No time-series relation is asserted.",
+        "reviewedAt": "2026-09-10",
+        "reviewMethod": "source metadata and visible-image inspection; not expert species verification"
+      },
+      "title": "Arcyria denudata 25025847",
+      "caption": "Красно-оранжевые плодовые тела группами на тёмной древесине. Определение — по источнику; это отдельная находка, не следующий кадр развития.",
+      "alt": "Группы красно-оранжевых вытянутых плодовых тел на тёмной древесине",
+      "isGenerated": false,
+      "mime": "image/webp",
+      "width": 1600,
+      "height": 1173,
+      "bytes": 152442,
+      "checksum": "7118e4f48f568d87921739c9a32ae4640bc199796f0e9aa65b6704c458021bfa",
+      "checksumAlgorithm": "sha256",
+      "original": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/33/Arcyria_denudata_25025847.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+        "width": 2048,
+        "height": 1501,
+        "bytes": 599670,
+        "commonsSha1": "6ea3d61fc5292c8348d78e4e01de43e1aaec51b6"
+      },
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "id": "music-forest-threshold",
+      "kind": "music",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/music/forest-threshold.mp3",
+      "source": {
+        "provider": "ElevenLabs Music API",
+        "promptFile": "scripts/generate-mixor-audio.mjs"
+      },
+      "rights": {
+        "licenseReview": "Verify the active ElevenLabs account terms before public distribution."
+      },
+      "science": null
+    },
+    {
+      "id": "ambience-forest-floor",
+      "kind": "ambience",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/ambience/forest-floor.mp3",
+      "source": {
+        "provider": "ElevenLabs Sound Effects API",
+        "promptFile": "scripts/generate-mixor-audio.mjs"
+      },
+      "rights": {
+        "licenseReview": "Verify the active ElevenLabs account terms before public distribution."
+      },
+      "science": null
+    },
+    {
+      "id": "sfx-ui-press",
+      "kind": "sfx",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/sfx/ui-press.mp3",
+      "source": {
+        "provider": "ElevenLabs Sound Effects API",
+        "promptFile": "scripts/generate-mixor-audio.mjs"
+      },
+      "rights": {
+        "licenseReview": "Verify the active ElevenLabs account terms before public distribution."
+      },
+      "science": null
+    },
+    {
+      "id": "sfx-journal-open",
+      "kind": "sfx",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/sfx/journal-open.mp3",
+      "source": {
+        "provider": "ElevenLabs Sound Effects API",
+        "promptFile": "scripts/generate-mixor-audio.mjs"
+      },
+      "rights": {
+        "licenseReview": "Verify the active ElevenLabs account terms before public distribution."
+      },
+      "science": null
+    },
+    {
+      "id": "sfx-lens-open",
+      "kind": "sfx",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/sfx/lens-open.mp3",
+      "source": {
+        "provider": "ElevenLabs Sound Effects API",
+        "promptFile": "scripts/generate-mixor-audio.mjs"
+      },
+      "rights": {
+        "licenseReview": "Verify the active ElevenLabs account terms before public distribution."
+      },
+      "science": null
+    },
+    {
+      "id": "sfx-discovery",
+      "kind": "sfx",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/sfx/discovery.mp3",
+      "source": {
+        "provider": "ElevenLabs Sound Effects API",
+        "promptFile": "scripts/generate-mixor-audio.mjs"
+      },
+      "rights": {
+        "licenseReview": "Verify the active ElevenLabs account terms before public distribution."
+      },
+      "science": null
+    },
+    {
+      "id": "sfx-save-local",
+      "kind": "sfx",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/sfx/save-local.mp3",
+      "source": {
+        "provider": "ElevenLabs Sound Effects API",
+        "promptFile": "scripts/generate-mixor-audio.mjs"
+      },
+      "rights": {
+        "licenseReview": "Verify the active ElevenLabs account terms before public distribution."
+      },
+      "science": null
+    },
+    {
+      "id": "music-forest-understory-mix",
+      "kind": "music",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/music/forest-understory-mix.mp3",
+      "source": {
+        "provider": "ElevenLabs Music API",
+        "promptFile": "scripts/generate-mixor-audio.mjs",
+        "masteringFile": "scripts/master-audio.mjs"
+      },
+      "rights": {
+        "licenseReview": "Verify active ElevenLabs account terms before public release."
+      },
+      "science": null
+    },
+    {
+      "id": "ambience-woodland-air-mix",
+      "kind": "ambience",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/ambience/woodland-air-mix.mp3",
+      "source": {
+        "provider": "ElevenLabs Sound Effects API",
+        "promptFile": "scripts/generate-mixor-audio.mjs",
+        "masteringFile": "scripts/master-audio.mjs"
+      },
+      "rights": {
+        "licenseReview": "Verify active ElevenLabs account terms before public release."
+      },
+      "science": null
+    },
+    {
+      "id": "ambience-birds-canopy-mix",
+      "kind": "ambience",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/ambience/birds-canopy-mix.mp3",
+      "source": {
+        "provider": "ElevenLabs Sound Effects API",
+        "promptFile": "scripts/generate-mixor-audio.mjs",
+        "masteringFile": "scripts/master-audio.mjs"
+      },
+      "rights": {
+        "licenseReview": "Verify active ElevenLabs account terms before public release."
+      },
+      "science": null
+    },
+    {
+      "id": "sfx-ui-press-soft-mix",
+      "kind": "sfx",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/sfx/ui-press-soft-mix.mp3",
+      "source": {
+        "provider": "ElevenLabs Sound Effects API",
+        "promptFile": "scripts/generate-mixor-audio.mjs",
+        "masteringFile": "scripts/master-audio.mjs"
+      },
+      "rights": {
+        "licenseReview": "Verify active ElevenLabs account terms before public release."
+      },
+      "science": null
+    }
+  ]
+}
