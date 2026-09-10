@@ -16,26 +16,30 @@
 }
 
 .rain-streaks > span {
-  width: 1px;
+  top: -36px;
+  width: var(--rain-width);
   height: var(--rain-length);
   opacity: var(--rain-opacity);
+  filter: blur(var(--rain-softness));
   background: linear-gradient(transparent, #edf3f4 65%, #edf3f480);
   animation: woodland-rain var(--rain-speed) var(--rain-delay) linear infinite;
 }
 
 @keyframes woodland-rain {
-  from { transform: translate(8px, -24vh) rotate(9deg); }
-  to { transform: translate(-12px, 26vh) rotate(9deg); }
+  from { transform: translate3d(0, 0, 0) rotate(3.5deg); }
+  to { transform: translate3d(-7vh, calc(100dvh + 80px), 0) rotate(3.5deg); }
 }
 
 .calm .rain-streaks > span {
   animation: none;
-  transform: rotate(9deg);
+  top: var(--rain-rest-top);
+  transform: translateX(-3.5vh) rotate(3.5deg);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .rain-streaks > span {
     animation: none;
-    transform: rotate(9deg);
+    top: var(--rain-rest-top);
+    transform: translateX(-3.5vh) rotate(3.5deg);
   }
 }
