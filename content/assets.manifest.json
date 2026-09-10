@@ -1390,13 +1390,13 @@
       "status": "prepared_local_demo",
       "path": "public/assets/audio/ambience/canopy-rain-v2-loop.mp3",
       "isGenerated": true,
-      "checksum": "fc10ccdf01b0adf746cdb02645ae1afaf15b9a5589d935adb4eb30d7b8a7e8cb",
-      "bytes": 384939,
+      "checksum": "a676f51688087d010389a2f5ee7a83d0548b6913a3c7f309a7504c8081e80669",
+      "bytes": 2081017,
       "source": {
         "provider": "ElevenLabs Sound Effects API",
         "promptFile": "scripts/generate-scene-audio.mjs",
         "masteringFile": "scripts/master-focused-audio.mjs",
-        "receipts": ["content/audio/canopy-rain-v2.source.json"]
+        "receipts": ["content/audio/canopy-rain-v2.source.json", "content/audio/canopy-rain-v2-b.source.json", "content/audio/canopy-rain-v2-c.source.json", "content/audio/canopy-rain-v2-d.source.json", "content/audio/canopy-rain-v2-e.source.json"]
       },
       "rights": { "licenseReview": "Verify the active ElevenLabs account terms before public distribution." },
       "science": null,

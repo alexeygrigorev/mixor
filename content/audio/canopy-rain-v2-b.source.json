@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "canopy-rain-v2-b",
+  "kind": "ambience",
+  "isGenerated": true,
+  "sourcePath": "public/assets/audio/ambience/canopy-rain-v2-b.mp3",
+  "provider": "ElevenLabs",
+  "endpoint": "https://api.elevenlabs.io/v1/sound-generation",
+  "request": {
+    "text": "Gentle woodland rain on broad beech leaves, heard from beneath a low canopy. Fine irregular soft taps on living leaves with small quieter intervals. Natural diffuse outdoor perspective, clean recording for quiet mixing. Only light leaf rain. No insects, cicadas, birds, tones, hum, buzz, electronic noise, music, voices, thunder, wind roar, streams, rivers, running water, gutters, puddle splashes or roof drumming.",
+    "duration_seconds": 30,
+    "prompt_influence": 0.65,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "outputFormat": "mp3_44100_128",
+  "requestedAt": "2026-09-10T12:09:31.012Z",
+  "bytes": 481115,
+  "sha256": "c8d4ce7fd09de854208b00c74557a1a21e37abdbcfc16aa5b2ea015d293894e3",
+  "physicalAudition": false,
+  "userAccepted": false,
+  "rights": {
+    "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+  }
+}

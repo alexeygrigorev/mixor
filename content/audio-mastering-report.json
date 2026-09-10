@@ -6,7 +6,7 @@
   "limits": [
     "User rejected the previous drone source; new source timbre and subjective buzz removal remain unaccepted until listening.",
     "Spectral measurements and digital level bounds are not a physical audition or acoustic loudness guarantee.",
-    "Wind arrangement repeats two generated 30-second sources twice; rain has one 24-second loop from a 30-second source.",
+    "Wind arrangement repeats two generated 30-second sources twice; rain uses five distinct 30-second sources once each, with five 4-second overlaps yielding 130 seconds.",
     "MP3 decoded seams are checked numerically; device gapless playback and the combined scene mix still require listening."
   ],
   "reproduce": "npm run audio:master",
@@ -14,7 +14,11 @@
     "public/assets/audio/music/forest-acoustic-v2.mp3": "3d10cd4bc4a075c146ff8ae04974a7727bed60fa27b45aef3272c7b7bc62fd7c",
     "public/assets/audio/ambience/dry-leaves-v2-a.mp3": "0af10522108ded155f20346470e7a51566d2f31fab62f62fd645be506defeca1",
     "public/assets/audio/ambience/dry-leaves-v2-b.mp3": "a15c6a1506130dc35280e4ac34ee7f68b4f2001ee9f64cb4e3a18691304f2c36",
-    "public/assets/audio/ambience/canopy-rain-v2.mp3": "11cda8409d72739a0b984b2b3377966e6988bea86b32e7e1e54b07ce2e843e8c"
+    "public/assets/audio/ambience/canopy-rain-v2.mp3": "11cda8409d72739a0b984b2b3377966e6988bea86b32e7e1e54b07ce2e843e8c",
+    "public/assets/audio/ambience/canopy-rain-v2-b.mp3": "c8d4ce7fd09de854208b00c74557a1a21e37abdbcfc16aa5b2ea015d293894e3",
+    "public/assets/audio/ambience/canopy-rain-v2-c.mp3": "af99c74bc4656c6e88ff3b843318fffacd42dd11b5a1c8463827e576336a04ca",
+    "public/assets/audio/ambience/canopy-rain-v2-d.mp3": "3e2d70cfb9e40c26107738e323fed17d69f1f54cf147cdcf2d79075d388b139b",
+    "public/assets/audio/ambience/canopy-rain-v2-e.mp3": "2ebadca264399d3bcde6de049cf46f8daeeafa4a48c33fe299230284221734e8"
   },
   "provenance": [
     {
@@ -135,6 +139,106 @@
       "requestedAt": "2026-09-10T11:43:36.037Z",
       "bytes": 481115,
       "sha256": "11cda8409d72739a0b984b2b3377966e6988bea86b32e7e1e54b07ce2e843e8c",
+      "physicalAudition": false,
+      "userAccepted": false,
+      "rights": {
+        "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "canopy-rain-v2-b",
+      "kind": "ambience",
+      "isGenerated": true,
+      "sourcePath": "public/assets/audio/ambience/canopy-rain-v2-b.mp3",
+      "provider": "ElevenLabs",
+      "endpoint": "https://api.elevenlabs.io/v1/sound-generation",
+      "request": {
+        "text": "Gentle woodland rain on broad beech leaves, heard from beneath a low canopy. Fine irregular soft taps on living leaves with small quieter intervals. Natural diffuse outdoor perspective, clean recording for quiet mixing. Only light leaf rain. No insects, cicadas, birds, tones, hum, buzz, electronic noise, music, voices, thunder, wind roar, streams, rivers, running water, gutters, puddle splashes or roof drumming.",
+        "duration_seconds": 30,
+        "prompt_influence": 0.65,
+        "model_id": "eleven_text_to_sound_v2",
+        "loop": false
+      },
+      "outputFormat": "mp3_44100_128",
+      "requestedAt": "2026-09-10T12:09:31.012Z",
+      "bytes": 481115,
+      "sha256": "c8d4ce7fd09de854208b00c74557a1a21e37abdbcfc16aa5b2ea015d293894e3",
+      "physicalAudition": false,
+      "userAccepted": false,
+      "rights": {
+        "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "canopy-rain-v2-c",
+      "kind": "ambience",
+      "isGenerated": true,
+      "sourcePath": "public/assets/audio/ambience/canopy-rain-v2-c.mp3",
+      "provider": "ElevenLabs",
+      "endpoint": "https://api.elevenlabs.io/v1/sound-generation",
+      "request": {
+        "text": "Soft light rain touching oak leaves and damp fallen leaves in a sheltered forest. Scattered delicate papery patters vary gently and irregularly; quiet natural outdoor detail. Clean recording for subtle mixing. Only leaf rain, no other water sounds. No insects, cicadas, birds, tones, hum, buzz, electronic noise, music, voices, thunder, strong wind, streams, rivers, flowing water, gutters, large droplets or splashes.",
+        "duration_seconds": 30,
+        "prompt_influence": 0.65,
+        "model_id": "eleven_text_to_sound_v2",
+        "loop": false
+      },
+      "outputFormat": "mp3_44100_128",
+      "requestedAt": "2026-09-10T12:09:36.471Z",
+      "bytes": 481115,
+      "sha256": "af99c74bc4656c6e88ff3b843318fffacd42dd11b5a1c8463827e576336a04ca",
+      "physicalAudition": false,
+      "userAccepted": false,
+      "rights": {
+        "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "canopy-rain-v2-d",
+      "kind": "ambience",
+      "isGenerated": true,
+      "sourcePath": "public/assets/audio/ambience/canopy-rain-v2-d.mp3",
+      "provider": "ElevenLabs",
+      "endpoint": "https://api.elevenlabs.io/v1/sound-generation",
+      "request": {
+        "text": "Light woodland rain under a birch canopy: very soft scattered taps on small leaves, fine diffuse patter slightly farther away, gently uneven density and quiet gaps. Natural clean outdoor recording for quiet mixing. Leaf rain only. No insects, cicadas, birds, tones, hum, buzz, electronic noise, music, voices, thunder, wind roar, streams, rivers, running water, gutters, puddles, heavy drips or roof drumming.",
+        "duration_seconds": 30,
+        "prompt_influence": 0.65,
+        "model_id": "eleven_text_to_sound_v2",
+        "loop": false
+      },
+      "outputFormat": "mp3_44100_128",
+      "requestedAt": "2026-09-10T12:09:42.081Z",
+      "bytes": 481115,
+      "sha256": "3e2d70cfb9e40c26107738e323fed17d69f1f54cf147cdcf2d79075d388b139b",
+      "physicalAudition": false,
+      "userAccepted": false,
+      "rights": {
+        "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "canopy-rain-v2-e",
+      "kind": "ambience",
+      "isGenerated": true,
+      "sourcePath": "public/assets/audio/ambience/canopy-rain-v2-e.mp3",
+      "provider": "ElevenLabs",
+      "endpoint": "https://api.elevenlabs.io/v1/sound-generation",
+      "request": {
+        "text": "Gentle rain landing on fern fronds and low woodland leaves. Delicate irregular fine patter with softly changing density, small quiet lulls, rounded tiny leaf contacts. Natural clean recording for subtle mixing. Only light leaf rain. No insects, cicadas, birds, tones, hum, buzz, electronic noise, music, voices, thunder, gusts, streams, rivers, flowing water, gutters, puddle splashes, loud drips or roof drumming.",
+        "duration_seconds": 30,
+        "prompt_influence": 0.65,
+        "model_id": "eleven_text_to_sound_v2",
+        "loop": false
+      },
+      "outputFormat": "mp3_44100_128",
+      "requestedAt": "2026-09-10T12:09:47.885Z",
+      "bytes": 481115,
+      "sha256": "2ebadca264399d3bcde6de049cf46f8daeeafa4a48c33fe299230284221734e8",
       "physicalAudition": false,
       "userAccepted": false,
       "rights": {
@@ -1265,14 +1369,316 @@
       "processing": [
         {
           "source": "public/assets/audio/ambience/canopy-rain-v2.mp3",
+          "sourceMeasurements": {
+            "path": "public/assets/audio/ambience/canopy-rain-v2.mp3",
+            "sha256": "11cda8409d72739a0b984b2b3377966e6988bea86b32e7e1e54b07ce2e843e8c",
+            "bytes": 481115,
+            "codec": "mp3",
+            "sampleRate": 44100,
+            "channels": 2,
+            "containerSeconds": 30.040816,
+            "decodedSeconds": 30,
+            "integratedLufs": -40.3,
+            "loudnessRangeLu": 9.3,
+            "truePeakDbfs": -9.9,
+            "rmsDbfs": -46.556,
+            "samplePeakDbfs": -12.225,
+            "dcOffset": -0.000036427797951378715,
+            "level": {
+              "windowSeconds": 1,
+              "rmsDbfs": [
+                -43.406,
+                -45.047,
+                -45.488,
+                -42.273,
+                -43.774,
+                -44.298,
+                -45.8,
+                -44.892,
+                -45.87,
+                -46.399,
+                -48.889,
+                -50.831,
+                -53.204,
+                -53.153,
+                -54.232,
+                -52.541,
+                -50.563,
+                -46.962,
+                -46.994,
+                -45.897,
+                -45.004,
+                -45.517,
+                -45.649,
+                -43.626,
+                -46.355,
+                -49.752,
+                -52.698,
+                -53.58,
+                -52.506,
+                -47.503
+              ],
+              "p10Dbfs": -53.153,
+              "p50Dbfs": -46.355,
+              "p90Dbfs": -43.626,
+              "fraction100msBelowMinus60Dbfs": 0
+            },
+            "seam": {
+              "boundaryJumpDbfs": -42.444,
+              "adjacentDifferenceRmsDbfs": -45.262,
+              "largestInternalJumpDbfs": -8.115,
+              "head100msRmsDbfs": -47.044,
+              "tail100msRmsDbfs": -46.953
+            },
+            "spectrum": {
+              "method": "Arithmetic stereo mean at 16 kHz; Hann 16384 samples; 0.5 s hop; one-sided power/bin, not dB/Hz. Peaks are candidates, not proof of unwanted hum.",
+              "frameCount": 58,
+              "binWidthHz": 0.9765625,
+              "bands": [
+                {
+                  "hz": [
+                    20,
+                    80
+                  ],
+                  "meanDbfs": -78.862,
+                  "p20Dbfs": -82.876,
+                  "p90Dbfs": -75.251
+                },
+                {
+                  "hz": [
+                    80,
+                    180
+                  ],
+                  "meanDbfs": -80.857,
+                  "p20Dbfs": -84.757,
+                  "p90Dbfs": -77.941
+                },
+                {
+                  "hz": [
+                    180,
+                    400
+                  ],
+                  "meanDbfs": -75.069,
+                  "p20Dbfs": -76.229,
+                  "p90Dbfs": -73.73
+                },
+                {
+                  "hz": [
+                    400,
+                    1000
+                  ],
+                  "meanDbfs": -69.749,
+                  "p20Dbfs": -72.39,
+                  "p90Dbfs": -67.402
+                },
+                {
+                  "hz": [
+                    1000,
+                    2500
+                  ],
+                  "meanDbfs": -59.418,
+                  "p20Dbfs": -66.321,
+                  "p90Dbfs": -57.359
+                },
+                {
+                  "hz": [
+                    2500,
+                    6500
+                  ],
+                  "meanDbfs": -55.583,
+                  "p20Dbfs": -59.425,
+                  "p90Dbfs": -53.425
+                },
+                {
+                  "hz": [
+                    6500,
+                    8000
+                  ],
+                  "meanDbfs": -59.595,
+                  "p20Dbfs": -67.738,
+                  "p90Dbfs": -57.026
+                }
+              ],
+              "persistentPeakCandidates": [
+                {
+                  "hz": 200.195,
+                  "meanDbfs": -77.808,
+                  "prominenceDb": 22.393,
+                  "p20Dbfs": -79.216,
+                  "p90Dbfs": -75.791
+                },
+                {
+                  "hz": 1400.391,
+                  "meanDbfs": -76.906,
+                  "prominenceDb": 11.729,
+                  "p20Dbfs": -80.053,
+                  "p90Dbfs": -73.856
+                },
+                {
+                  "hz": 6000,
+                  "meanDbfs": -68.988,
+                  "prominenceDb": 18.627,
+                  "p20Dbfs": -82.7,
+                  "p90Dbfs": -63.961
+                },
+                {
+                  "hz": 2000,
+                  "meanDbfs": -79.58,
+                  "prominenceDb": 11.211,
+                  "p20Dbfs": -83.869,
+                  "p90Dbfs": -76.091
+                },
+                {
+                  "hz": 1599.609,
+                  "meanDbfs": -80.617,
+                  "prominenceDb": 8.123,
+                  "p20Dbfs": -84.097,
+                  "p90Dbfs": -77.998
+                },
+                {
+                  "hz": 4599.609,
+                  "meanDbfs": -77.077,
+                  "prominenceDb": 11.751,
+                  "p20Dbfs": -84.586,
+                  "p90Dbfs": -73.38
+                },
+                {
+                  "hz": 400.391,
+                  "meanDbfs": -80.592,
+                  "prominenceDb": 18.583,
+                  "p20Dbfs": -84.592,
+                  "p90Dbfs": -78.246
+                },
+                {
+                  "hz": 6200.195,
+                  "meanDbfs": -76.236,
+                  "prominenceDb": 10.224,
+                  "p20Dbfs": -84.895,
+                  "p90Dbfs": -71.812
+                },
+                {
+                  "hz": 2400.391,
+                  "meanDbfs": -75.999,
+                  "prominenceDb": 12.916,
+                  "p20Dbfs": -85.239,
+                  "p90Dbfs": -71.491
+                },
+                {
+                  "hz": 4200.195,
+                  "meanDbfs": -73.005,
+                  "prominenceDb": 15.998,
+                  "p20Dbfs": -85.743,
+                  "p90Dbfs": -67.443
+                },
+                {
+                  "hz": 3400.391,
+                  "meanDbfs": -82.765,
+                  "prominenceDb": 7.182,
+                  "p20Dbfs": -85.864,
+                  "p90Dbfs": -80.169
+                },
+                {
+                  "hz": 5200.195,
+                  "meanDbfs": -74.362,
+                  "prominenceDb": 14.252,
+                  "p20Dbfs": -85.88,
+                  "p90Dbfs": -69.262
+                },
+                {
+                  "hz": 5000,
+                  "meanDbfs": -81.379,
+                  "prominenceDb": 8.936,
+                  "p20Dbfs": -86.027,
+                  "p90Dbfs": -78.02
+                },
+                {
+                  "hz": 799.805,
+                  "meanDbfs": -81.885,
+                  "prominenceDb": 15.996,
+                  "p20Dbfs": -86.062,
+                  "p90Dbfs": -79.825
+                },
+                {
+                  "hz": 1799.805,
+                  "meanDbfs": -82.076,
+                  "prominenceDb": 7.028,
+                  "p20Dbfs": -86.244,
+                  "p90Dbfs": -78.84
+                },
+                {
+                  "hz": 599.609,
+                  "meanDbfs": -80.667,
+                  "prominenceDb": 20.635,
+                  "p20Dbfs": -87.281,
+                  "p90Dbfs": -76.155
+                },
+                {
+                  "hz": 1250,
+                  "meanDbfs": -80.207,
+                  "prominenceDb": 9.941,
+                  "p20Dbfs": -87.449,
+                  "p90Dbfs": -75.375
+                },
+                {
+                  "hz": 3200.195,
+                  "meanDbfs": -80.482,
+                  "prominenceDb": 9.931,
+                  "p20Dbfs": -89.25,
+                  "p90Dbfs": -75.98
+                },
+                {
+                  "hz": 1000,
+                  "meanDbfs": -80.658,
+                  "prominenceDb": 9.914,
+                  "p20Dbfs": -90.391,
+                  "p90Dbfs": -77.846
+                },
+                {
+                  "hz": 849.609,
+                  "meanDbfs": -84.44,
+                  "prominenceDb": 8.559,
+                  "p20Dbfs": -90.653,
+                  "p90Dbfs": -79.67
+                },
+                {
+                  "hz": 450.195,
+                  "meanDbfs": -93.265,
+                  "prominenceDb": 11.135,
+                  "p20Dbfs": -97.664,
+                  "p90Dbfs": -90.147
+                },
+                {
+                  "hz": 700.195,
+                  "meanDbfs": -92.204,
+                  "prominenceDb": 11.16,
+                  "p20Dbfs": -99.238,
+                  "p90Dbfs": -89.048
+                },
+                {
+                  "hz": 250,
+                  "meanDbfs": -88.125,
+                  "prominenceDb": 14.29,
+                  "p20Dbfs": -99.349,
+                  "p90Dbfs": -83.822
+                },
+                {
+                  "hz": 650.391,
+                  "meanDbfs": -95.272,
+                  "prominenceDb": 8.329,
+                  "p20Dbfs": -99.352,
+                  "p90Dbfs": -92.441
+                }
+              ]
+            }
+          },
           "eq": "highpass=f=350:p=2,highpass=f=350:p=2,lowpass=f=5000:p=2,lowpass=f=5000:p=2",
           "level": {
-            "input": "tmp/audio-feedback/master-OdueLa/rain-filtered.wav",
-            "targetRmsDbfs": -43,
+            "input": "tmp/audio-feedback/master-A03MXB/rain-1-eq.wav",
+            "targetRmsDbfs": -53,
             "peakCeilingDbfs": -22,
             "gainDb": 1.699,
             "measured": {
-              "path": "tmp/audio-feedback/master-OdueLa/rain-filtered.wav",
+              "path": "tmp/audio-feedback/master-A03MXB/rain-1-eq.wav",
               "sha256": "7f3fc20fc9e91f1f697e6069600d7493f4b3c2932318d835485cb4ccd697ed02",
               "bytes": 10584114,
               "codec": "pcm_f32le",
@@ -1334,72 +1740,1758 @@
               }
             }
           }
+        },
+        {
+          "source": "public/assets/audio/ambience/canopy-rain-v2-b.mp3",
+          "sourceMeasurements": {
+            "path": "public/assets/audio/ambience/canopy-rain-v2-b.mp3",
+            "sha256": "c8d4ce7fd09de854208b00c74557a1a21e37abdbcfc16aa5b2ea015d293894e3",
+            "bytes": 481115,
+            "codec": "mp3",
+            "sampleRate": 44100,
+            "channels": 2,
+            "containerSeconds": 30.040816,
+            "decodedSeconds": 30,
+            "integratedLufs": -34.4,
+            "loudnessRangeLu": 2.4,
+            "truePeakDbfs": -9.9,
+            "rmsDbfs": -40.687,
+            "samplePeakDbfs": -10.21,
+            "dcOffset": -0.000020782165755101195,
+            "level": {
+              "windowSeconds": 1,
+              "rmsDbfs": [
+                -46.828,
+                -46.009,
+                -45.605,
+                -42.117,
+                -41.61,
+                -40.038,
+                -39.237,
+                -40.394,
+                -39.497,
+                -38.723,
+                -39.899,
+                -39.866,
+                -39.071,
+                -39.383,
+                -39.593,
+                -39.931,
+                -40.28,
+                -40.543,
+                -41.347,
+                -39.934,
+                -42.037,
+                -40.903,
+                -41.867,
+                -39.309,
+                -41.673,
+                -40.397,
+                -41.147,
+                -41.455,
+                -41.208,
+                -41.012
+              ],
+              "p10Dbfs": -42.117,
+              "p50Dbfs": -40.397,
+              "p90Dbfs": -39.237,
+              "fraction100msBelowMinus60Dbfs": 0
+            },
+            "seam": {
+              "boundaryJumpDbfs": -40.033,
+              "adjacentDifferenceRmsDbfs": -39.292,
+              "largestInternalJumpDbfs": -10.283,
+              "head100msRmsDbfs": -43.898,
+              "tail100msRmsDbfs": -43.362
+            },
+            "spectrum": {
+              "method": "Arithmetic stereo mean at 16 kHz; Hann 16384 samples; 0.5 s hop; one-sided power/bin, not dB/Hz. Peaks are candidates, not proof of unwanted hum.",
+              "frameCount": 58,
+              "binWidthHz": 0.9765625,
+              "bands": [
+                {
+                  "hz": [
+                    20,
+                    80
+                  ],
+                  "meanDbfs": -74.1,
+                  "p20Dbfs": -76.983,
+                  "p90Dbfs": -71.616
+                },
+                {
+                  "hz": [
+                    80,
+                    180
+                  ],
+                  "meanDbfs": -75.179,
+                  "p20Dbfs": -77.972,
+                  "p90Dbfs": -72.618
+                },
+                {
+                  "hz": [
+                    180,
+                    400
+                  ],
+                  "meanDbfs": -73.613,
+                  "p20Dbfs": -75.455,
+                  "p90Dbfs": -70.493
+                },
+                {
+                  "hz": [
+                    400,
+                    1000
+                  ],
+                  "meanDbfs": -62.903,
+                  "p20Dbfs": -63.658,
+                  "p90Dbfs": -62.1
+                },
+                {
+                  "hz": [
+                    1000,
+                    2500
+                  ],
+                  "meanDbfs": -55.556,
+                  "p20Dbfs": -56.811,
+                  "p90Dbfs": -54.753
+                },
+                {
+                  "hz": [
+                    2500,
+                    6500
+                  ],
+                  "meanDbfs": -49.412,
+                  "p20Dbfs": -52.254,
+                  "p90Dbfs": -46.416
+                },
+                {
+                  "hz": [
+                    6500,
+                    8000
+                  ],
+                  "meanDbfs": -54.097,
+                  "p20Dbfs": -56.251,
+                  "p90Dbfs": -51.883
+                }
+              ],
+              "persistentPeakCandidates": [
+                {
+                  "hz": 799.805,
+                  "meanDbfs": -74.456,
+                  "prominenceDb": 14.263,
+                  "p20Dbfs": -75.318,
+                  "p90Dbfs": -73.184
+                },
+                {
+                  "hz": 1400.391,
+                  "meanDbfs": -72.378,
+                  "prominenceDb": 11.756,
+                  "p20Dbfs": -75.728,
+                  "p90Dbfs": -68.187
+                },
+                {
+                  "hz": 1000,
+                  "meanDbfs": -75.64,
+                  "prominenceDb": 8.452,
+                  "p20Dbfs": -78.718,
+                  "p90Dbfs": -73.296
+                },
+                {
+                  "hz": 200.195,
+                  "meanDbfs": -78.2,
+                  "prominenceDb": 18.83,
+                  "p20Dbfs": -80.884,
+                  "p90Dbfs": -75.538
+                },
+                {
+                  "hz": 1599.609,
+                  "meanDbfs": -77.57,
+                  "prominenceDb": 7.321,
+                  "p20Dbfs": -81.074,
+                  "p90Dbfs": -74.675
+                },
+                {
+                  "hz": 6000,
+                  "meanDbfs": -73.437,
+                  "prominenceDb": 7.79,
+                  "p20Dbfs": -82.917,
+                  "p90Dbfs": -67.934
+                },
+                {
+                  "hz": 599.609,
+                  "meanDbfs": -79.876,
+                  "prominenceDb": 16.796,
+                  "p20Dbfs": -83.11,
+                  "p90Dbfs": -77.523
+                },
+                {
+                  "hz": 1250,
+                  "meanDbfs": -74.775,
+                  "prominenceDb": 10.905,
+                  "p20Dbfs": -84.376,
+                  "p90Dbfs": -68.321
+                },
+                {
+                  "hz": 1549.805,
+                  "meanDbfs": -76.941,
+                  "prominenceDb": 7.188,
+                  "p20Dbfs": -85.495,
+                  "p90Dbfs": -72.03
+                },
+                {
+                  "hz": 849.609,
+                  "meanDbfs": -78.504,
+                  "prominenceDb": 7.514,
+                  "p20Dbfs": -85.976,
+                  "p90Dbfs": -71.959
+                },
+                {
+                  "hz": 450.195,
+                  "meanDbfs": -86.934,
+                  "prominenceDb": 11.547,
+                  "p20Dbfs": -89.637,
+                  "p90Dbfs": -84.783
+                },
+                {
+                  "hz": 700.195,
+                  "meanDbfs": -82.905,
+                  "prominenceDb": 7.711,
+                  "p20Dbfs": -90.095,
+                  "p90Dbfs": -77.4
+                },
+                {
+                  "hz": 400.391,
+                  "meanDbfs": -83.862,
+                  "prominenceDb": 13.269,
+                  "p20Dbfs": -90.153,
+                  "p90Dbfs": -78.767
+                },
+                {
+                  "hz": 349.609,
+                  "meanDbfs": -88.723,
+                  "prominenceDb": 9.14,
+                  "p20Dbfs": -92.144,
+                  "p90Dbfs": -85.215
+                },
+                {
+                  "hz": 250,
+                  "meanDbfs": -89.52,
+                  "prominenceDb": 7.135,
+                  "p20Dbfs": -96.461,
+                  "p90Dbfs": -85.307
+                }
+              ]
+            }
+          },
+          "eq": "highpass=f=350:p=2,highpass=f=350:p=2,lowpass=f=5000:p=2,lowpass=f=5000:p=2",
+          "level": {
+            "input": "tmp/audio-feedback/master-A03MXB/rain-2-eq.wav",
+            "targetRmsDbfs": -53,
+            "peakCeilingDbfs": -22,
+            "gainDb": -9,
+            "measured": {
+              "path": "tmp/audio-feedback/master-A03MXB/rain-2-eq.wav",
+              "sha256": "82fec00a318693df1ab9dafb6e6b5a068db55d4663ce05c83c0364c4973d4e18",
+              "bytes": 10584114,
+              "codec": "pcm_f32le",
+              "sampleRate": 44100,
+              "channels": 2,
+              "containerSeconds": 30,
+              "decodedSeconds": 30,
+              "integratedLufs": -43.7,
+              "loudnessRangeLu": 4,
+              "truePeakDbfs": -13,
+              "rmsDbfs": -49.362,
+              "samplePeakDbfs": -13.104,
+              "dcOffset": 8.020586494247884e-8,
+              "level": {
+                "windowSeconds": 1,
+                "rmsDbfs": [
+                  -54.231,
+                  -53.814,
+                  -52.8,
+                  -51.169,
+                  -51.886,
+                  -50.87,
+                  -50.118,
+                  -50.15,
+                  -49.431,
+                  -49.378,
+                  -49.525,
+                  -49.302,
+                  -48.954,
+                  -49.351,
+                  -48.165,
+                  -48.945,
+                  -48.973,
+                  -48.989,
+                  -49.697,
+                  -45.823,
+                  -49.994,
+                  -49.381,
+                  -49.26,
+                  -46.838,
+                  -49.171,
+                  -48.086,
+                  -49.065,
+                  -49.228,
+                  -48.847,
+                  -48.824
+                ],
+                "p10Dbfs": -51.886,
+                "p50Dbfs": -49.302,
+                "p90Dbfs": -48.086,
+                "fraction100msBelowMinus60Dbfs": 0
+              },
+              "seam": {
+                "boundaryJumpDbfs": -52.707,
+                "adjacentDifferenceRmsDbfs": -55.423,
+                "largestInternalJumpDbfs": -18.053,
+                "head100msRmsDbfs": -52.088,
+                "tail100msRmsDbfs": -49.23
+              }
+            }
+          }
+        },
+        {
+          "source": "public/assets/audio/ambience/canopy-rain-v2-c.mp3",
+          "sourceMeasurements": {
+            "path": "public/assets/audio/ambience/canopy-rain-v2-c.mp3",
+            "sha256": "af99c74bc4656c6e88ff3b843318fffacd42dd11b5a1c8463827e576336a04ca",
+            "bytes": 481115,
+            "codec": "mp3",
+            "sampleRate": 44100,
+            "channels": 2,
+            "containerSeconds": 30.040816,
+            "decodedSeconds": 30,
+            "integratedLufs": -35.4,
+            "loudnessRangeLu": 2.9,
+            "truePeakDbfs": -12.2,
+            "rmsDbfs": -41.681,
+            "samplePeakDbfs": -12.171,
+            "dcOffset": -0.000026299671932562813,
+            "level": {
+              "windowSeconds": 1,
+              "rmsDbfs": [
+                -41.34,
+                -41.443,
+                -41.931,
+                -41.318,
+                -41.733,
+                -41.849,
+                -42.339,
+                -40.564,
+                -41.111,
+                -40.534,
+                -41.223,
+                -40.771,
+                -43.411,
+                -43.663,
+                -42.463,
+                -42.726,
+                -41.565,
+                -41.609,
+                -41.006,
+                -40.273,
+                -39.904,
+                -39.796,
+                -41.305,
+                -42.075,
+                -42.841,
+                -42.772,
+                -42.749,
+                -43.237,
+                -43.628,
+                -43.211
+              ],
+              "p10Dbfs": -43.237,
+              "p50Dbfs": -41.609,
+              "p90Dbfs": -40.273,
+              "fraction100msBelowMinus60Dbfs": 0
+            },
+            "seam": {
+              "boundaryJumpDbfs": -47.223,
+              "adjacentDifferenceRmsDbfs": -39.909,
+              "largestInternalJumpDbfs": -10.544,
+              "head100msRmsDbfs": -41.991,
+              "tail100msRmsDbfs": -43.798
+            },
+            "spectrum": {
+              "method": "Arithmetic stereo mean at 16 kHz; Hann 16384 samples; 0.5 s hop; one-sided power/bin, not dB/Hz. Peaks are candidates, not proof of unwanted hum.",
+              "frameCount": 58,
+              "binWidthHz": 0.9765625,
+              "bands": [
+                {
+                  "hz": [
+                    20,
+                    80
+                  ],
+                  "meanDbfs": -74.65,
+                  "p20Dbfs": -77.621,
+                  "p90Dbfs": -72.793
+                },
+                {
+                  "hz": [
+                    80,
+                    180
+                  ],
+                  "meanDbfs": -74.51,
+                  "p20Dbfs": -77.497,
+                  "p90Dbfs": -72.64
+                },
+                {
+                  "hz": [
+                    180,
+                    400
+                  ],
+                  "meanDbfs": -72.547,
+                  "p20Dbfs": -75.345,
+                  "p90Dbfs": -70.512
+                },
+                {
+                  "hz": [
+                    400,
+                    1000
+                  ],
+                  "meanDbfs": -71.072,
+                  "p20Dbfs": -71.581,
+                  "p90Dbfs": -70.342
+                },
+                {
+                  "hz": [
+                    1000,
+                    2500
+                  ],
+                  "meanDbfs": -57.428,
+                  "p20Dbfs": -58.655,
+                  "p90Dbfs": -56.349
+                },
+                {
+                  "hz": [
+                    2500,
+                    6500
+                  ],
+                  "meanDbfs": -50.603,
+                  "p20Dbfs": -51.98,
+                  "p90Dbfs": -49.097
+                },
+                {
+                  "hz": [
+                    6500,
+                    8000
+                  ],
+                  "meanDbfs": -57.12,
+                  "p20Dbfs": -57.708,
+                  "p90Dbfs": -56.112
+                }
+              ],
+              "persistentPeakCandidates": [
+                {
+                  "hz": 6200.195,
+                  "meanDbfs": -72.661,
+                  "prominenceDb": 9.86,
+                  "p20Dbfs": -77.43,
+                  "p90Dbfs": -69.785
+                },
+                {
+                  "hz": 6000,
+                  "meanDbfs": -70.452,
+                  "prominenceDb": 12.293,
+                  "p20Dbfs": -77.659,
+                  "p90Dbfs": -67.236
+                },
+                {
+                  "hz": 1400.391,
+                  "meanDbfs": -75.728,
+                  "prominenceDb": 14.406,
+                  "p20Dbfs": -77.769,
+                  "p90Dbfs": -73.488
+                },
+                {
+                  "hz": 2500,
+                  "meanDbfs": -72.153,
+                  "prominenceDb": 10.826,
+                  "p20Dbfs": -78.693,
+                  "p90Dbfs": -67.848
+                },
+                {
+                  "hz": 3400.391,
+                  "meanDbfs": -73.366,
+                  "prominenceDb": 8.8,
+                  "p20Dbfs": -79.12,
+                  "p90Dbfs": -69.362
+                },
+                {
+                  "hz": 400.391,
+                  "meanDbfs": -78.143,
+                  "prominenceDb": 18.944,
+                  "p20Dbfs": -80.175,
+                  "p90Dbfs": -75.685
+                },
+                {
+                  "hz": 3150.391,
+                  "meanDbfs": -73.091,
+                  "prominenceDb": 8.238,
+                  "p20Dbfs": -80.191,
+                  "p90Dbfs": -68.567
+                },
+                {
+                  "hz": 2900.391,
+                  "meanDbfs": -72.129,
+                  "prominenceDb": 8.919,
+                  "p20Dbfs": -80.215,
+                  "p90Dbfs": -67.542
+                },
+                {
+                  "hz": 2299.805,
+                  "meanDbfs": -73.496,
+                  "prominenceDb": 9.877,
+                  "p20Dbfs": -80.349,
+                  "p90Dbfs": -69.219
+                },
+                {
+                  "hz": 1599.609,
+                  "meanDbfs": -77.736,
+                  "prominenceDb": 9.051,
+                  "p20Dbfs": -80.467,
+                  "p90Dbfs": -75.272
+                },
+                {
+                  "hz": 200.195,
+                  "meanDbfs": -77.977,
+                  "prominenceDb": 17.344,
+                  "p20Dbfs": -80.473,
+                  "p90Dbfs": -75.799
+                },
+                {
+                  "hz": 6599.609,
+                  "meanDbfs": -77.307,
+                  "prominenceDb": 7.055,
+                  "p20Dbfs": -80.692,
+                  "p90Dbfs": -74.745
+                },
+                {
+                  "hz": 4599.609,
+                  "meanDbfs": -74.169,
+                  "prominenceDb": 10.775,
+                  "p20Dbfs": -80.963,
+                  "p90Dbfs": -70.946
+                },
+                {
+                  "hz": 2099.609,
+                  "meanDbfs": -75.016,
+                  "prominenceDb": 9.797,
+                  "p20Dbfs": -81.711,
+                  "p90Dbfs": -70.623
+                },
+                {
+                  "hz": 5000,
+                  "meanDbfs": -77.19,
+                  "prominenceDb": 9.183,
+                  "p20Dbfs": -81.912,
+                  "p90Dbfs": -74.192
+                },
+                {
+                  "hz": 4200.195,
+                  "meanDbfs": -75.385,
+                  "prominenceDb": 7.353,
+                  "p20Dbfs": -82.016,
+                  "p90Dbfs": -70.711
+                },
+                {
+                  "hz": 1250,
+                  "meanDbfs": -74.227,
+                  "prominenceDb": 20.072,
+                  "p20Dbfs": -82.067,
+                  "p90Dbfs": -71.338
+                },
+                {
+                  "hz": 2049.805,
+                  "meanDbfs": -78.374,
+                  "prominenceDb": 8.107,
+                  "p20Dbfs": -82.913,
+                  "p90Dbfs": -73.959
+                },
+                {
+                  "hz": 2000,
+                  "meanDbfs": -79.589,
+                  "prominenceDb": 9.706,
+                  "p20Dbfs": -83.113,
+                  "p90Dbfs": -76.601
+                },
+                {
+                  "hz": 799.805,
+                  "meanDbfs": -81.41,
+                  "prominenceDb": 19.922,
+                  "p20Dbfs": -83.153,
+                  "p90Dbfs": -79.824
+                },
+                {
+                  "hz": 2097.656,
+                  "meanDbfs": -76.621,
+                  "prominenceDb": 7.472,
+                  "p20Dbfs": -83.233,
+                  "p90Dbfs": -72.636
+                },
+                {
+                  "hz": 4799.805,
+                  "meanDbfs": -79.986,
+                  "prominenceDb": 7.27,
+                  "p20Dbfs": -83.612,
+                  "p90Dbfs": -77.54
+                },
+                {
+                  "hz": 1500,
+                  "meanDbfs": -80.36,
+                  "prominenceDb": 7.634,
+                  "p20Dbfs": -85.786,
+                  "p90Dbfs": -76.9
+                },
+                {
+                  "hz": 1947.266,
+                  "meanDbfs": -80.64,
+                  "prominenceDb": 7.877,
+                  "p20Dbfs": -85.962,
+                  "p90Dbfs": -76.711
+                },
+                {
+                  "hz": 1349.609,
+                  "meanDbfs": -80.643,
+                  "prominenceDb": 7.106,
+                  "p20Dbfs": -86.672,
+                  "p90Dbfs": -77.195
+                },
+                {
+                  "hz": 1950.195,
+                  "meanDbfs": -80.091,
+                  "prominenceDb": 8.761,
+                  "p20Dbfs": -87.354,
+                  "p90Dbfs": -76.67
+                },
+                {
+                  "hz": 599.609,
+                  "meanDbfs": -84.979,
+                  "prominenceDb": 14.948,
+                  "p20Dbfs": -88.822,
+                  "p90Dbfs": -81.517
+                },
+                {
+                  "hz": 1000,
+                  "meanDbfs": -84.417,
+                  "prominenceDb": 11.576,
+                  "p20Dbfs": -92.427,
+                  "p90Dbfs": -80.412
+                },
+                {
+                  "hz": 849.609,
+                  "meanDbfs": -86.675,
+                  "prominenceDb": 9.598,
+                  "p20Dbfs": -93.285,
+                  "p90Dbfs": -82.966
+                },
+                {
+                  "hz": 500,
+                  "meanDbfs": -90.859,
+                  "prominenceDb": 7.514,
+                  "p20Dbfs": -98.684,
+                  "p90Dbfs": -86.743
+                }
+              ]
+            }
+          },
+          "eq": "highpass=f=350:p=2,highpass=f=350:p=2,lowpass=f=5000:p=2,lowpass=f=5000:p=2",
+          "level": {
+            "input": "tmp/audio-feedback/master-A03MXB/rain-3-eq.wav",
+            "targetRmsDbfs": -53,
+            "peakCeilingDbfs": -22,
+            "gainDb": -3.9,
+            "measured": {
+              "path": "tmp/audio-feedback/master-A03MXB/rain-3-eq.wav",
+              "sha256": "ff6606c2f251b9f10bb03d824e7ecd2ac612cb38c07a2ff124e438c18e9f1d74",
+              "bytes": 10584114,
+              "codec": "pcm_f32le",
+              "sampleRate": 44100,
+              "channels": 2,
+              "containerSeconds": 30,
+              "decodedSeconds": 30,
+              "integratedLufs": -44.1,
+              "loudnessRangeLu": 3.4,
+              "truePeakDbfs": -18.1,
+              "rmsDbfs": -50.069,
+              "samplePeakDbfs": -18.219,
+              "dcOffset": 1.9503628737009582e-8,
+              "level": {
+                "windowSeconds": 1,
+                "rmsDbfs": [
+                  -49.597,
+                  -50.018,
+                  -50.204,
+                  -50.659,
+                  -50.875,
+                  -50.638,
+                  -50.921,
+                  -50.427,
+                  -50.418,
+                  -49.217,
+                  -49.855,
+                  -49.921,
+                  -51.962,
+                  -51.802,
+                  -49.673,
+                  -51.168,
+                  -50.549,
+                  -49.682,
+                  -48.951,
+                  -48.429,
+                  -47.629,
+                  -47.484,
+                  -48.941,
+                  -50.116,
+                  -50.859,
+                  -51.164,
+                  -51.03,
+                  -51.526,
+                  -51.731,
+                  -51.243
+                ],
+                "p10Dbfs": -51.526,
+                "p50Dbfs": -50.418,
+                "p90Dbfs": -48.429,
+                "fraction100msBelowMinus60Dbfs": 0
+              },
+              "seam": {
+                "boundaryJumpDbfs": -52.203,
+                "adjacentDifferenceRmsDbfs": -56,
+                "largestInternalJumpDbfs": -25.27,
+                "head100msRmsDbfs": -49.76,
+                "tail100msRmsDbfs": -50.851
+              }
+            }
+          }
+        },
+        {
+          "source": "public/assets/audio/ambience/canopy-rain-v2-d.mp3",
+          "sourceMeasurements": {
+            "path": "public/assets/audio/ambience/canopy-rain-v2-d.mp3",
+            "sha256": "3e2d70cfb9e40c26107738e323fed17d69f1f54cf147cdcf2d79075d388b139b",
+            "bytes": 481115,
+            "codec": "mp3",
+            "sampleRate": 44100,
+            "channels": 2,
+            "containerSeconds": 30.040816,
+            "decodedSeconds": 30,
+            "integratedLufs": -41.3,
+            "loudnessRangeLu": 5.9,
+            "truePeakDbfs": -12.4,
+            "rmsDbfs": -47.677,
+            "samplePeakDbfs": -12.659,
+            "dcOffset": -0.000001239483837396204,
+            "level": {
+              "windowSeconds": 1,
+              "rmsDbfs": [
+                -52.001,
+                -50.19,
+                -49.395,
+                -51.88,
+                -52.155,
+                -51.531,
+                -50.191,
+                -49.533,
+                -42.582,
+                -47.585,
+                -47.449,
+                -47.095,
+                -50.978,
+                -46.307,
+                -43.006,
+                -47.141,
+                -48.469,
+                -48.438,
+                -43.999,
+                -44.757,
+                -49.91,
+                -47.621,
+                -47.066,
+                -46.679,
+                -50.508,
+                -46.243,
+                -51.43,
+                -49.86,
+                -52.143,
+                -51.658
+              ],
+              "p10Dbfs": -51.88,
+              "p50Dbfs": -48.469,
+              "p90Dbfs": -43.999,
+              "fraction100msBelowMinus60Dbfs": 0
+            },
+            "seam": {
+              "boundaryJumpDbfs": -57.793,
+              "adjacentDifferenceRmsDbfs": -47.687,
+              "largestInternalJumpDbfs": -12.03,
+              "head100msRmsDbfs": -52.497,
+              "tail100msRmsDbfs": -51.881
+            },
+            "spectrum": {
+              "method": "Arithmetic stereo mean at 16 kHz; Hann 16384 samples; 0.5 s hop; one-sided power/bin, not dB/Hz. Peaks are candidates, not proof of unwanted hum.",
+              "frameCount": 58,
+              "binWidthHz": 0.9765625,
+              "bands": [
+                {
+                  "hz": [
+                    20,
+                    80
+                  ],
+                  "meanDbfs": -83.761,
+                  "p20Dbfs": -86.062,
+                  "p90Dbfs": -81.517
+                },
+                {
+                  "hz": [
+                    80,
+                    180
+                  ],
+                  "meanDbfs": -84.431,
+                  "p20Dbfs": -87.296,
+                  "p90Dbfs": -83.16
+                },
+                {
+                  "hz": [
+                    180,
+                    400
+                  ],
+                  "meanDbfs": -73.63,
+                  "p20Dbfs": -74.716,
+                  "p90Dbfs": -72.307
+                },
+                {
+                  "hz": [
+                    400,
+                    1000
+                  ],
+                  "meanDbfs": -76.611,
+                  "p20Dbfs": -77.796,
+                  "p90Dbfs": -74.911
+                },
+                {
+                  "hz": [
+                    1000,
+                    2500
+                  ],
+                  "meanDbfs": -74.299,
+                  "p20Dbfs": -77.236,
+                  "p90Dbfs": -72.623
+                },
+                {
+                  "hz": [
+                    2500,
+                    6500
+                  ],
+                  "meanDbfs": -54.669,
+                  "p20Dbfs": -57.195,
+                  "p90Dbfs": -52.764
+                },
+                {
+                  "hz": [
+                    6500,
+                    8000
+                  ],
+                  "meanDbfs": -59.003,
+                  "p20Dbfs": -66.15,
+                  "p90Dbfs": -55.364
+                }
+              ],
+              "persistentPeakCandidates": [
+                {
+                  "hz": 6000,
+                  "meanDbfs": -61.502,
+                  "prominenceDb": 20.618,
+                  "p20Dbfs": -63.09,
+                  "p90Dbfs": -59.313
+                },
+                {
+                  "hz": 6200.195,
+                  "meanDbfs": -65.829,
+                  "prominenceDb": 14.605,
+                  "p20Dbfs": -67.933,
+                  "p90Dbfs": -63.866
+                },
+                {
+                  "hz": 5200.195,
+                  "meanDbfs": -68.241,
+                  "prominenceDb": 17.621,
+                  "p20Dbfs": -71.876,
+                  "p90Dbfs": -65.664
+                },
+                {
+                  "hz": 4200.195,
+                  "meanDbfs": -69.441,
+                  "prominenceDb": 20.919,
+                  "p20Dbfs": -72.949,
+                  "p90Dbfs": -66.841
+                },
+                {
+                  "hz": 4599.609,
+                  "meanDbfs": -71.527,
+                  "prominenceDb": 15.192,
+                  "p20Dbfs": -76.02,
+                  "p90Dbfs": -67.431
+                },
+                {
+                  "hz": 200.195,
+                  "meanDbfs": -74.911,
+                  "prominenceDb": 24.29,
+                  "p20Dbfs": -76.114,
+                  "p90Dbfs": -73.623
+                },
+                {
+                  "hz": 7200.195,
+                  "meanDbfs": -76.747,
+                  "prominenceDb": 9.645,
+                  "p20Dbfs": -80.634,
+                  "p90Dbfs": -73.978
+                },
+                {
+                  "hz": 599.609,
+                  "meanDbfs": -79.438,
+                  "prominenceDb": 22.985,
+                  "p20Dbfs": -81.083,
+                  "p90Dbfs": -77.48
+                },
+                {
+                  "hz": 6599.609,
+                  "meanDbfs": -76.863,
+                  "prominenceDb": 10.341,
+                  "p20Dbfs": -82.77,
+                  "p90Dbfs": -74.661
+                },
+                {
+                  "hz": 4799.805,
+                  "meanDbfs": -80.474,
+                  "prominenceDb": 10.229,
+                  "p20Dbfs": -82.771,
+                  "p90Dbfs": -78.443
+                },
+                {
+                  "hz": 5000,
+                  "meanDbfs": -80.39,
+                  "prominenceDb": 10.451,
+                  "p20Dbfs": -84.097,
+                  "p90Dbfs": -76.886
+                },
+                {
+                  "hz": 7400.391,
+                  "meanDbfs": -79.714,
+                  "prominenceDb": 7.135,
+                  "p20Dbfs": -84.179,
+                  "p90Dbfs": -77.134
+                },
+                {
+                  "hz": 7799.805,
+                  "meanDbfs": -79.941,
+                  "prominenceDb": 9.81,
+                  "p20Dbfs": -84.339,
+                  "p90Dbfs": -76.959
+                },
+                {
+                  "hz": 5799.805,
+                  "meanDbfs": -81.483,
+                  "prominenceDb": 9.696,
+                  "p20Dbfs": -85.586,
+                  "p90Dbfs": -78.215
+                },
+                {
+                  "hz": 3799.805,
+                  "meanDbfs": -84.774,
+                  "prominenceDb": 9.974,
+                  "p20Dbfs": -87.827,
+                  "p90Dbfs": -82.576
+                },
+                {
+                  "hz": 400.391,
+                  "meanDbfs": -83.392,
+                  "prominenceDb": 13.525,
+                  "p20Dbfs": -88.246,
+                  "p90Dbfs": -79.801
+                },
+                {
+                  "hz": 3599.609,
+                  "meanDbfs": -85.34,
+                  "prominenceDb": 7.567,
+                  "p20Dbfs": -90.365,
+                  "p90Dbfs": -82.439
+                },
+                {
+                  "hz": 2400.391,
+                  "meanDbfs": -82.052,
+                  "prominenceDb": 22.64,
+                  "p20Dbfs": -90.546,
+                  "p90Dbfs": -76.881
+                },
+                {
+                  "hz": 1250,
+                  "meanDbfs": -88.363,
+                  "prominenceDb": 21.61,
+                  "p20Dbfs": -91.178,
+                  "p90Dbfs": -85.872
+                },
+                {
+                  "hz": 4000,
+                  "meanDbfs": -85.632,
+                  "prominenceDb": 12.369,
+                  "p20Dbfs": -91.216,
+                  "p90Dbfs": -82.108
+                },
+                {
+                  "hz": 1200.195,
+                  "meanDbfs": -89.847,
+                  "prominenceDb": 19.124,
+                  "p20Dbfs": -92.338,
+                  "p90Dbfs": -86.705
+                },
+                {
+                  "hz": 1799.805,
+                  "meanDbfs": -90.989,
+                  "prominenceDb": 18.882,
+                  "p20Dbfs": -92.36,
+                  "p90Dbfs": -89.576
+                },
+                {
+                  "hz": 1599.609,
+                  "meanDbfs": -89.265,
+                  "prominenceDb": 18.502,
+                  "p20Dbfs": -92.639,
+                  "p90Dbfs": -86.365
+                },
+                {
+                  "hz": 2200.195,
+                  "meanDbfs": -88.293,
+                  "prominenceDb": 12.843,
+                  "p20Dbfs": -92.728,
+                  "p90Dbfs": -84.121
+                },
+                {
+                  "hz": 1000,
+                  "meanDbfs": -91.202,
+                  "prominenceDb": 18.351,
+                  "p20Dbfs": -93.046,
+                  "p90Dbfs": -89.454
+                },
+                {
+                  "hz": 2000,
+                  "meanDbfs": -89.096,
+                  "prominenceDb": 19.543,
+                  "p20Dbfs": -94.923,
+                  "p90Dbfs": -85.506
+                },
+                {
+                  "hz": 1150.391,
+                  "meanDbfs": -90.469,
+                  "prominenceDb": 18.809,
+                  "p20Dbfs": -95.307,
+                  "p90Dbfs": -88.128
+                },
+                {
+                  "hz": 250,
+                  "meanDbfs": -91.696,
+                  "prominenceDb": 13.43,
+                  "p20Dbfs": -96.042,
+                  "p90Dbfs": -88.895
+                },
+                {
+                  "hz": 3950.195,
+                  "meanDbfs": -90.47,
+                  "prominenceDb": 10.393,
+                  "p20Dbfs": -96.056,
+                  "p90Dbfs": -86.72
+                },
+                {
+                  "hz": 3150.391,
+                  "meanDbfs": -94.208,
+                  "prominenceDb": 13.099,
+                  "p20Dbfs": -96.352,
+                  "p90Dbfs": -92.052
+                }
+              ]
+            }
+          },
+          "eq": "highpass=f=350:p=2,highpass=f=350:p=2,lowpass=f=5000:p=2,lowpass=f=5000:p=2",
+          "level": {
+            "input": "tmp/audio-feedback/master-A03MXB/rain-4-eq.wav",
+            "targetRmsDbfs": -53,
+            "peakCeilingDbfs": -22,
+            "gainDb": 2.8,
+            "measured": {
+              "path": "tmp/audio-feedback/master-A03MXB/rain-4-eq.wav",
+              "sha256": "f1dbbc3a017b7345261e09aac028eb82e32c546b8668dcd421df819ba6e853fe",
+              "bytes": 10584114,
+              "codec": "pcm_f32le",
+              "sampleRate": 44100,
+              "channels": 2,
+              "containerSeconds": 30,
+              "decodedSeconds": 30,
+              "integratedLufs": -52.6,
+              "loudnessRangeLu": 5.9,
+              "truePeakDbfs": -24.8,
+              "rmsDbfs": -58.838,
+              "samplePeakDbfs": -25.248,
+              "dcOffset": 4.560760180203506e-9,
+              "level": {
+                "windowSeconds": 1,
+                "rmsDbfs": [
+                  -61.537,
+                  -60.354,
+                  -59.063,
+                  -61.333,
+                  -62.356,
+                  -62.483,
+                  -61.589,
+                  -61.405,
+                  -53.492,
+                  -57.037,
+                  -58.743,
+                  -59.654,
+                  -60.596,
+                  -58.005,
+                  -53.573,
+                  -56.926,
+                  -61.195,
+                  -60.514,
+                  -60.074,
+                  -57.968,
+                  -58.465,
+                  -58.213,
+                  -60.131,
+                  -58.702,
+                  -61.317,
+                  -57.004,
+                  -61.802,
+                  -60.279,
+                  -60.408,
+                  -62.415
+                ],
+                "p10Dbfs": -61.802,
+                "p50Dbfs": -60.131,
+                "p90Dbfs": -56.926,
+                "fraction100msBelowMinus60Dbfs": 0.78
+              },
+              "seam": {
+                "boundaryJumpDbfs": -51.307,
+                "adjacentDifferenceRmsDbfs": -61.39,
+                "largestInternalJumpDbfs": -27.026,
+                "head100msRmsDbfs": -61.607,
+                "tail100msRmsDbfs": -63.255
+              }
+            }
+          }
+        },
+        {
+          "source": "public/assets/audio/ambience/canopy-rain-v2-e.mp3",
+          "sourceMeasurements": {
+            "path": "public/assets/audio/ambience/canopy-rain-v2-e.mp3",
+            "sha256": "2ebadca264399d3bcde6de049cf46f8daeeafa4a48c33fe299230284221734e8",
+            "bytes": 481115,
+            "codec": "mp3",
+            "sampleRate": 44100,
+            "channels": 2,
+            "containerSeconds": 30.040816,
+            "decodedSeconds": 30,
+            "integratedLufs": -41.8,
+            "loudnessRangeLu": 7,
+            "truePeakDbfs": -16.2,
+            "rmsDbfs": -48.037,
+            "samplePeakDbfs": -16.731,
+            "dcOffset": 0.000019529028859999892,
+            "level": {
+              "windowSeconds": 1,
+              "rmsDbfs": [
+                -44.427,
+                -44.981,
+                -44.787,
+                -45.244,
+                -44.987,
+                -45.859,
+                -44.78,
+                -45.818,
+                -46.488,
+                -49.148,
+                -49.54,
+                -48.592,
+                -48.723,
+                -50.032,
+                -50.767,
+                -51.412,
+                -51.211,
+                -51.938,
+                -51.876,
+                -52.7,
+                -52.231,
+                -51.848,
+                -51.683,
+                -51.469,
+                -50.945,
+                -46.842,
+                -49.698,
+                -49.875,
+                -50.052,
+                -48.877
+              ],
+              "p10Dbfs": -51.876,
+              "p50Dbfs": -49.54,
+              "p90Dbfs": -44.787,
+              "fraction100msBelowMinus60Dbfs": 0
+            },
+            "seam": {
+              "boundaryJumpDbfs": -56.524,
+              "adjacentDifferenceRmsDbfs": -48.052,
+              "largestInternalJumpDbfs": -17.129,
+              "head100msRmsDbfs": -43.995,
+              "tail100msRmsDbfs": -47.023
+            },
+            "spectrum": {
+              "method": "Arithmetic stereo mean at 16 kHz; Hann 16384 samples; 0.5 s hop; one-sided power/bin, not dB/Hz. Peaks are candidates, not proof of unwanted hum.",
+              "frameCount": 58,
+              "binWidthHz": 0.9765625,
+              "bands": [
+                {
+                  "hz": [
+                    20,
+                    80
+                  ],
+                  "meanDbfs": -81.082,
+                  "p20Dbfs": -86.703,
+                  "p90Dbfs": -76.43
+                },
+                {
+                  "hz": [
+                    80,
+                    180
+                  ],
+                  "meanDbfs": -82.607,
+                  "p20Dbfs": -87.097,
+                  "p90Dbfs": -78.915
+                },
+                {
+                  "hz": [
+                    180,
+                    400
+                  ],
+                  "meanDbfs": -73.649,
+                  "p20Dbfs": -77.253,
+                  "p90Dbfs": -71.076
+                },
+                {
+                  "hz": [
+                    400,
+                    1000
+                  ],
+                  "meanDbfs": -69.206,
+                  "p20Dbfs": -73.18,
+                  "p90Dbfs": -66.318
+                },
+                {
+                  "hz": [
+                    1000,
+                    2500
+                  ],
+                  "meanDbfs": -62.162,
+                  "p20Dbfs": -67.165,
+                  "p90Dbfs": -59.476
+                },
+                {
+                  "hz": [
+                    2500,
+                    6500
+                  ],
+                  "meanDbfs": -54.386,
+                  "p20Dbfs": -56.407,
+                  "p90Dbfs": -52.428
+                },
+                {
+                  "hz": [
+                    6500,
+                    8000
+                  ],
+                  "meanDbfs": -59.79,
+                  "p20Dbfs": -64.596,
+                  "p90Dbfs": -55.204
+                }
+              ],
+              "persistentPeakCandidates": [
+                {
+                  "hz": 6200.195,
+                  "meanDbfs": -66.784,
+                  "prominenceDb": 17.054,
+                  "p20Dbfs": -73.407,
+                  "p90Dbfs": -63.381
+                },
+                {
+                  "hz": 1400.391,
+                  "meanDbfs": -71.293,
+                  "prominenceDb": 19.427,
+                  "p20Dbfs": -78.89,
+                  "p90Dbfs": -65.509
+                },
+                {
+                  "hz": 6000,
+                  "meanDbfs": -60.061,
+                  "prominenceDb": 25.079,
+                  "p20Dbfs": -79.084,
+                  "p90Dbfs": -57.278
+                },
+                {
+                  "hz": 5200.195,
+                  "meanDbfs": -68.241,
+                  "prominenceDb": 18.676,
+                  "p20Dbfs": -80.013,
+                  "p90Dbfs": -64.585
+                },
+                {
+                  "hz": 6400.391,
+                  "meanDbfs": -77.947,
+                  "prominenceDb": 7.386,
+                  "p20Dbfs": -80.06,
+                  "p90Dbfs": -76.785
+                },
+                {
+                  "hz": 6599.609,
+                  "meanDbfs": -72.525,
+                  "prominenceDb": 13.842,
+                  "p20Dbfs": -80.295,
+                  "p90Dbfs": -69.237
+                },
+                {
+                  "hz": 6799.805,
+                  "meanDbfs": -76.614,
+                  "prominenceDb": 10.546,
+                  "p20Dbfs": -81.123,
+                  "p90Dbfs": -73.665
+                },
+                {
+                  "hz": 400.391,
+                  "meanDbfs": -73.578,
+                  "prominenceDb": 21.013,
+                  "p20Dbfs": -81.142,
+                  "p90Dbfs": -69.695
+                },
+                {
+                  "hz": 200.195,
+                  "meanDbfs": -79.736,
+                  "prominenceDb": 17.736,
+                  "p20Dbfs": -81.505,
+                  "p90Dbfs": -77.286
+                },
+                {
+                  "hz": 7000,
+                  "meanDbfs": -76.657,
+                  "prominenceDb": 9.994,
+                  "p20Dbfs": -81.603,
+                  "p90Dbfs": -73.585
+                },
+                {
+                  "hz": 7200.195,
+                  "meanDbfs": -77.105,
+                  "prominenceDb": 11.36,
+                  "p20Dbfs": -83.161,
+                  "p90Dbfs": -73.952
+                },
+                {
+                  "hz": 1599.609,
+                  "meanDbfs": -80.101,
+                  "prominenceDb": 11.655,
+                  "p20Dbfs": -83.435,
+                  "p90Dbfs": -77.047
+                },
+                {
+                  "hz": 7599.609,
+                  "meanDbfs": -78.813,
+                  "prominenceDb": 11.02,
+                  "p20Dbfs": -83.881,
+                  "p90Dbfs": -75.447
+                },
+                {
+                  "hz": 4200.195,
+                  "meanDbfs": -66.724,
+                  "prominenceDb": 23.508,
+                  "p20Dbfs": -83.947,
+                  "p90Dbfs": -63.823
+                },
+                {
+                  "hz": 5400.391,
+                  "meanDbfs": -79.222,
+                  "prominenceDb": 10.659,
+                  "p20Dbfs": -84.031,
+                  "p90Dbfs": -76.049
+                },
+                {
+                  "hz": 2400.391,
+                  "meanDbfs": -70.13,
+                  "prominenceDb": 21.676,
+                  "p20Dbfs": -84.067,
+                  "p90Dbfs": -66.248
+                },
+                {
+                  "hz": 5799.805,
+                  "meanDbfs": -79.869,
+                  "prominenceDb": 10.581,
+                  "p20Dbfs": -84.26,
+                  "p90Dbfs": -76.882
+                },
+                {
+                  "hz": 4599.609,
+                  "meanDbfs": -71.748,
+                  "prominenceDb": 16.67,
+                  "p20Dbfs": -84.543,
+                  "p90Dbfs": -68.459
+                },
+                {
+                  "hz": 5000,
+                  "meanDbfs": -74.137,
+                  "prominenceDb": 16.053,
+                  "p20Dbfs": -84.911,
+                  "p90Dbfs": -69.392
+                },
+                {
+                  "hz": 799.805,
+                  "meanDbfs": -75.963,
+                  "prominenceDb": 21.881,
+                  "p20Dbfs": -85.286,
+                  "p90Dbfs": -71.358
+                },
+                {
+                  "hz": 2000,
+                  "meanDbfs": -77.244,
+                  "prominenceDb": 20.618,
+                  "p20Dbfs": -85.616,
+                  "p90Dbfs": -71.286
+                },
+                {
+                  "hz": 599.609,
+                  "meanDbfs": -75.541,
+                  "prominenceDb": 23.152,
+                  "p20Dbfs": -86.855,
+                  "p90Dbfs": -71.56
+                },
+                {
+                  "hz": 7400.391,
+                  "meanDbfs": -81.629,
+                  "prominenceDb": 7.3,
+                  "p20Dbfs": -87.17,
+                  "p90Dbfs": -78.021
+                },
+                {
+                  "hz": 4400.391,
+                  "meanDbfs": -82.861,
+                  "prominenceDb": 8.326,
+                  "p20Dbfs": -87.179,
+                  "p90Dbfs": -79.881
+                },
+                {
+                  "hz": 4000,
+                  "meanDbfs": -84.146,
+                  "prominenceDb": 7.581,
+                  "p20Dbfs": -88.065,
+                  "p90Dbfs": -81.387
+                },
+                {
+                  "hz": 3799.805,
+                  "meanDbfs": -83.807,
+                  "prominenceDb": 8.883,
+                  "p20Dbfs": -88.716,
+                  "p90Dbfs": -81.168
+                },
+                {
+                  "hz": 5599.609,
+                  "meanDbfs": -83.942,
+                  "prominenceDb": 7.049,
+                  "p20Dbfs": -88.719,
+                  "p90Dbfs": -81.395
+                },
+                {
+                  "hz": 3599.609,
+                  "meanDbfs": -80.715,
+                  "prominenceDb": 12.471,
+                  "p20Dbfs": -88.925,
+                  "p90Dbfs": -76.935
+                },
+                {
+                  "hz": 1250,
+                  "meanDbfs": -84.833,
+                  "prominenceDb": 11.73,
+                  "p20Dbfs": -89.053,
+                  "p90Dbfs": -81.011
+                },
+                {
+                  "hz": 3200.195,
+                  "meanDbfs": -79.716,
+                  "prominenceDb": 15.446,
+                  "p20Dbfs": -89.402,
+                  "p90Dbfs": -75.819
+                }
+              ]
+            }
+          },
+          "eq": "highpass=f=350:p=2,highpass=f=350:p=2,lowpass=f=5000:p=2,lowpass=f=5000:p=2",
+          "level": {
+            "input": "tmp/audio-feedback/master-A03MXB/rain-5-eq.wav",
+            "targetRmsDbfs": -53,
+            "peakCeilingDbfs": -22,
+            "gainDb": 1.899,
+            "measured": {
+              "path": "tmp/audio-feedback/master-A03MXB/rain-5-eq.wav",
+              "sha256": "92a1df3bac341e7fa94c22339f5ee19afbf5bea2d02b5475eb493c1f7d6d6964",
+              "bytes": 10584114,
+              "codec": "pcm_f32le",
+              "sampleRate": 44100,
+              "channels": 2,
+              "containerSeconds": 30,
+              "decodedSeconds": 30,
+              "integratedLufs": -50.8,
+              "loudnessRangeLu": 7.1,
+              "truePeakDbfs": -23.9,
+              "rmsDbfs": -56.428,
+              "samplePeakDbfs": -24.049,
+              "dcOffset": -5.411013574448121e-10,
+              "level": {
+                "windowSeconds": 1,
+                "rmsDbfs": [
+                  -53.214,
+                  -53.795,
+                  -53.804,
+                  -53.486,
+                  -53.84,
+                  -54.287,
+                  -53.919,
+                  -54.36,
+                  -54.84,
+                  -57.37,
+                  -57.103,
+                  -55.03,
+                  -55.517,
+                  -56.461,
+                  -57.393,
+                  -59.19,
+                  -59.722,
+                  -60.169,
+                  -60.383,
+                  -61.518,
+                  -60.878,
+                  -61.761,
+                  -61.609,
+                  -60.864,
+                  -59.947,
+                  -55.136,
+                  -57.662,
+                  -58.247,
+                  -58.767,
+                  -58.066
+                ],
+                "p10Dbfs": -60.878,
+                "p50Dbfs": -57.37,
+                "p90Dbfs": -53.795,
+                "fraction100msBelowMinus60Dbfs": 0.25333333333333335
+              },
+              "seam": {
+                "boundaryJumpDbfs": -61.815,
+                "adjacentDifferenceRmsDbfs": -61.553,
+                "largestInternalJumpDbfs": -28.5,
+                "head100msRmsDbfs": -54.128,
+                "tail100msRmsDbfs": -57.81
+              }
+            }
+          }
         }
       ],
+      "arrangement": {
+        "sourceOrder": [
+          "canopy-rain-v2",
+          "canopy-rain-v2-b",
+          "canopy-rain-v2-c",
+          "canopy-rain-v2-d",
+          "canopy-rain-v2-e"
+        ],
+        "sourceSecondsEach": 30,
+        "uniqueSourceSeconds": 150,
+        "repetitionsPerSource": 1,
+        "overlapSeconds": 4,
+        "offsetsSamples": [
+          0,
+          1146600,
+          2293200,
+          3439800,
+          4586400
+        ],
+        "graph": "[0:a]afade=t=out:ss=1146600:ns=176400:curve=tri,adelay=0S:all=1,asetpts=PTS-STARTPTS[s0];[1:a]afade=t=in:ss=0:ns=176400:curve=tri,afade=t=out:ss=1146600:ns=176400:curve=tri,adelay=1146600S:all=1,asetpts=PTS-STARTPTS[s1];[2:a]afade=t=in:ss=0:ns=176400:curve=tri,afade=t=out:ss=1146600:ns=176400:curve=tri,adelay=2293200S:all=1,asetpts=PTS-STARTPTS[s2];[3:a]afade=t=in:ss=0:ns=176400:curve=tri,afade=t=out:ss=1146600:ns=176400:curve=tri,adelay=3439800S:all=1,asetpts=PTS-STARTPTS[s3];[4:a]afade=t=in:ss=0:ns=176400:curve=tri,adelay=4586400S:all=1,asetpts=PTS-STARTPTS[s4];[s0][s1][s2][s3][s4]amix=inputs=5:normalize=0:duration=longest:dropout_transition=0[out]"
+      },
       "loop": {
-        "seamSeconds": 6,
-        "inputFrames": 1323000,
-        "outputFrames": 1058400,
-        "graph": "[0:a]asplit=3[m][t][h];[m]atrim=start_sample=264600:end_sample=1058400,asetpts=PTS-STARTPTS[mid];[t]atrim=start_sample=1058400:end_sample=1323000,asetpts=PTS-STARTPTS,afade=t=out:ss=0:ns=264600:curve=tri[tail];[h]atrim=end_sample=264600,asetpts=PTS-STARTPTS,afade=t=in:ss=0:ns=264600:curve=tri[head];[tail][head]amix=inputs=2:normalize=0:duration=longest:dropout_transition=0[join];[mid][join]concat=n=2:v=0:a=1[out]"
+        "seamSeconds": 4,
+        "inputFrames": 5909400,
+        "outputFrames": 5733000,
+        "graph": "[0:a]asplit=3[m][t][h];[m]atrim=start_sample=176400:end_sample=5733000,asetpts=PTS-STARTPTS[mid];[t]atrim=start_sample=5733000:end_sample=5909400,asetpts=PTS-STARTPTS,afade=t=out:ss=0:ns=176400:curve=tri[tail];[h]atrim=end_sample=176400,asetpts=PTS-STARTPTS,afade=t=in:ss=0:ns=176400:curve=tri[head];[tail][head]amix=inputs=2:normalize=0:duration=longest:dropout_transition=0[join];[mid][join]concat=n=2:v=0:a=1[out]"
       },
       "measurements": {
-        "path": "tmp/audio-feedback/master-OdueLa/canopy-rain-v2-loop.mp3",
-        "sha256": "fc10ccdf01b0adf746cdb02645ae1afaf15b9a5589d935adb4eb30d7b8a7e8cb",
-        "bytes": 384939,
+        "path": "public/assets/audio/ambience/canopy-rain-v2-loop.mp3",
+        "sha256": "a676f51688087d010389a2f5ee7a83d0548b6913a3c7f309a7504c8081e80669",
+        "bytes": 2081017,
         "codec": "mp3",
         "sampleRate": 44100,
         "channels": 2,
-        "containerSeconds": 24.032653,
-        "decodedSeconds": 24,
-        "integratedLufs": -48.4,
-        "loudnessRangeLu": 8.1,
-        "truePeakDbfs": -25.6,
-        "rmsDbfs": -53.841,
-        "samplePeakDbfs": -25.651,
-        "dcOffset": -2.377655585132575e-9,
+        "containerSeconds": 130.037551,
+        "decodedSeconds": 130,
+        "integratedLufs": -49.6,
+        "loudnessRangeLu": 7.4,
+        "truePeakDbfs": -22.4,
+        "rmsDbfs": -55.398,
+        "samplePeakDbfs": -22.528,
+        "dcOffset": 2.0733831293016315e-9,
         "level": {
           "windowSeconds": 1,
           "rmsDbfs": [
-            -51.779,
-            -51.914,
-            -52.027,
-            -52.57,
-            -54.694,
-            -57.006,
-            -59.904,
-            -59.413,
-            -61.197,
-            -60.683,
-            -58.405,
-            -53.932,
-            -52.538,
-            -51.478,
-            -51.643,
-            -51.916,
-            -51.872,
-            -52.152,
-            -53.982,
-            -57.946,
-            -57.887,
-            -55.263,
-            -53.476,
-            -52.005
+            -51.074,
+            -51.322,
+            -51.839,
+            -51.905,
+            -52.013,
+            -52.545,
+            -54.701,
+            -57.028,
+            -59.92,
+            -59.394,
+            -61.211,
+            -60.722,
+            -58.357,
+            -53.916,
+            -52.534,
+            -51.492,
+            -51.616,
+            -51.934,
+            -51.876,
+            -52.189,
+            -53.423,
+            -56.995,
+            -60.663,
+            -63.652,
+            -63.431,
+            -61.017,
+            -61.239,
+            -60.254,
+            -59.475,
+            -59.49,
+            -58.786,
+            -58.725,
+            -58.883,
+            -58.653,
+            -58.295,
+            -58.693,
+            -57.565,
+            -58.308,
+            -58.342,
+            -58.362,
+            -59.081,
+            -55.23,
+            -59.363,
+            -58.736,
+            -58.627,
+            -56.245,
+            -58.53,
+            -57.48,
+            -59.137,
+            -59.637,
+            -57.744,
+            -56.023,
+            -55.103,
+            -54.876,
+            -55.116,
+            -54.638,
+            -54.658,
+            -53.445,
+            -54.122,
+            -54.145,
+            -56.241,
+            -56.044,
+            -53.905,
+            -55.41,
+            -54.811,
+            -53.942,
+            -53.206,
+            -52.665,
+            -51.857,
+            -51.722,
+            -53.209,
+            -54.354,
+            -55.099,
+            -55.388,
+            -56.303,
+            -58.888,
+            -59.232,
+            -59.816,
+            -59.972,
+            -60.086,
+            -59.183,
+            -58.985,
+            -51.063,
+            -54.643,
+            -56.248,
+            -57.269,
+            -58.196,
+            -55.618,
+            -51.148,
+            -54.44,
+            -58.813,
+            -58.142,
+            -57.679,
+            -55.534,
+            -56.131,
+            -55.821,
+            -57.642,
+            -56.298,
+            -58.892,
+            -54.683,
+            -59.975,
+            -58.103,
+            -55.995,
+            -53.012,
+            -52.312,
+            -52.777,
+            -52.398,
+            -52.857,
+            -53.311,
+            -55.901,
+            -55.605,
+            -53.535,
+            -54.019,
+            -54.978,
+            -55.914,
+            -57.674,
+            -58.252,
+            -58.643,
+            -58.9,
+            -60.031,
+            -59.407,
+            -60.256,
+            -60.106,
+            -59.392,
+            -58.438,
+            -53.65,
+            -57.02,
+            -57.53,
+            -55.095,
+            -51.956
           ],
-          "p10Dbfs": -59.904,
-          "p50Dbfs": -53.476,
-          "p90Dbfs": -51.779,
-          "fraction100msBelowMinus60Dbfs": 0.13333333333333333
+          "p10Dbfs": -59.972,
+          "p50Dbfs": -56.245,
+          "p90Dbfs": -51.956,
+          "fraction100msBelowMinus60Dbfs": 0.18846153846153846
         },
         "seam": {
-          "boundaryJumpDbfs": -67.072,
-          "adjacentDifferenceRmsDbfs": -60.471,
-          "largestInternalJumpDbfs": -29.406,
-          "head100msRmsDbfs": -52.026,
-          "tail100msRmsDbfs": -51.213
+          "boundaryJumpDbfs": -60.244,
+          "adjacentDifferenceRmsDbfs": -60.524,
+          "largestInternalJumpDbfs": -24.534,
+          "head100msRmsDbfs": -50.011,
+          "tail100msRmsDbfs": -51.116
         },
         "spectrum": {
           "method": "Arithmetic stereo mean at 16 kHz; Hann 16384 samples; 0.5 s hop; one-sided power/bin, not dB/Hz. Peaks are candidates, not proof of unwanted hum.",
-          "frameCount": 46,
+          "frameCount": 258,
           "binWidthHz": 0.9765625,
           "bands": [
             {
@@ -1407,247 +3499,275 @@
                 20,
                 80
               ],
-              "meanDbfs": -127.077,
-              "p20Dbfs": -129.921,
-              "p90Dbfs": -124.449
+              "meanDbfs": -127.801,
+              "p20Dbfs": -133.997,
+              "p90Dbfs": -125.295
             },
             {
               "hz": [
                 80,
                 180
               ],
-              "meanDbfs": -111.366,
-              "p20Dbfs": -113.216,
-              "p90Dbfs": -108.993
+              "meanDbfs": -111.822,
+              "p20Dbfs": -115.798,
+              "p90Dbfs": -109.186
             },
             {
               "hz": [
                 180,
                 400
               ],
-              "meanDbfs": -84.239,
-              "p20Dbfs": -86.467,
-              "p90Dbfs": -81.652
+              "meanDbfs": -83.207,
+              "p20Dbfs": -90.153,
+              "p90Dbfs": -81.253
             },
             {
               "hz": [
                 400,
                 1000
               ],
-              "meanDbfs": -69.089,
-              "p20Dbfs": -71.923,
-              "p90Dbfs": -66.272
+              "meanDbfs": -71.577,
+              "p20Dbfs": -76.64,
+              "p90Dbfs": -68.151
             },
             {
               "hz": [
                 1000,
                 2500
               ],
-              "meanDbfs": -58.648,
-              "p20Dbfs": -63.826,
-              "p90Dbfs": -56.21
+              "meanDbfs": -62.177,
+              "p20Dbfs": -68.808,
+              "p90Dbfs": -57.694
             },
             {
               "hz": [
                 2500,
                 6500
               ],
-              "meanDbfs": -59.429,
-              "p20Dbfs": -63.932,
-              "p90Dbfs": -57.216
+              "meanDbfs": -60.013,
+              "p20Dbfs": -63.315,
+              "p90Dbfs": -57.272
             },
             {
               "hz": [
                 6500,
                 8000
               ],
-              "meanDbfs": -74.655,
-              "p20Dbfs": -80.829,
-              "p90Dbfs": -71.605
+              "meanDbfs": -74.403,
+              "p20Dbfs": -78.743,
+              "p90Dbfs": -71.312
             }
           ],
           "persistentPeakCandidates": [
             {
               "hz": 1400.391,
-              "meanDbfs": -75.568,
-              "prominenceDb": 12.407,
-              "p20Dbfs": -78.879,
-              "p90Dbfs": -72.631
+              "meanDbfs": -75.096,
+              "prominenceDb": 16.523,
+              "p20Dbfs": -85.323,
+              "p90Dbfs": -72.967
             },
             {
               "hz": 1599.609,
-              "meanDbfs": -79.353,
-              "prominenceDb": 8.519,
-              "p20Dbfs": -82.199,
-              "p90Dbfs": -76.771
+              "meanDbfs": -81.778,
+              "prominenceDb": 9.679,
+              "p20Dbfs": -87.905,
+              "p90Dbfs": -78.324
             },
             {
               "hz": 799.805,
-              "meanDbfs": -81.005,
-              "prominenceDb": 16.823,
-              "p20Dbfs": -83.174,
-              "p90Dbfs": -79.022
-            },
-            {
-              "hz": 2400.391,
-              "meanDbfs": -75.38,
-              "prominenceDb": 12.853,
-              "p20Dbfs": -83.294,
-              "p90Dbfs": -71.226
+              "meanDbfs": -80.035,
+              "prominenceDb": 19.184,
+              "p20Dbfs": -89.125,
+              "p90Dbfs": -78.773
             },
             {
               "hz": 1250,
-              "meanDbfs": -78.828,
-              "prominenceDb": 10.567,
-              "p20Dbfs": -85.084,
-              "p90Dbfs": -73.83
-            },
-            {
-              "hz": 599.609,
-              "meanDbfs": -80.434,
-              "prominenceDb": 20.933,
-              "p20Dbfs": -86.301,
-              "p90Dbfs": -75.277
-            },
-            {
-              "hz": 2000,
-              "meanDbfs": -78.738,
-              "prominenceDb": 11.612,
-              "p20Dbfs": -86.687,
-              "p90Dbfs": -74.803
-            },
-            {
-              "hz": 4200.195,
-              "meanDbfs": -76.356,
-              "prominenceDb": 15.523,
-              "p20Dbfs": -86.996,
-              "p90Dbfs": -71.74
-            },
-            {
-              "hz": 3200.195,
-              "meanDbfs": -80.857,
-              "prominenceDb": 10.204,
-              "p20Dbfs": -88.509,
-              "p90Dbfs": -76.018
-            },
-            {
-              "hz": 1000,
-              "meanDbfs": -79.51,
-              "prominenceDb": 10.356,
-              "p20Dbfs": -88.519,
-              "p90Dbfs": -76.248
-            },
-            {
-              "hz": 849.609,
-              "meanDbfs": -83.024,
-              "prominenceDb": 8.941,
-              "p20Dbfs": -88.612,
-              "p90Dbfs": -78.037
+              "meanDbfs": -81.248,
+              "prominenceDb": 13.219,
+              "p20Dbfs": -90.095,
+              "p90Dbfs": -76.431
             },
             {
               "hz": 4599.609,
-              "meanDbfs": -80.817,
-              "prominenceDb": 11.835,
-              "p20Dbfs": -89.834,
-              "p90Dbfs": -77.23
+              "meanDbfs": -77.916,
+              "prominenceDb": 14.275,
+              "p20Dbfs": -90.548,
+              "p90Dbfs": -73.199
             },
             {
-              "hz": 400.391,
-              "meanDbfs": -83.763,
-              "prominenceDb": 18.636,
-              "p20Dbfs": -90.053,
-              "p90Dbfs": -79.809
+              "hz": 599.609,
+              "meanDbfs": -79.43,
+              "prominenceDb": 22.277,
+              "p20Dbfs": -90.73,
+              "p90Dbfs": -75.937
             },
             {
-              "hz": 5200.195,
-              "meanDbfs": -81.117,
-              "prominenceDb": 13.522,
-              "p20Dbfs": -90.35,
-              "p90Dbfs": -77.302
+              "hz": 4200.195,
+              "meanDbfs": -73.08,
+              "prominenceDb": 19.053,
+              "p20Dbfs": -90.805,
+              "p90Dbfs": -68.078
+            },
+            {
+              "hz": 2400.391,
+              "meanDbfs": -74.945,
+              "prominenceDb": 16.328,
+              "p20Dbfs": -90.949,
+              "p90Dbfs": -70.396
+            },
+            {
+              "hz": 2000,
+              "meanDbfs": -80.41,
+              "prominenceDb": 14.064,
+              "p20Dbfs": -91.057,
+              "p90Dbfs": -77.703
+            },
+            {
+              "hz": 3599.609,
+              "meanDbfs": -84.749,
+              "prominenceDb": 7.018,
+              "p20Dbfs": -92.186,
+              "p90Dbfs": -80.726
+            },
+            {
+              "hz": 1000,
+              "meanDbfs": -83.112,
+              "prominenceDb": 11.044,
+              "p20Dbfs": -92.472,
+              "p90Dbfs": -78.561
             },
             {
               "hz": 6000,
-              "meanDbfs": -78.016,
-              "prominenceDb": 19.547,
-              "p20Dbfs": -90.358,
-              "p90Dbfs": -72.611
+              "meanDbfs": -72.924,
+              "prominenceDb": 21.226,
+              "p20Dbfs": -92.609,
+              "p90Dbfs": -68.365
             },
             {
               "hz": 5000,
-              "meanDbfs": -86.769,
-              "prominenceDb": 9.146,
-              "p20Dbfs": -91.169,
-              "p90Dbfs": -83.121
+              "meanDbfs": -83.512,
+              "prominenceDb": 12.262,
+              "p20Dbfs": -92.638,
+              "p90Dbfs": -80.331
+            },
+            {
+              "hz": 5200.195,
+              "meanDbfs": -76.965,
+              "prominenceDb": 16.317,
+              "p20Dbfs": -93.28,
+              "p90Dbfs": -72.018
+            },
+            {
+              "hz": 1799.805,
+              "meanDbfs": -85.453,
+              "prominenceDb": 7.802,
+              "p20Dbfs": -93.595,
+              "p90Dbfs": -80.951
+            },
+            {
+              "hz": 3400.391,
+              "meanDbfs": -84.004,
+              "prominenceDb": 7.556,
+              "p20Dbfs": -93.911,
+              "p90Dbfs": -79.903
+            },
+            {
+              "hz": 2200.195,
+              "meanDbfs": -87.032,
+              "prominenceDb": 7.885,
+              "p20Dbfs": -94.088,
+              "p90Dbfs": -82.499
+            },
+            {
+              "hz": 2299.805,
+              "meanDbfs": -82.239,
+              "prominenceDb": 8.172,
+              "p20Dbfs": -94.71,
+              "p90Dbfs": -77.875
+            },
+            {
+              "hz": 400.391,
+              "meanDbfs": -81.858,
+              "prominenceDb": 19.005,
+              "p20Dbfs": -95.261,
+              "p90Dbfs": -79.804
+            },
+            {
+              "hz": 2500,
+              "meanDbfs": -82.18,
+              "prominenceDb": 9.425,
+              "p20Dbfs": -95.364,
+              "p90Dbfs": -76.794
+            },
+            {
+              "hz": 3200.195,
+              "meanDbfs": -83.205,
+              "prominenceDb": 9.407,
+              "p20Dbfs": -95.593,
+              "p90Dbfs": -78.458
             },
             {
               "hz": 6200.195,
-              "meanDbfs": -87.324,
-              "prominenceDb": 10.093,
-              "p20Dbfs": -94.703,
-              "p90Dbfs": -83.915
+              "meanDbfs": -79.191,
+              "prominenceDb": 14.497,
+              "p20Dbfs": -95.655,
+              "p90Dbfs": -74.052
             },
             {
-              "hz": 700.195,
-              "meanDbfs": -91.004,
-              "prominenceDb": 12.098,
-              "p20Dbfs": -96.971,
-              "p90Dbfs": -86.455
+              "hz": 4799.805,
+              "meanDbfs": -88.491,
+              "prominenceDb": 7.216,
+              "p20Dbfs": -95.881,
+              "p90Dbfs": -84.2
+            },
+            {
+              "hz": 849.609,
+              "meanDbfs": -87.393,
+              "prominenceDb": 9.215,
+              "p20Dbfs": -96.793,
+              "p90Dbfs": -84.39
+            },
+            {
+              "hz": 6599.609,
+              "meanDbfs": -88.897,
+              "prominenceDb": 11.168,
+              "p20Dbfs": -98.271,
+              "p90Dbfs": -84.706
             },
             {
               "hz": 5799.805,
-              "meanDbfs": -91.187,
-              "prominenceDb": 7.292,
-              "p20Dbfs": -97.206,
-              "p90Dbfs": -87.514
+              "meanDbfs": -90.999,
+              "prominenceDb": 7.956,
+              "p20Dbfs": -99.691,
+              "p90Dbfs": -87.036
             },
             {
-              "hz": 200.195,
-              "meanDbfs": -96.964,
-              "prominenceDb": 22.419,
-              "p20Dbfs": -98.124,
-              "p90Dbfs": -95.435
+              "hz": 2099.609,
+              "meanDbfs": -84.193,
+              "prominenceDb": 7.353,
+              "p20Dbfs": -100.981,
+              "p90Dbfs": -79.155
             },
             {
               "hz": 650.391,
-              "meanDbfs": -94.827,
-              "prominenceDb": 8.59,
-              "p20Dbfs": -98.547,
-              "p90Dbfs": -91.936
+              "meanDbfs": -96.211,
+              "prominenceDb": 7.691,
+              "p20Dbfs": -101,
+              "p90Dbfs": -92.782
             },
             {
               "hz": 450.195,
-              "meanDbfs": -95.162,
-              "prominenceDb": 10.952,
-              "p20Dbfs": -100.821,
-              "p90Dbfs": -91.45
+              "meanDbfs": -97.187,
+              "prominenceDb": 9.711,
+              "p20Dbfs": -101.865,
+              "p90Dbfs": -93.969
             },
             {
-              "hz": 250,
-              "meanDbfs": -100.476,
-              "prominenceDb": 14.605,
-              "p20Dbfs": -110.356,
-              "p90Dbfs": -96.332
-            },
-            {
-              "hz": 106.445,
-              "meanDbfs": -125.244,
-              "prominenceDb": 11.337,
-              "p20Dbfs": -128.198,
-              "p90Dbfs": -123.338
-            },
-            {
-              "hz": 29.297,
-              "meanDbfs": -135.368,
-              "prominenceDb": 9.704,
-              "p20Dbfs": -136.955,
-              "p90Dbfs": -133.054
-            },
-            {
-              "hz": 59.57,
-              "meanDbfs": -132.562,
-              "prominenceDb": 12.367,
-              "p20Dbfs": -139.65,
-              "p90Dbfs": -128.457
+              "hz": 7000,
+              "meanDbfs": -94.736,
+              "prominenceDb": 7.159,
+              "p20Dbfs": -101.881,
+              "p90Dbfs": -90.801
             }
           ]
         }

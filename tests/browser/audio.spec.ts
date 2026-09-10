@@ -326,6 +326,7 @@ test("scene audio uses rain only for roots and bark, without restarting shared s
   }
   await setScene(page, "roots");
   await expect.poll(async () => (await loops(page)).filter((a: any) => a.src.includes("canopy-rain-v2") && !a.paused && a.time > 0).length).toBe(1);
+  await expect.poll(() => page.evaluate(() => (window as any).__audioTest.media.find((a: HTMLMediaElement) => a.loop && a.src.includes("canopy-rain-v2"))?.duration ?? 0)).toBeGreaterThan(120);
   const rainPlays = await page.evaluate(() => (window as any).__audioTest.plays.filter((src: string) => src.includes("canopy-rain-v2")).length);
   await setScene(page, "bark");
   await setScene(page, "bark");

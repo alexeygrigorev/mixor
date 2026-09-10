@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "canopy-rain-v2-c",
+  "kind": "ambience",
+  "isGenerated": true,
+  "sourcePath": "public/assets/audio/ambience/canopy-rain-v2-c.mp3",
+  "provider": "ElevenLabs",
+  "endpoint": "https://api.elevenlabs.io/v1/sound-generation",
+  "request": {
+    "text": "Soft light rain touching oak leaves and damp fallen leaves in a sheltered forest. Scattered delicate papery patters vary gently and irregularly; quiet natural outdoor detail. Clean recording for subtle mixing. Only leaf rain, no other water sounds. No insects, cicadas, birds, tones, hum, buzz, electronic noise, music, voices, thunder, strong wind, streams, rivers, flowing water, gutters, large droplets or splashes.",
+    "duration_seconds": 30,
+    "prompt_influence": 0.65,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "outputFormat": "mp3_44100_128",
+  "requestedAt": "2026-09-10T12:09:36.471Z",
+  "bytes": 481115,
+  "sha256": "af99c74bc4656c6e88ff3b843318fffacd42dd11b5a1c8463827e576336a04ca",
+  "physicalAudition": false,
+  "userAccepted": false,
+  "rights": {
+    "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "canopy-rain-v2-d",
+  "kind": "ambience",
+  "isGenerated": true,
+  "sourcePath": "public/assets/audio/ambience/canopy-rain-v2-d.mp3",
+  "provider": "ElevenLabs",
+  "endpoint": "https://api.elevenlabs.io/v1/sound-generation",
+  "request": {
+    "text": "Light woodland rain under a birch canopy: very soft scattered taps on small leaves, fine diffuse patter slightly farther away, gently uneven density and quiet gaps. Natural clean outdoor recording for quiet mixing. Leaf rain only. No insects, cicadas, birds, tones, hum, buzz, electronic noise, music, voices, thunder, wind roar, streams, rivers, running water, gutters, puddles, heavy drips or roof drumming.",
+    "duration_seconds": 30,
+    "prompt_influence": 0.65,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "outputFormat": "mp3_44100_128",
+  "requestedAt": "2026-09-10T12:09:42.081Z",
+  "bytes": 481115,
+  "sha256": "3e2d70cfb9e40c26107738e323fed17d69f1f54cf147cdcf2d79075d388b139b",
+  "physicalAudition": false,
+  "userAccepted": false,
+  "rights": {
+    "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+  }
+}
