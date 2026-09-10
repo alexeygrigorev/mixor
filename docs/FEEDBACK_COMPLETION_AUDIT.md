@@ -25,3 +25,7 @@
 The next actionable missing input is whether the buzz persists in the **updated** game, and on which device/output. That question has been sent to the user. If it persists, isolate music versus nature with the existing settings, then work on the identified layer. Do not silently lower everything, regenerate unrelated assets, reset saved preferences or call successful decoding a listening test.
 
 No new audio defect was established by this audit, so no further remaster or volume change was made. A physical-device listening result cannot be produced by this environment's browser tests. This is the first completion audit awaiting that current-device evidence after the completed search correction; the goal is left active, not declared complete or blocked by a single audit.
+
+## Subsequent blocker revalidation
+
+At 16:40 UTC, the same missing current-device listening evidence had persisted through three consecutive completion audits. The worktree was clean, the latest actual user input remained U76, and no answer to the listening question or connected physical-device tool was available. The intervening turn was **no progress**, not a live-process wait; repeating passed tests would not resolve the missing evidence. The full goal was therefore marked **blocked, not complete**. Implemented fixes remain committed. Resume with the current buzz/device/output result; broader sound and device claims remain unverified.
