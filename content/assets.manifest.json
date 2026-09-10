@@ -1294,6 +1294,66 @@
         "licenseReview": "Verify active ElevenLabs account terms before public release."
       },
       "science": null
+    },
+    {
+      "id": "sfx-uncover-mix",
+      "kind": "sfx",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/sfx/uncover-mix.mp3",
+      "source": {
+        "provider": "ElevenLabs Sound Effects API",
+        "promptFile": "scripts/generate-mixor-audio.mjs",
+        "masteringFile": "scripts/master-audio.mjs"
+      },
+      "rights": {
+        "licenseReview": "Verify active ElevenLabs account terms before public release."
+      },
+      "science": null
+    },
+    {
+      "id": "music-forest-stillness-long",
+      "kind": "music",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/music/forest-stillness-long.mp3",
+      "source": {
+        "provider": "ElevenLabs Music API",
+        "promptFile": "scripts/generate-mixor-audio.mjs",
+        "masteringFile": "scripts/master-focused-audio.mjs"
+      },
+      "rights": {
+        "licenseReview": "Verify active ElevenLabs account terms before public release."
+      },
+      "science": null
+    },
+    {
+      "id": "ambience-dry-canopy-long",
+      "kind": "ambience",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/ambience/dry-canopy-long.mp3",
+      "source": {
+        "provider": "ElevenLabs Sound Effects API",
+        "promptFile": "scripts/generate-mixor-audio.mjs",
+        "masteringFile": "scripts/master-focused-audio.mjs"
+      },
+      "rights": {
+        "licenseReview": "Verify active ElevenLabs account terms before public release."
+      },
+      "science": null
+    },
+    {
+      "id": "ambience-distant-birds-long",
+      "kind": "ambience",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/ambience/distant-birds-long.mp3",
+      "source": {
+        "provider": "ElevenLabs Sound Effects API",
+        "promptFile": "scripts/generate-mixor-audio.mjs",
+        "masteringFile": "scripts/master-focused-audio.mjs"
+      },
+      "rights": {
+        "licenseReview": "Verify active ElevenLabs account terms before public release."
+      },
+      "science": null
     }
   ]
 }

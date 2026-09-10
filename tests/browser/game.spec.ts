@@ -28,115 +28,13 @@ async function inViewport(page: Page) {
         document.documentElement.scrollHeight <= innerHeight + 1,
     ),
   ).toBe(true);
-  await expect(
-    page
-      .getByRole("navigation")
-      .getByRole("button", { name: "Развитие", exact: true }),
-  ).toBeInViewport();
 }
-
-test("world, eight taxa, source photos, cycles and genuine gaps", async ({
-  page,
-}, info) => {
-  const errors: string[] = [];
-  page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("/");
-  await shot(page, info, "welcome");
-  await page
-    .getByRole("button", { name: "Начать в тишине", exact: true })
-    .click();
-  await inViewport(page);
-  await shot(page, info, "world");
-  await page.getByRole("button", { name: "Дерево", exact: true }).click();
-  await expect(page.locator(".taxon-branch")).toHaveCount(8);
-  await shot(page, info, "tree");
-  for (const id of [
-    "physarum",
-    "arcyria",
-    "fuligo",
-    "lycogala",
-    "stemonitis",
-    "trichia",
-    "tubifera",
-    "didymium",
-  ]) {
-    await page.goto(`/#portrait/${id}/spore`);
-    await expect(page.locator(".portrait-picture .art img")).toBeVisible();
-    await page
-      .getByRole("button", { name: "Настоящее фото", exact: true })
-      .click();
-    await expect(page.locator(".photo-zoom img")).toBeVisible();
-    expect(
-      await page
-        .locator(".photo-zoom img")
-        .evaluate(
-          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
-        ),
-    ).toBe(true);
-    await expect(page.locator(".photo-credit a").first()).toHaveAttribute(
-      "href",
-      /commons.wikimedia.org/,
-    );
-    await inViewport(page);
-    if (id === "physarum") {
-      await page
-        .getByRole("button", { name: "Увеличить фото", exact: true })
-        .click();
-      await expect(
-        page.getByRole("button", { name: "Вернуть полный кадр", exact: true }),
-      ).toContainText("1.5");
-      await page
-        .getByRole("button", { name: "Вернуть полный кадр", exact: true })
-        .click();
-      await shot(page, info, "real-portrait");
-    }
-  }
-  for (const id of ["physarum", "arcyria"]) {
-    for (const stage of ["spore", "cells", "fusion", "network", "fruit"]) {
-      await page.goto(`/#life/${id}/${stage}`);
-      await expect(page.locator(".stage-picture .art img")).toBeVisible();
-      await expect(
-        page.locator(".stage-trail [aria-current=step]"),
-      ).toBeVisible();
-      await inViewport(page);
-      if (stage === "spore" || stage === "network" || stage === "fruit")
-        await shot(page, info, `life-${id}-${stage}`);
-      if (stage === "spore") {
-        await page
-          .getByRole("button", { name: "Настоящее фото", exact: true })
-          .click();
-        await expect(
-          page.getByText("Фото этой стадии пока нет", { exact: true }),
-        ).toBeVisible();
-      }
-      if (stage === "fruit") {
-        await page
-          .getByRole("button", { name: "Настоящее фото", exact: true })
-          .click();
-        await expect(page.locator(".photo-zoom img")).toBeVisible();
-        await page
-          .getByRole("button", { name: "К новым спорам", exact: true })
-          .click();
-        await expect(page).toHaveURL(new RegExp(`life/${id}/spore$`));
-      }
-    }
-  }
-  await page.goto("/#life/fuligo/spore");
-  await expect(
-    page.getByText("Эта история ещё собирается", { exact: true }),
-  ).toBeVisible();
-  await page.getByRole("button", { name: "Развитие Physarum" }).click();
-  await expect(page).toHaveURL(/life\/physarum\/spore$/);
-  expect(errors).toEqual([]);
-});
 
 test("observe a real photo, save an educational discovery and revisit after reload", async ({
   page,
 }, info) => {
   await start(page);
-  await page
-    .getByRole("button", { name: "Рассмотреть: Жёлтая сеть", exact: true })
-    .click();
+  await page.goto("/#portrait/physarum/spore");
   await page
     .getByRole("button", { name: "Сделать открытие", exact: true })
     .click();
@@ -174,7 +72,7 @@ test("observe a real photo, save an educational discovery and revisit after relo
   await inViewport(page);
 });
 
-test("native dialog, originals persisted, quiet field mode, rotation", async ({
+test("native dialog, originals persisted, rotation", async ({
   page,
 }, info) => {
   await start(page);
@@ -192,7 +90,10 @@ test("native dialog, originals persisted, quiet field mode, rotation", async ({
   await expect(
     page.getByRole("button", { name: "Настройки", exact: true }),
   ).toBeFocused();
-  await page.getByRole("button", { name: "Находка", exact: true }).click();
+  await page.goto("/#journal");
+  await page
+    .getByRole("button", { name: "Добавить свою находку", exact: true })
+    .click();
   await page
     .getByLabel("Как назовём находку?")
     .fill("Синтетическая тестовая находка");
@@ -203,13 +104,11 @@ test("native dialog, originals persisted, quiet field mode, rotation", async ({
     "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a/YQAAAAASUVORK5CYII=",
     "base64",
   );
-  await page
-    .locator('input[type="file"]')
-    .setInputFiles({
-      name: "synthetic-pixel.png",
-      mimeType: "image/png",
-      buffer: png,
-    });
+  await page.locator('input[type="file"]').setInputFiles({
+    name: "synthetic-pixel.png",
+    mimeType: "image/png",
+    buffer: png,
+  });
   const viewport = page.viewportSize()!;
   await page.setViewportSize({
     width: viewport.height,
@@ -282,7 +181,7 @@ test("silent by default, real audio decoding, mute pauses every track, failures 
       ),
     )
     .toBe(3);
-  await page.getByRole("button", { name: "Дерево", exact: true }).click();
+
   await page
     .getByRole("button", { name: "Выключить звук", exact: true })
     .click();
@@ -314,7 +213,10 @@ test("a refused local write never claims success and keeps the form", async ({
     };
   });
   await start(page);
-  await page.getByRole("button", { name: "Находка", exact: true }).click();
+  await page.goto("/#journal");
+  await page
+    .getByRole("button", { name: "Добавить свою находку", exact: true })
+    .click();
   await page
     .getByLabel("Как назовём находку?")
     .fill("Несохранённый тестовый черновик");

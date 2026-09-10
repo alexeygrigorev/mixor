@@ -9,10 +9,11 @@
     "build": "tsc --noEmit && vite build && node scripts/build-offline.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "test": "node --test tests/domain.test.mjs && playwright test",
+    "test": "node --test tests/domain.test.mjs tests/content.test.mjs && playwright test",
     "test:browser": "playwright test",
     "test:offline": "node tests/offline.mjs",
-    "audio:master": "node scripts/master-audio.mjs",
+    "audio:master": "node scripts/master-audio.mjs && node scripts/master-focused-audio.mjs all --install",
+    "review:capture": "node scripts/capture-focused-review.mjs",
     "assets:validate": "node scripts/validate-assets.mjs",
     "audio:generate": "node --env-file=../red-stamp/.env scripts/generate-mixor-audio.mjs all"
   },

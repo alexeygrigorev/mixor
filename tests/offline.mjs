@@ -25,22 +25,57 @@ try {
   });
   assert(keys.some((path) => /index-.*\.js$/.test(path)));
   assert(keys.includes("/assets/art/organisms-v2.webp"));
-  assert(keys.includes("/assets/audio/ambience/birds-canopy-mix.mp3"));
+  assert(keys.includes("/assets/audio/ambience/distant-birds-long.mp3"));
+  assert(keys.includes("/assets/audio/sfx/uncover-mix.mp3"));
+  assert(keys.includes("/assets/art/search-bark.webp"));
+  assert(keys.includes("/assets/art/growth-early.webp"));
   assert(!keys.some((path) => /observations|private|outbox/.test(path)));
   await context.setOffline(true);
   await page.reload();
-  await page.getByRole("button", { name: "Развитие", exact: true }).click();
+  const uncoverOffline = await page.evaluate(async () => {
+    const response = await fetch("/assets/audio/sfx/uncover-mix.mp3");
+    return {
+      ok: response.ok,
+      type: response.headers.get("content-type"),
+      bytes: (await response.arrayBuffer()).byteLength,
+    };
+  });
+  assert(uncoverOffline.ok && uncoverOffline.bytes > 1000);
+  assert.match(uncoverOffline.type, /audio/);
+  await page.getByRole("button", { name: "Развитие", exact: false }).click();
   await page
-    .getByRole("button", { name: "Плазмодий", exact: false })
+    .getByRole("button", {
+      name: "Развитие: Badhamia polycephala",
+      exact: true,
+    })
+    .click();
+  await page
+    .getByRole("button", { name: "Этап 7: Плазмодий", exact: true })
     .first()
     .click();
   await page
-    .getByRole("button", { name: "Настоящее фото", exact: true })
+    .getByRole("button", {
+      name: "Посмотреть реальные фотографии",
+      exact: true,
+    })
     .click();
   await page.waitForFunction(() => {
     const image = document.querySelector(".photo-zoom img");
     return image?.complete && image.naturalWidth > 0;
   });
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: "Назад на главный экран" }).click();
+  await page
+    .getByRole("button", { name: "Найти в лесу", exact: false })
+    .click();
+  await page.getByRole("button", { name: "Искать: В тени берёзы" }).click();
+  await page.locator(".hiding-place").first().click();
+  assert(
+    (await page
+      .locator(".hiding-place")
+      .first()
+      .getAttribute("aria-pressed")) === "true",
+  );
   const missing = await page.evaluate(async () => {
     try {
       const response = await fetch("/assets/nonexistent.webp");

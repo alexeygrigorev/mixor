@@ -1,10 +1,15 @@
 export type SfxId =
-  "ui-press" | "journal-open" | "lens-open" | "discovery" | "save-local";
+  | "ui-press"
+  | "uncover"
+  | "journal-open"
+  | "lens-open"
+  | "discovery"
+  | "save-local";
 export type SoundLevels = { music: number; nature: number; effects: number };
 export const defaultSoundLevels: SoundLevels = {
-  music: 20,
-  nature: 65,
-  effects: 25,
+  music: 12,
+  nature: 45,
+  effects: 18,
 };
 
 class AudioManager {
@@ -16,7 +21,6 @@ class AudioManager {
   private sfx = new Map<SfxId, HTMLAudioElement>();
   private enabled = false;
   private muted = true;
-  private quiet = false;
   private levels: SoundLevels = { ...defaultSoundLevels };
   private lastPress = 0;
 
@@ -49,12 +53,6 @@ class AudioManager {
     else if (this.enabled) void this.playLoops();
   }
 
-  setQuiet(quiet: boolean): void {
-    this.quiet = quiet;
-    if (quiet) this.pauseAll();
-    else void this.playLoops();
-  }
-
   setLevels(levels: SoundLevels): void {
     this.levels = {
       music: Math.max(0, Math.min(100, levels.music)),
@@ -67,13 +65,19 @@ class AudioManager {
   }
 
   playSfx(id: SfxId): void {
-    if (!this.enabled || this.muted || this.quiet || document.hidden) return;
+    if (
+      !this.enabled ||
+      this.muted ||
+      document.hidden ||
+      this.levels.effects === 0
+    )
+      return;
     if (id === "ui-press" && performance.now() - this.lastPress < 120) return;
     this.lastPress = performance.now();
     let audio = this.sfx.get(id);
     if (!audio) {
       audio = new Audio(
-        `/assets/audio/sfx/${id === "ui-press" ? "ui-press-soft-mix" : id}.mp3`,
+        `/assets/audio/sfx/${id === "ui-press" ? "ui-press-soft-mix" : id === "uncover" ? "uncover-mix" : id}.mp3`,
       );
       this.sfx.set(id, audio);
     }
@@ -83,26 +87,31 @@ class AudioManager {
   }
 
   private effectVolume(id: SfxId): number {
-    return (this.levels.effects / 100) * (id === "ui-press" ? 0.4 : 0.18);
+    // Masters already have softened transients. Do not attenuate taps twice
+    // into silence; uncovering is a distinct, slightly more present foley cue.
+    return (
+      (this.levels.effects / 100) *
+      (id === "uncover" ? 0.9 : id === "ui-press" ? 0.65 : 0.4)
+    );
   }
 
   private ensureLoops(): void {
     if (this.loops.length) return;
     this.loops = [
       {
-        path: "music/forest-understory-mix",
+        path: "music/forest-stillness-long",
         channel: "music" as const,
-        gain: 0.6,
+        gain: 0.45,
       },
       {
-        path: "ambience/woodland-air-mix",
+        path: "ambience/dry-canopy-long",
         channel: "nature" as const,
-        gain: 0.6,
+        gain: 0.38,
       },
       {
-        path: "ambience/birds-canopy-mix",
+        path: "ambience/distant-birds-long",
         channel: "nature" as const,
-        gain: 0.42,
+        gain: 0.25,
       },
     ].map(({ path, channel, gain }) => {
       const audio = new Audio(`/assets/audio/${path}.mp3`);
@@ -114,7 +123,7 @@ class AudioManager {
   }
 
   private async playLoops(): Promise<PromiseSettledResult<void>[]> {
-    if (!this.enabled || this.muted || this.quiet || document.hidden) return [];
+    if (!this.enabled || this.muted || document.hidden) return [];
     this.ensureLoops();
     return Promise.allSettled(this.loops.map(({ audio }) => audio.play()));
   }
@@ -139,3 +148,4 @@ class AudioManager {
 }
 
 export const audioManager = new AudioManager();
+if (import.meta.hot) import.meta.hot.dispose(() => audioManager.dispose());

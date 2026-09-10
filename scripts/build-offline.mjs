@@ -19,17 +19,21 @@ for (const photo of photoManifest.assets.filter(
   (a) => a.kind === "reference_photo",
 ))
   files.push("/" + photo.path.replace(/^public\//, ""));
+const artwork = JSON.parse(
+  readFileSync("content/generated-art.manifest.json", "utf8"),
+);
 files.push(
-  ...["forest-world", "organisms-v2", "life-stages-v2", "arcyria-network"].map(
-    (name) => `/assets/art/${name}.webp`,
+  ...artwork.assets.map(
+    (asset) => "/" + asset.runtimePath.replace(/^public\//, ""),
   ),
 );
 files.push(
   ...[
-    "music/forest-understory-mix",
-    "ambience/woodland-air-mix",
-    "ambience/birds-canopy-mix",
+    "music/forest-stillness-long",
+    "ambience/dry-canopy-long",
+    "ambience/distant-birds-long",
     "sfx/ui-press-soft-mix",
+    "sfx/uncover-mix",
     "sfx/journal-open",
     "sfx/lens-open",
     "sfx/discovery",

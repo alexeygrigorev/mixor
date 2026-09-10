@@ -8,16 +8,46 @@ import { audioManager, defaultSoundLevels, type SoundLevels } from "./audio";
 import { readJourney, writeJourney, type Discovery } from "./game-store";
 import { listObservations, type StoredObservation } from "./storage";
 import "./styles.css";
+import "./focused.css";
+import {
+  ActivityHome,
+  BackButton,
+  WoodlandChooser,
+  SpeciesChooser,
+  SearchScene,
+  DevelopmentScene,
+  ClassificationTree,
+} from "./focused-scenes";
+import { readFinds, writeFinds, findWoodland } from "./search-data";
+import { scientificNames, taxonomySources } from "./taxonomy";
 
-type Place = "world" | "tree" | "portrait" | "life" | "journal";
+type Place =
+  | "home"
+  | "woods"
+  | "species"
+  | "world"
+  | "tree"
+  | "portrait"
+  | "life"
+  | "journal";
 type Route = { place: Place; taxon: TaxonId; stage: string };
-type Overlay = "settings" | "sources" | "capture" | "branches" | null;
+type Overlay =
+  "settings" | "sources" | "capture" | "branches" | "photos" | null;
 function readRoute(): Route {
   const [place, taxon, stage] = location.hash.slice(1).split("/");
   return {
-    place: ["world", "tree", "portrait", "life", "journal"].includes(place)
+    place: [
+      "home",
+      "woods",
+      "species",
+      "world",
+      "tree",
+      "portrait",
+      "life",
+      "journal",
+    ].includes(place)
       ? (place as Place)
-      : "world",
+      : "home",
     taxon: taxa.some((t) => t.id === taxon) ? (taxon as TaxonId) : "physarum",
     stage: stage || "spore",
   };
@@ -44,14 +74,14 @@ function MaterialToggle({
   change: (value: boolean) => void;
 }) {
   return (
-    <div className="material-switch" role="group" aria-label="Тип изображения">
-      <button aria-pressed={!real} onClick={() => change(false)}>
-        Иллюстрация
-      </button>
-      <button aria-pressed={real} onClick={() => change(true)}>
-        <Icon name="camera" size={18} /> Настоящее фото
-      </button>
-    </div>
+    <button
+      className="quiet-photo material-peek"
+      aria-pressed={real}
+      onClick={() => change(!real)}
+    >
+      <Icon name={real ? "leaf" : "camera"} size={18} />{" "}
+      {real ? "Иллюстрация" : "Настоящее фото"}
+    </button>
   );
 }
 function Credit({ photo }: { photo: MediaItem }) {
@@ -138,7 +168,8 @@ export default function App() {
   const [real, setReal] = useState(false);
   const requestedReal = useRef(false);
   const [photoIndex, setPhotoIndex] = useState(0);
-  const [grove, setGrove] = useState(0);
+  const [finds, setFinds] = useState(readFinds);
+  const [searchSessionOnly, setSearchSessionOnly] = useState(false);
   const [muted, setMuted] = useState(true);
   const [levels, setLevels] = useState<SoundLevels>(() => {
     const candidate = pref("mixor-sound-levels-v2", defaultSoundLevels);
@@ -171,7 +202,10 @@ export default function App() {
   ).length;
 
   useEffect(() => {
-    const update = () => setRoute(readRoute());
+    const update = () => {
+      setRoute(readRoute());
+      setOverlay(null);
+    };
     const full = () => setFullscreen(Boolean(document.fullscreenElement));
     window.addEventListener("hashchange", update);
     document.addEventListener("fullscreenchange", full);
@@ -194,10 +228,6 @@ export default function App() {
     audioManager.setLevels(levels);
     setPref("mixor-sound-levels-v2", levels);
   }, [levels]);
-  useEffect(() => {
-    audioManager.setQuiet(overlay === "capture");
-    return () => audioManager.setQuiet(false);
-  }, [overlay]);
   useEffect(() => {
     if (route.place !== "life" || !stage || !entered) return;
     const id = `${taxon.id}/${stage.id}`;
@@ -330,233 +360,140 @@ export default function App() {
     go("journal");
     setDetail(record);
   }
-  const brief: Record<string, string> = {
-    spore:
-      "Спора — маленькая клетка в защитной оболочке. При подходящих условиях из неё выходит подвижная клетка.",
-    cells:
-      "Амёбная клетка ползает и ест бактерии. В свободной воде возможна форма со жгутиками — она может плавать.",
-    fusion:
-      "Две совместимые клетки сливаются в одну. В половом цикле из неё вырастает плазмодий.",
-    network:
-      taxon.id === "arcyria"
-        ? "Одна клетка растёт, образуя жилки и веера. Для культуры этого вида описан белый плазмодий."
-        : "Эта жёлтая сеть — одна большая клетка с множеством ядер. Плазмодий распространяется по поверхности и питается.",
-    fruit:
-      "Плазмодий образует плодовые тела со спорами. Споры рассеиваются — и цикл может начаться снова.",
-  };
-  const nav: { place: Place | "capture"; label: string; icon: IconName }[] = [
-    { place: "world", label: "Лес", icon: "leaf" },
-    { place: "tree", label: "Дерево", icon: "tree" },
-    { place: "life", label: "Развитие", icon: "cycle" },
-    { place: "journal", label: "Журнал", icon: "book" },
-    { place: "capture", label: "Находка", icon: "plus" },
-  ];
+  function reveal(id: string) {
+    if (finds.includes(id)) return;
+    const next = [...finds, id];
+    setFinds(next);
+    if (!writeFinds(next)) setSearchSessionOnly(true);
+    audioManager.playSfx("uncover");
+  }
+  function openLifePhotos() {
+    setPhotoIndex(
+      Math.max(
+        0,
+        taxon.media.findIndex((item) => item.id === stagePhoto?.id),
+      ),
+    );
+    setOverlay("photos");
+  }
   return (
-    <div className={`game ${calm ? "calm" : ""} scene-${route.place}`}>
+    <div
+      className={`game ${calm ? "calm" : ""} scene-${route.place}`}
+      onClick={(event) => {
+        // Bubble after the action: a specific cue (uncover, save, journal)
+        // takes precedence through AudioManager's short UI-cue cooldown.
+        if (
+          !muted &&
+          event.target instanceof Element &&
+          event.target.closest("button")
+        )
+          audioManager.playSfx("ui-press");
+      }}
+    >
       <div className="forest-background" aria-hidden="true" />
       <div className="forest-shade" aria-hidden="true" />
-      <header className="hud">
-        <button
-          className="brand"
-          onClick={() => go("world")}
-          aria-label="Mixor — в лес"
-        >
-          <Icon name="leaf" />
-          <span>mixor</span>
-        </button>
-        <span className="hud-location">ТАЙНАЯ ЖИЗНЬ ЛЕСА</span>
-        <div className="hud-tools">
+      {route.place === "home" && (
+        <header className="hud">
           <button
-            className="icon-button"
-            onClick={() => void toggleSound()}
-            aria-label={muted ? "Включить звук" : "Выключить звук"}
-            aria-pressed={!muted}
+            className="brand"
+            onClick={() => go("home")}
+            aria-label="Mixor — главный экран"
           >
-            <Icon name={muted ? "mute" : "sound"} />
+            <Icon name="leaf" />
+            <span>mixor</span>
           </button>
-          <button
-            className="icon-button"
-            onClick={() => setOverlay("settings")}
-            aria-label="Настройки"
-          >
-            <Icon name="settings" />
-          </button>
-          <button
-            className="icon-button fullscreen-button"
-            onClick={() => void toggleFullscreen()}
-            aria-label={fullscreen ? "Выйти из полного экрана" : "Полный экран"}
-            aria-pressed={fullscreen}
-          >
-            <Icon name="expand" />
-          </button>
-        </div>
-      </header>
+          <span className="hud-location">ТАЙНАЯ ЖИЗНЬ ЛЕСА</span>
+          <div className="hud-tools">
+            <button
+              className="icon-button"
+              onClick={() => void toggleSound()}
+              aria-label={muted ? "Включить звук" : "Выключить звук"}
+              aria-pressed={!muted}
+            >
+              <Icon name={muted ? "mute" : "sound"} />
+            </button>
+            <button
+              className="icon-button"
+              onClick={() => setOverlay("settings")}
+              aria-label="Настройки"
+            >
+              <Icon name="settings" />
+            </button>
+            <button
+              className="icon-button fullscreen-button"
+              onClick={() => void toggleFullscreen()}
+              aria-label={
+                fullscreen ? "Выйти из полного экрана" : "Полный экран"
+              }
+              aria-pressed={fullscreen}
+            >
+              <Icon name="expand" />
+            </button>
+          </div>
+        </header>
+      )}
 
       <main
         className="scene"
         aria-label={
-          route.place === "world"
-            ? "Лесная поляна"
-            : route.place === "life"
-              ? "Развитие"
-              : route.place === "tree"
-                ? "Дерево видов"
-                : route.place === "journal"
-                  ? "Полевой журнал"
-                  : "Рассматривание организма"
+          route.place === "home"
+            ? "Выбор занятия"
+            : route.place === "woods"
+              ? "Места поиска"
+              : route.place === "species"
+                ? "Выбор вида"
+                : route.place === "world"
+                  ? "Лесная поляна"
+                  : route.place === "life"
+                    ? "Развитие"
+                    : route.place === "tree"
+                      ? "Дерево видов"
+                      : route.place === "journal"
+                        ? "Полевой журнал"
+                        : "Рассматривание организма"
         }
       >
+        {!["home", "world", "life"].includes(route.place) && (
+          <BackButton
+            back={() => go(route.place === "portrait" ? "tree" : "home")}
+            label={
+              route.place === "portrait"
+                ? "Назад к дереву"
+                : "Назад на главный экран"
+            }
+          />
+        )}
+        {route.place === "home" && (
+          <ActivityHome choose={(place) => go(place)} />
+        )}
+        {route.place === "woods" && (
+          <WoodlandChooser
+            finds={finds}
+            sessionOnly={searchSessionOnly}
+            choose={(id) => go("world", taxon.id, id)}
+          />
+        )}
+        {route.place === "species" && (
+          <SpeciesChooser
+            choose={(id) => go("life", id, "spore")}
+            visited={journey.visited}
+          />
+        )}
         {route.place === "world" && (
-          <section className="woodland">
-            <div className="world-heading">
-              <p className="eyebrow">МАЛЕНЬКАЯ ЭКСПЕДИЦИЯ</p>
-              <h1>
-                Лес ближе,
-                <br />
-                <em>чем кажется.</em>
-              </h1>
-              <p>
-                Коснись обитателя бревна.
-                <br />У каждой формы — своя история.
-              </p>
-            </div>
-            <button
-              className="grove-switch"
-              onClick={() =>
-                setGrove((value) => (value + 1) % Math.ceil(taxa.length / 4))
-              }
-            >
-              <span>
-                {grove === 0 ? "Мшистое бревно" : "Под опавшей листвой"}
-              </span>
-              <span>
-                {grove + 1} / {Math.ceil(taxa.length / 4)}{" "}
-                <Icon name="next" size={18} />
-              </span>
-            </button>
-            <div className="specimen-landmarks">
-              {taxa.slice(grove * 4, grove * 4 + 4).map((item, index) => (
-                <button
-                  key={item.id}
-                  className={`specimen specimen-${index}`}
-                  onClick={() => go("portrait", item.id)}
-                  aria-label={`Рассмотреть: ${item.commonName}`}
-                >
-                  <span className="specimen-halo">
-                    <Art
-                      taxon={item.id}
-                      label={`${item.latinName}, иллюстрация ИИ`}
-                    />
-                    {journey.discoveries.some(
-                      (discovery) => discovery.taxonId === item.id,
-                    ) && (
-                      <span className="specimen-stamp">
-                        <Icon name="check" size={16} />
-                      </span>
-                    )}
-                  </span>
-                  <span className="specimen-name">
-                    {item.commonName}
-                    <Icon name="lens" size={16} />
-                  </span>
-                </button>
-              ))}
-            </div>
-            <button
-              className="world-tool journal-landmark"
-              onClick={() => go("journal")}
-            >
-              <Icon name="book" size={28} />
-              <span>
-                Полевой журнал
-                <small>
-                  {journey.discoveries.length
-                    ? `${journey.discoveries.length} учебных открытий`
-                    : "Здесь будут твои открытия"}
-                </small>
-              </span>
-            </button>
-            <button
-              className="world-tool lens-landmark"
-              onClick={() => go("portrait", taxon.id, route.stage, true)}
-            >
-              <Icon name="lens" size={28} />
-              <span>
-                Рассмотреть<small>Рисунок и настоящее фото</small>
-              </span>
-            </button>
-            <button
-              className="life-invitation"
-              onClick={() => go("life", "physarum", "spore")}
-            >
-              <Icon name="cycle" />
-              <span>
-                От споры до живой сети<small>Исследовать развитие</small>
-              </span>
-              <Icon name="next" />
-            </button>
-            <span className="world-art-label">
-              Рисованный мир · иллюстрации ИИ
-            </span>
-          </section>
+          <SearchScene
+            key={route.stage}
+            woodland={findWoodland(route.stage)}
+            finds={finds}
+            reveal={reveal}
+            back={() => go("home")}
+          />
         )}
-
         {route.place === "tree" && (
-          <section className="tree-scene">
-            <div className="scene-heading">
-              <div>
-                <p className="eyebrow">АТЛАС МИКРОМИРА</p>
-                <h1>Дерево знакомств</h1>
-              </div>
-              <button
-                className="text-button"
-                onClick={() => setOverlay("sources")}
-              >
-                <Icon name="info" /> О дереве
-              </button>
-            </div>
-            <p className="tree-explanation">
-              Восемь разных форм. Выбери веточку, чтобы познакомиться.
-            </p>
-            <div className="tree-scroll">
-              <div className="taxonomy-root">
-                <Icon name="tree" />
-                <span>
-                  Эукариоты <b>›</b> Amoebozoa <b>›</b> Myxogastria
-                  <small>Упрощённая классификация · не стадии развития</small>
-                </span>
-              </div>
-              <div className="taxon-branches">
-                {taxa.map((item) => (
-                  <button
-                    className="taxon-branch"
-                    key={item.id}
-                    onClick={() => go("portrait", item.id)}
-                  >
-                    <Art
-                      taxon={item.id}
-                      label={`${item.latinName}: иллюстрация ИИ`}
-                    />
-                    <span className="branch-name">
-                      {item.commonName}
-                      <i>{item.latinName}</i>
-                    </span>
-                    {journey.discoveries.some((d) => d.taxonId === item.id) && (
-                      <span className="branch-check">
-                        <Icon name="check" size={18} /> изучено
-                      </span>
-                    )}
-                  </button>
-                ))}
-              </div>
-              <p className="fineprint tree-footnote">
-                Промежуточные ранги опущены. Ветви не обозначают степень
-                родства. Русские названия — описательные; рисунки созданы с ИИ.
-              </p>
-            </div>
-          </section>
+          <ClassificationTree
+            select={(id) => go("portrait", id)}
+            sources={() => setOverlay("sources")}
+          />
         )}
-
         {route.place === "portrait" && (
           <section className="portrait-scene">
             <div className="scene-heading">
@@ -567,7 +504,11 @@ export default function App() {
                     : "ЗНАКОМСТВО С ОБИТАТЕЛЕМ"}
                 </p>
                 <h1>{taxon.commonName}</h1>
-                <i className="latin">{taxon.latinName}</i>
+                {scientificNames[taxon.id].synonym && (
+                  <i className="latin">
+                    Также: {scientificNames[taxon.id].synonym}
+                  </i>
+                )}
               </div>
               <button
                 className="icon-button"
@@ -717,190 +658,18 @@ export default function App() {
           </section>
         )}
 
-        {route.place === "life" && (
-          <section className="life-scene">
-            <div className="scene-heading">
-              <div>
-                <p className="eyebrow">ТЕАТР МАЛЕНЬКИХ ПРЕВРАЩЕНИЙ</p>
-                <h1>Развитие</h1>
-                <button className="taxon-link" onClick={() => go("portrait")}>
-                  <span>{taxon.commonName}</span>
-                  <i>{taxon.latinName}</i>
-                  <Icon name="next" size={16} />
-                </button>
-              </div>
-              <button
-                className="icon-button"
-                onClick={() => setOverlay("sources")}
-                aria-label="Источники развития"
-              >
-                <Icon name="info" />
-              </button>
-            </div>
-            {stage && cycle ? (
-              <>
-                <div className="life-content">
-                  <div className="stage-visual">
-                    <MaterialToggle real={real} change={setReal} />
-                    <div
-                      className="stage-picture"
-                      key={`${taxon.id}/${stage.id}/${real}`}
-                    >
-                      {real ? (
-                        stagePhoto ? (
-                          <Photo photo={stagePhoto} />
-                        ) : (
-                          <div className="missing-photo">
-                            <Icon name="camera" size={36} />
-                            <h2>Фото этой стадии пока нет</h2>
-                            <p>
-                              Не будем подменять его другим видом или стадией.
-                            </p>
-                            <button
-                              className="secondary"
-                              onClick={() => setReal(false)}
-                            >
-                              Вернуться к иллюстрации
-                            </button>
-                          </div>
-                        )
-                      ) : (
-                        <Art
-                          taxon={taxon.id}
-                          stage={stage.illustration}
-                          label={`${stage.label}. Учебная иллюстрация ИИ`}
-                        />
-                      )}
-                    </div>
-                    {real && stagePhoto ? (
-                      <Credit photo={stagePhoto} />
-                    ) : (
-                      <p className="material-label">
-                        {real
-                          ? "Проверенного снимка нет в подборке"
-                          : "Учебная иллюстрация · создана с ИИ · разные масштабы"}
-                      </p>
-                    )}
-                  </div>
-                  <div
-                    key={`${taxon.id}/${stage.id}`}
-                    className="stage-notes scroll-panel"
-                  >
-                    <p className="stage-number">
-                      ГЛАВА 0{stageIndex + 1} <span>/ 0{stages.length}</span>
-                    </p>
-                    <h2>{stage.label}</h2>
-                    <p>{brief[stage.id] || stage.description}</p>
-                    <span className="scope-badge">
-                      {taxon.id === "physarum"
-                        ? "Упрощённый половой цикл"
-                        : "Схема группы · пример Arcyria"}
-                    </span>
-                    <button
-                      className="text-button"
-                      onClick={() => setOverlay("branches")}
-                    >
-                      <Icon name="cycle" size={18} /> А если условия изменятся?
-                    </button>
-                    <button
-                      className="secondary"
-                      onClick={() =>
-                        go("portrait", taxon.id, route.stage, true)
-                      }
-                    >
-                      Сравнить с организмом
-                    </button>
-                  </div>
-                </div>
-                <div className="life-controls">
-                  <div className="stage-trail" aria-label="Стадии развития">
-                    {stages.map((item, index) => (
-                      <button
-                        key={item.id}
-                        aria-current={index === stageIndex ? "step" : undefined}
-                        onClick={() => go("life", taxon.id, item.id)}
-                      >
-                        <span className="stage-dot">
-                          {index === stageIndex ? (
-                            index + 1
-                          ) : journey.visited.includes(
-                              `${taxon.id}/${item.id}`,
-                            ) ? (
-                            <Icon name="check" size={16} />
-                          ) : (
-                            index + 1
-                          )}
-                        </span>
-                        <span>{item.shortLabel}</span>
-                      </button>
-                    ))}
-                  </div>
-                  <div className="stage-stepper">
-                    <button
-                      className="secondary"
-                      disabled={stageIndex === 0}
-                      onClick={() =>
-                        go("life", taxon.id, stages[stageIndex - 1].id)
-                      }
-                    >
-                      <Icon name="back" size={18} /> Назад
-                    </button>
-                    <span className="stage-progress">
-                      {viewed} из {stages.length} стадий открыто
-                      <small>Без шкалы времени</small>
-                    </span>
-                    <button
-                      className="primary"
-                      onClick={() =>
-                        go(
-                          "life",
-                          taxon.id,
-                          stages[(stageIndex + 1) % stages.length].id,
-                        )
-                      }
-                    >
-                      {stageIndex === stages.length - 1
-                        ? "К новым спорам"
-                        : "Дальше"}
-                      <Icon
-                        name={
-                          stageIndex === stages.length - 1 ? "cycle" : "next"
-                        }
-                        size={18}
-                      />
-                    </button>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className="cycle-gap">
-                <Art
-                  taxon={taxon.id}
-                  label={`${taxon.latinName}, иллюстрация ИИ`}
-                />
-                <div>
-                  <h2>Эта история ещё собирается</h2>
-                  <p>
-                    Для {taxon.latinName} отдельная серия стадий пока не
-                    подготовлена. Можно рассмотреть реальные фотографии или
-                    изучить проверенный пример Physarum.
-                  </p>
-                  <button
-                    className="primary"
-                    onClick={() => go("life", "physarum", "spore")}
-                  >
-                    Развитие Physarum <Icon name="next" />
-                  </button>
-                  <button className="secondary" onClick={() => go("portrait")}>
-                    Вернуться к организму
-                  </button>
-                  <p className="material-label">Портрет · иллюстрация ИИ</p>
-                </div>
-              </div>
-            )}
-          </section>
+        {route.place === "life" && stage && (
+          <DevelopmentScene
+            taxon={taxon}
+            cycle={cycle}
+            stage={stage}
+            index={stageIndex}
+            back={() => go("home")}
+            select={(id) => go("life", taxon.id, id)}
+            photos={openLifePhotos}
+            details={() => setOverlay("sources")}
+          />
         )}
-
         {route.place === "journal" && (
           <section className="journal-scene">
             <div className="scene-heading">
@@ -1037,20 +806,6 @@ export default function App() {
         )}
       </main>
 
-      <nav className="game-nav" aria-label="Игровые инструменты">
-        {nav.map((item) => (
-          <button
-            key={item.place}
-            aria-current={route.place === item.place ? "page" : undefined}
-            onClick={() =>
-              item.place === "capture" ? setOverlay("capture") : go(item.place)
-            }
-          >
-            <Icon name={item.icon} />
-            <span>{item.label}</span>
-          </button>
-        ))}
-      </nav>
       {toast && (
         <div className="toast" role="status">
           {toast}
@@ -1109,6 +864,35 @@ export default function App() {
           />
         </Panel>
       )}
+      {overlay === "photos" && (
+        <Panel title={taxon.latinName} close={closeOverlay} wide>
+          <div className="photo-peek-content">
+            <p className="peek-context">
+              {photo.id === stagePhoto?.id
+                ? "Настоящее фото этой стадии · другой экземпляр"
+                : "Фото вида, не выбранного этапа развития. Это не последовательность одного экземпляра."}
+            </p>
+            <div className="peek-photo">
+              <Photo key={photo.id} photo={photo} />
+            </div>
+            <Credit photo={photo} />
+            <p className="peek-caption">{photo.caption}</p>
+            <div className="photo-select" aria-label="Реальные фотографии">
+              {taxon.media.map((item, i) => (
+                <button
+                  key={item.id}
+                  aria-label={`Фото ${i + 1}`}
+                  aria-pressed={i === photoIndex}
+                  onClick={() => setPhotoIndex(i)}
+                >
+                  <img src={item.src} alt="" />
+                  <span>{i + 1}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </Panel>
+      )}
       {overlay === "settings" && (
         <Panel title="Настроить тишину" close={closeOverlay}>
           <p>
@@ -1164,10 +948,10 @@ export default function App() {
             {fullscreen ? "Выйти из полного экрана" : "На весь экран"}
           </button>
           <p className="fineprint">
-            При скрытии вкладки и добавлении находки звук приостанавливается.
-            После перезагрузки звук включается только нажатием. Фон и
-            иллюстрации созданы с ИИ; аудио — ElevenLabs. Это локальная игровая
-            версия.
+            При скрытии вкладки звук приостанавливается. Открытие окон не
+            прерывает музыку. После перезагрузки звук включается только
+            нажатием. Фон и иллюстрации созданы с ИИ; аудио — ElevenLabs. Это
+            локальная игровая версия.
           </p>
         </Panel>
       )}
@@ -1185,15 +969,35 @@ export default function App() {
           <p>{taxon.habitat}</p>
           <p>
             Основные изображения созданы с ИИ для исследования форм. Это не
-            снимки реальных экземпляров и не определитель. Русские названия
-            описательные.
+            снимки реальных экземпляров и не определитель. Названия — научные;
+            синонимы сохранены для сопоставления с подписями источников.
           </p>
           {route.place === "tree" && (
-            <p>
-              Дерево показывает общий путь Эукариоты → Amoebozoa → Myxogastria и
-              восемь примеров видов. Промежуточные ранги опущены, порядок ветвей
-              не отражает близость родства.
-            </p>
+            <>
+              <h3>Выбранная классификация</h3>
+              <p>
+                Myxomycetes → подклассы → порядки → семейства → роды → виды.
+                Основа: Leontyev et al. (2019), пересмотры 2023, 2025 и 2026
+                годов; проверено 10.09.2026. Это ветви классификации, а не
+                дерево с измеренными эволюционными расстояниями. Остальные виды
+                и группы не показаны.
+              </p>
+              <p>
+                Badhamia polycephala — также известна как Physarum polycephalum.
+                Hemitrichia decipiens — ранее Trichia decipiens. Подписи
+                настоящих фотографий сохраняют название исходного автора.
+                Классификации баз данных могут отличаться от этих публикаций.
+              </p>
+              <ul className="source-links">
+                {taxonomySources.map((source) => (
+                  <li key={source.url}>
+                    <a href={source.url} target="_blank" rel="noreferrer">
+                      {source.title} ↗
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
           )}
           {route.place === "life" && cycle && (
             <>

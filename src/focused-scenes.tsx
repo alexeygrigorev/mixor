@@ -1,0 +1,564 @@
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import { Art } from "./art";
+import { Icon, type IconName } from "./icons";
+import { taxa, type TaxonId, type Taxon } from "./data";
+import { stageBrief, type LifeCycle, type LifeStage } from "./life-data";
+import { woodlands, type Woodland } from "./search-data";
+import { scientificNames, taxonomyTree, type TaxonomyNode } from "./taxonomy";
+
+export function BackButton({
+  back,
+  label = "Назад",
+}: {
+  back: () => void;
+  label?: string;
+}) {
+  return (
+    <button className="activity-back" onClick={back} aria-label={label}>
+      <Icon name="back" />
+      <span>Назад</span>
+    </button>
+  );
+}
+export function ActivityHome({
+  choose,
+}: {
+  choose: (activity: "woods" | "species" | "tree" | "journal") => void;
+}) {
+  const activities: {
+    id: "woods" | "species" | "tree" | "journal";
+    name: string;
+    hint: string;
+    icon: IconName;
+  }[] = [
+    {
+      id: "woods",
+      name: "Найти в лесу",
+      hint: "Пять мест, полных маленькой жизни",
+      icon: "lens",
+    },
+    {
+      id: "species",
+      name: "Развитие",
+      hint: "От одной клетки до спор",
+      icon: "cycle",
+    },
+    {
+      id: "tree",
+      name: "Дерево жизни",
+      hint: "Виды и их родственные группы",
+      icon: "tree",
+    },
+    {
+      id: "journal",
+      name: "Полевой журнал",
+      hint: "Твои фотографии и наблюдения",
+      icon: "book",
+    },
+  ];
+  return (
+    <section className="activity-home">
+      <div className="home-title">
+        <p className="eyebrow">МИКРОМИР</p>
+        <h1>Что исследуем?</h1>
+      </div>
+      <nav className="activity-choices" aria-label="Занятия">
+        {activities.map((a) => (
+          <button key={a.id} onClick={() => choose(a.id)}>
+            <Icon name={a.icon} size={30} />
+            <span>
+              {a.name}
+              <small>{a.hint}</small>
+            </span>
+            <Icon name="next" size={20} />
+          </button>
+        ))}
+      </nav>
+      <p className="home-provenance">
+        Рисованный мир · настоящие фотографии внутри
+      </p>
+    </section>
+  );
+}
+export function WoodlandChooser({
+  finds,
+  choose,
+  sessionOnly,
+}: {
+  finds: string[];
+  choose: (id: string) => void;
+  sessionOnly: boolean;
+}) {
+  return (
+    <section className="woodland-chooser">
+      <div className="chooser-heading">
+        <h1>Куда отправимся?</h1>
+        <p>
+          Ищи маленькие формы среди коры, мха и листьев. Коснись, чтобы
+          рассмотреть.
+        </p>
+      </div>
+      <div className="woodland-choices">
+        {woodlands.map((w, i) => (
+          <button
+            key={w.id}
+            onClick={() => choose(w.id)}
+            aria-label={`Искать: ${w.title}`}
+          >
+            <img src={w.image} alt="" />
+            <span className="woodland-choice-caption">
+              <span>
+                <small>0{i + 1}</small>
+                <strong>{w.title}</strong>
+                <span>{w.description}</span>
+              </span>
+              <span className="find-count" aria-label="Найдено">
+                {w.spots.filter((s) => finds.includes(s.id)).length} /{" "}
+                {w.spots.length}
+              </span>
+            </span>
+          </button>
+        ))}
+      </div>
+      <p className="chooser-note">
+        Учебные сцены созданы с ИИ; размещение условное, не карта находок. Без
+        таймеров и штрафов.
+        {sessionOnly &&
+          " Прогресс этой вкладки не удалось сохранить на устройстве."}
+      </p>
+    </section>
+  );
+}
+export function SpeciesChooser({
+  choose,
+  visited,
+}: {
+  choose: (id: TaxonId) => void;
+  visited: string[];
+}) {
+  return (
+    <section className="species-chooser">
+      <div className="chooser-heading">
+        <h1>Чью жизнь проследим?</h1>
+        <p>От споры через рост одной клетки — к спороношению.</p>
+      </div>
+      <div className="species-choices">
+        {taxa.map((t) => (
+          <button
+            key={t.id}
+            onClick={() => choose(t.id)}
+            aria-label={`Развитие: ${t.latinName}`}
+          >
+            <Art taxon={t.id} label={`${t.latinName}: иллюстрация ИИ`} />
+            <span>
+              <i>{t.latinName}</i>
+              {scientificNames[t.id].synonym && (
+                <small>Также: {scientificNames[t.id].synonym}</small>
+              )}
+              <small>
+                {
+                  new Set(visited.filter((id) => id.startsWith(`${t.id}/`)))
+                    .size
+                }{" "}
+                / 9 этапов
+              </small>
+            </span>
+            <Icon name="next" size={20} />
+          </button>
+        ))}
+      </div>
+      <p className="chooser-note">
+        Учебные реконструкции, не съёмка одного экземпляра. Ранние этапы общие
+        для группы; развитие зависит от условий.
+      </p>
+    </section>
+  );
+}
+
+export function SearchScene({
+  woodland,
+  finds,
+  reveal,
+  back,
+}: {
+  woodland: Woodland;
+  finds: string[];
+  reveal: (id: string) => void;
+  back: () => void;
+}) {
+  const host = useRef<HTMLElement>(null);
+  const [size, setSize] = useState({ width: 1536, height: 1024 });
+  const [announcement, setAnnouncement] = useState("");
+  const [failed, setFailed] = useState(false);
+  useLayoutEffect(() => {
+    const el = host.current!;
+    const observer = new ResizeObserver(([entry]) => {
+      setSize({
+        width: entry.contentRect.width,
+        height: entry.contentRect.height,
+      });
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  const worldWidth = Math.max(size.width, size.height * 1.5);
+  const portrait = size.width < size.height;
+  const diameter = Math.max(
+    48,
+    Math.min(
+      portrait ? 224 : 256,
+      size.width * (portrait ? 0.44 : 0.2),
+      size.height * (portrait ? 0.22 : 0.28),
+    ),
+  );
+  const verticalOrder = [...woodland.spots].sort((a, b) => a.y - b.y);
+  // The lenses enlarge the source patches; their layout belongs to the viewport,
+  // so cropping the forest on rotation cannot hide an interactive circle.
+  const inset = diameter / 2 + 20;
+  return (
+    <section
+      ref={host}
+      className="search-scene"
+      aria-label={`${woodland.title}: поиск миксомицетов`}
+    >
+      <div
+        className="search-world"
+        style={{ width: worldWidth, height: worldWidth / 1.5 }}
+      >
+        <img
+          className="search-environment"
+          src={woodland.image}
+          alt=""
+          onError={() => setFailed(true)}
+        />
+      </div>
+      {woodland.spots.map((spot) => {
+        const found = finds.includes(spot.id);
+        const x = 50 + (spot.x - 50) * (portrait ? 1.7 : 2.4);
+        const y = portrait ? 25 + verticalOrder.indexOf(spot) * 25 : spot.y;
+        const lensWidth = (diameter * 100) / spot.size;
+        return (
+          <button
+            key={spot.id}
+            data-find={spot.id}
+            className={`hiding-place ${found ? "is-found" : ""}`}
+            aria-label={
+              found
+                ? `Найдено: ${scientificNames[spot.taxon].name}`
+                : `Осмотреть: ${spot.label}`
+            }
+            aria-pressed={found}
+            aria-describedby="search-material"
+            style={{
+              left: Math.max(
+                inset,
+                Math.min(size.width - inset, (size.width * x) / 100),
+              ),
+              top: Math.max(
+                inset + 60,
+                Math.min(size.height - inset, (size.height * y) / 100),
+              ),
+              width: diameter,
+              height: diameter,
+            }}
+            onClick={() => {
+              if (!found) {
+                reveal(spot.id);
+                setAnnouncement(`Найдено: ${scientificNames[spot.taxon].name}`);
+              }
+            }}
+          >
+            <span className="search-lens" aria-hidden="true">
+              <span className="hidden-organism">
+                <Art taxon={spot.taxon} label="" />
+              </span>
+              <span
+                className="natural-cover"
+                style={{
+                  backgroundImage: `url(${woodland.image})`,
+                  backgroundSize: `${lensWidth}px ${lensWidth / 1.5}px`,
+                  backgroundPosition: `${diameter / 2 - (lensWidth * spot.x) / 100}px ${diameter / 2 - ((lensWidth / 1.5) * spot.y) / 100}px`,
+                }}
+              />
+            </span>
+            <span className="search-lens-cue" aria-hidden="true">
+              <Icon name={found ? "check" : "lens"} size={18} />
+            </span>
+          </button>
+        );
+      })}
+      <BackButton back={back} label="Назад на главный экран" />
+      <span className="sr-only" id="search-material">
+        Учебная иллюстрация ИИ. Коснись круга, чтобы открыть организм.
+      </span>
+      <span className="sr-only" role="status">
+        {announcement}
+      </span>
+      {failed && (
+        <p className="search-error" role="alert">
+          Лес не загрузился. Вернись и открой это место ещё раз.
+        </p>
+      )}
+    </section>
+  );
+}
+
+export function DevelopmentScene({
+  taxon,
+  cycle,
+  stage,
+  index,
+  back,
+  select,
+  photos,
+  details,
+}: {
+  taxon: Taxon;
+  cycle: LifeCycle;
+  stage: LifeStage;
+  index: number;
+  back: () => void;
+  select: (id: string) => void;
+  photos: () => void;
+  details: () => void;
+}) {
+  const stages = cycle.stages.filter((s) => s.id !== "rest");
+  const rail = useRef<HTMLDivElement>(null);
+  const gesture = useRef<{ x: number; y: number } | null>(null);
+  useEffect(() => {
+    const selected = rail.current?.querySelector<HTMLElement>(
+      '[aria-current="step"]',
+    );
+    if (selected && rail.current)
+      rail.current.scrollLeft =
+        selected.offsetLeft -
+        rail.current.offsetWidth / 2 +
+        selected.offsetWidth / 2;
+  }, [stage.id]);
+  return (
+    <section
+      className="development-focus"
+      aria-label={`Развитие ${taxon.latinName}`}
+    >
+      <div className="development-top">
+        <BackButton back={back} label="Назад на главный экран" />
+        <i className="development-name">{taxon.latinName}</i>
+        <button
+          className="quiet-photo"
+          onClick={photos}
+          aria-label="Посмотреть реальные фотографии"
+        >
+          <Icon name="camera" size={20} />
+          <span>Фото</span>
+        </button>
+      </div>
+      <div
+        className="development-image"
+        onPointerDown={(event) => {
+          gesture.current = { x: event.clientX, y: event.clientY };
+        }}
+        onPointerUp={(event) => {
+          if (!gesture.current) return;
+          const dx = event.clientX - gesture.current.x,
+            dy = event.clientY - gesture.current.y;
+          gesture.current = null;
+          if (Math.abs(dx) > 65 && Math.abs(dx) > Math.abs(dy) * 1.5)
+            select(
+              stages[
+                Math.max(
+                  0,
+                  Math.min(stages.length - 1, index + (dx < 0 ? 1 : -1)),
+                )
+              ].id,
+            );
+        }}
+        onPointerCancel={() => {
+          gesture.current = null;
+        }}
+      >
+        <Art
+          key={`${taxon.id}/${stage.id}`}
+          taxon={taxon.id}
+          stage={stage.illustration}
+          label={`${stage.label}. Учебная реконструкция ИИ, не фотография`}
+        />
+      </div>
+      <div
+        className="development-caption"
+        key={`${taxon.id}/${stage.id}`}
+        aria-live="polite"
+      >
+        <h1>{stage.label}</h1>
+        <p>{stageBrief[stage.id]}</p>
+        <button
+          className="model-note"
+          onClick={details}
+          aria-label="О реконструкции и источниках"
+        >
+          Реконструкция ИИ ·{" "}
+          {index < 6 ? "схема группы" : "условные форма и цвет"} · разные
+          масштабы <Icon name="info" size={14} />
+        </button>
+      </div>
+      <div className="development-controls">
+        <div
+          className="development-rail"
+          ref={rail}
+          aria-label="Этапы развития"
+        >
+          {stages.map((s, i) => (
+            <button
+              key={s.id}
+              aria-label={`Этап ${i + 1}: ${s.shortLabel}`}
+              aria-current={i === index ? "step" : undefined}
+              onClick={() => select(s.id)}
+            >
+              <span>{i + 1}</span>
+              <small>{s.shortLabel}</small>
+            </button>
+          ))}
+        </div>
+        <div className="development-stepper">
+          <button
+            className="step-button"
+            disabled={index === 0}
+            onClick={() => select(stages[index - 1].id)}
+            aria-label="Предыдущий этап"
+          >
+            <Icon name="back" />
+            <span>Раньше</span>
+          </button>
+          <span className="stage-position">
+            {index + 1} / {stages.length}
+          </span>
+          <button
+            className="step-button next-stage"
+            onClick={() => select(stages[(index + 1) % stages.length].id)}
+            aria-label={
+              index === stages.length - 1 ? "Снова к споре" : "Следующий этап"
+            }
+          >
+            <span>{index === stages.length - 1 ? "К споре" : "Дальше"}</span>
+            <Icon name={index === stages.length - 1 ? "cycle" : "next"} />
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function treePref(key: string, fallback: number | boolean) {
+  try {
+    return (
+      JSON.parse(sessionStorage.getItem(`mixor-tree-${key}`) ?? "null") ??
+      fallback
+    );
+  } catch {
+    return fallback;
+  }
+}
+function rememberTree(key: string, value: number | boolean) {
+  try {
+    sessionStorage.setItem(`mixor-tree-${key}`, JSON.stringify(value));
+  } catch {
+    /* Navigation remains available. */
+  }
+}
+function TaxonomyBranch({
+  node,
+  select,
+}: {
+  node: TaxonomyNode;
+  select: (id: TaxonId) => void;
+}) {
+  const [open, setOpen] = useState(() => Boolean(treePref(node.name, true)));
+  return (
+    <li className={`taxonomy-node ${node.taxon ? "species-leaf" : ""}`}>
+      {node.taxon ? (
+        <button
+          onClick={() => select(node.taxon!)}
+          aria-label={`Рассмотреть: ${node.name}`}
+        >
+          <Art taxon={node.taxon} label="" />
+          <span>
+            <i>{node.name}</i>
+            <small>{node.rank}</small>
+          </span>
+          <Icon name="next" size={16} />
+        </button>
+      ) : (
+        <details
+          open={open}
+          onToggle={(event) => {
+            setOpen(event.currentTarget.open);
+            rememberTree(node.name, event.currentTarget.open);
+          }}
+        >
+          <summary>
+            <span>
+              {node.name}
+              <small>{node.rank}</small>
+            </span>
+          </summary>
+          <ul>
+            {node.children?.map((child) => (
+              <TaxonomyBranch key={child.name} node={child} select={select} />
+            ))}
+          </ul>
+        </details>
+      )}
+    </li>
+  );
+}
+export function ClassificationTree({
+  select,
+  sources,
+}: {
+  select: (id: TaxonId) => void;
+  sources: () => void;
+}) {
+  const scroll = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    if (scroll.current)
+      scroll.current.scrollTop = Number(treePref("scroll", 0));
+  }, []);
+  return (
+    <section className="classification-scene">
+      <div className="classification-heading">
+        <h1>Дерево жизни</h1>
+        <button className="text-button" onClick={sources}>
+          <Icon name="info" size={20} /> Источники
+        </button>
+      </div>
+      <div
+        className="classification-scroll"
+        ref={scroll}
+        onScroll={(event) =>
+          rememberTree("scroll", event.currentTarget.scrollTop)
+        }
+      >
+        <div className="tree-ancestry">
+          Eukaryota <span>›</span> Amoebozoa <span>›</span> Eumycetozoa
+        </div>
+        <div className="classification-root">
+          <strong>{taxonomyTree.name}</strong>
+          <small>{taxonomyTree.rank}</small>
+        </div>
+        <ul className="classification-branches">
+          {taxonomyTree.children?.map((node) => (
+            <TaxonomyBranch key={node.name} node={node} select={select} />
+          ))}
+        </ul>
+        <p className="classification-note">
+          Ветви классификации, не стадии развития. Показаны только восемь видов
+          коллекции; длины ветвей не означают время или степень родства.
+        </p>
+      </div>
+    </section>
+  );
+}

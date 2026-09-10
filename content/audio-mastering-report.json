@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-10",
+  "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers",
+  "physicalAudition": false,
+  "limits": [
+    "Spectral and level measurements do not prove subjective comfort or absence of water-like artifacts in generated sources.",
+    "Music is a tonal composition: suppressing its low drone does not remove every sustained musical tone.",
+    "MP3 decoded seams are checked numerically; browser/device gapless playback and acoustic quality still require audition."
+  ],
+  "sources": {
+    "public/assets/audio/music/forest-stillness.mp3": "c341f3fa90a585514688682058f4e8b891a0576230b2556a36072e4e2d1167f7",
+    "public/assets/audio/ambience/dry-wind-1.mp3": "2b31b1f173caf9fb03cfac659de39586e2a20a0386cd4ce18baab5f6030b9624",
+    "public/assets/audio/ambience/dry-wind-2.mp3": "d0773184df389367004c646dd556ae610517beb74d988efa61ce97b991cdc307",
+    "public/assets/audio/ambience/dry-wind-3.mp3": "b7dc2b78ad5f05efb7f1fa15f4274e9d4fec1730cc14f23c24a9063751d02ad5",
+    "public/assets/audio/ambience/dry-wind-4.mp3": "4a9390ea7cc7bc2052c5ca9ec24204ae17f3f22a976d1f6cee19d3f34d55c900",
+    "public/assets/audio/ambience/distant-birds-1.mp3": "05c165721a29cee232e6bb17401fe8f5e379200a49eaeae2d80f4b971b9986fb",
+    "public/assets/audio/ambience/distant-birds-2.mp3": "4986da7d1abafc7bc9fea718b11c747bda838ef082a67b075d6c5509f2ec1d65",
+    "public/assets/audio/ambience/distant-birds-3.mp3": "c3da88cea7bd44d350a56e6fbddfe9d5442dc59b60821b177801df305a988e6b"
+  },
+  "tracks": [
+    {
+      "kind": "music",
+      "path": "public/assets/audio/music/forest-stillness-long.mp3",
+      "sha256": "ba557a44f732574328e9dc7e1c9f3945671a87848545e8adc2be0a80166d3aa9",
+      "decodedSeconds": 174.03591836734694,
+      "rmsDbfs": -43.31,
+      "truePeakDbfs": -27.7,
+      "boundaryJumpDbfs": -80.447,
+      "seamSeconds": 6
+    },
+    {
+      "kind": "wind",
+      "path": "public/assets/audio/ambience/dry-canopy-long.mp3",
+      "sha256": "35520a3a71d6e140c4d28bfe6a7187dcf5ba3d060dc7630bb4c8a6354b0ea308",
+      "decodedSeconds": 167,
+      "rmsDbfs": -50.265,
+      "truePeakDbfs": -28.6,
+      "boundaryJumpDbfs": -63.599,
+      "seamSeconds": 6
+    },
+    {
+      "kind": "birds",
+      "path": "public/assets/audio/ambience/distant-birds-long.mp3",
+      "sha256": "8f0279f80375e87724e4a2544a628ad0003c9aa766cf6e82fb0e8dfa1c70720c",
+      "decodedSeconds": 191,
+      "rmsDbfs": -56.158,
+      "truePeakDbfs": -20.3,
+      "boundaryJumpDbfs": -82.311,
+      "seamSeconds": 6
+    }
+  ],
+  "reproduce": "npm run audio:master",
+  "processingScripts": [
+    "scripts/master-focused-audio.mjs",
+    "scripts/analyze-audio.mjs"
+  ]
+}

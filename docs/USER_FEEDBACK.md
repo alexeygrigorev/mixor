@@ -8,7 +8,7 @@ Status vocabulary: **implemented** means present in the working tree, not user-a
 
 | ID | Request / acceptance condition | Status |
 | --- | --- | --- |
-| AUDIO-01 | Remove the annoying continuous buzz. Keep quiet birds, wind and leaf sounds, with no water. Do not solve it by muting all nature audio. Compare separate stems and the mix, including a loop boundary. | In progress: diagnose and remaster existing stems; listening confirmation still needed. |
+| AUDIO-01 | Remove the annoying continuous buzz. Keep quiet birds, wind and leaf sounds, with no water. Do not solve it by muting all nature audio. Compare separate stems and the mix, including a loop boundary. | Cleaned masters installed: fixed-profile denoise, targeted frequency cuts, fixed gain instead of dynamic normalization, longer sample-checked joins. Listening confirmation still needed; do not mark the buzz subjectively resolved yet. |
 | AUDIO-02 | Taps must be subtle but audible. Earlier feedback asked for less pronounced clicks, not silence. Keep effects independent of the music and nature sliders. | Implemented: measure filtered cues before fixed-gain mastering; restore button feedback. Browser playback checks pass; physical listening pending. |
 | AUDIO-03 | Uncovering bark/cork, leaves or another hiding place in the forest must produce a short, natural tactile sound synchronized with the reveal. Not merely the generic menu click, a musical reward or an organism's supposed voice. | Implemented: dedicated 1.2-second bark/leaf cue, plays only on a new reveal. Decoding, repeat suppression and mute checks pass; physical listening pending. |
 | AUDIO-04 | Opening or closing a modal must not stop or restart the music/ambience. Includes real-photo preview, settings, sources and the new-find form. Mute and hidden-tab pause must still work. | Implemented: removed modal-driven pause. Same advancing tracks verified through all four modal types on phone/tablet Chromium. |
@@ -63,3 +63,10 @@ These are independent review findings, not additional requests invented on the u
 - **REVIEW-03:** Qualify the conventional Stemonitis axifera genus placement in the source note and taxonomy data. The chosen 2026 source treats its generic affiliation as unresolved; do not invent a replacement genus. Recheck the primary source before editing the scientific record.
 
 Current review evidence is in `tmp/focused-review/ROUND1_REVIEW.md`; those scratch files may not survive another environment, so the actionable findings are recorded here. The old published `REDESIGN_REVIEW.md` concerns the earlier version and does not close this checklist.
+
+## Latest completed checks
+
+- `npm test`: 6 domain/content tests and 28 phone/tablet browser tests passed. Includes actual tap/uncover signal bounds, modal continuity, all species/stages, circles, storage and keyboard regressions.
+- `npm run typecheck`, `npm run build`, `npm run assets:validate`, and `npm run test:offline` passed. The public cache contains 68 files, including the dedicated uncover cue.
+- Cleaned loop files: music 174.036s, wind 167s, birds 191s. Source/master hashes and numerical boundaries: [audio-mastering-report.json](../content/audio-mastering-report.json). These measurements are not a physical listening report.
+- Retained screenshots: [phone circles](screenshots/phone-search-circles.png), [tablet circles](screenshots/tablet-search-circles.png), [phone development](screenshots/phone-development-focused.jpg), [tablet development](screenshots/tablet-development-focused.jpg), [classification](screenshots/phone-classification-focused.jpg). Current art is shown as evidence of implementation, not acceptance of realism.

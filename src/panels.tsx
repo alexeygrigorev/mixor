@@ -113,8 +113,7 @@ export function Capture({
   return (
     <form className="capture-form" onSubmit={submit}>
       <p>
-        Своя находка. Можно не знать вид и место. Звук здесь выключен,
-        координаты не запрашиваются.
+        Своя находка. Можно не знать вид и место. Координаты не запрашиваются.
       </p>
       <label className="file-picker">
         <Icon name="camera" /> Добавить фото

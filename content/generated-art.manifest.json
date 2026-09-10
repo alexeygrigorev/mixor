@@ -46,6 +46,121 @@
       "adaptationLicense": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "changeNote": "AI re-rendering in a unified woodland style; anatomical reference corrections to three panels. Attribution remains with the original reference photographs."
+    },
+    {
+      "id": "search-forest",
+      "runtimePath": "public/assets/art/search-forest.webp",
+      "sourcePath": "content/artwork/search-forest.png",
+      "prompt": "Use case: illustration-story. Asset type: full-screen hidden-object nature game environment. Image 1 is STYLE reference only. Match its lush, quietly magical naturalistic painted woodland style, detailed realistic bark/moss, emerald and warm ochre palette. Generate a new distinct landscape environment: A broad fallen oak log across a sunlit forest clearing. Beautiful deeply cracked brown bark, moss cushions, fern fronds, leaf litter, small natural hollows. Camera low, close enough to inspect bark, forest atmosphere behind. Preserve the same woodland feeling as reference, but absolutely NO notebook, NO magnifying glass, NO man-made items. Composition: 3:2 landscape, detailed from edge to edge; important wood/moss habitat areas throughout the CENTRAL third so a narrow portrait crop still works on phones. The environment is the game itself, not a website backdrop; no empty UI panels. Do not paint any slime moulds or mushrooms: game creatures will be overlaid in code. No objects artificially highlighted, no circles, labels, icons, text, borders, arrows, people, equipment or watermarks. Natural believable perspective and texture.",
+      "tool": "builtin image_gen",
+      "createdAt": "2026-09-10",
+      "scope": "Imagined educational habitat; not a real locality or documented species association.",
+      "license": "Generated artwork",
+      "reference": "content/artwork/forest-world.png"
+    },
+    {
+      "id": "search-stump",
+      "runtimePath": "public/assets/art/search-stump.webp",
+      "sourcePath": "content/artwork/search-stump.png",
+      "prompt": "Use case: illustration-story. Asset type: full-screen hidden-object nature game environment. Image 1 is STYLE reference only. Match its lush, quietly magical naturalistic painted woodland style, detailed realistic bark/moss, emerald and warm ochre palette. Generate a new distinct landscape environment: An enormous old weathered oak stump viewed close at ground level. Its broken crown is near upper center, dark hollow at center, exposed branching roots reaching into lower corners. Loose cracked bark and cushions of green moss. Cool sheltered forest with gentle warm morning highlights. Visibly different vertical stump composition from reference horizontal log. Composition: 3:2 landscape, detailed from edge to edge; important wood/moss habitat areas throughout the CENTRAL third so a narrow portrait crop still works on phones. The environment is the game itself, not a website backdrop; no empty UI panels. Do not paint any slime moulds or mushrooms: game creatures will be overlaid in code. No objects artificially highlighted, no circles, labels, icons, text, borders, arrows, people, equipment or watermarks. Natural believable perspective and texture.",
+      "tool": "builtin image_gen",
+      "createdAt": "2026-09-10",
+      "scope": "Imagined educational habitat; not a real locality or documented species association.",
+      "license": "Generated artwork",
+      "reference": "content/artwork/forest-world.png"
+    },
+    {
+      "id": "search-leaves",
+      "runtimePath": "public/assets/art/search-leaves.webp",
+      "sourcePath": "content/artwork/search-leaves.png",
+      "prompt": "Use case: illustration-story. Asset type: full-screen hidden-object nature game environment. Image 1 is STYLE reference only. Match its lush, quietly magical naturalistic painted woodland style, detailed realistic bark/moss, emerald and warm ochre palette. Generate a new distinct landscape environment: Close, almost overhead view of a richly layered autumn forest floor. Russet oak leaves and curled beech leaves, thin decaying twigs, dark bark fragments, pine needles, patches of velvety moss. A few curled large leaves make sheltered pockets. Little visible sky. Honey amber light and olive greens. No fruits, no flowers, no man-made objects. Composition: 3:2 landscape, detailed from edge to edge; important wood/moss habitat areas throughout the CENTRAL third so a narrow portrait crop still works on phones. The environment is the game itself, not a website backdrop; no empty UI panels. Do not paint any slime moulds or mushrooms: game creatures will be overlaid in code. No objects artificially highlighted, no circles, labels, icons, text, borders, arrows, people, equipment or watermarks. Natural believable perspective and texture.",
+      "tool": "builtin image_gen",
+      "createdAt": "2026-09-10",
+      "scope": "Imagined educational habitat; not a real locality or documented species association.",
+      "license": "Generated artwork",
+      "reference": "content/artwork/forest-world.png"
+    },
+    {
+      "id": "search-roots",
+      "runtimePath": "public/assets/art/search-roots.webp",
+      "sourcePath": "content/artwork/search-roots.png",
+      "prompt": "Use case: illustration-story. Asset type: full-screen hidden-object nature game environment. Image 1 is STYLE reference only. Match its lush, quietly magical naturalistic painted woodland style, detailed realistic bark/moss, emerald and warm ochre palette. Generate a new distinct landscape environment: A quiet mossy woodland bank with interlacing exposed tree roots, flat damp stones and weathered driftwood. No visible river or running water. Deep cool jade-green moss and fern fronds frame a small open patch of dark woody material in center. Soft silver dappled light. Very different environment composition from fallen log. Composition: 3:2 landscape, detailed from edge to edge; important wood/moss habitat areas throughout the CENTRAL third so a narrow portrait crop still works on phones. The environment is the game itself, not a website backdrop; no empty UI panels. Do not paint any slime moulds or mushrooms: game creatures will be overlaid in code. No objects artificially highlighted, no circles, labels, icons, text, borders, arrows, people, equipment or watermarks. Natural believable perspective and texture.",
+      "tool": "builtin image_gen",
+      "createdAt": "2026-09-10",
+      "scope": "Imagined educational habitat; not a real locality or documented species association.",
+      "license": "Generated artwork",
+      "reference": "content/artwork/forest-world.png"
+    },
+    {
+      "id": "search-bark",
+      "runtimePath": "public/assets/art/search-bark.webp",
+      "sourcePath": "content/artwork/search-bark.png",
+      "prompt": "Use case: illustration-story. Asset type: full-screen hidden-object nature game environment. Image 1 is STYLE reference only. Match its lush, quietly magical naturalistic painted woodland style, detailed realistic bark/moss, emerald and warm ochre palette. Generate a new distinct landscape environment: Close view underneath a fallen hollow birch trunk in deep forest shade. Pale curled birch bark peeling away at upper right, rich dark decomposing wood in the center, splintered bark ledges, delicate moss, small leaves, soft blue-green shade with a sliver of gold light. Several distinct natural recesses to inspect. Low macro camera, not a tunnel dungeon. Composition: 3:2 landscape, detailed from edge to edge; important wood/moss habitat areas throughout the CENTRAL third so a narrow portrait crop still works on phones. The environment is the game itself, not a website backdrop; no empty UI panels. Do not paint any slime moulds or mushrooms: game creatures will be overlaid in code. No objects artificially highlighted, no circles, labels, icons, text, borders, arrows, people, equipment or watermarks. Natural believable perspective and texture.",
+      "tool": "builtin image_gen",
+      "createdAt": "2026-09-10",
+      "scope": "Imagined educational habitat; not a real locality or documented species association.",
+      "license": "Generated artwork",
+      "reference": "content/artwork/forest-world.png"
+    },
+    {
+      "id": "growth-early",
+      "runtimePath": "public/assets/art/growth-early.webp",
+      "sourcePath": "content/artwork/growth-early.png",
+      "prompt": "Use case: scientific-educational. Asset type: game lifecycle illustration sprite atlas. Image1 is STYLE reference, not layout to preserve. Match the naturalistic painted educational rendering, soft depth of field and restrained warm forest palette. A SINGLE sprite atlas with EXACTLY SIX equal square panels in a 3-column by 2-row grid, no gaps. Read LEFT TO RIGHT top then bottom: 1) one round fine-grained brown slime mould spore with a small emerging translucent amoeboid cell; 2) ONE crawling translucent amoeboid cell and ONE alternative slender flagellated cell nearby, EACH with exactly ONE clearly distinguishable round nucleus; 3) TWO compatible translucent amoeboid cells halfway fusing, a connected narrow bridge, one nucleus in each half; 4) ONE small roughly oval translucent ZYGOTE with exactly ONE large central nucleus, completely unified membrane, no internal wall; 5) ONE unified slightly larger lobed translucent cell with TWO distinct round nuclei, NOT two cells, no constriction or internal membrane; 6) ONE still larger continuous flattened young plasmodium with FOUR small discrete round nuclei, a few short rounded pseudopods spreading outward, no partition walls, no collection of separate cells. These are magnified generic schematic educational stages, NOT a microscopic species diagnosis. Keep nuclei much larger than subtle pale food vesicles so nuclear counts read immediately. SAME muted olive-green microscopic substrate/background in all panels, pearl/translucent cell material, soft golden light. Make the continuous single-cell growth progression unmistakable. No veins yet in panel6, just a growing unified young cell. Each subject centered inside its square with15% margins. Equal rectilinear panel boundaries aligned perfectly. No labels, no text, no arrows, no numbering, no framing, no visible panel gutters, no logos or watermark.",
+      "tool": "builtin image_gen",
+      "createdAt": "2026-09-10",
+      "scope": "Educational reconstruction; early cells shared across taxa; plasmodial forms/colors conditional, not diagnostic photographs.",
+      "license": "CC BY 4.0",
+      "reference": "content/artwork/life-stages-v2.png (derived from the credited Katja Schulz photograph; see existing plate provenance).",
+      "tileGrid": {
+        "columns": 3,
+        "rows": 2
+      }
+    },
+    {
+      "id": "growth-networks",
+      "runtimePath": "public/assets/art/growth-networks.webp",
+      "sourcePath": "content/artwork/growth-networks.png",
+      "prompt": "Use case: scientific-educational. Asset type: game lifecycle illustration sprite atlas. Image1 is STYLE reference, not layout to preserve. Match the naturalistic painted educational rendering, soft depth of field and restrained warm forest palette. A SINGLE sprite atlas with EXACTLY EIGHT equal square panels in a 4-column by 2-row grid, no gaps. ALL panels show an active PLASMODIUM spreading over dark decaying bark, NOT fruiting bodies. Reading order: 1) Badhamia polycephala (Physarum polycephalum): rich yellow extensive branching reticulate network with fan-shaped advancing edge; 2) Arcyria denudata: delicate pale ivory white branching veins and small white spreading fans; 3) Fuligo septica: broad buttery yellow flattened spreading lobes joined by thick yellow veins, not a puffball; 4) Lycogala epidendrum: translucent pale coral-pink thin spreading plasmodial sheet, a small continuous irregular patch, NO round fruiting bodies; 5) Stemonitis axifera: very thin nearly transparent milky white film with sparse delicate strands, not a thick reticulate Physarum network; 6) Hemitrichia decipiens (Trichia decipiens): pale cream-white interconnected veins and small lobes on rotten wood; 7) Tubifera ferruginosa: smooth continuous pale coral spreading lobes on pine wood, no tubes or beads yet; 8) Didymium squamulosum: small white flattened plasmodial sheet and white branching veins on a brown decaying leaf. These are clearly educational reconstructed models, not diagnostic photographs. Every panel different natural arrangement. Keep the organism central with dark green-brown soft-focused surrounding margins. No nuclei drawn at this macro scale, no sparkles. Equal rectilinear panel boundaries aligned perfectly. No labels, no text, no arrows, no numbering, no framing, no visible panel gutters, no logos or watermark.",
+      "tool": "builtin image_gen",
+      "createdAt": "2026-09-10",
+      "scope": "Educational reconstruction; early cells shared across taxa; plasmodial forms/colors conditional, not diagnostic photographs.",
+      "license": "CC BY 4.0",
+      "reference": "content/artwork/life-stages-v2.png (derived from the credited Katja Schulz photograph; see existing plate provenance).",
+      "tileGrid": {
+        "columns": 4,
+        "rows": 2
+      }
+    },
+    {
+      "id": "growth-forming",
+      "runtimePath": "public/assets/art/growth-forming.webp",
+      "sourcePath": "content/artwork/growth-forming.png",
+      "prompt": "Use case: scientific-educational. Asset type: game lifecycle illustration sprite atlas. Image1 is STYLE reference, not layout to preserve. Match the naturalistic painted educational rendering, soft depth of field and restrained warm forest palette. A SINGLE sprite atlas with EXACTLY EIGHT equal square panels in a 4-column by 2-row grid, no gaps. ALL panels show EARLY FRUITING, distinct from fully spread plasmodium and mature spore-bearing stage. Reading order: 1) Badhamia polycephala (Physarum polycephalum): yellow plasmodial veins contracting into multiple low yellow rounded lobed primordia with very short rising stems; 2) Arcyria denudata: pale ivory to blush-pink smooth short cylindrical primordia beginning to stand on short stems, no expanded red net yet; 3) Fuligo septica: one broad cream-yellow cushion consolidating on wood, smooth lumpy moist surface, NOT branching coral; 4) Lycogala epidendrum: several soft coral-pink globose sessile immature fruiting bodies tightly on bark, with no stems; 5) Stemonitis axifera: clustered milky-white slender blunt primordia standing upright, just beginning to elongate from a thin film, no brown dusty coat yet; 6) Hemitrichia decipiens: small glossy orange pear-shaped immature sporocarps on short slender stems, smooth round closed tops, absolutely NO pointed tips/horns; 7) Tubifera ferruginosa: tightly packed upright salmon-pink short cylinders with CLOSED rounded tops on a common base, no individual stalks and no open coral holes; 8) Didymium squamulosum: pale rounded immature globose sporocarps on short pale stems on a brown leaf, round heads NOT umbrella mushroom caps, no gills. Match reference painted naturalism, bark/moss atmosphere, quiet olive background. Each whole subject centered in square with15%margin. Equal rectilinear panel boundaries aligned perfectly. No labels, no text, no arrows, no numbering, no framing, no visible panel gutters, no logos or watermark.",
+      "tool": "builtin image_gen",
+      "createdAt": "2026-09-10",
+      "scope": "Educational reconstruction; early cells shared across taxa; plasmodial forms/colors conditional, not diagnostic photographs.",
+      "license": "CC BY 4.0",
+      "reference": "content/artwork/life-stages-v2.png (derived from the credited Katja Schulz photograph; see existing plate provenance).",
+      "tileGrid": {
+        "columns": 4,
+        "rows": 2
+      }
+    },
+    {
+      "id": "growth-mature",
+      "runtimePath": "public/assets/art/growth-mature.webp",
+      "sourcePath": "content/artwork/growth-mature.png",
+      "prompt": "Use case: scientific-educational. Asset type: game lifecycle illustration sprite atlas. Image1 is STYLE reference, not layout to preserve. Match the naturalistic painted educational rendering, soft depth of field and restrained warm forest palette. A SINGLE sprite atlas with EXACTLY EIGHT equal square panels in a 4-column by 2-row grid, no gaps. Mature spore-bearing slime moulds in realistic natural history painting, not fungi. Reading order: 1) Badhamia polycephala (Physarum polycephalum): clustered MULTILOBED grey-ochre heads, each head shaped like three connected irregular little lobes, atop slender dark stalks, NOT single perfectly round balls; 2) Arcyria denudata: brick-red expanded soft netlike cylindrical sporocarps on short dark stalks, some visible lacy capillitium, no flower petals; 3) Fuligo septica: a broad low mature pale ochre and cream crusted aethalium on bark, with small broken area showing very dark brown powder inside, NOT branching coral; 4) Lycogala epidendrum: several mature ochre-brown globose sessile bodies on wood, one with a small natural opening showing dull spore powder, NO red/pink immature globes; 5) Stemonitis axifera: tall closely packed rusty-brown slender cylindrical sporocarps on thin black stalks, fine net surface; 6) Hemitrichia decipiens: ochre to olive-brown pear-shaped sporangia on slender stems, some top envelopes broken to reveal ochre fine hairlike spore mass, smooth round tops NO sharp horns; 7) Tubifera ferruginosa: densely packed mature rusty-brown upright short cylinders on one shared base, no stems, mostly closed polygonal/rounded top surfaces, NOT pink bubble coral; 8) Didymium squamulosum: small dark globose sporangia covered with irregular chalk-white lime crystals on SHORT white or cream stems, white circular bases on brown leaf, no mushroom umbrellas or gills. Every subject inside square centered with15%margin. Dark bark, subtle moss, olive-green soft-focus, warm diffuse light, microscopic details only where appropriate. No exaggerated dust clouds. Equal rectilinear panel boundaries aligned perfectly. No labels, no text, no arrows, no numbering, no framing, no visible panel gutters, no logos or watermark.",
+      "tool": "builtin image_gen",
+      "createdAt": "2026-09-10",
+      "scope": "Educational reconstruction; early cells shared across taxa; plasmodial forms/colors conditional, not diagnostic photographs.",
+      "license": "CC BY 4.0",
+      "reference": "content/artwork/life-stages-v2.png (derived from the credited Katja Schulz photograph; see existing plate provenance).",
+      "tileGrid": {
+        "columns": 4,
+        "rows": 2
+      }
     }
   ],
   "spriteMap": {

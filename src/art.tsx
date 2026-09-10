@@ -28,13 +28,29 @@ export function Art({
     spore: 0,
     cells: 1,
     fusion: 2,
-    network: 3,
-    fruit: taxon === "arcyria" ? 5 : 4,
+    zygote: 3,
+    division: 4,
+    young: 5,
+    network: portraits[taxon],
+    forming: portraits[taxon],
+    fruit: portraits[taxon],
     rest: 3,
   };
   const index = stage ? stages[stage] : (portraits[taxon] ?? 0);
-  const columns = stage ? 3 : 4;
-  const single = taxon === "arcyria" && stage === "network";
+  const early =
+    stage &&
+    ["spore", "cells", "fusion", "zygote", "division", "young"].includes(stage);
+  const columns = early ? 3 : 4;
+  const single = false;
+  const file = !stage
+    ? "organisms-v2"
+    : early
+      ? "growth-early"
+      : stage === "forming"
+        ? "growth-forming"
+        : stage === "fruit"
+          ? "growth-mature"
+          : "growth-networks";
   return (
     <div
       className={`art ${single ? "single" : ""} ${className}`}
@@ -45,12 +61,14 @@ export function Art({
           "--columns": columns,
           "--column": index % columns,
           "--row": Math.floor(index / columns),
+          "--tile-aspect": stage && !early ? 0.75 : 1,
         } as CSSProperties
       }
     >
       {!failed ? (
         <img
-          src={`/assets/art/${single ? "arcyria-network" : stage ? "life-stages-v2" : "organisms-v2"}.webp`}
+          key={file}
+          src={`/assets/art/${file}.webp`}
           alt=""
           draggable={false}
           onError={() => setFailed(true)}
