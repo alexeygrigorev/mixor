@@ -15,7 +15,8 @@
     "audio:master": "node scripts/master-audio.mjs && node scripts/master-focused-audio.mjs all --install",
     "review:capture": "node scripts/capture-focused-review.mjs",
     "assets:validate": "node scripts/validate-assets.mjs",
-    "audio:generate": "node --env-file=../red-stamp/.env scripts/generate-mixor-audio.mjs all"
+    "audio:generate": "node --env-file=../red-stamp/.env scripts/generate-scene-audio.mjs feedback-v2",
+    "audio:generate:legacy-sfx": "node --env-file=../red-stamp/.env scripts/generate-mixor-audio.mjs sfx"
   },
   "dependencies": {
     "@fontsource-variable/literata": "5.3.0",

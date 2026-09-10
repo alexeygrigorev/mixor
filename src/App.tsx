@@ -30,27 +30,90 @@ type Place =
   | "portrait"
   | "life"
   | "journal";
-type Route = { place: Place; taxon: TaxonId; stage: string };
+type RouteStep = {
+  place: Place;
+  taxon: TaxonId;
+  stage: string;
+  focus?: string;
+};
+type Route = RouteStep & { trail: RouteStep[] };
+const places: Place[] = [
+  "home",
+  "woods",
+  "species",
+  "world",
+  "tree",
+  "portrait",
+  "life",
+  "journal",
+];
+const routeKey = (route: RouteStep) =>
+  `#${route.place}/${route.taxon}/${route.stage}`;
+function isRouteStep(value: unknown): value is RouteStep {
+  if (!value || typeof value !== "object") return false;
+  const step = value as Record<string, unknown>;
+  return (
+    places.includes(step.place as Place) &&
+    taxa.some((taxon) => taxon.id === step.taxon) &&
+    typeof step.stage === "string" &&
+    /^[a-z0-9-]{1,80}$/i.test(step.stage) &&
+    (step.focus === undefined ||
+      (typeof step.focus === "string" && /^[a-z0-9-]{1,80}$/i.test(step.focus)))
+  );
+}
 type Overlay =
   "settings" | "sources" | "capture" | "branches" | "photos" | null;
 function readRoute(): Route {
   const [place, taxon, stage] = location.hash.slice(1).split("/");
-  return {
-    place: [
-      "home",
-      "woods",
-      "species",
-      "world",
-      "tree",
-      "portrait",
-      "life",
-      "journal",
-    ].includes(place)
-      ? (place as Place)
-      : "home",
+  const route: Route = {
+    place: places.includes(place as Place) ? (place as Place) : "home",
     taxon: taxa.some((t) => t.id === taxon) ? (taxon as TaxonId) : "physarum",
     stage: stage || "spore",
+    trail: [],
   };
+  // Browser history keeps the return path across reload and Back/Forward,
+  // without mixing navigation metadata into the saved learning progress.
+  const saved = history.state?.mixorNavigation;
+  if (
+    saved &&
+    isRouteStep(saved.route) &&
+    routeKey(saved.route) === routeKey(route) &&
+    Array.isArray(saved.trail) &&
+    saved.trail.length <= 8 &&
+    saved.trail.every(isRouteStep)
+  ) {
+    route.trail = saved.trail;
+    route.focus = saved.route.focus;
+  }
+  return route;
+}
+function parentRoute(route: Route): Route {
+  const last = route.trail.at(-1);
+  if (last) return { ...last, trail: route.trail.slice(0, -1) };
+  const place =
+    route.place === "world"
+      ? "woods"
+      : route.place === "life"
+        ? "species"
+        : route.place === "portrait"
+          ? "tree"
+          : "home";
+  return { place, taxon: route.taxon, stage: "spore", trail: [] };
+}
+function backLabel(route: RouteStep): string {
+  return route.place === "woods"
+    ? "Назад к выбору места"
+    : route.place === "species"
+      ? "Назад к выбору вида"
+      : route.place === "world"
+        ? `Назад: ${findWoodland(route.stage).title}`
+        : route.place === "portrait"
+          ? "Назад к организму"
+          : route.place === "tree"
+            ? "Назад к дереву"
+            : route.place === "journal"
+              ? "Назад в журнал"
+              : "Назад на главный экран";
 }
 function pref<T>(key: string, fallback: T): T {
   try {
@@ -89,8 +152,7 @@ function Credit({ photo }: { photo: MediaItem }) {
     <p className="photo-credit">
       <a href={photo.sourceUrl} target="_blank" rel="noreferrer">
         {photo.author} · Wikimedia Commons
-      </a>{" "}
-      ·{" "}
+      </a>
       <a href={photo.licenseUrl} target="_blank" rel="noreferrer">
         {photo.license}
       </a>
@@ -200,6 +262,15 @@ export default function App() {
   const viewed = stages.filter((item) =>
     journey.visited.includes(`${taxon.id}/${item.id}`),
   ).length;
+  const parent = parentRoute(route);
+  const originWoodland =
+    route.place === "world"
+      ? route
+      : (route.place === "portrait" || route.place === "life") &&
+        [...route.trail].reverse().find((step) => step.place === "world");
+  const ambientScene = originWoodland
+    ? findWoodland(originWoodland.stage).id
+    : null;
 
   useEffect(() => {
     const update = () => {
@@ -208,12 +279,26 @@ export default function App() {
     };
     const full = () => setFullscreen(Boolean(document.fullscreenElement));
     window.addEventListener("hashchange", update);
+    window.addEventListener("popstate", update);
     document.addEventListener("fullscreenchange", full);
     return () => {
       window.removeEventListener("hashchange", update);
+      window.removeEventListener("popstate", update);
       document.removeEventListener("fullscreenchange", full);
     };
   }, []);
+  useEffect(() => {
+    audioManager.setScene(ambientScene);
+  }, [ambientScene]);
+  useEffect(() => {
+    if (route.place !== "world" || !route.focus) return;
+    const frame = requestAnimationFrame(() => {
+      document
+        .querySelector<HTMLButtonElement>(`[data-find="${route.focus}"]`)
+        ?.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [route]);
   useEffect(() => {
     setPhotoIndex(0);
     setAnswer("");
@@ -269,12 +354,70 @@ export default function App() {
     id = taxon.id,
     at = route.stage,
     showPhoto = false,
+    returnFocus?: string,
   ) {
     audioManager.playSfx(place === "journal" ? "journal-open" : "ui-press");
     setDetail(null);
     requestedReal.current = showPhoto;
     setReal(showPhoto);
-    location.hash = `${place}/${id}/${at}`;
+    const sameActivity = place === route.place;
+    const step = {
+      place: route.place,
+      taxon: route.taxon,
+      stage: route.stage,
+      focus: returnFocus,
+    };
+    const trail = sameActivity
+      ? route.trail
+      : ["home", "woods", "species", "tree", "journal"].includes(place)
+        ? []
+        : [...route.trail, step].slice(-8);
+    const next: Route = { place, taxon: id, stage: at, trail };
+    const parentKey = sameActivity
+      ? history.state?.mixorNavigation?.parentKey
+      : routeKey(route);
+    if (!sameActivity) {
+      history.replaceState(
+        {
+          ...history.state,
+          mixorNavigation: {
+            ...history.state?.mixorNavigation,
+            route: { ...route, focus: returnFocus },
+            trail: route.trail,
+          },
+        },
+        "",
+      );
+    }
+    // Moving between stages or woodland scenes keeps one history entry for
+    // that activity. Back then returns to the chooser/organism, not each step.
+    history[sameActivity ? "replaceState" : "pushState"](
+      {
+        ...history.state,
+        mixorNavigation: { route: next, trail, parentKey },
+      },
+      "",
+      routeKey(next),
+    );
+    setOverlay(null);
+    setRoute(next);
+  }
+  function back() {
+    audioManager.playSfx("ui-press");
+    if (history.state?.mixorNavigation?.parentKey === routeKey(parent)) {
+      history.back();
+    } else {
+      history.replaceState(
+        {
+          ...history.state,
+          mixorNavigation: { route: parent, trail: parent.trail },
+        },
+        "",
+        routeKey(parent),
+      );
+      setOverlay(null);
+      setRoute(parent);
+    }
   }
   async function toggleSound() {
     if (!muted) {
@@ -380,12 +523,13 @@ export default function App() {
     <div
       className={`game ${calm ? "calm" : ""} scene-${route.place}`}
       onClick={(event) => {
-        // Bubble after the action: a specific cue (uncover, save, journal)
-        // takes precedence through AudioManager's short UI-cue cooldown.
+        // Circle actions choose their own uncover/inspection cue. Other plain
+        // controls use the common tap cue (deduplicated by AudioManager).
         if (
           !muted &&
           event.target instanceof Element &&
-          event.target.closest("button")
+          event.target.closest("button") &&
+          !event.target.closest(".hiding-place")
         )
           audioManager.playSfx("ui-press");
       }}
@@ -454,14 +598,7 @@ export default function App() {
         }
       >
         {!["home", "world", "life"].includes(route.place) && (
-          <BackButton
-            back={() => go(route.place === "portrait" ? "tree" : "home")}
-            label={
-              route.place === "portrait"
-                ? "Назад к дереву"
-                : "Назад на главный экран"
-            }
-          />
+          <BackButton back={back} label={backLabel(parent)} />
         )}
         {route.place === "home" && (
           <ActivityHome choose={(place) => go(place)} />
@@ -485,7 +622,9 @@ export default function App() {
             woodland={findWoodland(route.stage)}
             finds={finds}
             reveal={reveal}
-            back={() => go("home")}
+            inspect={(id, findId) => go("portrait", id, "spore", false, findId)}
+            change={(id) => go("world", taxon.id, id)}
+            back={back}
           />
         )}
         {route.place === "tree" && (
@@ -664,7 +803,8 @@ export default function App() {
             cycle={cycle}
             stage={stage}
             index={stageIndex}
-            back={() => go("home")}
+            back={back}
+            backLabel={backLabel(parent)}
             select={(id) => go("life", taxon.id, id)}
             photos={openLifePhotos}
             details={() => setOverlay("sources")}
@@ -988,6 +1128,7 @@ export default function App() {
                 настоящих фотографий сохраняют название исходного автора.
                 Классификации баз данных могут отличаться от этих публикаций.
               </p>
+              <p>{scientificNames.stemonitis.placementNote}</p>
               <ul className="source-links">
                 {taxonomySources.map((source) => (
                   <li key={source.url}>
@@ -1050,33 +1191,42 @@ export default function App() {
               </div>
             </div>
           ))}
-          <h3>Источники рисованной серии</h3>
+          <h3>Учебные реконструкции</h3>
           <p>
-            Плодовые тела Physarum в серии развития уточнены по снимку Katja
-            Schulz. Это переработка с ИИ по CC BY 4.0, а не фотография.
+            Учебные реконструкции созданы с ИИ, это не снимки экземпляров и не
+            документальная последовательность развития. Источники сведений о
+            форме организмов и авторство настоящих фотографий приведены выше.
           </p>
-          <Credit photo={getMedia("physarum-macro")} />
-          <p>
-            Три портрета уточнены по фотографиям Trichia decipiens и Tubifera
-            ferruginosa (Björn S…, CC BY-SA 2.0) и Didymium squamulosum (Thomas
-            Laxton, CC BY-SA 4.0). Рисованная серия — переработка с ИИ,
-            распространяемая по{" "}
-            <a
-              href="https://creativecommons.org/licenses/by-sa/4.0/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              CC BY-SA 4.0
-            </a>
-            .
-          </p>
-          <div className="source-links">
-            {["trichia-portrait", "tubifera-portrait", "didymium-portrait"].map(
-              (id) => (
+          <details className="archived-art-sources">
+            <summary>Предыдущие иллюстрации: источники и лицензии</summary>
+            <p>
+              В прежней серии плодовые тела Physarum уточнялись по снимку Katja
+              Schulz. Эта архивная переработка с ИИ использует CC BY 4.0.
+            </p>
+            <Credit photo={getMedia("physarum-macro")} />
+            <p>
+              Три прежних портрета перерабатывали фотографии Trichia decipiens и
+              Tubifera ferruginosa (Björn S…, CC BY-SA 2.0) и Didymium
+              squamulosum (Thomas Laxton, CC BY-SA 4.0). Для этих архивных
+              переработок сохраняется лицензия CC BY-SA 4.0.
+            </p>
+            <div className="source-links">
+              {[
+                "trichia-portrait",
+                "tubifera-portrait",
+                "didymium-portrait",
+              ].map((id) => (
                 <Credit key={id} photo={getMedia(id)} />
-              ),
-            )}
-          </div>
+              ))}
+              <a
+                href="https://creativecommons.org/licenses/by-sa/4.0/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Лицензия архивных переработок: CC BY-SA 4.0
+              </a>
+            </div>
+          </details>
         </Panel>
       )}
       {overlay === "branches" && (

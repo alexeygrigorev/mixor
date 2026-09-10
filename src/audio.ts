@@ -6,35 +6,68 @@ export type SfxId =
   | "discovery"
   | "save-local";
 export type SoundLevels = { music: number; nature: number; effects: number };
-export const defaultSoundLevels: SoundLevels = {
-  music: 12,
-  nature: 45,
-  effects: 18,
+export const defaultSoundLevels: SoundLevels = { music: 12, nature: 45, effects: 18 };
+
+type LoopId = "music" | "wind" | "birds" | "rain";
+type SceneId = "forest" | "stump" | "leaves" | "roots" | "bark";
+type SceneMix = Record<LoopId, number>;
+type Loop = {
+  id: LoopId;
+  audio: HTMLAudioElement;
+  channel: "music" | "nature";
+  gain: number;
+  pending?: Promise<void>;
+};
+
+const HOME: SceneMix = { music: 1, wind: 0.45, birds: 0.55, rain: 0 };
+const SCENES: Record<SceneId, SceneMix> = {
+  forest: { music: 1, wind: 1, birds: 1, rain: 0 },
+  stump: { music: 1, wind: 0.7, birds: 0.55, rain: 0 },
+  leaves: { music: 1, wind: 1, birds: 0.65, rain: 0 },
+  roots: { music: 1, wind: 0.45, birds: 0.18, rain: 0.9 },
+  bark: { music: 1, wind: 0.35, birds: 0.12, rain: 0.65 },
+};
+
+const TRACKS: Record<LoopId, { path: string; channel: "music" | "nature"; gain: number }> = {
+  music: { path: "music/forest-acoustic-v2-long", channel: "music", gain: 0.45 },
+  wind: { path: "ambience/dry-leaves-v2-long", channel: "nature", gain: 0.38 },
+  birds: { path: "ambience/distant-birds-long", channel: "nature", gain: 0.25 },
+  rain: { path: "ambience/canopy-rain-v2-loop", channel: "nature", gain: 0.32 },
 };
 
 class AudioManager {
-  private loops: {
-    audio: HTMLAudioElement;
-    channel: "music" | "nature";
-    gain: number;
-  }[] = [];
+  private loops = new Map<LoopId, Loop>();
   private sfx = new Map<SfxId, HTMLAudioElement>();
   private enabled = false;
   private muted = true;
+  private pageHidden = false;
+  private scene: SceneId | null = null;
   private levels: SoundLevels = { ...defaultSoundLevels };
-  private lastPress = 0;
+  private lastPress = -Infinity;
 
   constructor() {
     document.addEventListener("visibilitychange", this.handleVisibility);
-    window.addEventListener("pagehide", this.pauseAll);
+    window.addEventListener("pagehide", this.handlePageHide);
+    window.addEventListener("pageshow", this.handlePageShow);
+  }
+
+  // The caller supplies the VISIBLE woodland, including behind a discovery
+  // portrait. Modals do not call this API. Null/unknown means dry home ambience.
+  setScene(id: string | null): void {
+    const next = id && Object.hasOwn(SCENES, id) ? id as SceneId : null;
+    if (next === this.scene) return;
+    this.scene = next;
+    this.applyVolumes();
+    if (this.canPlay()) void this.playLoops();
   }
 
   async enable(): Promise<boolean> {
     this.enabled = true;
     this.muted = false;
-    this.ensureLoops();
+    if (!this.canPlay()) return false;
     const results = await this.playLoops();
-    const playing = results.some((result) => result.status === "fulfilled");
+    if (!this.canPlay()) return false;
+    const playing = results.length === 0 || results.some((r) => r.status === "fulfilled");
     if (!playing) this.muted = true;
     return playing;
   }
@@ -43,9 +76,8 @@ class AudioManager {
     this.enabled = false;
     this.pauseAll();
   }
-  isMuted(): boolean {
-    return this.muted;
-  }
+
+  isMuted(): boolean { return this.muted; }
 
   setMuted(muted: boolean): void {
     this.muted = muted;
@@ -54,82 +86,98 @@ class AudioManager {
   }
 
   setLevels(levels: SoundLevels): void {
+    const bound = (value: number) => Number.isFinite(value) ? Math.max(0, Math.min(100, value)) : 0;
     this.levels = {
-      music: Math.max(0, Math.min(100, levels.music)),
-      nature: Math.max(0, Math.min(100, levels.nature)),
-      effects: Math.max(0, Math.min(100, levels.effects)),
+      music: bound(levels.music), nature: bound(levels.nature), effects: bound(levels.effects),
     };
-    for (const loop of this.loops)
-      loop.audio.volume = (this.levels[loop.channel] / 100) * loop.gain;
-    for (const [id, audio] of this.sfx) audio.volume = this.effectVolume(id);
+    this.applyVolumes();
+    for (const [id, audio] of this.sfx) {
+      audio.volume = this.effectVolume(id);
+      if (this.levels.effects === 0) audio.pause();
+    }
+    if (this.canPlay()) void this.playLoops();
   }
 
   playSfx(id: SfxId): void {
-    if (
-      !this.enabled ||
-      this.muted ||
-      document.hidden ||
-      this.levels.effects === 0
-    )
-      return;
-    if (id === "ui-press" && performance.now() - this.lastPress < 120) return;
+    if (!this.canPlay() || this.levels.effects === 0) return;
+    if (id === "ui-press") {
+      if (performance.now() - this.lastPress < 120) return;
+    }
+    // A specific handler runs before the app's generic bubbling tap handler.
+    // Stamp every accepted cue immediately, before play() settles, so that
+    // generic ui-press cannot stack the same foley on lens/save/etc.
     this.lastPress = performance.now();
     let audio = this.sfx.get(id);
     if (!audio) {
-      audio = new Audio(
-        `/assets/audio/sfx/${id === "ui-press" ? "ui-press-soft-mix" : id === "uncover" ? "uncover-mix" : id}.mp3`,
-      );
+      // Navigation, lens/stage changes and save use physical fingertip foley.
+      // Do not revive the rejected pitched electronic/glass reward cues.
+      const file = id === "uncover" ? "uncover-mix"
+        : id === "journal-open" ? "journal-open" : "fingertip-wood-v2-mix";
+      audio = new Audio("/assets/audio/sfx/" + file + ".mp3");
       this.sfx.set(id, audio);
     }
     audio.currentTime = 0;
     audio.volume = this.effectVolume(id);
-    void audio.play().catch(() => undefined);
+    void audio.play().then(() => {
+      if (!this.canPlay() || this.levels.effects === 0) audio.pause();
+    }).catch(() => undefined);
   }
 
   private effectVolume(id: SfxId): number {
-    // Masters already have softened transients. Do not attenuate taps twice
-    // into silence; uncovering is a distinct, slightly more present foley cue.
-    return (
-      (this.levels.effects / 100) *
-      (id === "uncover" ? 0.9 : id === "ui-press" ? 0.65 : 0.4)
-    );
+    return (this.levels.effects / 100) * (id === "uncover" ? 0.9 : id === "journal-open" ? 0.4 : 0.65);
   }
 
-  private ensureLoops(): void {
-    if (this.loops.length) return;
-    this.loops = [
-      {
-        path: "music/forest-stillness-long",
-        channel: "music" as const,
-        gain: 0.45,
-      },
-      {
-        path: "ambience/dry-canopy-long",
-        channel: "nature" as const,
-        gain: 0.38,
-      },
-      {
-        path: "ambience/distant-birds-long",
-        channel: "nature" as const,
-        gain: 0.25,
-      },
-    ].map(({ path, channel, gain }) => {
-      const audio = new Audio(`/assets/audio/${path}.mp3`);
-      audio.loop = true;
-      audio.preload = "metadata";
-      audio.volume = (this.levels[channel] / 100) * gain;
-      return { audio, channel, gain };
-    });
+  private mix(): SceneMix { return this.scene ? SCENES[this.scene] : HOME; }
+  private canPlay(): boolean {
+    return this.enabled && !this.muted && !document.hidden && !this.pageHidden;
+  }
+  private wants(loop: Loop): boolean {
+    return this.canPlay() && this.mix()[loop.id] > 0 && this.levels[loop.channel] > 0;
+  }
+
+  private applyVolumes(): void {
+    for (const loop of this.loops.values()) {
+      loop.audio.volume = (this.levels[loop.channel] / 100) * loop.gain * this.mix()[loop.id];
+      // Rain stops immediately on leaving visible rain. Other active stems
+      // keep their element and playback position across all scene changes.
+      if (!this.wants(loop) && !loop.audio.paused) loop.audio.pause();
+    }
   }
 
   private async playLoops(): Promise<PromiseSettledResult<void>[]> {
-    if (!this.enabled || this.muted || document.hidden) return [];
-    this.ensureLoops();
-    return Promise.allSettled(this.loops.map(({ audio }) => audio.play()));
+    if (!this.canPlay()) return [];
+    const wanted = (Object.keys(TRACKS) as LoopId[]).filter((id) => this.mix()[id] > 0 && this.levels[TRACKS[id].channel] > 0);
+    for (const id of wanted) {
+      if (this.loops.has(id)) continue;
+      const { path, channel, gain } = TRACKS[id];
+      const audio = new Audio("/assets/audio/" + path + ".mp3");
+      audio.loop = true;
+      audio.preload = "metadata";
+      this.loops.set(id, { id, audio, channel, gain });
+    }
+    this.applyVolumes();
+    return Promise.allSettled(wanted.map((id) => {
+      const loop = this.loops.get(id)!;
+      if (loop.pending) return loop.pending;
+      if (!loop.audio.paused) return Promise.resolve();
+      let cancelled = false;
+      loop.pending = loop.audio.play().then(() => {
+        if (!this.wants(loop)) loop.audio.pause();
+      }).catch((error: unknown) => {
+        cancelled = error instanceof DOMException && error.name === "AbortError";
+        throw error;
+      }).finally(() => {
+        loop.pending = undefined;
+        // A rapid wet → dry → wet switch can cancel an in-flight play.
+        // Resume the final requested state, never retry network/autoplay errors.
+        if (cancelled && this.wants(loop) && loop.audio.paused) void this.playLoops();
+      });
+      return loop.pending;
+    }));
   }
 
   private pauseAll = (): void => {
-    for (const { audio } of this.loops) audio.pause();
+    for (const { audio } of this.loops.values()) audio.pause();
     for (const audio of this.sfx.values()) audio.pause();
   };
 
@@ -137,12 +185,26 @@ class AudioManager {
     if (document.hidden) this.pauseAll();
     else void this.playLoops();
   };
+  private handlePageHide = (): void => {
+    this.pageHidden = true;
+    this.pauseAll();
+  };
+  private handlePageShow = (): void => {
+    this.pageHidden = false;
+    void this.playLoops();
+  };
 
   dispose(): void {
+    this.enabled = false;
     this.pauseAll();
     document.removeEventListener("visibilitychange", this.handleVisibility);
-    window.removeEventListener("pagehide", this.pauseAll);
-    this.loops = [];
+    window.removeEventListener("pagehide", this.handlePageHide);
+    window.removeEventListener("pageshow", this.handlePageShow);
+    for (const audio of [...this.loops.values()].map((l) => l.audio).concat([...this.sfx.values()])) {
+      audio.removeAttribute("src");
+      audio.load();
+    }
+    this.loops.clear();
     this.sfx.clear();
   }
 }

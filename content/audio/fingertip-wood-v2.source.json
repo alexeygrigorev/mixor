@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "fingertip-wood-v2",
+  "kind": "sfx",
+  "isGenerated": true,
+  "sourcePath": "public/assets/audio/sfx/fingertip-wood-v2.mp3",
+  "provider": "ElevenLabs",
+  "endpoint": "https://api.elevenlabs.io/v1/sound-generation",
+  "request": {
+    "text": "One gentle bare fingertip touches unfinished dry wood, sliding a few millimeters across papery grain. Natural close dry foley: tiny muted contact and soft skin friction, rounded onset, quick decay. Starts immediately, usable recording level for quiet mixing. No electronic click, beep, pitched tone, ring, chime, string, music, metallic resonance, thud, buzz, hum or reverb. Not a digital interface sound.",
+    "duration_seconds": 0.65,
+    "prompt_influence": 0.65,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "outputFormat": "mp3_44100_128",
+  "requestedAt": "2026-09-10T11:43:28.097Z",
+  "bytes": 11328,
+  "sha256": "d4876076c26da7226e296dd6d8bb503a7623d999b17c1c6e0af96f8716769ae5",
+  "physicalAudition": false,
+  "userAccepted": false,
+  "rights": {
+    "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+  }
+}

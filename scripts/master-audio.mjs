@@ -1,17 +1,8 @@
 import { spawnSync } from "node:child_process";
 const tracks = [
-  ["music/forest-understory", "loudnorm=I=-32:TP=-9:LRA=5"],
   [
-    "ambience/woodland-air",
-    "loudnorm=I=-26:TP=-9:LRA=6,afade=t=in:d=0.4,afade=t=out:st=29.4:d=0.6",
-  ],
-  [
-    "ambience/birds-canopy",
-    "loudnorm=I=-28:TP=-9:LRA=6,afade=t=in:d=0.4,afade=t=out:st=29.4:d=0.6",
-  ],
-  [
-    "sfx/ui-press-soft",
-    "highpass=f=120,lowpass=f=5500,afade=t=in:d=0.012,afade=t=out:st=0.35:d=0.15",
+    "sfx/fingertip-wood-v2",
+    "highpass=f=180:p=2,lowpass=f=4800:p=2,afade=t=in:d=0.008,afade=t=out:st=0.43:d=0.21",
     -14,
   ],
   [

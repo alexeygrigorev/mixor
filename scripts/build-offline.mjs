@@ -29,15 +29,13 @@ files.push(
 );
 files.push(
   ...[
-    "music/forest-stillness-long",
-    "ambience/dry-canopy-long",
+    "music/forest-acoustic-v2-long",
+    "ambience/dry-leaves-v2-long",
     "ambience/distant-birds-long",
-    "sfx/ui-press-soft-mix",
+    "ambience/canopy-rain-v2-loop",
+    "sfx/fingertip-wood-v2-mix",
     "sfx/uncover-mix",
     "sfx/journal-open",
-    "sfx/lens-open",
-    "sfx/discovery",
-    "sfx/save-local",
   ].map((name) => `/assets/audio/${name}.mp3`),
 );
 const unique = [...new Set(files)];

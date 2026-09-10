@@ -1,15 +1,11 @@
-import {
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Art } from "./art";
 import { Icon, type IconName } from "./icons";
 import { taxa, type TaxonId, type Taxon } from "./data";
 import { stageBrief, type LifeCycle, type LifeStage } from "./life-data";
 import { woodlands, type Woodland } from "./search-data";
 import { scientificNames, taxonomyTree, type TaxonomyNode } from "./taxonomy";
+import { SceneWeather } from "./weather";
 
 export function BackButton({
   back,
@@ -184,11 +180,15 @@ export function SearchScene({
   woodland,
   finds,
   reveal,
+  inspect,
+  change,
   back,
 }: {
   woodland: Woodland;
   finds: string[];
   reveal: (id: string) => void;
+  inspect: (taxon: TaxonId, findId: string) => void;
+  change: (woodlandId: string) => void;
   back: () => void;
 }) {
   const host = useRef<HTMLElement>(null);
@@ -220,6 +220,12 @@ export function SearchScene({
   // The lenses enlarge the source patches; their layout belongs to the viewport,
   // so cropping the forest on rotation cannot hide an interactive circle.
   const inset = diameter / 2 + 20;
+  const woodlandIndex = woodlands.findIndex(
+    (place) => place.id === woodland.id,
+  );
+  const previous =
+    woodlands[(woodlandIndex + woodlands.length - 1) % woodlands.length];
+  const next = woodlands[(woodlandIndex + 1) % woodlands.length];
   return (
     <section
       ref={host}
@@ -237,6 +243,7 @@ export function SearchScene({
           onError={() => setFailed(true)}
         />
       </div>
+      <SceneWeather weather={woodland.weather} />
       {woodland.spots.map((spot) => {
         const found = finds.includes(spot.id);
         const x = 50 + (spot.x - 50) * (portrait ? 1.7 : 2.4);
@@ -249,7 +256,7 @@ export function SearchScene({
             className={`hiding-place ${found ? "is-found" : ""}`}
             aria-label={
               found
-                ? `Найдено: ${scientificNames[spot.taxon].name}`
+                ? `Узнать больше: ${scientificNames[spot.taxon].name}`
                 : `Осмотреть: ${spot.label}`
             }
             aria-pressed={found}
@@ -269,8 +276,10 @@ export function SearchScene({
             onClick={() => {
               if (!found) {
                 reveal(spot.id);
-                setAnnouncement(`Найдено: ${scientificNames[spot.taxon].name}`);
-              }
+                setAnnouncement(
+                  `Найдено: ${scientificNames[spot.taxon].name}. Коснись ещё раз, чтобы узнать больше.`,
+                );
+              } else inspect(spot.taxon, spot.id);
             }}
           >
             <span className="search-lens" aria-hidden="true">
@@ -286,15 +295,42 @@ export function SearchScene({
                 }}
               />
             </span>
-            <span className="search-lens-cue" aria-hidden="true">
-              <Icon name={found ? "check" : "lens"} size={18} />
-            </span>
+            {found ? (
+              <span className="search-found-invitation" aria-hidden="true">
+                Узнать <Icon name="next" size={16} />
+              </span>
+            ) : (
+              <span className="search-lens-cue" aria-hidden="true">
+                <Icon name="lens" size={18} />
+              </span>
+            )}
           </button>
         );
       })}
-      <BackButton back={back} label="Назад на главный экран" />
+      <BackButton back={back} label="Назад к выбору места" />
+      <nav
+        className="search-places"
+        aria-label={`Места поиска. Сейчас: ${woodland.title}`}
+      >
+        <button
+          onClick={() => change(previous.id)}
+          aria-label={`Предыдущее место: ${previous.title}`}
+        >
+          <Icon name="back" size={20} />
+        </button>
+        <span aria-label={`Место ${woodlandIndex + 1} из ${woodlands.length}`}>
+          {woodlandIndex + 1} / {woodlands.length}
+        </span>
+        <button
+          onClick={() => change(next.id)}
+          aria-label={`Следующее место: ${next.title}`}
+        >
+          <Icon name="next" size={20} />
+        </button>
+      </nav>
       <span className="sr-only" id="search-material">
-        Учебная иллюстрация ИИ. Коснись круга, чтобы открыть организм.
+        Учебная иллюстрация ИИ. Первое касание открывает организм, следующее —
+        сведения о нём.
       </span>
       <span className="sr-only" role="status">
         {announcement}
@@ -314,6 +350,7 @@ export function DevelopmentScene({
   stage,
   index,
   back,
+  backLabel,
   select,
   photos,
   details,
@@ -323,6 +360,7 @@ export function DevelopmentScene({
   stage: LifeStage;
   index: number;
   back: () => void;
+  backLabel: string;
   select: (id: string) => void;
   photos: () => void;
   details: () => void;
@@ -346,7 +384,7 @@ export function DevelopmentScene({
       aria-label={`Развитие ${taxon.latinName}`}
     >
       <div className="development-top">
-        <BackButton back={back} label="Назад на главный экран" />
+        <BackButton back={back} label={backLabel} />
         <i className="development-name">{taxon.latinName}</i>
         <button
           className="quiet-photo"

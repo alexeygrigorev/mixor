@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "forest-acoustic-v2",
+  "kind": "music",
+  "isGenerated": true,
+  "sourcePath": "public/assets/audio/music/forest-acoustic-v2.mp3",
+  "provider": "ElevenLabs",
+  "endpoint": "https://api.elevenlabs.io/v1/music",
+  "request": {
+    "prompt": "Three minutes of sparse, gentle acoustic chamber music for quiet woodland exploration. One real unamplified nylon-string guitar, individual softly finger-plucked mid-register notes with short natural decays. A few unhurried notes then several seconds of genuine silence between small irregular phrases. Minimal, understated, warm and intimate, small dry room, very little reverberation. No recurring tune or rhythmic pattern. No synthesizers, pads, electronic instruments, sustained chords, organ, bowed strings, bass drone, humming, buzzing, distortion, tape noise, vinyl noise, percussion, bells, chimes, vocals or nature recordings. Each acoustic note ends completely before the next little phrase. Start and finish with a few seconds of silence. Not continuous ambient or a sustained harmonic bed.",
+    "music_length_ms": 180000,
+    "force_instrumental": true,
+    "model_id": "music_v2"
+  },
+  "outputFormat": "mp3_44100_128",
+  "requestedAt": "2026-09-10T11:41:04.747Z",
+  "bytes": 2880619,
+  "sha256": "3d10cd4bc4a075c146ff8ae04974a7727bed60fa27b45aef3272c7b7bc62fd7c",
+  "physicalAudition": false,
+  "userAccepted": false,
+  "rights": {
+    "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+  }
+}

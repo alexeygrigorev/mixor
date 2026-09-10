@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // Local-only, deterministic mastering of the existing generated raw MP3s.
-// Preview: node scripts/master-focused-audio.mjs [all|music|wind|birds]
+// Preview: node scripts/master-focused-audio.mjs [all|music|wind|rain]
 // Install after ALL selected candidates pass: add --install.
 // Exact graphs, measurements, hashes and previous masters stay in tmp/audio-feedback.
 // No loudnorm, compressor, automatic makeup, adaptive noise tracking or paid APIs.
-import { copyFileSync, constants, existsSync, mkdirSync, mkdtempSync, renameSync, writeFileSync } from "node:fs";
+import { copyFileSync, constants, existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { analyzeAudio, decode, run, sha256 } from "./analyze-audio.mjs";
@@ -13,15 +13,15 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 process.chdir(root);
 const args = process.argv.slice(2);
 const target = args.find((arg) => !arg.startsWith("--")) ?? "all";
-if (!["all", "music", "wind", "birds"].includes(target) || args.some((arg) => arg.startsWith("--") && arg !== "--install"))
-  throw new Error("Usage: master-focused-audio.mjs [all|music|wind|birds] [--install]");
+if (!["all", "music", "wind", "rain"].includes(target) || args.some((arg) => arg.startsWith("--") && arg !== "--install"))
+  throw new Error("Usage: master-focused-audio.mjs [all|music|wind|rain] [--install]");
 const install = args.includes("--install"), rate = 44100;
 mkdirSync("tmp/audio-feedback", { recursive: true });
 const scratch = mkdtempSync("tmp/audio-feedback/master-");
 const report = {
-  schemaVersion: 2, ffmpeg: run("ffmpeg", ["-version"], { encoding: "utf8" }).stdout.split("\n")[0],
+  schemaVersion: 3, ffmpeg: run("ffmpeg", ["-version"], { encoding: "utf8" }).stdout.split("\n")[0],
   scratch, installed: false, physicalAudition: false,
-  limits: ["Spectral and level measurements do not prove subjective comfort or absence of water-like artifacts in generated sources.", "Music is a tonal composition: suppressing its low drone does not remove every sustained musical tone.", "MP3 decoded seams are checked numerically; browser/device gapless playback and acoustic quality still require audition."],
+  limits: ["User rejected the previous drone source; new source timbre and subjective buzz removal remain unaccepted until listening.", "Spectral measurements and digital level bounds are not a physical audition or acoustic loudness guarantee.", "Wind arrangement repeats two generated 30-second sources twice; rain has one 24-second loop from a 30-second source.", "MP3 decoded seams are checked numerically; device gapless playback and the combined scene mix still require listening."],
   sources: {}, commands: [], tracks: [],
 };
 function ffmpeg(args) {
@@ -50,28 +50,6 @@ function fixedGain(input, output, targetRms, peakCeiling) {
   return { input, targetRmsDbfs: targetRms, peakCeilingDbfs: peakCeiling, gainDb, measured };
 }
 
-function quietStart(file, duration = 2) {
-  const pcm = decode(file), count = rate * 2 * duration, hop = rate;
-  let bestPower = Infinity, bestStart = 0;
-  for (let start = 0; start + count <= pcm.length; start += hop) {
-    let power = 0;
-    for (let i = start; i < start + count; i++) power += pcm[i] ** 2;
-    if (power < bestPower) { bestPower = power; bestStart = start / 2; }
-  }
-  return bestStart;
-}
-
-function denoise(input, output, reduction) {
-  // Learn a fixed spectral profile from the quietest two seconds AFTER EQ.
-  // Prepending the sample lets the SAME profile process the entire real clip.
-  // Tracking remains off, and gain smoothing limits musical-noise artifacts.
-  const noiseStart = quietStart(input), prefix = 2 * rate, frames = frameCount(input);
-  const graph = `[0:a]asplit=2[n][s];[n]atrim=start_sample=${noiseStart}:end_sample=${noiseStart + prefix},asetpts=PTS-STARTPTS[n0];[s]asetpts=PTS-STARTPTS[s0];[n0][s0]concat=n=2:v=0:a=1,asendcmd=c='0.0 afftdn sn start;2.0 afftdn sn stop',afftdn=nr=${reduction}:nf=-45:tn=0:tr=0:ad=0.9:gs=12,atrim=start_sample=${prefix}:end_sample=${prefix + frames},asetpts=PTS-STARTPTS[out]`;
-  ffmpeg(["-i", input, "-filter_complex", graph, "-map", "[out]", ...waveArgs, output]);
-  if (frameCount(output) !== frames) throw new Error("Denoising changed sample count");
-  return { noiseProfileStartSeconds: noiseStart / rate, noiseProfileSeconds: 2, reductionDb: reduction, graph };
-}
-
 function circular(input, output, seamSeconds = 6) {
   const frames = frameCount(input), seam = seamSeconds * rate, end = frames - seam;
   if (frames < 3 * seam) throw new Error("Loop is too short");
@@ -84,46 +62,43 @@ function circular(input, output, seamSeconds = 6) {
   return { seamSeconds, inputFrames: frames, outputFrames: frames - seam, graph };
 }
 
-const selected = target === "all" ? ["music", "wind", "birds"] : [target];
+const selected = target === "all" ? ["music", "wind", "rain"] : [target];
 for (const kind of selected) {
-  const name = { music: "music/forest-stillness-long.mp3", wind: "ambience/dry-canopy-long.mp3", birds: "ambience/distant-birds-long.mp3" }[kind];
+  const name = { music: "music/forest-acoustic-v2-long.mp3", wind: "ambience/dry-leaves-v2-long.mp3", rain: "ambience/canopy-rain-v2-loop.mp3" }[kind];
   const final = `public/assets/audio/${name}`, candidate = `${scratch}/${path.basename(name)}`;
   const beforeHash = existsSync(final) ? sha256(final) : null;
   if (beforeHash) copyFileSync(final, `${scratch}/before-${path.basename(name)}`, constants.COPYFILE_EXCL);
   const track = { kind, final, candidate, beforeHash, processing: [] };
   let assembled;
-  if (kind === "music") {
-    const input = source("public/assets/audio/music/forest-stillness.mp3");
-    const eq = "highpass=f=220:p=2,highpass=f=220:p=2,equalizer=f=233.08:t=h:w=14:g=-18,equalizer=f=466.16:t=h:w=20:g=-9,lowpass=f=1100:p=2";
-    const filtered = `${scratch}/music-filtered.wav`;
+  if (kind === "music" || kind === "rain") {
+    const input = source(kind === "music" ? "public/assets/audio/music/forest-acoustic-v2.mp3" : "public/assets/audio/ambience/canopy-rain-v2.mp3");
+    // The rejected sustained music source is replaced, not notched again.
+    // Gentle EQ removes subsonic recording energy and softens high transients.
+    const eq = kind === "music"
+      ? "highpass=f=90:p=2,lowpass=f=5200:p=2"
+      : "highpass=f=350:p=2,highpass=f=350:p=2,lowpass=f=5000:p=2,lowpass=f=5000:p=2";
+    const filtered = `${scratch}/${kind}-filtered.wav`;
     filter(input, filtered, eq);
-    assembled = `${scratch}/music-gain.wav`;
-    track.processing.push({ source: input, eq, level: fixedGain(filtered, assembled, -43, -22) });
+    assembled = `${scratch}/${kind}-gain.wav`;
+    track.processing.push({ source: input, eq, level: fixedGain(filtered, assembled, kind === "music" ? -38 : -43, kind === "music" ? -20 : -22) });
   } else {
-    const count = kind === "wind" ? 4 : 3, files = [];
-    for (let i = 0; i < count; i++) {
-      const input = source(`public/assets/audio/ambience/${kind === "wind" ? "dry-wind" : "distant-birds"}-${i + 1}.mp3`);
+    const files = [];
+    for (let i = 0; i < 2; i++) {
+      const input = source(`public/assets/audio/ambience/dry-leaves-v2-${i === 0 ? "a" : "b"}.mp3`);
       const stem = `${scratch}/${kind}-${i + 1}`;
-      // These stationary frequencies recur across independent raw sources.
-      // Narrow cuts spare adjacent rustle/bird energy; HP removes low hum.
-      const notches = (kind === "wind" ? [200, 400, 600, 1000, 1400, 1800, 1950, 2400, 2450, 3500, 4350, 4400, 5800] : [1400, 1800, 1950, 2450, 3500, 4350, 4400, 5800])
-        .map((hz) => `equalizer=f=${hz}:t=h:w=12:g=-18`).join(",");
-      const eq = kind === "wind"
-        ? `volume=40dB:precision=double,highpass=f=320:p=2,highpass=f=320:p=2,${notches},lowpass=f=4500:p=2,lowpass=f=4500:p=2`
-        : `volume=30dB:precision=double,highpass=f=1700:p=2,highpass=f=1700:p=2,${notches},lowpass=f=7200:p=2`;
+      const eq = "highpass=f=350:p=2,highpass=f=350:p=2,lowpass=f=6000:p=2,lowpass=f=6000:p=2";
       filter(input, `${stem}-eq.wav`, `atrim=end_sample=${30 * rate},${eq}`);
-      const noise = denoise(`${stem}-eq.wav`, `${stem}-clean.wav`, kind === "wind" ? 10 : 12);
-      const level = fixedGain(`${stem}-clean.wav`, `${stem}-gain.wav`, kind === "wind" ? -45 : -43, kind === "wind" ? -28 : -20);
+      const level = fixedGain(`${stem}-eq.wav`, `${stem}-gain.wav`, -44, -25);
       files.push(`${stem}-gain.wav`);
-      track.processing.push({ source: input, eq, noise, level });
+      track.processing.push({ source: input, eq, level });
     }
     assembled = `${scratch}/${kind}-assembled.wav`;
-    const lengths = kind === "wind" ? [38, 45, 41, 49] : [59, 71, 67];
-    const delays = kind === "wind" ? [1, 4, 2, 6] : [5, 14, 9];
-    const graph = files.map((_, i) => `[${i}:a]afade=t=in:d=${kind === "wind" ? 4 : 0.8},afade=t=out:st=${kind === "wind" ? 24 : 28}:d=${kind === "wind" ? 6 : 2},adelay=${delays[i] * rate}S:all=1,apad=whole_len=${lengths[i] * rate},atrim=end_sample=${lengths[i] * rate},asetpts=PTS-STARTPTS[s${i}]`).join(";")
-      + `;${files.map((_, i) => `[s${i}]`).join("")}concat=n=${count}:v=0:a=1[out]`;
-    ffmpeg([...files.flatMap((file) => ["-i", file]), "-filter_complex", graph, "-map", "[out]", ...waveArgs, assembled]);
-    track.arrangement = { lengthsSeconds: lengths, delaysSeconds: delays, graph };
+    const arranged = [...files, ...files];
+    const lengths = [38, 45, 41, 49], delays = [1, 4, 2, 6];
+    const graph = arranged.map((_, i) => `[${i}:a]afade=t=in:d=4,afade=t=out:st=24:d=6,adelay=${delays[i] * rate}S:all=1,apad=whole_len=${lengths[i] * rate},atrim=end_sample=${lengths[i] * rate},asetpts=PTS-STARTPTS[s${i}]`).join(";")
+      + `;${arranged.map((_, i) => `[s${i}]`).join("")}concat=n=4:v=0:a=1[out]`;
+    ffmpeg([...arranged.flatMap((file) => ["-i", file]), "-filter_complex", graph, "-map", "[out]", ...waveArgs, assembled]);
+    track.arrangement = { uniqueSourceSeconds: 60, repetitionsPerSource: 2, lengthsSeconds: lengths, delaysSeconds: delays, graph };
   }
   const loop = `${scratch}/${kind}-loop.wav`;
   track.loop = circular(assembled, loop);
@@ -131,7 +106,7 @@ for (const kind of selected) {
   track.measurements = analyzeAudio(candidate);
   const m = track.measurements;
   if (Math.abs(m.decodedSeconds * rate - track.loop.outputFrames) > 1) throw new Error(`${kind}: encoded duration differs from PCM loop`);
-  if (m.decodedSeconds <= (kind === "music" ? 120 : 150)) throw new Error(`${kind}: duration is too short`);
+  if (m.decodedSeconds <= (kind === "music" ? 120 : kind === "wind" ? 150 : 20)) throw new Error(`${kind}: duration is too short`);
   if (m.truePeakDbfs === null || m.truePeakDbfs > -18) throw new Error(`${kind}: unexpected peak`);
   if (m.rmsDbfs < -58 || m.level.p90Dbfs < -56) throw new Error(`${kind}: useful content is too quiet`);
   if (m.seam.boundaryJumpDbfs > -48) throw new Error(`${kind}: discontinuity at decoded loop boundary`);
@@ -155,4 +130,16 @@ if (install) {
 }
 const reportFile = `${scratch}/report.json`;
 writeFileSync(reportFile, `${JSON.stringify(report, null, 2)}\n`);
+if (install && target === "all") {
+  // Keep a compact durable report; full spectral bins/commands remain in scratch.
+  const compact = (m) => ({ ...m, spectrum: m.spectrum ? { ...m.spectrum, meanPowerDbfs: undefined } : undefined });
+  const retained = ["ambience/distant-birds-long", "sfx/fingertip-wood-v2-mix", "sfx/uncover-mix", "sfx/journal-open"].map((name) => compact(analyzeAudio(`public/assets/audio/${name}.mp3`, { spectral: !name.startsWith("sfx/") })));
+  const provenance = ["forest-acoustic-v2", "dry-leaves-v2-a", "dry-leaves-v2-b", "fingertip-wood-v2", "canopy-rain-v2"].map((id) => JSON.parse(readFileSync(`content/audio/${id}.source.json`, "utf8")));
+  writeFileSync("content/audio-mastering-report.json", `${JSON.stringify({
+    schemaVersion: 3, ffmpeg: report.ffmpeg, physicalAudition: false, userAccepted: false, limits: report.limits,
+    reproduce: "npm run audio:master", sources: report.sources, provenance,
+    tracks: report.tracks.map((track) => ({ kind: track.kind, path: track.final, processing: track.processing, loop: track.loop, measurements: compact(track.measurements) })),
+    retained, sceneWeather: { forest: "clear", stump: "overcast", leaves: "overcast", roots: "rain", bark: "rain" },
+  }, null, 2)}\n`);
+}
 console.log(`${install ? "Installed" : "Preview only"}; report: ${reportFile}`);

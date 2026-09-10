@@ -26,6 +26,15 @@ try {
   assert(keys.some((path) => /index-.*\.js$/.test(path)));
   assert(keys.includes("/assets/art/organisms-v2.webp"));
   assert(keys.includes("/assets/audio/ambience/distant-birds-long.mp3"));
+  const freshAudio = [
+    "music/forest-acoustic-v2-long",
+    "ambience/dry-leaves-v2-long",
+    "ambience/canopy-rain-v2-loop",
+    "sfx/fingertip-wood-v2-mix",
+  ];
+  for (const file of freshAudio) assert(keys.includes(`/assets/audio/${file}.mp3`));
+  assert(!keys.includes("/assets/audio/music/forest-stillness-long.mp3"));
+  assert(!keys.includes("/assets/audio/sfx/ui-press-soft-mix.mp3"));
   assert(keys.includes("/assets/audio/sfx/uncover-mix.mp3"));
   assert(keys.includes("/assets/art/search-bark.webp"));
   assert(keys.includes("/assets/art/growth-early.webp"));
@@ -42,6 +51,17 @@ try {
   });
   assert(uncoverOffline.ok && uncoverOffline.bytes > 1000);
   assert.match(uncoverOffline.type, /audio/);
+  for (const file of freshAudio) {
+    const result = await page.evaluate(async (name) => {
+      const response = await fetch(`/assets/audio/${name}.mp3`);
+      const context = new AudioContext();
+      try {
+        const buffer = await context.decodeAudioData(await response.arrayBuffer());
+        return { ok: response.ok, seconds: buffer.duration };
+      } finally { await context.close(); }
+    }, file);
+    assert(result.ok && result.seconds > 0.2, `Offline audio decode: ${file}`);
+  }
   await page.getByRole("button", { name: "Развитие", exact: false }).click();
   await page
     .getByRole("button", {
@@ -64,6 +84,7 @@ try {
     return image?.complete && image.naturalWidth > 0;
   });
   await page.keyboard.press("Escape");
+  await page.getByRole("button", { name: "Назад к выбору вида" }).click();
   await page.getByRole("button", { name: "Назад на главный экран" }).click();
   await page
     .getByRole("button", { name: "Найти в лесу", exact: false })
@@ -76,6 +97,12 @@ try {
       .first()
       .getAttribute("aria-pressed")) === "true",
   );
+  await page.locator(".hiding-place").first().click();
+  await page.locator(".portrait-scene").waitFor();
+  await page.getByRole("button", { name: "Назад: В тени берёзы", exact: true }).click();
+  assert.equal(await page.locator(".hiding-place.is-found").count(), 1);
+  await page.getByRole("button", { name: /^Следующее место:/ }).click();
+  assert.equal(await page.locator(".scene-weather").getAttribute("data-weather"), "clear");
   const missing = await page.evaluate(async () => {
     try {
       const response = await fetch("/assets/nonexistent.webp");

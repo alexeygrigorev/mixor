@@ -63,6 +63,8 @@ test("focused keyboard, photo focus return, rotation, large text and reduced mot
   });
   await next.scrollIntoViewIfNeeded();
   await expect(next).toBeVisible();
+  await page.getByRole("button", { name: "Назад к выбору вида" }).click();
+  await expect(page.locator(".species-chooser")).toBeVisible();
   await page.getByRole("button", { name: "Назад на главный экран" }).click();
   await page
     .getByRole("button", { name: "Найти в лесу", exact: false })

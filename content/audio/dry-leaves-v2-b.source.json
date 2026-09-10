@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "dry-leaves-v2-b",
+  "kind": "ambience",
+  "isGenerated": true,
+  "sourcePath": "public/assets/audio/ambience/dry-leaves-v2-b.mp3",
+  "provider": "ElevenLabs",
+  "endpoint": "https://api.elevenlabs.io/v1/sound-generation",
+  "request": {
+    "text": "Natural dry oak woodland foley. A little air moves loose dry oak leaves and papery bark edges: soft short irregular shuffles, fine leaf texture, long quiet pauses. Clean usable recording level for quiet mixing. No insects, whine, electrical hum, buzz, drone, constant wind blast, recording hiss, music, birds, water, rain, drips, voices or footsteps. Dry airy rustles only, no repeating rhythm.",
+    "duration_seconds": 30,
+    "prompt_influence": 0.65,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "outputFormat": "mp3_44100_128",
+  "requestedAt": "2026-09-10T11:43:26.233Z",
+  "bytes": 481115,
+  "sha256": "a15c6a1506130dc35280e4ac34ee7f68b4f2001ee9f64cb4e3a18691304f2c36",
+  "physicalAudition": false,
+  "userAccepted": false,
+  "rights": {
+    "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+  }
+}

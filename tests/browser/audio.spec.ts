@@ -130,6 +130,7 @@ test("taps and forest uncovering decode, have separate cues, and obey effects an
     [],
   );
   await page.getByRole("button", { name: /Назад/ }).click();
+  await changeRoute(page, "#base");
   await enable(page);
   await page.getByRole("button", { name: "Настройки", exact: true }).click();
   await expect
@@ -137,7 +138,7 @@ test("taps and forest uncovering decode, have separate cues, and obey effects an
       page.evaluate(() =>
         (window as any).__audioTest.media.some(
           (a: HTMLMediaElement) =>
-            a.src.includes("ui-press-soft-mix") &&
+            a.src.includes("fingertip-wood-v2-mix") &&
             a.readyState >= 2 &&
             a.currentTime > 0 &&
             a.volume > 0.1,
@@ -178,6 +179,7 @@ test("taps and forest uncovering decode, have separate cues, and obey effects an
     ),
   ).toBe(count);
   await page.getByRole("button", { name: /Назад/ }).click();
+  await changeRoute(page, "#base");
   await page.getByRole("button", { name: "Настройки", exact: true }).click();
   await page.getByRole("slider", { name: "Касания и инструменты" }).fill("0");
   await page.getByRole("button", { name: "Закрыть", exact: true }).click();
@@ -191,6 +193,7 @@ test("taps and forest uncovering decode, have separate cues, and obey effects an
   ).toBe(plays);
   expect((await loops(page)).every((a: any) => !a.paused)).toBe(true);
   await page.getByRole("button", { name: /Назад/ }).click();
+  await changeRoute(page, "#base");
   await page
     .getByRole("button", { name: "Выключить звук", exact: true })
     .click();
@@ -245,7 +248,7 @@ test("hidden document pauses and resumes the same loops, without overriding mute
   expect((await loops(page)).every((a: any) => a.paused)).toBe(true);
 });
 
-test("mastered tap and uncover files contain audible-level signal, not just a successful play call", async ({
+test("new physical tap and uncover files decode within digital signal bounds", async ({
   page,
 }) => {
   await instrument(page);
@@ -254,7 +257,7 @@ test("mastered tap and uncover files contain audible-level signal, not just a su
     try {
       const measured = [];
       for (const [file, gain] of [
-        ["ui-press-soft-mix", 0.18 * 0.65],
+        ["fingertip-wood-v2-mix", 0.18 * 0.65],
         ["uncover-mix", 0.18 * 0.9],
       ] as const) {
         const response = await fetch(`/assets/audio/sfx/${file}.mp3`);
@@ -296,4 +299,126 @@ test("mastered tap and uncover files contain audible-level signal, not just a su
   }
   // These digital-signal bounds catch the previous near-silent files;
   // they do not certify perceived loudness through physical speakers.
+});
+
+async function setScene(page: Page, scene: string | null) {
+  await page.evaluate(async (id) => {
+    // Use the already loaded URL (including Vite's HMR timestamp) so the
+    // test observes the app singleton instead of importing a second manager.
+    const modulePath = performance.getEntriesByType("resource").map((entry) => entry.name).find((url) => new URL(url).pathname === "/src/audio.ts");
+    if (!modulePath) throw new Error("Application audio module was not loaded");
+    const { audioManager } = await import(modulePath);
+    audioManager.setScene(id);
+  }, scene);
+}
+
+test("scene audio uses rain only for roots and bark, without restarting shared stems", async ({ page }) => {
+  await instrument(page);
+  await enable(page);
+  const before = await loops(page);
+  const loopPlayCount = () => page.evaluate(() => (window as any).__audioTest.plays.filter((src: string) => /forest-acoustic-v2-long|dry-leaves-v2-long|distant-birds-long/.test(src)).length);
+  const plays = await loopPlayCount();
+  for (const id of ["forest", "stump", "leaves"]) {
+    await setScene(page, id);
+    await setScene(page, id);
+    expect((await loops(page)).filter((a: any) => !a.paused)).toHaveLength(3);
+    expect((await loops(page)).some((a: any) => a.src.includes("rain"))).toBe(false);
+  }
+  await setScene(page, "roots");
+  await expect.poll(async () => (await loops(page)).filter((a: any) => a.src.includes("canopy-rain-v2") && !a.paused && a.time > 0).length).toBe(1);
+  const rainPlays = await page.evaluate(() => (window as any).__audioTest.plays.filter((src: string) => src.includes("canopy-rain-v2")).length);
+  await setScene(page, "bark");
+  await setScene(page, "bark");
+  expect(await page.evaluate(() => (window as any).__audioTest.plays.filter((src: string) => src.includes("canopy-rain-v2")).length)).toBe(rainPlays);
+  expect(await loopPlayCount()).toBe(plays);
+  await expect.poll(async () => (await loops(page)).filter((a: any) => !a.src.includes("rain")).every((a: any, i: number) => !a.paused && a.time > before[i].time)).toBe(true);
+  for (const id of ["forest", "stump", "leaves", null, "unknown-scene"]) {
+    await setScene(page, "roots");
+    await setScene(page, id);
+    expect((await loops(page)).filter((a: any) => a.src.includes("rain")).every((a: any) => a.paused)).toBe(true);
+  }
+  expect((await loops(page)).length).toBe(4);
+  expect(await page.evaluate(() => (window as any).__audioTest.media.filter((a: HTMLMediaElement) => a.loop).some((a: HTMLMediaElement) => /forest-stillness|dry-canopy-long/.test(a.src)))).toBe(false);
+});
+
+test("rain respects consent, mute, hidden state and zero nature level", async ({ page }) => {
+  await instrument(page);
+  await setScene(page, "roots");
+  expect(await page.evaluate(() => (window as any).__audioTest.plays)).toEqual([]);
+  await setScene(page, null);
+  await enable(page);
+  await page.getByRole("button", { name: "Выключить звук", exact: true }).click();
+  const plays = await page.evaluate(() => (window as any).__audioTest.plays.length);
+  await setScene(page, "roots");
+  expect(await page.evaluate(() => (window as any).__audioTest.plays.length)).toBe(plays);
+  await page.getByRole("button", { name: "Включить звук", exact: true }).click();
+  await expect.poll(async () => (await loops(page)).filter((a: any) => !a.paused && a.src.includes("rain")).length).toBe(1);
+  await page.evaluate(() => {
+    Object.defineProperty(document, "hidden", { configurable: true, value: true });
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+  await setScene(page, "bark");
+  expect((await loops(page)).every((a: any) => a.paused)).toBe(true);
+  await page.evaluate(() => {
+    Object.defineProperty(document, "hidden", { configurable: true, value: false });
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+  await expect.poll(async () => (await loops(page)).filter((a: any) => !a.paused).length).toBe(4);
+  await page.evaluate(async () => {
+    const modulePath = performance.getEntriesByType("resource").map((entry) => entry.name).find((url) => new URL(url).pathname === "/src/audio.ts");
+    if (!modulePath) throw new Error("Application audio module was not loaded");
+    const { audioManager } = await import(modulePath);
+    audioManager.setLevels({ music: 12, nature: 0, effects: 18 });
+  });
+  const remaining = (await loops(page)).filter((a: any) => !a.paused);
+  expect(remaining).toHaveLength(1);
+  expect(remaining[0].src).toContain("forest-acoustic-v2-long");
+});
+
+test("visible scene weather and discovery return context drive the actual rain layer", async ({ page }) => {
+  await instrument(page);
+  await enable(page);
+  for (const [id, weather] of [["forest", "clear"], ["stump", "overcast"], ["leaves", "overcast"], ["roots", "rain"], ["bark", "rain"]]) {
+    await changeRoute(page, `#world/physarum/${id}`);
+    await expect(page.locator(".search-scene .scene-weather")).toHaveAttribute("data-weather", weather);
+    await expect.poll(async () => (await loops(page)).some((a: any) => a.src.includes("canopy-rain-v2") && !a.paused && a.time > 0)).toBe(weather === "rain");
+  }
+  const spot = page.locator('.hiding-place[aria-pressed="false"]').first();
+  await spot.click();
+  const before = await loops(page);
+  await page.locator('.hiding-place[aria-pressed="true"]').first().click();
+  await expect(page.locator(".search-scene")).toHaveCount(0);
+  await expect.poll(async () => (await loops(page)).every((a: any, i: number) => !a.paused && a.src === before[i].src && a.time > before[i].time)).toBe(true);
+  await page.getByRole("button", { name: /Назад/ }).first().click();
+  await expect(page.locator(".search-scene .scene-weather")).toHaveAttribute("data-weather", "rain");
+  await page.getByRole("button", { name: /Назад/ }).first().click();
+  await expect(page.locator(".woodland-chooser")).toBeVisible();
+  await expect.poll(async () => (await loops(page)).filter((a: any) => a.src.includes("rain")).every((a: any) => a.paused)).toBe(true);
+});
+
+test("specific lens and save foley suppress the same event's generic bubbling tap", async ({ page }) => {
+  await instrument(page);
+  await enable(page);
+  await expect.poll(() => page.evaluate(() => (window as any).__audioTest.media.filter((a: HTMLMediaElement) => !a.loop).every((a: HTMLMediaElement) => a.paused || a.ended))).toBe(true);
+  for (const id of ["lens-open", "save-local"]) {
+    const result = await page.evaluate(async (cue) => {
+      const modulePath = performance.getEntriesByType("resource").map((entry) => entry.name).find((url) => new URL(url).pathname === "/src/audio.ts");
+      if (!modulePath) throw new Error("Application audio module was not loaded");
+      const { audioManager } = await import(modulePath);
+      const state = (window as any).__audioTest;
+      const before = state.plays.length;
+      audioManager.playSfx(cue);
+      audioManager.playSfx("ui-press");
+      return { plays: state.plays.slice(before) };
+    }, id);
+    expect(result.plays).toHaveLength(1);
+    expect(result.plays[0]).toContain("fingertip-wood-v2-mix");
+    await expect.poll(() => page.evaluate(() => {
+      const clips = (window as any).__audioTest.media.filter((a: HTMLMediaElement) => !a.loop && a.src.includes("fingertip-wood-v2-mix"));
+      const latest = clips.at(-1);
+      return Boolean(latest && latest.readyState >= 2 && latest.currentTime > 0);
+    })).toBe(true);
+    expect(await page.evaluate(() => (window as any).__audioTest.media.filter((a: HTMLMediaElement) => !a.loop && !a.paused && !a.ended).length)).toBe(1);
+    await expect.poll(() => page.evaluate(() => (window as any).__audioTest.media.filter((a: HTMLMediaElement) => !a.loop).every((a: HTMLMediaElement) => a.paused || a.ended))).toBe(true);
+  }
 });

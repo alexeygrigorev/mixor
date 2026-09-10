@@ -251,6 +251,31 @@
   top: max(16px, env(safe-area-inset-top));
   left: max(16px, env(safe-area-inset-left));
 }
+.search-places {
+  position: absolute;
+  top: max(16px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  display: flex;
+  align-items: center;
+  border: 1px solid #e0dcc342;
+  border-radius: 26px;
+  background: #10271feb;
+  color: #f4eedb;
+  z-index: 5;
+}
+.search-places button {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  min-height: 48px;
+  border-radius: 50%;
+  padding: 8px;
+}
+.search-places > span {
+  font-size: 13px;
+  white-space: nowrap;
+  padding: 0 3px;
+}
 .hiding-place {
   position: absolute;
   transform: translate(-50%, -50%);
@@ -330,9 +355,22 @@
   box-shadow: 0 2px 8px #081b1d80;
   pointer-events: none;
 }
-.is-found .search-lens-cue {
-  color: #203425;
-  background: #e7c88a;
+.search-found-invitation {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 8px;
+  border-radius: 18px;
+  border: 1px solid #ddc58f;
+  color: #fff0cb;
+  background: #162c21f5;
+  font-size: 14px;
+  line-height: 1.3;
+  pointer-events: none;
 }
 .search-error {
   position: absolute;
@@ -357,21 +395,23 @@
   height: 100%;
   min-height: 0;
   display: grid;
-  grid-template-rows: auto minmax(150px, 1fr) auto auto;
+  grid-template-rows: max-content minmax(150px, 1fr) max-content max-content;
   padding: max(12px, env(safe-area-inset-top))
     max(20px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom))
     max(20px, env(safe-area-inset-left));
   overflow-y: auto;
 }
 .development-top {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 16px;
   min-height: 48px;
   padding-bottom: 6px;
 }
 .development-name {
-  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
   text-align: center;
   font:
     italic 20px/1.35 "Literata Variable",
@@ -569,6 +609,30 @@
 }
 .photo-peek-content .photo-credit {
   line-height: 1.5;
+}
+.photo-credit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 12px;
+}
+.photo-credit a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 8px 10px;
+  font-size: 14px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.archived-art-sources > summary {
+  display: list-item;
+  min-height: 48px;
+  padding: 12px 0;
+  cursor: pointer;
 }
 
 .classification-scene {
@@ -811,7 +875,7 @@
   .development-focus {
     padding-left: 12px;
     padding-right: 12px;
-    grid-template-rows: auto minmax(220px, 1fr) auto auto;
+    grid-template-rows: max-content minmax(220px, 1fr) max-content max-content;
   }
   .development-top {
     gap: 4px;
@@ -983,7 +1047,7 @@
   }
   .development-focus {
     grid-template-columns: 1.15fr 1fr;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: max-content minmax(min-content, 1fr) max-content;
     column-gap: 18px;
   }
   .development-top {
@@ -1070,6 +1134,7 @@
 .step-button {
   min-width: 48px;
   width: 100%;
+  flex-wrap: wrap;
 }
 .stage-position {
   white-space: nowrap;

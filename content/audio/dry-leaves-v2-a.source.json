@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "dry-leaves-v2-a",
+  "kind": "ambience",
+  "isGenerated": true,
+  "sourcePath": "public/assets/audio/ambience/dry-leaves-v2-a.mp3",
+  "provider": "ElevenLabs",
+  "endpoint": "https://api.elevenlabs.io/v1/sound-generation",
+  "request": {
+    "text": "Natural woodland foley: a light breeze briefly moves dry beech leaves. Soft irregular papery rustles with long quiet pauses, delicate leaf detail and rounded sound. Clean usable recording level for later quiet mixing. No constant wind roar, microphone rumble, hiss bed, insects, electrical buzz, hum, tones, music, birds, water, rain, drips, people or footsteps. Dry leaves moving in air only.",
+    "duration_seconds": 30,
+    "prompt_influence": 0.65,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": false
+  },
+  "outputFormat": "mp3_44100_128",
+  "requestedAt": "2026-09-10T11:43:20.805Z",
+  "bytes": 481115,
+  "sha256": "0af10522108ded155f20346470e7a51566d2f31fab62f62fd645be506defeca1",
+  "physicalAudition": false,
+  "userAccepted": false,
+  "rights": {
+    "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+  }
+}

@@ -1,58 +1,2272 @@
 {
-  "schemaVersion": 1,
-  "createdAt": "2026-09-10",
+  "schemaVersion": 3,
   "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers",
   "physicalAudition": false,
+  "userAccepted": false,
   "limits": [
-    "Spectral and level measurements do not prove subjective comfort or absence of water-like artifacts in generated sources.",
-    "Music is a tonal composition: suppressing its low drone does not remove every sustained musical tone.",
-    "MP3 decoded seams are checked numerically; browser/device gapless playback and acoustic quality still require audition."
+    "User rejected the previous drone source; new source timbre and subjective buzz removal remain unaccepted until listening.",
+    "Spectral measurements and digital level bounds are not a physical audition or acoustic loudness guarantee.",
+    "Wind arrangement repeats two generated 30-second sources twice; rain has one 24-second loop from a 30-second source.",
+    "MP3 decoded seams are checked numerically; device gapless playback and the combined scene mix still require listening."
   ],
+  "reproduce": "npm run audio:master",
   "sources": {
-    "public/assets/audio/music/forest-stillness.mp3": "c341f3fa90a585514688682058f4e8b891a0576230b2556a36072e4e2d1167f7",
-    "public/assets/audio/ambience/dry-wind-1.mp3": "2b31b1f173caf9fb03cfac659de39586e2a20a0386cd4ce18baab5f6030b9624",
-    "public/assets/audio/ambience/dry-wind-2.mp3": "d0773184df389367004c646dd556ae610517beb74d988efa61ce97b991cdc307",
-    "public/assets/audio/ambience/dry-wind-3.mp3": "b7dc2b78ad5f05efb7f1fa15f4274e9d4fec1730cc14f23c24a9063751d02ad5",
-    "public/assets/audio/ambience/dry-wind-4.mp3": "4a9390ea7cc7bc2052c5ca9ec24204ae17f3f22a976d1f6cee19d3f34d55c900",
-    "public/assets/audio/ambience/distant-birds-1.mp3": "05c165721a29cee232e6bb17401fe8f5e379200a49eaeae2d80f4b971b9986fb",
-    "public/assets/audio/ambience/distant-birds-2.mp3": "4986da7d1abafc7bc9fea718b11c747bda838ef082a67b075d6c5509f2ec1d65",
-    "public/assets/audio/ambience/distant-birds-3.mp3": "c3da88cea7bd44d350a56e6fbddfe9d5442dc59b60821b177801df305a988e6b"
+    "public/assets/audio/music/forest-acoustic-v2.mp3": "3d10cd4bc4a075c146ff8ae04974a7727bed60fa27b45aef3272c7b7bc62fd7c",
+    "public/assets/audio/ambience/dry-leaves-v2-a.mp3": "0af10522108ded155f20346470e7a51566d2f31fab62f62fd645be506defeca1",
+    "public/assets/audio/ambience/dry-leaves-v2-b.mp3": "a15c6a1506130dc35280e4ac34ee7f68b4f2001ee9f64cb4e3a18691304f2c36",
+    "public/assets/audio/ambience/canopy-rain-v2.mp3": "11cda8409d72739a0b984b2b3377966e6988bea86b32e7e1e54b07ce2e843e8c"
   },
+  "provenance": [
+    {
+      "schemaVersion": 1,
+      "id": "forest-acoustic-v2",
+      "kind": "music",
+      "isGenerated": true,
+      "sourcePath": "public/assets/audio/music/forest-acoustic-v2.mp3",
+      "provider": "ElevenLabs",
+      "endpoint": "https://api.elevenlabs.io/v1/music",
+      "request": {
+        "prompt": "Three minutes of sparse, gentle acoustic chamber music for quiet woodland exploration. One real unamplified nylon-string guitar, individual softly finger-plucked mid-register notes with short natural decays. A few unhurried notes then several seconds of genuine silence between small irregular phrases. Minimal, understated, warm and intimate, small dry room, very little reverberation. No recurring tune or rhythmic pattern. No synthesizers, pads, electronic instruments, sustained chords, organ, bowed strings, bass drone, humming, buzzing, distortion, tape noise, vinyl noise, percussion, bells, chimes, vocals or nature recordings. Each acoustic note ends completely before the next little phrase. Start and finish with a few seconds of silence. Not continuous ambient or a sustained harmonic bed.",
+        "music_length_ms": 180000,
+        "force_instrumental": true,
+        "model_id": "music_v2"
+      },
+      "outputFormat": "mp3_44100_128",
+      "requestedAt": "2026-09-10T11:41:04.747Z",
+      "bytes": 2880619,
+      "sha256": "3d10cd4bc4a075c146ff8ae04974a7727bed60fa27b45aef3272c7b7bc62fd7c",
+      "physicalAudition": false,
+      "userAccepted": false,
+      "rights": {
+        "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "dry-leaves-v2-a",
+      "kind": "ambience",
+      "isGenerated": true,
+      "sourcePath": "public/assets/audio/ambience/dry-leaves-v2-a.mp3",
+      "provider": "ElevenLabs",
+      "endpoint": "https://api.elevenlabs.io/v1/sound-generation",
+      "request": {
+        "text": "Natural woodland foley: a light breeze briefly moves dry beech leaves. Soft irregular papery rustles with long quiet pauses, delicate leaf detail and rounded sound. Clean usable recording level for later quiet mixing. No constant wind roar, microphone rumble, hiss bed, insects, electrical buzz, hum, tones, music, birds, water, rain, drips, people or footsteps. Dry leaves moving in air only.",
+        "duration_seconds": 30,
+        "prompt_influence": 0.65,
+        "model_id": "eleven_text_to_sound_v2",
+        "loop": false
+      },
+      "outputFormat": "mp3_44100_128",
+      "requestedAt": "2026-09-10T11:43:20.805Z",
+      "bytes": 481115,
+      "sha256": "0af10522108ded155f20346470e7a51566d2f31fab62f62fd645be506defeca1",
+      "physicalAudition": false,
+      "userAccepted": false,
+      "rights": {
+        "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "dry-leaves-v2-b",
+      "kind": "ambience",
+      "isGenerated": true,
+      "sourcePath": "public/assets/audio/ambience/dry-leaves-v2-b.mp3",
+      "provider": "ElevenLabs",
+      "endpoint": "https://api.elevenlabs.io/v1/sound-generation",
+      "request": {
+        "text": "Natural dry oak woodland foley. A little air moves loose dry oak leaves and papery bark edges: soft short irregular shuffles, fine leaf texture, long quiet pauses. Clean usable recording level for quiet mixing. No insects, whine, electrical hum, buzz, drone, constant wind blast, recording hiss, music, birds, water, rain, drips, voices or footsteps. Dry airy rustles only, no repeating rhythm.",
+        "duration_seconds": 30,
+        "prompt_influence": 0.65,
+        "model_id": "eleven_text_to_sound_v2",
+        "loop": false
+      },
+      "outputFormat": "mp3_44100_128",
+      "requestedAt": "2026-09-10T11:43:26.233Z",
+      "bytes": 481115,
+      "sha256": "a15c6a1506130dc35280e4ac34ee7f68b4f2001ee9f64cb4e3a18691304f2c36",
+      "physicalAudition": false,
+      "userAccepted": false,
+      "rights": {
+        "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fingertip-wood-v2",
+      "kind": "sfx",
+      "isGenerated": true,
+      "sourcePath": "public/assets/audio/sfx/fingertip-wood-v2.mp3",
+      "provider": "ElevenLabs",
+      "endpoint": "https://api.elevenlabs.io/v1/sound-generation",
+      "request": {
+        "text": "One gentle bare fingertip touches unfinished dry wood, sliding a few millimeters across papery grain. Natural close dry foley: tiny muted contact and soft skin friction, rounded onset, quick decay. Starts immediately, usable recording level for quiet mixing. No electronic click, beep, pitched tone, ring, chime, string, music, metallic resonance, thud, buzz, hum or reverb. Not a digital interface sound.",
+        "duration_seconds": 0.65,
+        "prompt_influence": 0.65,
+        "model_id": "eleven_text_to_sound_v2",
+        "loop": false
+      },
+      "outputFormat": "mp3_44100_128",
+      "requestedAt": "2026-09-10T11:43:28.097Z",
+      "bytes": 11328,
+      "sha256": "d4876076c26da7226e296dd6d8bb503a7623d999b17c1c6e0af96f8716769ae5",
+      "physicalAudition": false,
+      "userAccepted": false,
+      "rights": {
+        "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "canopy-rain-v2",
+      "kind": "ambience",
+      "isGenerated": true,
+      "sourcePath": "public/assets/audio/ambience/canopy-rain-v2.mp3",
+      "provider": "ElevenLabs",
+      "endpoint": "https://api.elevenlabs.io/v1/sound-generation",
+      "request": {
+        "text": "Gentle rain on a leafy woodland canopy. Soft scattered droplets touch broad leaves and damp leaf litter, fine irregular patter and quiet diffuse air. Light rain, clean usable recording level for quiet mixing. No thunder, stream, river, pouring water, bubbling, large splashes, gutters, roof drumming, insects, tonal hiss, electrical hum, buzz, music, drones, birds or voices. Soft leaf rain, seamless loop.",
+        "duration_seconds": 30,
+        "prompt_influence": 0.65,
+        "model_id": "eleven_text_to_sound_v2",
+        "loop": true
+      },
+      "outputFormat": "mp3_44100_128",
+      "requestedAt": "2026-09-10T11:43:36.037Z",
+      "bytes": 481115,
+      "sha256": "11cda8409d72739a0b984b2b3377966e6988bea86b32e7e1e54b07ce2e843e8c",
+      "physicalAudition": false,
+      "userAccepted": false,
+      "rights": {
+        "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+      }
+    }
+  ],
   "tracks": [
     {
       "kind": "music",
-      "path": "public/assets/audio/music/forest-stillness-long.mp3",
-      "sha256": "ba557a44f732574328e9dc7e1c9f3945671a87848545e8adc2be0a80166d3aa9",
-      "decodedSeconds": 174.03591836734694,
-      "rmsDbfs": -43.31,
-      "truePeakDbfs": -27.7,
-      "boundaryJumpDbfs": -80.447,
-      "seamSeconds": 6
+      "path": "public/assets/audio/music/forest-acoustic-v2-long.mp3",
+      "processing": [
+        {
+          "source": "public/assets/audio/music/forest-acoustic-v2.mp3",
+          "eq": "highpass=f=90:p=2,lowpass=f=5200:p=2",
+          "level": {
+            "input": "tmp/audio-feedback/master-OdueLa/music-filtered.wav",
+            "targetRmsDbfs": -38,
+            "peakCeilingDbfs": -20,
+            "gainDb": -14.1,
+            "measured": {
+              "path": "tmp/audio-feedback/master-OdueLa/music-filtered.wav",
+              "sha256": "2cf296a870a86a0c52c8dd574ec3a3b3fdff9bca0dddce7e8faa9519b40fb6af",
+              "bytes": 63516786,
+              "codec": "pcm_f32le",
+              "sampleRate": 44100,
+              "channels": 2,
+              "containerSeconds": 180.035918,
+              "decodedSeconds": 180.03591836734694,
+              "integratedLufs": -25.4,
+              "loudnessRangeLu": 9.7,
+              "truePeakDbfs": -5.9,
+              "rmsDbfs": -29.894,
+              "samplePeakDbfs": -5.883,
+              "dcOffset": -6.062354635008734e-9,
+              "level": {
+                "windowSeconds": 1,
+                "rmsDbfs": [
+                  -138.657,
+                  -139.19,
+                  -139.66,
+                  -139.263,
+                  -139.392,
+                  -138.982,
+                  -138.664,
+                  -139.177,
+                  -139.871,
+                  -139.012,
+                  -139.758,
+                  -64.705,
+                  -22.256,
+                  -28.721,
+                  -36.608,
+                  -45.163,
+                  -24.913,
+                  -33.573,
+                  -42.671,
+                  -50.919,
+                  -28.228,
+                  -37.897,
+                  -45.522,
+                  -54.955,
+                  -23.335,
+                  -31.763,
+                  -39.719,
+                  -50.299,
+                  -21.633,
+                  -28.75,
+                  -37.372,
+                  -46.387,
+                  -19.146,
+                  -26.501,
+                  -35.093,
+                  -45.198,
+                  -25.202,
+                  -33.721,
+                  -43.023,
+                  -50.655,
+                  -24.532,
+                  -32.095,
+                  -41.068,
+                  -51.221,
+                  -27.936,
+                  -36.775,
+                  -45.211,
+                  -53.695,
+                  -35.159,
+                  -44.587,
+                  -45.852,
+                  -55.333,
+                  -25.004,
+                  -32.897,
+                  -41.805,
+                  -49.487,
+                  -24.6,
+                  -31.203,
+                  -39.719,
+                  -47.999,
+                  -25.47,
+                  -31.477,
+                  -28.265,
+                  -36.828,
+                  -26.408,
+                  -33.975,
+                  -25.938,
+                  -34.038,
+                  -24.605,
+                  -31.975,
+                  -40.764,
+                  -48.774,
+                  -23.761,
+                  -30.404,
+                  -38.809,
+                  -49.83,
+                  -20.4,
+                  -27.621,
+                  -34.632,
+                  -45.217,
+                  -27.252,
+                  -34.337,
+                  -44.291,
+                  -52.13,
+                  -24.545,
+                  -32.65,
+                  -40.856,
+                  -48.734,
+                  -24.71,
+                  -34.216,
+                  -41.546,
+                  -49.492,
+                  -21.542,
+                  -27.938,
+                  -35.687,
+                  -43.91,
+                  -27.26,
+                  -36.316,
+                  -43.722,
+                  -48.766,
+                  -25.617,
+                  -33.849,
+                  -43.509,
+                  -52.334,
+                  -23.286,
+                  -31.46,
+                  -38.706,
+                  -48.06,
+                  -24.918,
+                  -32.251,
+                  -41.816,
+                  -49.436,
+                  -23.674,
+                  -31.618,
+                  -40.283,
+                  -49.143,
+                  -23.843,
+                  -32.404,
+                  -41.195,
+                  -48.377,
+                  -24.013,
+                  -31.028,
+                  -40.308,
+                  -49.128,
+                  -23.012,
+                  -31.374,
+                  -36.513,
+                  -47.197,
+                  -22.301,
+                  -29.418,
+                  -38.475,
+                  -44.632,
+                  -25.704,
+                  -34.645,
+                  -41.507,
+                  -51.348,
+                  -25.857,
+                  -33.094,
+                  -41.534,
+                  -49.992,
+                  -24.863,
+                  -32.829,
+                  -42.243,
+                  -49.247,
+                  -28.195,
+                  -34.907,
+                  -43.384,
+                  -50.774,
+                  -30.392,
+                  -38.045,
+                  -46.888,
+                  -54.046,
+                  -24.056,
+                  -30.443,
+                  -40.592,
+                  -48.718,
+                  -25.691,
+                  -32.295,
+                  -42.317,
+                  -48.164,
+                  -25.387,
+                  -32.134,
+                  -41.505,
+                  -50.515,
+                  -25.622,
+                  -32.982,
+                  -40.884,
+                  -47.647,
+                  -25.862,
+                  -34.813,
+                  -40.956,
+                  -49.76,
+                  -54.506,
+                  -61.918,
+                  -69.316,
+                  -82.089,
+                  -97.012,
+                  -107.244,
+                  -113.398,
+                  -119.006,
+                  -116.48
+                ],
+                "p10Dbfs": -64.705,
+                "p50Dbfs": -38.706,
+                "p90Dbfs": -24.71,
+                "fraction100msBelowMinus60Dbfs": 0.12992781787895613
+              },
+              "seam": {
+                "boundaryJumpDbfs": -138.723,
+                "adjacentDifferenceRmsDbfs": -59.57,
+                "largestInternalJumpDbfs": -31.689,
+                "head100msRmsDbfs": -139.378,
+                "tail100msRmsDbfs": -119.88
+              }
+            }
+          }
+        }
+      ],
+      "loop": {
+        "seamSeconds": 6,
+        "inputFrames": 7939584,
+        "outputFrames": 7674984,
+        "graph": "[0:a]asplit=3[m][t][h];[m]atrim=start_sample=264600:end_sample=7674984,asetpts=PTS-STARTPTS[mid];[t]atrim=start_sample=7674984:end_sample=7939584,asetpts=PTS-STARTPTS,afade=t=out:ss=0:ns=264600:curve=tri[tail];[h]atrim=end_sample=264600,asetpts=PTS-STARTPTS,afade=t=in:ss=0:ns=264600:curve=tri[head];[tail][head]amix=inputs=2:normalize=0:duration=longest:dropout_transition=0[join];[mid][join]concat=n=2:v=0:a=1[out]"
+      },
+      "measurements": {
+        "path": "tmp/audio-feedback/master-OdueLa/forest-acoustic-v2-long.mp3",
+        "sha256": "460c9b339890db8d95028f1dd2ee5dbc7820bcadb7270957609cae5d6adfd888",
+        "bytes": 2785697,
+        "codec": "mp3",
+        "sampleRate": 44100,
+        "channels": 2,
+        "containerSeconds": 174.08,
+        "decodedSeconds": 174.03591836734694,
+        "integratedLufs": -39.9,
+        "loudnessRangeLu": 9.7,
+        "truePeakDbfs": -20.4,
+        "rmsDbfs": -44.292,
+        "samplePeakDbfs": -20.425,
+        "dcOffset": -1.56325217232244e-8,
+        "level": {
+          "windowSeconds": 1,
+          "rmsDbfs": [
+            -153.162,
+            -153.728,
+            -154.166,
+            -153.477,
+            -154.281,
+            -79.247,
+            -36.803,
+            -43.266,
+            -51.153,
+            -59.702,
+            -39.459,
+            -48.118,
+            -57.216,
+            -65.459,
+            -42.775,
+            -52.442,
+            -60.067,
+            -69.498,
+            -37.88,
+            -46.308,
+            -54.263,
+            -64.844,
+            -36.178,
+            -43.294,
+            -51.917,
+            -60.933,
+            -33.691,
+            -41.045,
+            -49.637,
+            -59.744,
+            -39.747,
+            -48.266,
+            -57.568,
+            -65.202,
+            -39.076,
+            -46.64,
+            -55.612,
+            -65.768,
+            -42.482,
+            -51.319,
+            -59.755,
+            -68.238,
+            -49.705,
+            -59.132,
+            -60.397,
+            -69.876,
+            -39.549,
+            -47.442,
+            -56.351,
+            -64.031,
+            -39.144,
+            -45.748,
+            -54.264,
+            -62.544,
+            -40.014,
+            -46.022,
+            -42.811,
+            -51.374,
+            -40.953,
+            -48.52,
+            -40.482,
+            -48.582,
+            -39.15,
+            -46.519,
+            -55.308,
+            -63.318,
+            -38.307,
+            -44.949,
+            -53.354,
+            -64.375,
+            -34.945,
+            -42.165,
+            -49.177,
+            -59.765,
+            -41.798,
+            -48.882,
+            -58.838,
+            -66.674,
+            -39.089,
+            -47.195,
+            -55.402,
+            -63.275,
+            -39.254,
+            -48.761,
+            -56.091,
+            -64.036,
+            -36.086,
+            -42.483,
+            -50.232,
+            -58.454,
+            -41.805,
+            -50.861,
+            -58.266,
+            -63.312,
+            -40.162,
+            -48.393,
+            -58.053,
+            -66.875,
+            -37.832,
+            -46.005,
+            -53.251,
+            -62.601,
+            -39.463,
+            -46.796,
+            -56.361,
+            -63.98,
+            -38.22,
+            -46.163,
+            -54.826,
+            -63.685,
+            -38.387,
+            -46.949,
+            -55.74,
+            -62.921,
+            -38.56,
+            -45.573,
+            -54.854,
+            -63.677,
+            -37.557,
+            -45.919,
+            -51.058,
+            -61.739,
+            -36.845,
+            -43.963,
+            -53.019,
+            -59.179,
+            -40.248,
+            -49.19,
+            -56.052,
+            -65.896,
+            -40.4,
+            -47.638,
+            -56.078,
+            -64.54,
+            -39.409,
+            -47.373,
+            -56.785,
+            -63.787,
+            -42.742,
+            -49.453,
+            -57.929,
+            -65.324,
+            -44.94,
+            -52.59,
+            -61.431,
+            -68.591,
+            -38.601,
+            -44.988,
+            -55.137,
+            -63.261,
+            -40.237,
+            -46.84,
+            -56.862,
+            -62.708,
+            -39.931,
+            -46.68,
+            -56.049,
+            -65.058,
+            -40.165,
+            -47.527,
+            -55.432,
+            -62.191,
+            -40.407,
+            -49.359,
+            -55.5,
+            -64.304,
+            -69.054,
+            -76.463,
+            -84.205,
+            -98.652,
+            -115.491,
+            -128.685,
+            -138.903,
+            -150.131,
+            -153.818
+          ],
+          "p10Dbfs": -68.591,
+          "p50Dbfs": -52.442,
+          "p90Dbfs": -39.15,
+          "fraction100msBelowMinus60Dbfs": 0.3009764503159104
+        },
+        "seam": {
+          "boundaryJumpDbfs": -160,
+          "adjacentDifferenceRmsDbfs": -73.966,
+          "largestInternalJumpDbfs": -46.574,
+          "head100msRmsDbfs": -154.164,
+          "tail100msRmsDbfs": -154.612
+        },
+        "spectrum": {
+          "method": "Arithmetic stereo mean at 16 kHz; Hann 16384 samples; 0.5 s hop; one-sided power/bin, not dB/Hz. Peaks are candidates, not proof of unwanted hum.",
+          "frameCount": 347,
+          "binWidthHz": 0.9765625,
+          "bands": [
+            {
+              "hz": [
+                20,
+                80
+              ],
+              "meanDbfs": -80.895,
+              "p20Dbfs": -91.996,
+              "p90Dbfs": -78.878
+            },
+            {
+              "hz": [
+                80,
+                180
+              ],
+              "meanDbfs": -46.295,
+              "p20Dbfs": -62.962,
+              "p90Dbfs": -41.38
+            },
+            {
+              "hz": [
+                180,
+                400
+              ],
+              "meanDbfs": -49.399,
+              "p20Dbfs": -70.854,
+              "p90Dbfs": -44.88
+            },
+            {
+              "hz": [
+                400,
+                1000
+              ],
+              "meanDbfs": -67.58,
+              "p20Dbfs": -86.55,
+              "p90Dbfs": -62.775
+            },
+            {
+              "hz": [
+                1000,
+                2500
+              ],
+              "meanDbfs": -70.46,
+              "p20Dbfs": -98.765,
+              "p90Dbfs": -63.7
+            },
+            {
+              "hz": [
+                2500,
+                6500
+              ],
+              "meanDbfs": -79.557,
+              "p20Dbfs": -102.073,
+              "p90Dbfs": -72.601
+            },
+            {
+              "hz": [
+                6500,
+                8000
+              ],
+              "meanDbfs": -100.21,
+              "p20Dbfs": -115.644,
+              "p90Dbfs": -95.972
+            }
+          ],
+          "persistentPeakCandidates": [
+            {
+              "hz": 146.484,
+              "meanDbfs": -47.326,
+              "prominenceDb": 27.575,
+              "p20Dbfs": -64.097,
+              "p90Dbfs": -42.6
+            },
+            {
+              "hz": 294.922,
+              "meanDbfs": -50.456,
+              "prominenceDb": 26.827,
+              "p20Dbfs": -73.516,
+              "p90Dbfs": -46.007
+            },
+            {
+              "hz": 442.383,
+              "meanDbfs": -71.097,
+              "prominenceDb": 22.914,
+              "p20Dbfs": -95.338,
+              "p90Dbfs": -66.465
+            },
+            {
+              "hz": 103.516,
+              "meanDbfs": -63.103,
+              "prominenceDb": 9.491,
+              "p20Dbfs": -97.837,
+              "p90Dbfs": -55.314
+            },
+            {
+              "hz": 588.867,
+              "meanDbfs": -79.474,
+              "prominenceDb": 17.024,
+              "p20Dbfs": -105.21,
+              "p90Dbfs": -83.05
+            },
+            {
+              "hz": 736.328,
+              "meanDbfs": -78.613,
+              "prominenceDb": 19.08,
+              "p20Dbfs": -111.726,
+              "p90Dbfs": -73.973
+            },
+            {
+              "hz": 883.789,
+              "meanDbfs": -88.832,
+              "prominenceDb": 15.789,
+              "p20Dbfs": -112.589,
+              "p90Dbfs": -83.884
+            },
+            {
+              "hz": 853.516,
+              "meanDbfs": -100.477,
+              "prominenceDb": 8.032,
+              "p20Dbfs": -114.875,
+              "p90Dbfs": -95.652
+            },
+            {
+              "hz": 1031.25,
+              "meanDbfs": -81.456,
+              "prominenceDb": 16.921,
+              "p20Dbfs": -116.165,
+              "p90Dbfs": -76.352
+            },
+            {
+              "hz": 1179.688,
+              "meanDbfs": -81.127,
+              "prominenceDb": 19.695,
+              "p20Dbfs": -123.635,
+              "p90Dbfs": -76.973
+            },
+            {
+              "hz": 1328.125,
+              "meanDbfs": -85.154,
+              "prominenceDb": 15.114,
+              "p20Dbfs": -124.68,
+              "p90Dbfs": -80.495
+            },
+            {
+              "hz": 1474.609,
+              "meanDbfs": -85.132,
+              "prominenceDb": 12.425,
+              "p20Dbfs": -129.611,
+              "p90Dbfs": -81.452
+            },
+            {
+              "hz": 1772.461,
+              "meanDbfs": -88.155,
+              "prominenceDb": 9.653,
+              "p20Dbfs": -130.824,
+              "p90Dbfs": -86.557
+            },
+            {
+              "hz": 1621.094,
+              "meanDbfs": -90.782,
+              "prominenceDb": 9.774,
+              "p20Dbfs": -133.391,
+              "p90Dbfs": -87.501
+            },
+            {
+              "hz": 2665.039,
+              "meanDbfs": -96.601,
+              "prominenceDb": 7.344,
+              "p20Dbfs": -134.292,
+              "p90Dbfs": -95.798
+            },
+            {
+              "hz": 2679.688,
+              "meanDbfs": -96.066,
+              "prominenceDb": 8.225,
+              "p20Dbfs": -135.318,
+              "p90Dbfs": -101.411
+            },
+            {
+              "hz": 2670.898,
+              "meanDbfs": -96.521,
+              "prominenceDb": 7.587,
+              "p20Dbfs": -135.327,
+              "p90Dbfs": -96.203
+            }
+          ]
+        }
+      }
     },
     {
       "kind": "wind",
-      "path": "public/assets/audio/ambience/dry-canopy-long.mp3",
-      "sha256": "35520a3a71d6e140c4d28bfe6a7187dcf5ba3d060dc7630bb4c8a6354b0ea308",
-      "decodedSeconds": 167,
-      "rmsDbfs": -50.265,
-      "truePeakDbfs": -28.6,
-      "boundaryJumpDbfs": -63.599,
-      "seamSeconds": 6
+      "path": "public/assets/audio/ambience/dry-leaves-v2-long.mp3",
+      "processing": [
+        {
+          "source": "public/assets/audio/ambience/dry-leaves-v2-a.mp3",
+          "eq": "highpass=f=350:p=2,highpass=f=350:p=2,lowpass=f=6000:p=2,lowpass=f=6000:p=2",
+          "level": {
+            "input": "tmp/audio-feedback/master-OdueLa/wind-1-eq.wav",
+            "targetRmsDbfs": -44,
+            "peakCeilingDbfs": -25,
+            "gainDb": 0.399,
+            "measured": {
+              "path": "tmp/audio-feedback/master-OdueLa/wind-1-eq.wav",
+              "sha256": "3d86709b13212badbb0a2331d53c60a31e1d88baaa8dbcbdb9ad1ba1a910fc2d",
+              "bytes": 10584114,
+              "codec": "pcm_f32le",
+              "sampleRate": 44100,
+              "channels": 2,
+              "containerSeconds": 30,
+              "decodedSeconds": 30,
+              "integratedLufs": -53.5,
+              "loudnessRangeLu": 15.2,
+              "truePeakDbfs": -25.4,
+              "rmsDbfs": -59.072,
+              "samplePeakDbfs": -25.907,
+              "dcOffset": -2.0005733401725613e-8,
+              "level": {
+                "windowSeconds": 1,
+                "rmsDbfs": [
+                  -64.856,
+                  -65.38,
+                  -65.439,
+                  -64.94,
+                  -64.738,
+                  -64.154,
+                  -62.845,
+                  -60.016,
+                  -55.505,
+                  -53.353,
+                  -49.927,
+                  -52.81,
+                  -56.356,
+                  -57.768,
+                  -57.011,
+                  -63.776,
+                  -64.551,
+                  -64.399,
+                  -65.248,
+                  -65.273,
+                  -65.079,
+                  -65.036,
+                  -64.987,
+                  -65.07,
+                  -65.263,
+                  -65.296,
+                  -65.006,
+                  -65.349,
+                  -64.772,
+                  -64.524
+                ],
+                "p10Dbfs": -65.296,
+                "p50Dbfs": -64.738,
+                "p90Dbfs": -53.353,
+                "fraction100msBelowMinus60Dbfs": 0.7533333333333333
+              },
+              "seam": {
+                "boundaryJumpDbfs": -64.513,
+                "adjacentDifferenceRmsDbfs": -63.98,
+                "largestInternalJumpDbfs": -29.052,
+                "head100msRmsDbfs": -60.437,
+                "tail100msRmsDbfs": -63.471
+              }
+            }
+          }
+        },
+        {
+          "source": "public/assets/audio/ambience/dry-leaves-v2-b.mp3",
+          "eq": "highpass=f=350:p=2,highpass=f=350:p=2,lowpass=f=6000:p=2,lowpass=f=6000:p=2",
+          "level": {
+            "input": "tmp/audio-feedback/master-OdueLa/wind-2-eq.wav",
+            "targetRmsDbfs": -44,
+            "peakCeilingDbfs": -25,
+            "gainDb": 0,
+            "measured": {
+              "path": "tmp/audio-feedback/master-OdueLa/wind-2-eq.wav",
+              "sha256": "6889852608b21b326b05d13d984908fcb9140d606f3f64a96492c17a5af6dfc2",
+              "bytes": 10584114,
+              "codec": "pcm_f32le",
+              "sampleRate": 44100,
+              "channels": 2,
+              "containerSeconds": 30,
+              "decodedSeconds": 30,
+              "integratedLufs": -46.1,
+              "loudnessRangeLu": 9.1,
+              "truePeakDbfs": -25,
+              "rmsDbfs": -52.232,
+              "samplePeakDbfs": -25.036,
+              "dcOffset": 1.4012920231348842e-9,
+              "level": {
+                "windowSeconds": 1,
+                "rmsDbfs": [
+                  -54.731,
+                  -54.019,
+                  -51.003,
+                  -55.708,
+                  -54.993,
+                  -52.338,
+                  -54.094,
+                  -53.757,
+                  -55.274,
+                  -47.159,
+                  -55.514,
+                  -56.728,
+                  -54.422,
+                  -54.907,
+                  -54.285,
+                  -55.173,
+                  -54.29,
+                  -55.32,
+                  -56.707,
+                  -55.513,
+                  -56.853,
+                  -55.321,
+                  -53.288,
+                  -50.908,
+                  -55.517,
+                  -46.527,
+                  -44.477,
+                  -50,
+                  -56.802,
+                  -58.463
+                ],
+                "p10Dbfs": -56.728,
+                "p50Dbfs": -54.731,
+                "p90Dbfs": -47.159,
+                "fraction100msBelowMinus60Dbfs": 0.01
+              },
+              "seam": {
+                "boundaryJumpDbfs": -51.502,
+                "adjacentDifferenceRmsDbfs": -56.785,
+                "largestInternalJumpDbfs": -29.181,
+                "head100msRmsDbfs": -54.097,
+                "tail100msRmsDbfs": -62.28
+              }
+            }
+          }
+        }
+      ],
+      "loop": {
+        "seamSeconds": 6,
+        "inputFrames": 7629300,
+        "outputFrames": 7364700,
+        "graph": "[0:a]asplit=3[m][t][h];[m]atrim=start_sample=264600:end_sample=7364700,asetpts=PTS-STARTPTS[mid];[t]atrim=start_sample=7364700:end_sample=7629300,asetpts=PTS-STARTPTS,afade=t=out:ss=0:ns=264600:curve=tri[tail];[h]atrim=end_sample=264600,asetpts=PTS-STARTPTS,afade=t=in:ss=0:ns=264600:curve=tri[head];[tail][head]amix=inputs=2:normalize=0:duration=longest:dropout_transition=0[join];[mid][join]concat=n=2:v=0:a=1[out]"
+      },
+      "measurements": {
+        "path": "tmp/audio-feedback/master-OdueLa/dry-leaves-v2-long.mp3",
+        "sha256": "672a8276fd66799353a8aceea688c6b294f0ce48d8c2db145598070ba9290766",
+        "bytes": 2672848,
+        "codec": "mp3",
+        "sampleRate": 44100,
+        "channels": 2,
+        "containerSeconds": 167.026939,
+        "decodedSeconds": 167,
+        "integratedLufs": -48,
+        "loudnessRangeLu": 18.3,
+        "truePeakDbfs": -25.4,
+        "rmsDbfs": -57.442,
+        "samplePeakDbfs": -25.922,
+        "dcOffset": 1.187050030101565e-10,
+        "level": {
+          "windowSeconds": 1,
+          "rmsDbfs": [
+            -64.181,
+            -62.823,
+            -59.936,
+            -55.406,
+            -53.245,
+            -49.827,
+            -52.673,
+            -56.239,
+            -57.674,
+            -56.929,
+            -63.755,
+            -64.577,
+            -64.401,
+            -65.255,
+            -65.295,
+            -65.089,
+            -65.037,
+            -65.012,
+            -65.099,
+            -66.023,
+            -67.811,
+            -69.598,
+            -72.928,
+            -76.605,
+            -84.941,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -71.815,
+            -62.75,
+            -55.46,
+            -57.244,
+            -55.342,
+            -52.631,
+            -54.425,
+            -54.125,
+            -55.589,
+            -47.477,
+            -55.894,
+            -57.083,
+            -54.708,
+            -55.203,
+            -54.559,
+            -55.515,
+            -54.603,
+            -55.637,
+            -57.043,
+            -55.787,
+            -57.162,
+            -55.614,
+            -53.564,
+            -51.293,
+            -56.641,
+            -49.12,
+            -49.248,
+            -57.983,
+            -68.971,
+            -77.737,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -82.551,
+            -73.727,
+            -69.442,
+            -66.014,
+            -64.763,
+            -64.142,
+            -62.846,
+            -59.954,
+            -55.382,
+            -53.223,
+            -49.756,
+            -52.696,
+            -56.198,
+            -57.658,
+            -56.873,
+            -63.768,
+            -64.55,
+            -64.391,
+            -65.254,
+            -65.293,
+            -65.094,
+            -65.052,
+            -65.002,
+            -65.068,
+            -66.007,
+            -67.813,
+            -69.601,
+            -72.915,
+            -76.616,
+            -84.954,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -71.749,
+            -62.745,
+            -55.436,
+            -57.225,
+            -55.31,
+            -52.64,
+            -54.422,
+            -54.089,
+            -55.622,
+            -47.383,
+            -55.88,
+            -57.078,
+            -54.714,
+            -55.243,
+            -54.59,
+            -55.508,
+            -54.609,
+            -55.661,
+            -57.036,
+            -55.858,
+            -57.194,
+            -55.629,
+            -53.616,
+            -51.227,
+            -56.642,
+            -49.035,
+            -49.246,
+            -58.015,
+            -68.947,
+            -77.747,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -160,
+            -93.153,
+            -80.891,
+            -73.949,
+            -68.349,
+            -65.49
+          ],
+          "p10Dbfs": -160,
+          "p50Dbfs": -65.037,
+          "p90Dbfs": -53.564,
+          "fraction100msBelowMinus60Dbfs": 0.6
+        },
+        "seam": {
+          "boundaryJumpDbfs": -60.777,
+          "adjacentDifferenceRmsDbfs": -61.989,
+          "largestInternalJumpDbfs": -29.051,
+          "head100msRmsDbfs": -63.001,
+          "tail100msRmsDbfs": -64.697
+        },
+        "spectrum": {
+          "method": "Arithmetic stereo mean at 16 kHz; Hann 16384 samples; 0.5 s hop; one-sided power/bin, not dB/Hz. Peaks are candidates, not proof of unwanted hum.",
+          "frameCount": 332,
+          "binWidthHz": 0.9765625,
+          "bands": [
+            {
+              "hz": [
+                20,
+                80
+              ],
+              "meanDbfs": -124.592,
+              "p20Dbfs": -160,
+              "p90Dbfs": -119.164
+            },
+            {
+              "hz": [
+                80,
+                180
+              ],
+              "meanDbfs": -103.273,
+              "p20Dbfs": -160,
+              "p90Dbfs": -97.758
+            },
+            {
+              "hz": [
+                180,
+                400
+              ],
+              "meanDbfs": -84.393,
+              "p20Dbfs": -160,
+              "p90Dbfs": -79.5
+            },
+            {
+              "hz": [
+                400,
+                1000
+              ],
+              "meanDbfs": -73.607,
+              "p20Dbfs": -160,
+              "p90Dbfs": -69.571
+            },
+            {
+              "hz": [
+                1000,
+                2500
+              ],
+              "meanDbfs": -66.381,
+              "p20Dbfs": -160,
+              "p90Dbfs": -61.995
+            },
+            {
+              "hz": [
+                2500,
+                6500
+              ],
+              "meanDbfs": -61.042,
+              "p20Dbfs": -160,
+              "p90Dbfs": -57.361
+            },
+            {
+              "hz": [
+                6500,
+                8000
+              ],
+              "meanDbfs": -73.305,
+              "p20Dbfs": -160,
+              "p90Dbfs": -69.336
+            }
+          ],
+          "persistentPeakCandidates": [
+            {
+              "hz": 200.195,
+              "meanDbfs": -99.299,
+              "prominenceDb": 17.837,
+              "p20Dbfs": -160,
+              "p90Dbfs": -95.53
+            },
+            {
+              "hz": 250,
+              "meanDbfs": -102.367,
+              "prominenceDb": 8.722,
+              "p20Dbfs": -160,
+              "p90Dbfs": -96.399
+            },
+            {
+              "hz": 400.391,
+              "meanDbfs": -88.476,
+              "prominenceDb": 13.26,
+              "p20Dbfs": -160,
+              "p90Dbfs": -83.529
+            },
+            {
+              "hz": 599.609,
+              "meanDbfs": -88.262,
+              "prominenceDb": 12.194,
+              "p20Dbfs": -160,
+              "p90Dbfs": -85.056
+            },
+            {
+              "hz": 799.805,
+              "meanDbfs": -87.783,
+              "prominenceDb": 13.201,
+              "p20Dbfs": -160,
+              "p90Dbfs": -84.476
+            },
+            {
+              "hz": 1000,
+              "meanDbfs": -90.576,
+              "prominenceDb": 9.782,
+              "p20Dbfs": -160,
+              "p90Dbfs": -86.569
+            },
+            {
+              "hz": 1400.391,
+              "meanDbfs": -87.903,
+              "prominenceDb": 11.767,
+              "p20Dbfs": -160,
+              "p90Dbfs": -83.289
+            },
+            {
+              "hz": 1599.609,
+              "meanDbfs": -86.977,
+              "prominenceDb": 9.705,
+              "p20Dbfs": -160,
+              "p90Dbfs": -83.109
+            }
+          ]
+        }
+      }
     },
     {
-      "kind": "birds",
-      "path": "public/assets/audio/ambience/distant-birds-long.mp3",
-      "sha256": "8f0279f80375e87724e4a2544a628ad0003c9aa766cf6e82fb0e8dfa1c70720c",
-      "decodedSeconds": 191,
-      "rmsDbfs": -56.158,
-      "truePeakDbfs": -20.3,
-      "boundaryJumpDbfs": -82.311,
-      "seamSeconds": 6
+      "kind": "rain",
+      "path": "public/assets/audio/ambience/canopy-rain-v2-loop.mp3",
+      "processing": [
+        {
+          "source": "public/assets/audio/ambience/canopy-rain-v2.mp3",
+          "eq": "highpass=f=350:p=2,highpass=f=350:p=2,lowpass=f=5000:p=2,lowpass=f=5000:p=2",
+          "level": {
+            "input": "tmp/audio-feedback/master-OdueLa/rain-filtered.wav",
+            "targetRmsDbfs": -43,
+            "peakCeilingDbfs": -22,
+            "gainDb": 1.699,
+            "measured": {
+              "path": "tmp/audio-feedback/master-OdueLa/rain-filtered.wav",
+              "sha256": "7f3fc20fc9e91f1f697e6069600d7493f4b3c2932318d835485cb4ccd697ed02",
+              "bytes": 10584114,
+              "codec": "pcm_f32le",
+              "sampleRate": 44100,
+              "channels": 2,
+              "containerSeconds": 30,
+              "decodedSeconds": 30,
+              "integratedLufs": -49.2,
+              "loudnessRangeLu": 8.8,
+              "truePeakDbfs": -23.7,
+              "rmsDbfs": -54.731,
+              "samplePeakDbfs": -23.731,
+              "dcOffset": 1.301851928283268e-10,
+              "level": {
+                "windowSeconds": 1,
+                "rmsDbfs": [
+                  -51.554,
+                  -53.489,
+                  -52.799,
+                  -52.264,
+                  -52.453,
+                  -52.686,
+                  -53.181,
+                  -53.245,
+                  -53.393,
+                  -53.906,
+                  -56.019,
+                  -58.323,
+                  -61.207,
+                  -60.702,
+                  -62.502,
+                  -62.014,
+                  -59.729,
+                  -55.253,
+                  -53.887,
+                  -52.815,
+                  -52.964,
+                  -53.269,
+                  -53.235,
+                  -53.514,
+                  -54.787,
+                  -58.329,
+                  -61.048,
+                  -62.361,
+                  -61.08,
+                  -55.277
+                ],
+                "p10Dbfs": -61.207,
+                "p50Dbfs": -53.887,
+                "p90Dbfs": -52.453,
+                "fraction100msBelowMinus60Dbfs": 0.26
+              },
+              "seam": {
+                "boundaryJumpDbfs": -54.588,
+                "adjacentDifferenceRmsDbfs": -61.326,
+                "largestInternalJumpDbfs": -28.965,
+                "head100msRmsDbfs": -55.406,
+                "tail100msRmsDbfs": -56.92
+              }
+            }
+          }
+        }
+      ],
+      "loop": {
+        "seamSeconds": 6,
+        "inputFrames": 1323000,
+        "outputFrames": 1058400,
+        "graph": "[0:a]asplit=3[m][t][h];[m]atrim=start_sample=264600:end_sample=1058400,asetpts=PTS-STARTPTS[mid];[t]atrim=start_sample=1058400:end_sample=1323000,asetpts=PTS-STARTPTS,afade=t=out:ss=0:ns=264600:curve=tri[tail];[h]atrim=end_sample=264600,asetpts=PTS-STARTPTS,afade=t=in:ss=0:ns=264600:curve=tri[head];[tail][head]amix=inputs=2:normalize=0:duration=longest:dropout_transition=0[join];[mid][join]concat=n=2:v=0:a=1[out]"
+      },
+      "measurements": {
+        "path": "tmp/audio-feedback/master-OdueLa/canopy-rain-v2-loop.mp3",
+        "sha256": "fc10ccdf01b0adf746cdb02645ae1afaf15b9a5589d935adb4eb30d7b8a7e8cb",
+        "bytes": 384939,
+        "codec": "mp3",
+        "sampleRate": 44100,
+        "channels": 2,
+        "containerSeconds": 24.032653,
+        "decodedSeconds": 24,
+        "integratedLufs": -48.4,
+        "loudnessRangeLu": 8.1,
+        "truePeakDbfs": -25.6,
+        "rmsDbfs": -53.841,
+        "samplePeakDbfs": -25.651,
+        "dcOffset": -2.377655585132575e-9,
+        "level": {
+          "windowSeconds": 1,
+          "rmsDbfs": [
+            -51.779,
+            -51.914,
+            -52.027,
+            -52.57,
+            -54.694,
+            -57.006,
+            -59.904,
+            -59.413,
+            -61.197,
+            -60.683,
+            -58.405,
+            -53.932,
+            -52.538,
+            -51.478,
+            -51.643,
+            -51.916,
+            -51.872,
+            -52.152,
+            -53.982,
+            -57.946,
+            -57.887,
+            -55.263,
+            -53.476,
+            -52.005
+          ],
+          "p10Dbfs": -59.904,
+          "p50Dbfs": -53.476,
+          "p90Dbfs": -51.779,
+          "fraction100msBelowMinus60Dbfs": 0.13333333333333333
+        },
+        "seam": {
+          "boundaryJumpDbfs": -67.072,
+          "adjacentDifferenceRmsDbfs": -60.471,
+          "largestInternalJumpDbfs": -29.406,
+          "head100msRmsDbfs": -52.026,
+          "tail100msRmsDbfs": -51.213
+        },
+        "spectrum": {
+          "method": "Arithmetic stereo mean at 16 kHz; Hann 16384 samples; 0.5 s hop; one-sided power/bin, not dB/Hz. Peaks are candidates, not proof of unwanted hum.",
+          "frameCount": 46,
+          "binWidthHz": 0.9765625,
+          "bands": [
+            {
+              "hz": [
+                20,
+                80
+              ],
+              "meanDbfs": -127.077,
+              "p20Dbfs": -129.921,
+              "p90Dbfs": -124.449
+            },
+            {
+              "hz": [
+                80,
+                180
+              ],
+              "meanDbfs": -111.366,
+              "p20Dbfs": -113.216,
+              "p90Dbfs": -108.993
+            },
+            {
+              "hz": [
+                180,
+                400
+              ],
+              "meanDbfs": -84.239,
+              "p20Dbfs": -86.467,
+              "p90Dbfs": -81.652
+            },
+            {
+              "hz": [
+                400,
+                1000
+              ],
+              "meanDbfs": -69.089,
+              "p20Dbfs": -71.923,
+              "p90Dbfs": -66.272
+            },
+            {
+              "hz": [
+                1000,
+                2500
+              ],
+              "meanDbfs": -58.648,
+              "p20Dbfs": -63.826,
+              "p90Dbfs": -56.21
+            },
+            {
+              "hz": [
+                2500,
+                6500
+              ],
+              "meanDbfs": -59.429,
+              "p20Dbfs": -63.932,
+              "p90Dbfs": -57.216
+            },
+            {
+              "hz": [
+                6500,
+                8000
+              ],
+              "meanDbfs": -74.655,
+              "p20Dbfs": -80.829,
+              "p90Dbfs": -71.605
+            }
+          ],
+          "persistentPeakCandidates": [
+            {
+              "hz": 1400.391,
+              "meanDbfs": -75.568,
+              "prominenceDb": 12.407,
+              "p20Dbfs": -78.879,
+              "p90Dbfs": -72.631
+            },
+            {
+              "hz": 1599.609,
+              "meanDbfs": -79.353,
+              "prominenceDb": 8.519,
+              "p20Dbfs": -82.199,
+              "p90Dbfs": -76.771
+            },
+            {
+              "hz": 799.805,
+              "meanDbfs": -81.005,
+              "prominenceDb": 16.823,
+              "p20Dbfs": -83.174,
+              "p90Dbfs": -79.022
+            },
+            {
+              "hz": 2400.391,
+              "meanDbfs": -75.38,
+              "prominenceDb": 12.853,
+              "p20Dbfs": -83.294,
+              "p90Dbfs": -71.226
+            },
+            {
+              "hz": 1250,
+              "meanDbfs": -78.828,
+              "prominenceDb": 10.567,
+              "p20Dbfs": -85.084,
+              "p90Dbfs": -73.83
+            },
+            {
+              "hz": 599.609,
+              "meanDbfs": -80.434,
+              "prominenceDb": 20.933,
+              "p20Dbfs": -86.301,
+              "p90Dbfs": -75.277
+            },
+            {
+              "hz": 2000,
+              "meanDbfs": -78.738,
+              "prominenceDb": 11.612,
+              "p20Dbfs": -86.687,
+              "p90Dbfs": -74.803
+            },
+            {
+              "hz": 4200.195,
+              "meanDbfs": -76.356,
+              "prominenceDb": 15.523,
+              "p20Dbfs": -86.996,
+              "p90Dbfs": -71.74
+            },
+            {
+              "hz": 3200.195,
+              "meanDbfs": -80.857,
+              "prominenceDb": 10.204,
+              "p20Dbfs": -88.509,
+              "p90Dbfs": -76.018
+            },
+            {
+              "hz": 1000,
+              "meanDbfs": -79.51,
+              "prominenceDb": 10.356,
+              "p20Dbfs": -88.519,
+              "p90Dbfs": -76.248
+            },
+            {
+              "hz": 849.609,
+              "meanDbfs": -83.024,
+              "prominenceDb": 8.941,
+              "p20Dbfs": -88.612,
+              "p90Dbfs": -78.037
+            },
+            {
+              "hz": 4599.609,
+              "meanDbfs": -80.817,
+              "prominenceDb": 11.835,
+              "p20Dbfs": -89.834,
+              "p90Dbfs": -77.23
+            },
+            {
+              "hz": 400.391,
+              "meanDbfs": -83.763,
+              "prominenceDb": 18.636,
+              "p20Dbfs": -90.053,
+              "p90Dbfs": -79.809
+            },
+            {
+              "hz": 5200.195,
+              "meanDbfs": -81.117,
+              "prominenceDb": 13.522,
+              "p20Dbfs": -90.35,
+              "p90Dbfs": -77.302
+            },
+            {
+              "hz": 6000,
+              "meanDbfs": -78.016,
+              "prominenceDb": 19.547,
+              "p20Dbfs": -90.358,
+              "p90Dbfs": -72.611
+            },
+            {
+              "hz": 5000,
+              "meanDbfs": -86.769,
+              "prominenceDb": 9.146,
+              "p20Dbfs": -91.169,
+              "p90Dbfs": -83.121
+            },
+            {
+              "hz": 6200.195,
+              "meanDbfs": -87.324,
+              "prominenceDb": 10.093,
+              "p20Dbfs": -94.703,
+              "p90Dbfs": -83.915
+            },
+            {
+              "hz": 700.195,
+              "meanDbfs": -91.004,
+              "prominenceDb": 12.098,
+              "p20Dbfs": -96.971,
+              "p90Dbfs": -86.455
+            },
+            {
+              "hz": 5799.805,
+              "meanDbfs": -91.187,
+              "prominenceDb": 7.292,
+              "p20Dbfs": -97.206,
+              "p90Dbfs": -87.514
+            },
+            {
+              "hz": 200.195,
+              "meanDbfs": -96.964,
+              "prominenceDb": 22.419,
+              "p20Dbfs": -98.124,
+              "p90Dbfs": -95.435
+            },
+            {
+              "hz": 650.391,
+              "meanDbfs": -94.827,
+              "prominenceDb": 8.59,
+              "p20Dbfs": -98.547,
+              "p90Dbfs": -91.936
+            },
+            {
+              "hz": 450.195,
+              "meanDbfs": -95.162,
+              "prominenceDb": 10.952,
+              "p20Dbfs": -100.821,
+              "p90Dbfs": -91.45
+            },
+            {
+              "hz": 250,
+              "meanDbfs": -100.476,
+              "prominenceDb": 14.605,
+              "p20Dbfs": -110.356,
+              "p90Dbfs": -96.332
+            },
+            {
+              "hz": 106.445,
+              "meanDbfs": -125.244,
+              "prominenceDb": 11.337,
+              "p20Dbfs": -128.198,
+              "p90Dbfs": -123.338
+            },
+            {
+              "hz": 29.297,
+              "meanDbfs": -135.368,
+              "prominenceDb": 9.704,
+              "p20Dbfs": -136.955,
+              "p90Dbfs": -133.054
+            },
+            {
+              "hz": 59.57,
+              "meanDbfs": -132.562,
+              "prominenceDb": 12.367,
+              "p20Dbfs": -139.65,
+              "p90Dbfs": -128.457
+            }
+          ]
+        }
+      }
     }
   ],
-  "reproduce": "npm run audio:master",
-  "processingScripts": [
-    "scripts/master-focused-audio.mjs",
-    "scripts/analyze-audio.mjs"
-  ]
+  "retained": [
+    {
+      "path": "public/assets/audio/ambience/distant-birds-long.mp3",
+      "sha256": "8f0279f80375e87724e4a2544a628ad0003c9aa766cf6e82fb0e8dfa1c70720c",
+      "bytes": 3056952,
+      "codec": "mp3",
+      "sampleRate": 44100,
+      "channels": 2,
+      "containerSeconds": 191.033469,
+      "decodedSeconds": 191,
+      "integratedLufs": -39.7,
+      "loudnessRangeLu": 24.1,
+      "truePeakDbfs": -20.3,
+      "rmsDbfs": -56.158,
+      "samplePeakDbfs": -20.332,
+      "dcOffset": -1.645355990590397e-11,
+      "level": {
+        "windowSeconds": 1,
+        "rmsDbfs": [
+          -53.316,
+          -53.568,
+          -52.615,
+          -65.546,
+          -71.707,
+          -71.22,
+          -69.031,
+          -64.765,
+          -69.566,
+          -70.75,
+          -71.92,
+          -71.813,
+          -67.02,
+          -54.341,
+          -65.64,
+          -71.047,
+          -71.119,
+          -70.918,
+          -63.455,
+          -67.016,
+          -43.349,
+          -49.26,
+          -39.561,
+          -46.2,
+          -48.712,
+          -69.254,
+          -71.477,
+          -74.119,
+          -69.374,
+          -157.784,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -81.54,
+          -54.384,
+          -92.903,
+          -55.359,
+          -54.198,
+          -92.778,
+          -92.748,
+          -92.69,
+          -53.301,
+          -93.016,
+          -53.499,
+          -93.37,
+          -92.879,
+          -92.241,
+          -93.469,
+          -52.755,
+          -51.551,
+          -74.665,
+          -93.963,
+          -56.676,
+          -59.41,
+          -92.857,
+          -57.452,
+          -80.72,
+          -59.944,
+          -94.433,
+          -52.385,
+          -47.991,
+          -50.806,
+          -60.921,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -71.981,
+          -68.514,
+          -67.484,
+          -42.547,
+          -49.023,
+          -45.037,
+          -48.954,
+          -68.152,
+          -68.346,
+          -68.899,
+          -69.612,
+          -69.824,
+          -69.341,
+          -61.452,
+          -67.312,
+          -69.025,
+          -68.762,
+          -68.646,
+          -68.528,
+          -68.277,
+          -67.918,
+          -67.935,
+          -68.216,
+          -66.812,
+          -67.482,
+          -43.314,
+          -59.873,
+          -55.429,
+          -69.642,
+          -78.726,
+          -159.334,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -160,
+          -68.739
+        ],
+        "p10Dbfs": -160,
+        "p50Dbfs": -160,
+        "p90Dbfs": -53.568,
+        "fraction100msBelowMinus60Dbfs": 0.9486910994764398
+      },
+      "seam": {
+        "boundaryJumpDbfs": -82.311,
+        "adjacentDifferenceRmsDbfs": -58.626,
+        "largestInternalJumpDbfs": -19.489,
+        "head100msRmsDbfs": -71.983,
+        "tail100msRmsDbfs": -71.813
+      },
+      "spectrum": {
+        "method": "Arithmetic stereo mean at 16 kHz; Hann 16384 samples; 0.5 s hop; one-sided power/bin, not dB/Hz. Peaks are candidates, not proof of unwanted hum.",
+        "frameCount": 380,
+        "binWidthHz": 0.9765625,
+        "bands": [
+          {
+            "hz": [
+              20,
+              80
+            ],
+            "meanDbfs": -160,
+            "p20Dbfs": -160,
+            "p90Dbfs": -160
+          },
+          {
+            "hz": [
+              80,
+              180
+            ],
+            "meanDbfs": -160,
+            "p20Dbfs": -160,
+            "p90Dbfs": -160
+          },
+          {
+            "hz": [
+              180,
+              400
+            ],
+            "meanDbfs": -153.686,
+            "p20Dbfs": -160,
+            "p90Dbfs": -148.257
+          },
+          {
+            "hz": [
+              400,
+              1000
+            ],
+            "meanDbfs": -101.555,
+            "p20Dbfs": -160,
+            "p90Dbfs": -96.445
+          },
+          {
+            "hz": [
+              1000,
+              2500
+            ],
+            "meanDbfs": -85.577,
+            "p20Dbfs": -160,
+            "p90Dbfs": -80.015
+          },
+          {
+            "hz": [
+              2500,
+              6500
+            ],
+            "meanDbfs": -60.406,
+            "p20Dbfs": -160,
+            "p90Dbfs": -64.919
+          },
+          {
+            "hz": [
+              6500,
+              8000
+            ],
+            "meanDbfs": -63.73,
+            "p20Dbfs": -160,
+            "p90Dbfs": -74.793
+          }
+        ],
+        "persistentPeakCandidates": [
+          {
+            "hz": 88.867,
+            "meanDbfs": -160,
+            "prominenceDb": 8.083,
+            "p20Dbfs": -160,
+            "p90Dbfs": -160
+          },
+          {
+            "hz": 242.188,
+            "meanDbfs": -160,
+            "prominenceDb": 8.183,
+            "p20Dbfs": -160,
+            "p90Dbfs": -160
+          },
+          {
+            "hz": 318.359,
+            "meanDbfs": -160,
+            "prominenceDb": 7.033,
+            "p20Dbfs": -160,
+            "p90Dbfs": -160
+          },
+          {
+            "hz": 599.609,
+            "meanDbfs": -126.866,
+            "prominenceDb": 11.589,
+            "p20Dbfs": -160,
+            "p90Dbfs": -121.098
+          },
+          {
+            "hz": 1000,
+            "meanDbfs": -109.985,
+            "prominenceDb": 11.9,
+            "p20Dbfs": -160,
+            "p90Dbfs": -104.174
+          },
+          {
+            "hz": 1599.609,
+            "meanDbfs": -105.951,
+            "prominenceDb": 12.947,
+            "p20Dbfs": -160,
+            "p90Dbfs": -100.106
+          },
+          {
+            "hz": 1650.391,
+            "meanDbfs": -106.248,
+            "prominenceDb": 10.873,
+            "p20Dbfs": -160,
+            "p90Dbfs": -100.163
+          },
+          {
+            "hz": 1700.195,
+            "meanDbfs": -104.622,
+            "prominenceDb": 11.973,
+            "p20Dbfs": -160,
+            "p90Dbfs": -98.873
+          },
+          {
+            "hz": 1750,
+            "meanDbfs": -109.694,
+            "prominenceDb": 7.397,
+            "p20Dbfs": -160,
+            "p90Dbfs": -103.857
+          },
+          {
+            "hz": 1849.609,
+            "meanDbfs": -100.465,
+            "prominenceDb": 12.827,
+            "p20Dbfs": -160,
+            "p90Dbfs": -94.645
+          },
+          {
+            "hz": 1900.391,
+            "meanDbfs": -105.395,
+            "prominenceDb": 7.44,
+            "p20Dbfs": -160,
+            "p90Dbfs": -100.084
+          },
+          {
+            "hz": 2000,
+            "meanDbfs": -105.135,
+            "prominenceDb": 11.428,
+            "p20Dbfs": -160,
+            "p90Dbfs": -99.579
+          },
+          {
+            "hz": 2049.805,
+            "meanDbfs": -103.238,
+            "prominenceDb": 13.578,
+            "p20Dbfs": -160,
+            "p90Dbfs": -97.629
+          },
+          {
+            "hz": 2099.609,
+            "meanDbfs": -106.939,
+            "prominenceDb": 7.428,
+            "p20Dbfs": -160,
+            "p90Dbfs": -101.439
+          },
+          {
+            "hz": 2150.391,
+            "meanDbfs": -103.762,
+            "prominenceDb": 11.878,
+            "p20Dbfs": -160,
+            "p90Dbfs": -97.798
+          },
+          {
+            "hz": 2200.195,
+            "meanDbfs": -98.467,
+            "prominenceDb": 17.222,
+            "p20Dbfs": -160,
+            "p90Dbfs": -92.552
+          },
+          {
+            "hz": 2250,
+            "meanDbfs": -102.35,
+            "prominenceDb": 13.156,
+            "p20Dbfs": -160,
+            "p90Dbfs": -96.08
+          },
+          {
+            "hz": 2349.609,
+            "meanDbfs": -104.754,
+            "prominenceDb": 8.534,
+            "p20Dbfs": -160,
+            "p90Dbfs": -98.738
+          },
+          {
+            "hz": 2400.391,
+            "meanDbfs": -97.741,
+            "prominenceDb": 16.227,
+            "p20Dbfs": -160,
+            "p90Dbfs": -91.335
+          },
+          {
+            "hz": 2500,
+            "meanDbfs": -99.72,
+            "prominenceDb": 11.84,
+            "p20Dbfs": -160,
+            "p90Dbfs": -93.733
+          },
+          {
+            "hz": 2549.805,
+            "meanDbfs": -98.953,
+            "prominenceDb": 12.341,
+            "p20Dbfs": -160,
+            "p90Dbfs": -92.689
+          },
+          {
+            "hz": 2757.813,
+            "meanDbfs": -83.592,
+            "prominenceDb": 7.6,
+            "p20Dbfs": -160,
+            "p90Dbfs": -104.11
+          },
+          {
+            "hz": 2849.609,
+            "meanDbfs": -99.026,
+            "prominenceDb": 9.68,
+            "p20Dbfs": -160,
+            "p90Dbfs": -93.403
+          },
+          {
+            "hz": 2900.391,
+            "meanDbfs": -98.073,
+            "prominenceDb": 7.322,
+            "p20Dbfs": -160,
+            "p90Dbfs": -92.364
+          },
+          {
+            "hz": 4849.609,
+            "meanDbfs": -95.118,
+            "prominenceDb": 8.562,
+            "p20Dbfs": -160,
+            "p90Dbfs": -89.716
+          },
+          {
+            "hz": 4950.195,
+            "meanDbfs": -96.995,
+            "prominenceDb": 11.594,
+            "p20Dbfs": -160,
+            "p90Dbfs": -91.406
+          },
+          {
+            "hz": 5000,
+            "meanDbfs": -101.131,
+            "prominenceDb": 9.156,
+            "p20Dbfs": -160,
+            "p90Dbfs": -96.507
+          },
+          {
+            "hz": 5049.805,
+            "meanDbfs": -97.323,
+            "prominenceDb": 13.2,
+            "p20Dbfs": -160,
+            "p90Dbfs": -91.172
+          },
+          {
+            "hz": 5099.609,
+            "meanDbfs": -96.784,
+            "prominenceDb": 8.452,
+            "p20Dbfs": -160,
+            "p90Dbfs": -90.97
+          },
+          {
+            "hz": 5299.805,
+            "meanDbfs": -99.915,
+            "prominenceDb": 7.233,
+            "p20Dbfs": -160,
+            "p90Dbfs": -94.977
+          }
+        ]
+      }
+    },
+    {
+      "path": "public/assets/audio/sfx/fingertip-wood-v2-mix.mp3",
+      "sha256": "70942ca89f2f2372bbe924f73ac9a144b6cc8059450ecd3c75a744c9e8248e53",
+      "bytes": 11328,
+      "codec": "mp3",
+      "sampleRate": 44100,
+      "channels": 2,
+      "containerSeconds": 0.679184,
+      "decodedSeconds": 0.64,
+      "integratedLufs": -23.3,
+      "loudnessRangeLu": 0,
+      "truePeakDbfs": -14.6,
+      "rmsDbfs": -30.262,
+      "samplePeakDbfs": -14.593,
+      "dcOffset": -0.000004227630734557688,
+      "level": {
+        "windowSeconds": 1,
+        "rmsDbfs": [
+          -30.652
+        ],
+        "p10Dbfs": -30.652,
+        "p50Dbfs": -30.652,
+        "p90Dbfs": -30.652,
+        "fraction100msBelowMinus60Dbfs": 0.2857142857142857
+      },
+      "seam": {
+        "boundaryJumpDbfs": -52.134,
+        "adjacentDifferenceRmsDbfs": -33.553,
+        "largestInternalJumpDbfs": -19.744,
+        "head100msRmsDbfs": -30.755,
+        "tail100msRmsDbfs": -73.741
+      }
+    },
+    {
+      "path": "public/assets/audio/sfx/uncover-mix.mp3",
+      "sha256": "ea1601e89aa543bcfce1d79c431d795768a1b46744377378ba6f09c3c723ab1b",
+      "bytes": 20106,
+      "codec": "mp3",
+      "sampleRate": 44100,
+      "channels": 2,
+      "containerSeconds": 1.227755,
+      "decodedSeconds": 1.2,
+      "integratedLufs": -32.4,
+      "loudnessRangeLu": 0,
+      "truePeakDbfs": -10.5,
+      "rmsDbfs": -38.841,
+      "samplePeakDbfs": -10.486,
+      "dcOffset": -0.0000037059378107031734,
+      "level": {
+        "windowSeconds": 1,
+        "rmsDbfs": [
+          -38.057,
+          -58.664
+        ],
+        "p10Dbfs": -58.664,
+        "p50Dbfs": -38.057,
+        "p90Dbfs": -38.057,
+        "fraction100msBelowMinus60Dbfs": 0.08333333333333333
+      },
+      "seam": {
+        "boundaryJumpDbfs": -80.967,
+        "adjacentDifferenceRmsDbfs": -40.655,
+        "largestInternalJumpDbfs": -14.144,
+        "head100msRmsDbfs": -41.425,
+        "tail100msRmsDbfs": -75.923
+      }
+    },
+    {
+      "path": "public/assets/audio/sfx/journal-open.mp3",
+      "sha256": "96493d7d9f59e58ac47883809bf5059f3a553f485347ebcc4f959193b7f90aaf",
+      "bytes": 18434,
+      "codec": "mp3",
+      "sampleRate": 44100,
+      "channels": 2,
+      "containerSeconds": 1.123265,
+      "decodedSeconds": 1.08,
+      "integratedLufs": -48.5,
+      "loudnessRangeLu": 0,
+      "truePeakDbfs": -26.5,
+      "rmsDbfs": -54.017,
+      "samplePeakDbfs": -26.508,
+      "dcOffset": -0.00004949811388575973,
+      "level": {
+        "windowSeconds": 1,
+        "rmsDbfs": [
+          -53.683,
+          -84.291
+        ],
+        "p10Dbfs": -84.291,
+        "p50Dbfs": -53.683,
+        "p90Dbfs": -53.683,
+        "fraction100msBelowMinus60Dbfs": 0.7272727272727273
+      },
+      "seam": {
+        "boundaryJumpDbfs": -68.245,
+        "adjacentDifferenceRmsDbfs": -69.577,
+        "largestInternalJumpDbfs": -41.282,
+        "head100msRmsDbfs": -68.729,
+        "tail100msRmsDbfs": -84.574
+      }
+    }
+  ],
+  "sceneWeather": {
+    "forest": "clear",
+    "stump": "overcast",
+    "leaves": "overcast",
+    "roots": "rain",
+    "bark": "rain"
+  }
 }

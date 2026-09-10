@@ -1282,6 +1282,8 @@
     },
     {
       "id": "sfx-ui-press-soft-mix",
+      "runtimeActive": false,
+      "feedback": "Electronic changing timbre rejected by user U37; replaced with new fingertip-on-wood foley.",
       "kind": "sfx",
       "status": "prepared_local_demo",
       "path": "public/assets/audio/sfx/ui-press-soft-mix.mp3",
@@ -1312,6 +1314,8 @@
     },
     {
       "id": "music-forest-stillness-long",
+      "runtimeActive": false,
+      "feedback": "Rejected by user U43 for persistent buzz; replaced with a new acoustic source.",
       "kind": "music",
       "status": "prepared_local_demo",
       "path": "public/assets/audio/music/forest-stillness-long.mp3",
@@ -1327,6 +1331,8 @@
     },
     {
       "id": "ambience-dry-canopy-long",
+      "runtimeActive": false,
+      "feedback": "Archived after source replacement for user-reported buzz.",
       "kind": "ambience",
       "status": "prepared_local_demo",
       "path": "public/assets/audio/ambience/dry-canopy-long.mp3",
@@ -1339,6 +1345,82 @@
         "licenseReview": "Verify active ElevenLabs account terms before public release."
       },
       "science": null
+    },
+    {
+      "id": "music-forest-acoustic-v2-long",
+      "kind": "music",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/music/forest-acoustic-v2-long.mp3",
+      "isGenerated": true,
+      "checksum": "460c9b339890db8d95028f1dd2ee5dbc7820bcadb7270957609cae5d6adfd888",
+      "bytes": 2785697,
+      "source": {
+        "provider": "ElevenLabs Music API",
+        "promptFile": "scripts/generate-scene-audio.mjs",
+        "masteringFile": "scripts/master-focused-audio.mjs",
+        "receipts": ["content/audio/forest-acoustic-v2.source.json"]
+      },
+      "rights": { "licenseReview": "Verify the active ElevenLabs account terms before public distribution." },
+      "science": null,
+      "physicalAudition": false,
+      "userAccepted": false
+    },
+    {
+      "id": "ambience-dry-leaves-v2-long",
+      "kind": "ambience",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/ambience/dry-leaves-v2-long.mp3",
+      "isGenerated": true,
+      "checksum": "672a8276fd66799353a8aceea688c6b294f0ce48d8c2db145598070ba9290766",
+      "bytes": 2672848,
+      "source": {
+        "provider": "ElevenLabs Sound Effects API",
+        "promptFile": "scripts/generate-scene-audio.mjs",
+        "masteringFile": "scripts/master-focused-audio.mjs",
+        "receipts": ["content/audio/dry-leaves-v2-a.source.json", "content/audio/dry-leaves-v2-b.source.json"]
+      },
+      "rights": { "licenseReview": "Verify the active ElevenLabs account terms before public distribution." },
+      "science": null,
+      "physicalAudition": false,
+      "userAccepted": false
+    },
+    {
+      "id": "ambience-canopy-rain-v2-loop",
+      "kind": "ambience",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/ambience/canopy-rain-v2-loop.mp3",
+      "isGenerated": true,
+      "checksum": "fc10ccdf01b0adf746cdb02645ae1afaf15b9a5589d935adb4eb30d7b8a7e8cb",
+      "bytes": 384939,
+      "source": {
+        "provider": "ElevenLabs Sound Effects API",
+        "promptFile": "scripts/generate-scene-audio.mjs",
+        "masteringFile": "scripts/master-focused-audio.mjs",
+        "receipts": ["content/audio/canopy-rain-v2.source.json"]
+      },
+      "rights": { "licenseReview": "Verify the active ElevenLabs account terms before public distribution." },
+      "science": null,
+      "physicalAudition": false,
+      "userAccepted": false
+    },
+    {
+      "id": "sfx-fingertip-wood-v2-mix",
+      "kind": "sfx",
+      "status": "prepared_local_demo",
+      "path": "public/assets/audio/sfx/fingertip-wood-v2-mix.mp3",
+      "isGenerated": true,
+      "checksum": "70942ca89f2f2372bbe924f73ac9a144b6cc8059450ecd3c75a744c9e8248e53",
+      "bytes": 11328,
+      "source": {
+        "provider": "ElevenLabs Sound Effects API",
+        "promptFile": "scripts/generate-scene-audio.mjs",
+        "masteringFile": "scripts/master-audio.mjs",
+        "receipts": ["content/audio/fingertip-wood-v2.source.json"]
+      },
+      "rights": { "licenseReview": "Verify the active ElevenLabs account terms before public distribution." },
+      "science": null,
+      "physicalAudition": false,
+      "userAccepted": false
     },
     {
       "id": "ambience-distant-birds-long",

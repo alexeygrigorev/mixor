@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "canopy-rain-v2",
+  "kind": "ambience",
+  "isGenerated": true,
+  "sourcePath": "public/assets/audio/ambience/canopy-rain-v2.mp3",
+  "provider": "ElevenLabs",
+  "endpoint": "https://api.elevenlabs.io/v1/sound-generation",
+  "request": {
+    "text": "Gentle rain on a leafy woodland canopy. Soft scattered droplets touch broad leaves and damp leaf litter, fine irregular patter and quiet diffuse air. Light rain, clean usable recording level for quiet mixing. No thunder, stream, river, pouring water, bubbling, large splashes, gutters, roof drumming, insects, tonal hiss, electrical hum, buzz, music, drones, birds or voices. Soft leaf rain, seamless loop.",
+    "duration_seconds": 30,
+    "prompt_influence": 0.65,
+    "model_id": "eleven_text_to_sound_v2",
+    "loop": true
+  },
+  "outputFormat": "mp3_44100_128",
+  "requestedAt": "2026-09-10T11:43:36.037Z",
+  "bytes": 481115,
+  "sha256": "11cda8409d72739a0b984b2b3377966e6988bea86b32e7e1e54b07ce2e843e8c",
+  "physicalAudition": false,
+  "userAccepted": false,
+  "rights": {
+    "licenseReview": "Verify the active ElevenLabs account terms before public distribution; no exclusive-rights claim."
+  }
+}

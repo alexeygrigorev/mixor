@@ -60,7 +60,7 @@ async function readyToCapture(page: Page) {
   });
 }
 
-test("five places, only Back, circular clues reveal whole organisms, persistent unique finds and rotation", async ({
+test("five places, quiet scene navigation, circular discoveries and persistent finds through rotation", async ({
   page,
 }, testInfo) => {
   test.setTimeout(90000);
@@ -79,7 +79,7 @@ test("five places, only Back, circular clues reveal whole organisms, persistent 
       page.locator(".hud, .game-nav, .world-heading, .life-invitation"),
     ).toHaveCount(0);
     await expect(page.locator(".search-scene button")).toHaveCount(
-      woodland.spots.length + 1,
+      woodland.spots.length + 3,
     );
     await expect(page.locator(".search-environment")).toHaveAttribute(
       "src",
@@ -132,7 +132,7 @@ test("five places, only Back, circular clues reveal whole organisms, persistent 
       await target.tap();
       await expect(target).toHaveAttribute("aria-pressed", "true");
       await expect(target).toHaveAccessibleName(
-        `Найдено: ${scientificNames[spot.taxon].name}`,
+        `Узнать больше: ${scientificNames[spot.taxon].name}`,
       );
       await expect(target.locator(".natural-cover")).toHaveCSS("opacity", "0");
       await expect(target.locator(".hidden-organism")).toHaveCSS(
@@ -144,9 +144,19 @@ test("five places, only Back, circular clues reveal whole organisms, persistent 
         "none",
       );
       await expect(page.locator(".search-scene [role=status]")).toHaveText(
-        `Найдено: ${scientificNames[spot.taxon].name}`,
+        `Найдено: ${scientificNames[spot.taxon].name}. Коснись ещё раз, чтобы узнать больше.`,
+      );
+      await expect(target.locator(".search-found-invitation")).toHaveText(
+        "Узнать",
       );
       await target.tap();
+      await expect(page.locator(".portrait-scene h1")).toHaveText(
+        scientificNames[spot.taxon].name,
+      );
+      await page
+        .getByRole("button", { name: `Назад: ${woodland.title}`, exact: true })
+        .click();
+      await expect(target).toHaveAttribute("aria-pressed", "true");
     }
     await circlesFit(page);
     await page.screenshot({
@@ -161,6 +171,8 @@ test("five places, only Back, circular clues reveal whole organisms, persistent 
     await page.setViewportSize(originalViewport);
     await page.reload();
     await expect(page.locator(".hiding-place.is-found")).toHaveCount(3);
+    await page.getByRole("button", { name: "Назад к выбору места" }).click();
+    await expect(page.locator(".woodland-chooser")).toBeVisible();
     await page.getByRole("button", { name: "Назад на главный экран" }).click();
     await expect(page.locator(".activity-home")).toBeVisible();
   }
@@ -197,10 +209,10 @@ test("forest circles uncover with keyboard and reduced motion", async ({
     await page.keyboard.press("Tab");
   }
   await expect(
-    page.getByRole("button", { name: "Назад на главный экран" }),
+    page.getByRole("button", { name: "Назад к выбору места" }),
   ).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page.locator(".activity-home")).toBeVisible();
+  await expect(page.locator(".woodland-chooser")).toBeVisible();
 });
 
 test("eight nine-stage cycles, scientific names, distinct growth stills and quiet photo peek", async ({
@@ -276,6 +288,8 @@ test("eight nine-stage cycles, scientific names, distinct growth stills and quie
     }
     expect(views.size).toBe(9);
     await expect(page).toHaveURL(new RegExp(`life/${taxon.id}/spore$`));
+    await page.getByRole("button", { name: "Назад к выбору вида" }).click();
+    await expect(page.locator(".species-chooser")).toBeVisible();
     await page.getByRole("button", { name: "Назад на главный экран" }).click();
   }
   await page.reload();
