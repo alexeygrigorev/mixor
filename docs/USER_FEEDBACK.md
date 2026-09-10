@@ -110,6 +110,8 @@ These are independent review findings, not additional requests invented on the u
 - Taxonomy data: rechecked the primary 2026 publication; marked Stemonitis placement provisional and added an explicit note. `node --test tests/content.test.mjs`: 3 passed. This does not close the entire tree/UI requirement.
 - Live development server responded HTTP 200 on `http://127.0.0.1:4173/` during this pass. Physical phone/tablet access is not inferred from that check.
 - A full browser run overlapped active UI/audio edits and therefore is not final regression evidence. Rerun after the implementation batch is stable.
+- Scene-art replacement: all five backgrounds regenerated with the built-in image tool; the main-screen forest reuses the new clearing. Exact prompts and output identifiers are in `content/generated-art.manifest.json`. Wider ordinary woodland compositions replace the old shiny/golden close-ups; originals and runtime WebP files are installed. Source images and four live phone/tablet/landscape frames inspected; full independent review remains pending.
+- Weather data/layer: forest clear; stump/leaves overcast; roots/birch rainy. Noninteractive rain respects reduced-motion and calm mode. Rain audio integration is a separate active change, not implied complete by the visual layer.
 
 Current review evidence is in `tmp/focused-review/ROUND1_REVIEW.md`; those scratch files may not survive another environment, so the actionable findings are recorded here. The old published `REDESIGN_REVIEW.md` concerns the earlier version and does not close this checklist.
 

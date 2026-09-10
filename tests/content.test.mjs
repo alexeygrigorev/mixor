@@ -83,3 +83,10 @@ test("five unique environments cover all taxa; corrupted search data is containe
   };
   assert.equal(writeFinds([spots[1].id]), false);
 });
+
+test("weather is scene-specific, with rain only at roots and birch", () => {
+  assert.deepEqual(
+    Object.fromEntries(woodlands.map((w) => [w.id, w.weather])),
+    { forest: "clear", stump: "overcast", leaves: "overcast", roots: "rain", bark: "rain" },
+  );
+});

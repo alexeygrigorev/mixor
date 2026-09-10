@@ -1,0 +1,41 @@
+.scene-weather {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.rain-streaks,
+.rain-streaks > span {
+  position: absolute;
+}
+
+.rain-streaks {
+  inset: 0;
+}
+
+.rain-streaks > span {
+  width: 1px;
+  height: var(--rain-length);
+  opacity: var(--rain-opacity);
+  background: linear-gradient(transparent, #d3dee1);
+  animation: woodland-rain var(--rain-speed) var(--rain-delay) linear infinite;
+}
+
+@keyframes woodland-rain {
+  from { transform: translate(8px, -24vh) rotate(9deg); }
+  to { transform: translate(-12px, 26vh) rotate(9deg); }
+}
+
+.calm .rain-streaks > span {
+  animation: none;
+  transform: rotate(9deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rain-streaks > span {
+    animation: none;
+    transform: rotate(9deg);
+  }
+}

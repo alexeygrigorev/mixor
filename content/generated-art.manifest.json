@@ -9,7 +9,25 @@
       "id": "forest-world",
       "runtimePath": "public/assets/art/forest-world.webp",
       "sourcePath": "content/artwork/forest-world.png",
-      "prompt": "Use case: illustration-story. Asset type: full-screen exploration game woodland environment, landscape 1536x1024. A lovingly handcrafted painterly miniature forest floor, viewed close to ground at a gentle 3/4 angle, an ancient decaying log crossing the middle, velvety emerald moss, tiny ferns, ochre fallen leaves, winding roots, warm shafts of morning light in hazy dark teal forest. Foreground lower-left: a small closed naturalist field notebook with blank worn canvas cover; lower-right a brass magnifying glass leaning against root. A quiet welcoming hidden micro-world, tangible gouache and softly painted 3D storybook texture, botanical detail, cinematic depth, restrained gold/forest green palette. Center log has clear dark wood surfaces for separate interactive specimen illustrations overlay later. Balanced landscape composition with important log and clearings in central 60% so usable on phone portrait crop. Pure background artwork, no giant mushrooms, no characters, no lettering, no typography, no buttons, no interface, no panels, no logo. Match a beautiful family nature exploration game, sophisticated not cartoon flat, gentle not scary."
+      "prompt": "Use case: photorealistic-natural.\nAsset type: full-screen woodland exploration game background, landscape 3:2, 1536x1024.\nStyle: photorealistic ordinary field photograph in a central European deciduous woodland, 35mm lens, naturally imperfect exposure and understated color, neutral white balance. Unretouched documentary appearance, not concept art. Irregular broken bark, dirty decomposing leaves with holes, scruffy patchy moss mixed with bare soil, tiny twigs and ordinary woodland litter.\nComposition: a WIDE view of several metres of habitat, camera about a metre above the ground angled gently down, foreground and middle-distance environments visible together, sufficient depth of field to explore details. Main habitat around the middle; both the full landscape and central phone crop should contain several things to inspect.\nConstraints: no humans, no props, no labels or interfaces, no circles, no painted organisms or mushrooms. No polished surfaces, no magical forest, no golden shafts of light, no CGI, no painterly brushstrokes, no HDR, no oversharpening, no decorative composition, no uniformly emerald carpet. This generated reconstruction must visually resemble an unglamorous real woodland photograph.\nScene: a broad ordinary forest clearing with a decaying fallen oak log stretching through the middle; grey-brown cracked bark, loose bark flakes and thin patchy moss, dead leaves around it, several thin saplings and tall tree trunks in the background. A few modest patches of soft daylight through a thin canopy, mostly open shade, no dramatic sunbeams. No rain.",
+      "tool": "built-in image_gen",
+      "createdAt": "2026-09-10",
+      "revision": "natural-wide-v1",
+      "scope": "Generated photorealistic educational habitat reconstruction, not a photograph or a documented locality/species association.",
+      "license": "Generated artwork",
+      "builtinOutput": "exec-1509f372-e342-4dd1-b0a3-306d98d22a96.png",
+      "weather": "clear",
+      "feedbackSourceIds": [
+        "U22",
+        "U24",
+        "U25",
+        "U26",
+        "U27",
+        "U28",
+        "U31",
+        "U38"
+      ],
+      "reuses": "search-forest"
     },
     {
       "id": "life-stages",
@@ -51,56 +69,116 @@
       "id": "search-forest",
       "runtimePath": "public/assets/art/search-forest.webp",
       "sourcePath": "content/artwork/search-forest.png",
-      "prompt": "Use case: illustration-story. Asset type: full-screen hidden-object nature game environment. Image 1 is STYLE reference only. Match its lush, quietly magical naturalistic painted woodland style, detailed realistic bark/moss, emerald and warm ochre palette. Generate a new distinct landscape environment: A broad fallen oak log across a sunlit forest clearing. Beautiful deeply cracked brown bark, moss cushions, fern fronds, leaf litter, small natural hollows. Camera low, close enough to inspect bark, forest atmosphere behind. Preserve the same woodland feeling as reference, but absolutely NO notebook, NO magnifying glass, NO man-made items. Composition: 3:2 landscape, detailed from edge to edge; important wood/moss habitat areas throughout the CENTRAL third so a narrow portrait crop still works on phones. The environment is the game itself, not a website backdrop; no empty UI panels. Do not paint any slime moulds or mushrooms: game creatures will be overlaid in code. No objects artificially highlighted, no circles, labels, icons, text, borders, arrows, people, equipment or watermarks. Natural believable perspective and texture.",
-      "tool": "builtin image_gen",
+      "prompt": "Use case: photorealistic-natural.\nAsset type: full-screen woodland exploration game background, landscape 3:2, 1536x1024.\nStyle: photorealistic ordinary field photograph in a central European deciduous woodland, 35mm lens, naturally imperfect exposure and understated color, neutral white balance. Unretouched documentary appearance, not concept art. Irregular broken bark, dirty decomposing leaves with holes, scruffy patchy moss mixed with bare soil, tiny twigs and ordinary woodland litter.\nComposition: a WIDE view of several metres of habitat, camera about a metre above the ground angled gently down, foreground and middle-distance environments visible together, sufficient depth of field to explore details. Main habitat around the middle; both the full landscape and central phone crop should contain several things to inspect.\nConstraints: no humans, no props, no labels or interfaces, no circles, no painted organisms or mushrooms. No polished surfaces, no magical forest, no golden shafts of light, no CGI, no painterly brushstrokes, no HDR, no oversharpening, no decorative composition, no uniformly emerald carpet. This generated reconstruction must visually resemble an unglamorous real woodland photograph.\nScene: a broad ordinary forest clearing with a decaying fallen oak log stretching through the middle; grey-brown cracked bark, loose bark flakes and thin patchy moss, dead leaves around it, several thin saplings and tall tree trunks in the background. A few modest patches of soft daylight through a thin canopy, mostly open shade, no dramatic sunbeams. No rain.",
+      "tool": "built-in image_gen",
       "createdAt": "2026-09-10",
-      "scope": "Imagined educational habitat; not a real locality or documented species association.",
+      "scope": "Generated photorealistic educational habitat reconstruction, not a photograph or a documented locality/species association.",
       "license": "Generated artwork",
-      "reference": "content/artwork/forest-world.png"
+      "revision": "natural-wide-v1",
+      "builtinOutput": "exec-1509f372-e342-4dd1-b0a3-306d98d22a96.png",
+      "weather": "clear",
+      "feedbackSourceIds": [
+        "U22",
+        "U24",
+        "U25",
+        "U26",
+        "U27",
+        "U28",
+        "U31",
+        "U38"
+      ]
     },
     {
       "id": "search-stump",
       "runtimePath": "public/assets/art/search-stump.webp",
       "sourcePath": "content/artwork/search-stump.png",
-      "prompt": "Use case: illustration-story. Asset type: full-screen hidden-object nature game environment. Image 1 is STYLE reference only. Match its lush, quietly magical naturalistic painted woodland style, detailed realistic bark/moss, emerald and warm ochre palette. Generate a new distinct landscape environment: An enormous old weathered oak stump viewed close at ground level. Its broken crown is near upper center, dark hollow at center, exposed branching roots reaching into lower corners. Loose cracked bark and cushions of green moss. Cool sheltered forest with gentle warm morning highlights. Visibly different vertical stump composition from reference horizontal log. Composition: 3:2 landscape, detailed from edge to edge; important wood/moss habitat areas throughout the CENTRAL third so a narrow portrait crop still works on phones. The environment is the game itself, not a website backdrop; no empty UI panels. Do not paint any slime moulds or mushrooms: game creatures will be overlaid in code. No objects artificially highlighted, no circles, labels, icons, text, borders, arrows, people, equipment or watermarks. Natural believable perspective and texture.",
-      "tool": "builtin image_gen",
+      "prompt": "Use case: photorealistic-natural.\nAsset type: full-screen woodland exploration game background, landscape 3:2, 1536x1024.\nStyle: photorealistic ordinary field photograph in a central European deciduous woodland, 35mm lens, naturally imperfect exposure and understated color, neutral white balance. Unretouched documentary appearance, not concept art. Irregular broken bark, dirty decomposing leaves with holes, scruffy patchy moss mixed with bare soil, tiny twigs and ordinary woodland litter.\nComposition: a WIDE view of several metres of habitat, camera about a metre above the ground angled gently down, foreground and middle-distance environments visible together, sufficient depth of field to explore details. Main habitat around the middle; both the full landscape and central phone crop should contain several things to inspect.\nConstraints: no humans, no props, no labels or interfaces, no circles, no painted organisms or mushrooms. No polished surfaces, no magical forest, no golden shafts of light, no CGI, no painterly brushstrokes, no HDR, no oversharpening, no decorative composition, no uniformly emerald carpet. This generated reconstruction must visually resemble an unglamorous real woodland photograph.\nScene: a SMALL mundane rotting stump, less than knee high, with an asymmetrically broken upper surface and dark inner crevice. The whole stump, surrounding roots, scattered leaves, fallen sticks, bare earth and woodland trees beyond are visible; the stump occupies at most one third of the frame, not a monumental central throne. Drab grey cloudy-day light, mostly grey-brown wood, sparse faded moss, no sunlight, no rain. No glossy or perfectly radial giant roots.",
+      "tool": "built-in image_gen",
       "createdAt": "2026-09-10",
-      "scope": "Imagined educational habitat; not a real locality or documented species association.",
+      "scope": "Generated photorealistic educational habitat reconstruction, not a photograph or a documented locality/species association.",
       "license": "Generated artwork",
-      "reference": "content/artwork/forest-world.png"
+      "revision": "natural-wide-v1",
+      "builtinOutput": "exec-878f248a-b899-4726-b03c-7201fe8bc39c.png",
+      "weather": "overcast",
+      "feedbackSourceIds": [
+        "U22",
+        "U24",
+        "U25",
+        "U26",
+        "U27",
+        "U28",
+        "U31",
+        "U38"
+      ]
     },
     {
       "id": "search-leaves",
       "runtimePath": "public/assets/art/search-leaves.webp",
       "sourcePath": "content/artwork/search-leaves.png",
-      "prompt": "Use case: illustration-story. Asset type: full-screen hidden-object nature game environment. Image 1 is STYLE reference only. Match its lush, quietly magical naturalistic painted woodland style, detailed realistic bark/moss, emerald and warm ochre palette. Generate a new distinct landscape environment: Close, almost overhead view of a richly layered autumn forest floor. Russet oak leaves and curled beech leaves, thin decaying twigs, dark bark fragments, pine needles, patches of velvety moss. A few curled large leaves make sheltered pockets. Little visible sky. Honey amber light and olive greens. No fruits, no flowers, no man-made objects. Composition: 3:2 landscape, detailed from edge to edge; important wood/moss habitat areas throughout the CENTRAL third so a narrow portrait crop still works on phones. The environment is the game itself, not a website backdrop; no empty UI panels. Do not paint any slime moulds or mushrooms: game creatures will be overlaid in code. No objects artificially highlighted, no circles, labels, icons, text, borders, arrows, people, equipment or watermarks. Natural believable perspective and texture.",
-      "tool": "builtin image_gen",
+      "prompt": "Use case: photorealistic-natural.\nAsset type: full-screen woodland exploration game background, landscape 3:2, 1536x1024.\nStyle: photorealistic ordinary field photograph in a central European deciduous woodland, 35mm lens, naturally imperfect exposure and understated color, neutral white balance. Unretouched documentary appearance, not concept art. Irregular broken bark, dirty decomposing leaves with holes, scruffy patchy moss mixed with bare soil, tiny twigs and ordinary woodland litter.\nComposition: a WIDE view of several metres of habitat, camera about a metre above the ground angled gently down, foreground and middle-distance environments visible together, sufficient depth of field to explore details. Main habitat around the middle; both the full landscape and central phone crop should contain several things to inspect.\nConstraints: no humans, no props, no labels or interfaces, no circles, no painted organisms or mushrooms. No polished surfaces, no magical forest, no golden shafts of light, no CGI, no painterly brushstrokes, no HDR, no oversharpening, no decorative composition, no uniformly emerald carpet. This generated reconstruction must visually resemble an unglamorous real woodland photograph.\nScene: several metres of a leaf-strewn woodland clearing, viewed from standing or crouching height, NOT a close-up of individual leaves. Include many small weathered brown beech and oak leaves, thin fallen branches, a short rotten log, tufts of grass, low moss islands, bare earth, a few stones and tree bases receding into the background. Lots of environmental context and many different things to explore. Soft cloudy grey light, no sunny glint, no rain, no autumn orange grading.",
+      "tool": "built-in image_gen",
       "createdAt": "2026-09-10",
-      "scope": "Imagined educational habitat; not a real locality or documented species association.",
+      "scope": "Generated photorealistic educational habitat reconstruction, not a photograph or a documented locality/species association.",
       "license": "Generated artwork",
-      "reference": "content/artwork/forest-world.png"
+      "revision": "natural-wide-v1",
+      "builtinOutput": "exec-b045e305-431f-429d-82bc-04e9f11f74f4.png",
+      "weather": "overcast",
+      "feedbackSourceIds": [
+        "U22",
+        "U24",
+        "U25",
+        "U26",
+        "U27",
+        "U28",
+        "U31",
+        "U38"
+      ]
     },
     {
       "id": "search-roots",
       "runtimePath": "public/assets/art/search-roots.webp",
       "sourcePath": "content/artwork/search-roots.png",
-      "prompt": "Use case: illustration-story. Asset type: full-screen hidden-object nature game environment. Image 1 is STYLE reference only. Match its lush, quietly magical naturalistic painted woodland style, detailed realistic bark/moss, emerald and warm ochre palette. Generate a new distinct landscape environment: A quiet mossy woodland bank with interlacing exposed tree roots, flat damp stones and weathered driftwood. No visible river or running water. Deep cool jade-green moss and fern fronds frame a small open patch of dark woody material in center. Soft silver dappled light. Very different environment composition from fallen log. Composition: 3:2 landscape, detailed from edge to edge; important wood/moss habitat areas throughout the CENTRAL third so a narrow portrait crop still works on phones. The environment is the game itself, not a website backdrop; no empty UI panels. Do not paint any slime moulds or mushrooms: game creatures will be overlaid in code. No objects artificially highlighted, no circles, labels, icons, text, borders, arrows, people, equipment or watermarks. Natural believable perspective and texture.",
-      "tool": "builtin image_gen",
+      "prompt": "Use case: photorealistic-natural.\nAsset type: full-screen woodland exploration game background, landscape 3:2, 1536x1024.\nStyle: photorealistic ordinary field photograph in a central European deciduous woodland, 35mm lens, naturally imperfect exposure and understated color, neutral white balance. Unretouched documentary appearance, not concept art. Irregular broken bark, dirty decomposing leaves with holes, scruffy patchy moss mixed with bare soil, tiny twigs and ordinary woodland litter.\nComposition: a WIDE view of several metres of habitat, camera about a metre above the ground angled gently down, foreground and middle-distance environments visible together, sufficient depth of field to explore details. Main habitat around the middle; both the full landscape and central phone crop should contain several things to inspect.\nConstraints: no humans, no props, no labels or interfaces, no circles, no painted organisms or mushrooms. No polished surfaces, no magical forest, no golden shafts of light, no CGI, no painterly brushstrokes, no HDR, no oversharpening, no decorative composition, no uniformly emerald carpet. This generated reconstruction must visually resemble an unglamorous real woodland photograph.\nScene: several metres of a wooded earthy slope with the lower trunks of two trees, irregular exposed roots, grey stones, a decaying branch, wet dark leaf litter and scattered moss. Broad spatial context, not a close-up root texture. It is raining lightly: a few faint fine rain streaks against darker distant bark and wet droplets on leaves, darkened wet soil, cool diffuse cloudy daylight. Rain is gentle and believable, not a storm or fog effect. No river, stream, waterfall or puddle dominating the scene. Avoid glossy plastic roots; only small physically plausible wet highlights.",
+      "tool": "built-in image_gen",
       "createdAt": "2026-09-10",
-      "scope": "Imagined educational habitat; not a real locality or documented species association.",
+      "scope": "Generated photorealistic educational habitat reconstruction, not a photograph or a documented locality/species association.",
       "license": "Generated artwork",
-      "reference": "content/artwork/forest-world.png"
+      "revision": "natural-wide-v1",
+      "builtinOutput": "exec-88504a31-e76b-4a03-b2e8-ba5ac428eb86.png",
+      "weather": "rain",
+      "feedbackSourceIds": [
+        "U22",
+        "U24",
+        "U25",
+        "U26",
+        "U27",
+        "U28",
+        "U31",
+        "U38"
+      ]
     },
     {
       "id": "search-bark",
       "runtimePath": "public/assets/art/search-bark.webp",
       "sourcePath": "content/artwork/search-bark.png",
-      "prompt": "Use case: illustration-story. Asset type: full-screen hidden-object nature game environment. Image 1 is STYLE reference only. Match its lush, quietly magical naturalistic painted woodland style, detailed realistic bark/moss, emerald and warm ochre palette. Generate a new distinct landscape environment: Close view underneath a fallen hollow birch trunk in deep forest shade. Pale curled birch bark peeling away at upper right, rich dark decomposing wood in the center, splintered bark ledges, delicate moss, small leaves, soft blue-green shade with a sliver of gold light. Several distinct natural recesses to inspect. Low macro camera, not a tunnel dungeon. Composition: 3:2 landscape, detailed from edge to edge; important wood/moss habitat areas throughout the CENTRAL third so a narrow portrait crop still works on phones. The environment is the game itself, not a website backdrop; no empty UI panels. Do not paint any slime moulds or mushrooms: game creatures will be overlaid in code. No objects artificially highlighted, no circles, labels, icons, text, borders, arrows, people, equipment or watermarks. Natural believable perspective and texture.",
-      "tool": "builtin image_gen",
+      "prompt": "Use case: photorealistic-natural.\nAsset type: full-screen woodland exploration game background, landscape 3:2, 1536x1024.\nStyle: photorealistic ordinary field photograph in a central European deciduous woodland, 35mm lens, naturally imperfect exposure and understated color, neutral white balance. Unretouched documentary appearance, not concept art. Irregular broken bark, dirty decomposing leaves with holes, scruffy patchy moss mixed with bare soil, tiny twigs and ordinary woodland litter.\nComposition: a WIDE view of several metres of habitat, camera about a metre above the ground angled gently down, foreground and middle-distance environments visible together, sufficient depth of field to explore details. Main habitat around the middle; both the full landscape and central phone crop should contain several things to inspect.\nConstraints: no humans, no props, no labels or interfaces, no circles, no painted organisms or mushrooms. No polished surfaces, no magical forest, no golden shafts of light, no CGI, no painterly brushstrokes, no HDR, no oversharpening, no decorative composition, no uniformly emerald carpet. This generated reconstruction must visually resemble an unglamorous real woodland photograph.\nScene: a small birch grove seen widely from about two metres away, whole lower birch trunks from ground upward, pale peeling and dirt-stained birch bark with naturally irregular dark markings, a fallen birch limb and curled bark fragments among wet leaf litter, small ferns and twigs, other trunks receding behind. Not a macro of bark; show several metres of surrounding forest floor to explore. Gentle visible light rain, darker wet wood with a few water beads, cool grey cloudy daylight, subtle faint rain streaks only, no sunshine, no river or stream, no polished surfaces.",
+      "tool": "built-in image_gen",
       "createdAt": "2026-09-10",
-      "scope": "Imagined educational habitat; not a real locality or documented species association.",
+      "scope": "Generated photorealistic educational habitat reconstruction, not a photograph or a documented locality/species association.",
       "license": "Generated artwork",
-      "reference": "content/artwork/forest-world.png"
+      "revision": "natural-wide-v1",
+      "builtinOutput": "exec-3220082d-9c88-497a-bc49-a0b134da4eac.png",
+      "weather": "rain",
+      "feedbackSourceIds": [
+        "U22",
+        "U24",
+        "U25",
+        "U26",
+        "U27",
+        "U28",
+        "U31",
+        "U38"
+      ]
     },
     {
       "id": "growth-early",

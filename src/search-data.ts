@@ -14,6 +14,7 @@ export type Woodland = {
   title: string;
   description: string;
   image: string;
+  weather: "clear" | "overcast" | "rain";
   spots: HidingPlace[];
 };
 export const woodlands: Woodland[] = [
@@ -22,6 +23,7 @@ export const woodlands: Woodland[] = [
     title: "Лесная поляна",
     description: "Мох и трещинки старого бревна",
     image: "/assets/art/search-forest.webp",
+    weather: "clear",
     spots: [
       {
         id: "forest-network",
@@ -57,6 +59,7 @@ export const woodlands: Woodland[] = [
     title: "Старый пень",
     description: "Дупло, корни и отслоившаяся кора",
     image: "/assets/art/search-stump.webp",
+    weather: "overcast",
     spots: [
       {
         id: "stump-fuligo",
@@ -92,6 +95,7 @@ export const woodlands: Woodland[] = [
     title: "Под листвой",
     description: "Сухие листья и прелые веточки",
     image: "/assets/art/search-leaves.webp",
+    weather: "overcast",
     spots: [
       {
         id: "leaves-didymium",
@@ -127,6 +131,7 @@ export const woodlands: Woodland[] = [
     title: "Мшистый берег",
     description: "Влажная древесина между корнями",
     image: "/assets/art/search-roots.webp",
+    weather: "rain",
     spots: [
       {
         id: "roots-tubifera",
@@ -162,6 +167,7 @@ export const woodlands: Woodland[] = [
     title: "В тени берёзы",
     description: "Береста и потайные щели ствола",
     image: "/assets/art/search-bark.webp",
+    weather: "rain",
     spots: [
       {
         id: "bark-stemonitis",
