@@ -349,10 +349,11 @@ img {
 .art > img {
   position: absolute;
   max-width: none;
-  width: calc(var(--columns) * 100%);
-  height: 200%;
-  left: calc(var(--column) * -100%);
-  top: calc(var(--row) * -100%);
+  /* Sample just inside each atlas tile, excluding its thin divider pixels. */
+  width: calc(var(--columns) * 102%);
+  height: 204%;
+  left: calc(var(--column) * -102% - 1%);
+  top: calc(var(--row) * -102% - 1%);
   user-select: none;
   pointer-events: none;
 }

@@ -3,7 +3,7 @@
   "createdAt": "2026-09-10",
   "tool": "built-in image_gen",
   "typeLabel": "Учебная иллюстрация · создана с ИИ",
-  "scope": "Illustrations are symbolic, at different unspecified scales, not photographs, measurements, identification keys or time-lapse.",
+  "scope": "Generated educational reconstructions at different unspecified scales, not specimen photographs, measurements, identification keys or time-lapse. Habitat scenes use natural photographic styling; early microscopic stages are shared group-level models.",
   "assets": [
     {
       "id": "forest-world",
@@ -53,17 +53,23 @@
       "id": "organisms-v2",
       "runtimePath": "public/assets/art/organisms-v2.webp",
       "sourcePath": "content/artwork/organisms-v2.png",
-      "prompt": "Use case: precise-object-edit scientific-educational. Edit target Image1: eight-panel organism sprite atlas. Keep exact four-column two-row square-panel grid, same forest background, lighting, palette, botanical illustration style and ALL FIVE OTHER panels unchanged. Correct ONLY three bottom-row panels: bottom second Trichia decipiens, bottom third Tubifera ferruginosa, bottom fourth Didymium squamulosum. Supporting images2,3,4 are real reference PHOTOS for morphology, not style; render painted matching target, don't paste photos. Bottom second Trichia: small smooth bright orange ROUND TO PEAR-SHAPED sporangia with rounded TOPS and lower taper toward very short stalks or close to bark as Image4, absolutely NO horns or pointy protrusions at TOP, no droplets upside down. Bottom third Tubifera: dense low mound of tightly packed tiny orange-pink elongated tubular structures with CLOSED ROUNDED tops like Image3, glistening small bead tops, absolutely no open pipes, no wide hollow tubes, no coral. Bottom fourth Didymium: a few dark charcoal globose to slightly flattened sporangia with irregular chalky white lime crust flecks over their closed spherical surfaces, short slender pale stalks like Image2, NOT open cups and NOT mushroom caps, no radial gills, no petal shapes. Accurate morphology matters. Preserve same framing and soft warm morning light all panels, no text, no scale.",
-      "initialPrompt": "Use case: scientific-educational. Asset type: ONE 4-column by 2-row game sprite atlas, landscape 2048x1024, eight exactly square adjacent panels, no borders no gaps, each panel 512x512. Input image is style reference only: match its richly textured painterly miniature woodland lighting and dark damp bark, moss, sophisticated forest-green/ochre palette. Paint eight distinct beautiful macro portraits of slime moulds, NOT photographs. Each organism centered occupying middle 70% of its own square, no parts crossing panels, background dark and calm. Panel order strictly left-to-right top row then bottom row. TOP LEFT Physarum polycephalum: vibrant yellow branching vein network plasmodium spreading over dark decaying wood. TOP SECOND Arcyria denudata: clustered tiny brick-red elongated cottony cylindrical capillitium structures on small thin stalks. TOP THIRD Fuligo septica: one irregular cushion-like bright yellow foamy aethalium on damp bark, not veins and not gilled fungus. TOP FOURTH Lycogala epidendrum: small round matte salmon pink puffball-like aethalia grouped directly on decaying wood, no stalks, varied sizes. BOTTOM LEFT Stemonitis axifera: forest of narrow tall slender rusty-brown cylindrical sporocarps on very thin dark stalks. BOTTOM SECOND Trichia decipiens: group of small pear-shaped glossy orange sporocarps with tapered lower body and slender stalks, not gilled mushrooms. BOTTOM THIRD Tubifera ferruginosa: dense close-packed colony of salmon-red upright tubular sporangia, a raspberry-like mound with individual elongated tubes, no separate stalks. BOTTOM FOURTH Didymium squamulosum: tiny flattened whitish lime-encrusted discoid sporangia on short pale stalks, lightly chalky white, on dead leaf. Same precise botanical painterly game style every square. Species-inspired educational illustration, no claim of exact scale. No text, no letters, no UI, no watermark, no arrows, no eyes or faces.",
-      "referencePhotos": [
-        "didymium-portrait",
-        "tubifera-portrait",
-        "trichia-portrait"
+      "prompt": "Use case: scientific-educational. Asset type: sprite atlas for a biology exploration game, generated educational reconstruction, not a documented specimen.\nNatural restrained optical appearance: no fantasy glow, no golden rim light, no plastic 3D rendering, no polished beads, no decorative particles, no text, arrows, numbers, scales, labels, margins, gutters or borders. Clean exact rectangular grid; separate complete subject in the central 70% of each panel, none crossing boundaries.\nStyle: photorealistic unretouched naturalist macro photography under soft neutral cloudy light, real irregular decomposed grey-brown wood with visible small cracks and grains, restrained moss only at edges, softly out-of-focus ordinary substrate behind. Real-world depth of field, tiny inconsistent natural shapes, subdued color, not illustration or CGI. A little naturally moist organism texture is allowed but no glassy blobs or glossy varnished bark. No mushroom caps/gills, fantasy creatures, flowers or coral. Organisms are minute slime mould structures; visual scale varies between panels.\nLayout: landscape2048x1024, EXACTLY FOUR COLUMNS by TWO ROWS, eight equal square panels512x512. Reading order top left to right then bottom.\n1) Badhamia polycephala: ochre-yellow fine branching plasmodial vein network on dark decayed wood.\n2) Arcyria denudata: tiny brick-red lacy delicate elongated cylindrical sporocarps on short thin stalks, no petals.\n3) Fuligo septica: low irregular pale yellow crumbly foamy aethalium cushion on rough bark, no veins, not coral.\n4) Lycogala epidendrum: small matte salmon-pink sessile spherical aethalia of uneven sizes directly on wood, finely textured surface, no stalks.\n5) Stemonitis axifera: narrow rusty-brown delicate cylindrical sporocarps clustered on thin black stalks.\n6) Hemitrichia decipiens: small closed orange round-to-pear-shaped sporangia, rounded tops with taper ONLY at bottom toward short stalks, NO horns or sharp upper tips.\n7) Tubifera ferruginosa: densely packed salmon-pink tiny upright closed tubes making a low irregular raspberry-like colony, CLOSED rounded tops, no open coral holes.\n8) Didymium squamulosum: tiny dark globose sporangia coated irregularly with chalk-white lime crystals, very short pale stalks with pale bases on dead leaf, no umbrella caps or gills.",
+      "tool": "built-in image_gen",
+      "createdAt": "2026-09-10",
+      "revision": "natural-optical-v1",
+      "scope": "Generated educational reconstruction, not a specimen photograph, time series, diagnostic image or measured scale. Early microscopic forms are shared group-level models; later shapes/colors are conditional.",
+      "license": "Generated artwork",
+      "builtinOutput": "exec-c2083f90-3efb-4957-bb3d-9fb5c9596b9d.png",
+      "feedbackSourceIds": [
+        "U04",
+        "U08",
+        "U15",
+        "U20",
+        "U22",
+        "U27",
+        "U38"
       ],
-      "referenceManifest": "content/assets.manifest.json",
-      "adaptationLicense": "CC BY-SA 4.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-      "changeNote": "AI re-rendering in a unified woodland style; anatomical reference corrections to three panels. Attribution remains with the original reference photographs."
+      "inputImages": []
     },
     {
       "id": "search-forest",
@@ -184,61 +190,105 @@
       "id": "growth-early",
       "runtimePath": "public/assets/art/growth-early.webp",
       "sourcePath": "content/artwork/growth-early.png",
-      "prompt": "Use case: scientific-educational. Asset type: game lifecycle illustration sprite atlas. Image1 is STYLE reference, not layout to preserve. Match the naturalistic painted educational rendering, soft depth of field and restrained warm forest palette. A SINGLE sprite atlas with EXACTLY SIX equal square panels in a 3-column by 2-row grid, no gaps. Read LEFT TO RIGHT top then bottom: 1) one round fine-grained brown slime mould spore with a small emerging translucent amoeboid cell; 2) ONE crawling translucent amoeboid cell and ONE alternative slender flagellated cell nearby, EACH with exactly ONE clearly distinguishable round nucleus; 3) TWO compatible translucent amoeboid cells halfway fusing, a connected narrow bridge, one nucleus in each half; 4) ONE small roughly oval translucent ZYGOTE with exactly ONE large central nucleus, completely unified membrane, no internal wall; 5) ONE unified slightly larger lobed translucent cell with TWO distinct round nuclei, NOT two cells, no constriction or internal membrane; 6) ONE still larger continuous flattened young plasmodium with FOUR small discrete round nuclei, a few short rounded pseudopods spreading outward, no partition walls, no collection of separate cells. These are magnified generic schematic educational stages, NOT a microscopic species diagnosis. Keep nuclei much larger than subtle pale food vesicles so nuclear counts read immediately. SAME muted olive-green microscopic substrate/background in all panels, pearl/translucent cell material, soft golden light. Make the continuous single-cell growth progression unmistakable. No veins yet in panel6, just a growing unified young cell. Each subject centered inside its square with15% margins. Equal rectilinear panel boundaries aligned perfectly. No labels, no text, no arrows, no numbering, no framing, no visible panel gutters, no logos or watermark.",
-      "tool": "builtin image_gen",
+      "prompt": "Use case: scientific-educational. Asset type: sprite atlas for a biology exploration game, generated educational reconstruction, not a documented specimen.\nNatural restrained optical appearance: no fantasy glow, no golden rim light, no plastic 3D rendering, no polished beads, no decorative particles, no text, arrows, numbers, scales, labels, margins, gutters or borders. Clean exact rectangular grid; separate complete subject in the central 70% of each panel, none crossing boundaries.\nLayout: landscape1536x1024, exactly THREE COLUMNS by TWO ROWS, six equal square panels512x512.\nStyle: restrained transmitted-light microscopy-inspired educational reconstruction, flat translucent grey/cream cell boundaries on pale muted grey-green field, fine granular cell interiors, soft optical contrast rather than glossy 3D jelly. Round nuclei slightly darker than cytoplasm and easily counted. Different magnifications between frames, no fake scale bars.\nPanels in reading order: 1) One round brown finely warted spore, with one small translucent amoeboid cell emerging from its opening. 2) Two ALTERNATIVE feeding forms nearby but separate: one amoeboid cell with short blunt pseudopodia and ONE nucleus; one slender flagellated cell with ONE nucleus and two thin flagella. 3) TWO compatible amoeboid cells merging through a cytoplasmic bridge, exactly TWO nuclei total, one in each merging part. 4) ONE unified roughly oval zygote with exactly ONE round nucleus, no separate cells, no internal walls. 5) ONE slightly larger unified lobed cell with exactly TWO distinct round nuclei following nuclear division, no internal walls or splitting membrane. 6) ONE larger flattened young plasmodium, exactly FOUR distinct round nuclei inside ONE continuous membrane, several short blunt extending pseudopods, no internal walls, no separate cells, no mature vein network yet.\nKeep all nuclei visibly distinct from tiny fine cytoplasmic granules. Biological lesson is growth of one continuous cell with more nuclei, not multiplication into a colony. No nuclei in spore other than natural indistinct contents.",
+      "tool": "built-in image_gen",
       "createdAt": "2026-09-10",
-      "scope": "Educational reconstruction; early cells shared across taxa; plasmodial forms/colors conditional, not diagnostic photographs.",
-      "license": "CC BY 4.0",
-      "reference": "content/artwork/life-stages-v2.png (derived from the credited Katja Schulz photograph; see existing plate provenance).",
+      "scope": "Generated educational reconstruction, not a specimen photograph, time series, diagnostic image or measured scale. Early microscopic forms are shared group-level models; later shapes/colors are conditional.",
+      "license": "Generated artwork",
       "tileGrid": {
         "columns": 3,
         "rows": 2
-      }
+      },
+      "revision": "natural-optical-v1",
+      "builtinOutput": "exec-5e7581d6-55d5-489d-bf00-a6690a62acf4.png",
+      "feedbackSourceIds": [
+        "U04",
+        "U08",
+        "U15",
+        "U20",
+        "U22",
+        "U27",
+        "U38"
+      ],
+      "inputImages": []
     },
     {
       "id": "growth-networks",
       "runtimePath": "public/assets/art/growth-networks.webp",
       "sourcePath": "content/artwork/growth-networks.png",
-      "prompt": "Use case: scientific-educational. Asset type: game lifecycle illustration sprite atlas. Image1 is STYLE reference, not layout to preserve. Match the naturalistic painted educational rendering, soft depth of field and restrained warm forest palette. A SINGLE sprite atlas with EXACTLY EIGHT equal square panels in a 4-column by 2-row grid, no gaps. ALL panels show an active PLASMODIUM spreading over dark decaying bark, NOT fruiting bodies. Reading order: 1) Badhamia polycephala (Physarum polycephalum): rich yellow extensive branching reticulate network with fan-shaped advancing edge; 2) Arcyria denudata: delicate pale ivory white branching veins and small white spreading fans; 3) Fuligo septica: broad buttery yellow flattened spreading lobes joined by thick yellow veins, not a puffball; 4) Lycogala epidendrum: translucent pale coral-pink thin spreading plasmodial sheet, a small continuous irregular patch, NO round fruiting bodies; 5) Stemonitis axifera: very thin nearly transparent milky white film with sparse delicate strands, not a thick reticulate Physarum network; 6) Hemitrichia decipiens (Trichia decipiens): pale cream-white interconnected veins and small lobes on rotten wood; 7) Tubifera ferruginosa: smooth continuous pale coral spreading lobes on pine wood, no tubes or beads yet; 8) Didymium squamulosum: small white flattened plasmodial sheet and white branching veins on a brown decaying leaf. These are clearly educational reconstructed models, not diagnostic photographs. Every panel different natural arrangement. Keep the organism central with dark green-brown soft-focused surrounding margins. No nuclei drawn at this macro scale, no sparkles. Equal rectilinear panel boundaries aligned perfectly. No labels, no text, no arrows, no numbering, no framing, no visible panel gutters, no logos or watermark.",
-      "tool": "builtin image_gen",
+      "prompt": "Use case: scientific-educational. Asset type: sprite atlas for a biology exploration game, generated educational reconstruction, not a documented specimen.\nNatural restrained optical appearance: no fantasy glow, no golden rim light, no plastic 3D rendering, no polished beads, no decorative particles, no text, arrows, numbers, scales, labels, margins, gutters or borders. Clean exact rectangular grid; separate complete subject in the central 70% of each panel, none crossing boundaries.\nStyle: photorealistic unretouched naturalist macro photography under soft neutral cloudy light, real irregular decomposed grey-brown wood with visible small cracks and grains, restrained moss only at edges, softly out-of-focus ordinary substrate behind. Real-world depth of field, tiny inconsistent natural shapes, subdued color, not illustration or CGI. A little naturally moist organism texture is allowed but no glassy blobs or glossy varnished bark. No mushroom caps/gills, fantasy creatures, flowers or coral. Organisms are minute slime mould structures; visual scale varies between panels.\nLayout: landscape1536x1024, EXACTLY FOUR COLUMNS and TWO ROWS; each panel384x512, portrait orientation. Reading left-to-right top row then bottom row.\nAll eight panels are ACTIVE PLASMODIUM, never fruiting bodies. Conditional educational forms/colors, not diagnostic claims.\n1) Badhamia polycephala / Physarum polycephalum: fine ochre-yellow interconnected branching veins, thin fans at some advancing margins on dark dead wood.\n2) Arcyria denudata: delicate ivory-white interconnected small veins and thin spreading fan margins on wood, no red structures yet.\n3) Fuligo septica: broad butter-yellow flattened irregular lobes linked by yellow veins, continuous spreading plasmodium, not a solid cushion yet.\n4) Lycogala epidendrum: thin pale pinkish translucent continuous irregular spreading patch on decomposed wood, no separate round bodies.\n5) Stemonitis axifera: very thin nearly translucent milky film with only a few delicate strands, not a thick yellow network.\n6) Hemitrichia decipiens: small pale cream interconnected veins and flattened lobes over rough wood.\n7) Tubifera ferruginosa: continuous pale coral-cream lobes spreading over wood, no beads or tubes yet.\n8) Didymium squamulosum: a small thin white plasmodial sheet and branching veins on a decomposed brown leaf.\nDo not draw nuclei at this macro scale. Each entire connected patch distinct and visible, irregular not symmetrical, nothing looks like roots, worms, fried eggs or spilled paint.",
+      "tool": "built-in image_gen",
       "createdAt": "2026-09-10",
-      "scope": "Educational reconstruction; early cells shared across taxa; plasmodial forms/colors conditional, not diagnostic photographs.",
-      "license": "CC BY 4.0",
-      "reference": "content/artwork/life-stages-v2.png (derived from the credited Katja Schulz photograph; see existing plate provenance).",
+      "scope": "Generated educational reconstruction, not a specimen photograph, time series, diagnostic image or measured scale. Early microscopic forms are shared group-level models; later shapes/colors are conditional.",
+      "license": "Generated artwork",
       "tileGrid": {
         "columns": 4,
         "rows": 2
-      }
+      },
+      "revision": "natural-optical-v1",
+      "builtinOutput": "exec-a70f7fac-50da-4f94-949d-7ad3e00dca1b.png",
+      "feedbackSourceIds": [
+        "U04",
+        "U08",
+        "U15",
+        "U20",
+        "U22",
+        "U27",
+        "U38"
+      ],
+      "inputImages": []
     },
     {
       "id": "growth-forming",
       "runtimePath": "public/assets/art/growth-forming.webp",
       "sourcePath": "content/artwork/growth-forming.png",
-      "prompt": "Use case: scientific-educational. Asset type: game lifecycle illustration sprite atlas. Image1 is STYLE reference, not layout to preserve. Match the naturalistic painted educational rendering, soft depth of field and restrained warm forest palette. A SINGLE sprite atlas with EXACTLY EIGHT equal square panels in a 4-column by 2-row grid, no gaps. ALL panels show EARLY FRUITING, distinct from fully spread plasmodium and mature spore-bearing stage. Reading order: 1) Badhamia polycephala (Physarum polycephalum): yellow plasmodial veins contracting into multiple low yellow rounded lobed primordia with very short rising stems; 2) Arcyria denudata: pale ivory to blush-pink smooth short cylindrical primordia beginning to stand on short stems, no expanded red net yet; 3) Fuligo septica: one broad cream-yellow cushion consolidating on wood, smooth lumpy moist surface, NOT branching coral; 4) Lycogala epidendrum: several soft coral-pink globose sessile immature fruiting bodies tightly on bark, with no stems; 5) Stemonitis axifera: clustered milky-white slender blunt primordia standing upright, just beginning to elongate from a thin film, no brown dusty coat yet; 6) Hemitrichia decipiens: small glossy orange pear-shaped immature sporocarps on short slender stems, smooth round closed tops, absolutely NO pointed tips/horns; 7) Tubifera ferruginosa: tightly packed upright salmon-pink short cylinders with CLOSED rounded tops on a common base, no individual stalks and no open coral holes; 8) Didymium squamulosum: pale rounded immature globose sporocarps on short pale stems on a brown leaf, round heads NOT umbrella mushroom caps, no gills. Match reference painted naturalism, bark/moss atmosphere, quiet olive background. Each whole subject centered in square with15%margin. Equal rectilinear panel boundaries aligned perfectly. No labels, no text, no arrows, no numbering, no framing, no visible panel gutters, no logos or watermark.",
-      "tool": "builtin image_gen",
+      "prompt": "Use case: scientific-educational. Asset type: sprite atlas for a biology exploration game, generated educational reconstruction, not a documented specimen.\nNatural restrained optical appearance: no fantasy glow, no golden rim light, no plastic 3D rendering, no polished beads, no decorative particles, no text, arrows, numbers, scales, labels, margins, gutters or borders. Clean exact rectangular grid; separate complete subject in the central 70% of each panel, none crossing boundaries.\nStyle: photorealistic unretouched naturalist macro photography under soft neutral cloudy light, real irregular decomposed grey-brown wood with visible small cracks and grains, restrained moss only at edges, softly out-of-focus ordinary substrate behind. Real-world depth of field, tiny inconsistent natural shapes, subdued color, not illustration or CGI. A little naturally moist organism texture is allowed but no glassy blobs or glossy varnished bark. No mushroom caps/gills, fantasy creatures, flowers or coral. Organisms are minute slime mould structures; visual scale varies between panels.\nLayout: landscape1536x1024, EXACTLY FOUR COLUMNS and TWO ROWS; each panel384x512, portrait orientation. Reading left-to-right top row then bottom row.\nAll eight panels show IMMATURE FRUITING PRIMORDIA, different from active plasmodium and from mature powdery spore masses.\n1) Badhamia polycephala: yellow veins contracting into several low uneven MULTILOBED primordia starting to lift on very short stems.\n2) Arcyria denudata: small ivory to pale-blush SMOOTH closed blunt cylindrical primordia on short stems, not expanded red net structures yet.\n3) Fuligo septica: one low irregular cream-yellow moist cushion consolidating on wood, no branches or vein network.\n4) Lycogala epidendrum: a few uneven soft salmon-pink small round sessile immature aethalia on bark, no stalks.\n5) Stemonitis axifera: a close small cluster of slender MILKY-WHITE smooth blunt primordia elongating upright, not mature rusty cylinders.\n6) Hemitrichia decipiens: small orange round-to-pear-shaped smooth closed immature sporocarps, rounded tops and taper ONLY toward short stalks at bottom, no horns.\n7) Tubifera ferruginosa: tightly packed tiny upright salmon-pink cylinders on common base, CLOSED rounded tops, no stalks, no open tubes.\n8) Didymium squamulosum: tiny closed round immature pale sporocarps lifting on short pale stalks on decomposed brown leaf, not umbrellas or gills.",
+      "tool": "built-in image_gen",
       "createdAt": "2026-09-10",
-      "scope": "Educational reconstruction; early cells shared across taxa; plasmodial forms/colors conditional, not diagnostic photographs.",
-      "license": "CC BY 4.0",
-      "reference": "content/artwork/life-stages-v2.png (derived from the credited Katja Schulz photograph; see existing plate provenance).",
+      "scope": "Generated educational reconstruction, not a specimen photograph, time series, diagnostic image or measured scale. Early microscopic forms are shared group-level models; later shapes/colors are conditional.",
+      "license": "Generated artwork",
       "tileGrid": {
         "columns": 4,
         "rows": 2
-      }
+      },
+      "revision": "natural-optical-v1",
+      "builtinOutput": "exec-938b79a6-f539-4450-a07e-120fdc8d4f6e.png",
+      "feedbackSourceIds": [
+        "U04",
+        "U08",
+        "U15",
+        "U20",
+        "U22",
+        "U27",
+        "U38"
+      ],
+      "inputImages": []
     },
     {
       "id": "growth-mature",
       "runtimePath": "public/assets/art/growth-mature.webp",
       "sourcePath": "content/artwork/growth-mature.png",
-      "prompt": "Use case: scientific-educational. Asset type: game lifecycle illustration sprite atlas. Image1 is STYLE reference, not layout to preserve. Match the naturalistic painted educational rendering, soft depth of field and restrained warm forest palette. A SINGLE sprite atlas with EXACTLY EIGHT equal square panels in a 4-column by 2-row grid, no gaps. Mature spore-bearing slime moulds in realistic natural history painting, not fungi. Reading order: 1) Badhamia polycephala (Physarum polycephalum): clustered MULTILOBED grey-ochre heads, each head shaped like three connected irregular little lobes, atop slender dark stalks, NOT single perfectly round balls; 2) Arcyria denudata: brick-red expanded soft netlike cylindrical sporocarps on short dark stalks, some visible lacy capillitium, no flower petals; 3) Fuligo septica: a broad low mature pale ochre and cream crusted aethalium on bark, with small broken area showing very dark brown powder inside, NOT branching coral; 4) Lycogala epidendrum: several mature ochre-brown globose sessile bodies on wood, one with a small natural opening showing dull spore powder, NO red/pink immature globes; 5) Stemonitis axifera: tall closely packed rusty-brown slender cylindrical sporocarps on thin black stalks, fine net surface; 6) Hemitrichia decipiens: ochre to olive-brown pear-shaped sporangia on slender stems, some top envelopes broken to reveal ochre fine hairlike spore mass, smooth round tops NO sharp horns; 7) Tubifera ferruginosa: densely packed mature rusty-brown upright short cylinders on one shared base, no stems, mostly closed polygonal/rounded top surfaces, NOT pink bubble coral; 8) Didymium squamulosum: small dark globose sporangia covered with irregular chalk-white lime crystals on SHORT white or cream stems, white circular bases on brown leaf, no mushroom umbrellas or gills. Every subject inside square centered with15%margin. Dark bark, subtle moss, olive-green soft-focus, warm diffuse light, microscopic details only where appropriate. No exaggerated dust clouds. Equal rectilinear panel boundaries aligned perfectly. No labels, no text, no arrows, no numbering, no framing, no visible panel gutters, no logos or watermark.",
-      "tool": "builtin image_gen",
+      "prompt": "Use case: scientific-educational. Asset type: sprite atlas for a biology exploration game, generated educational reconstruction, not a documented specimen.\nNatural restrained optical appearance: no fantasy glow, no golden rim light, no plastic 3D rendering, no polished beads, no decorative particles, no text, arrows, numbers, scales, labels, margins, gutters or borders. Clean exact rectangular grid; separate complete subject in the central 70% of each panel, none crossing boundaries.\nStyle: photorealistic unretouched naturalist macro photography under soft neutral cloudy light, real irregular decomposed grey-brown wood with visible small cracks and grains, restrained moss only at edges, softly out-of-focus ordinary substrate behind. Real-world depth of field, tiny inconsistent natural shapes, subdued color, not illustration or CGI. A little naturally moist organism texture is allowed but no glassy blobs or glossy varnished bark. No mushroom caps/gills, fantasy creatures, flowers or coral. Organisms are minute slime mould structures; visual scale varies between panels.\nLayout: landscape1536x1024, EXACTLY FOUR COLUMNS and TWO ROWS; each panel384x512, portrait orientation. Reading left-to-right top row then bottom row.\nAll eight panels show MATURE spore-bearing structures.\n1) Badhamia polycephala: small grey-ochre stalked heads, EACH head irregular and MULTILOBED with several connected lumps rather than a perfect ball, on fine dark stalks.\n2) Arcyria denudata: brick-red expanded delicate lacy netlike elongated cylindrical sporocarps on short fine stalks. Fragile open capillitium texture, no flower petals.\n3) Fuligo septica: low uneven pale-ochre crusted aethalium cushion with one small irregular broken patch exposing dark brown powder, not yellow branched coral.\n4) Lycogala epidendrum: a few mature matte ochre-brown round sessile aethalia with finely rough walls on dead wood, one small opening, not bright pink immature bodies.\n5) Stemonitis axifera: slender rusty-brown cylinders with fine net surface clustered on thin black stalks, varied heights, not chunky cattails.\n6) Hemitrichia decipiens: small ochre/olive-brown pear-shaped heads on short stalks, some opened to reveal a fine ochre hairy spore mass, no pointed tops.\n7) Tubifera ferruginosa: low closely packed rust-brown colony of upright tiny cylinders on a common base, no individual stalks, mostly closed irregular polygonal rounded tops, no open coral pipes.\n8) Didymium squamulosum: small dark globose to slightly flattened sporangia with irregular chalk-white lime crystals covering their round surfaces, very short pale stalks and pale bases on a dead brown leaf, no mushroom caps or gills.",
+      "tool": "built-in image_gen",
       "createdAt": "2026-09-10",
-      "scope": "Educational reconstruction; early cells shared across taxa; plasmodial forms/colors conditional, not diagnostic photographs.",
-      "license": "CC BY 4.0",
-      "reference": "content/artwork/life-stages-v2.png (derived from the credited Katja Schulz photograph; see existing plate provenance).",
+      "scope": "Generated educational reconstruction, not a specimen photograph, time series, diagnostic image or measured scale. Early microscopic forms are shared group-level models; later shapes/colors are conditional.",
+      "license": "Generated artwork",
       "tileGrid": {
         "columns": 4,
         "rows": 2
-      }
+      },
+      "revision": "natural-optical-v1",
+      "builtinOutput": "exec-06e65b16-2eec-47fe-a773-a84a80affb57.png",
+      "feedbackSourceIds": [
+        "U04",
+        "U08",
+        "U15",
+        "U20",
+        "U22",
+        "U27",
+        "U38"
+      ],
+      "inputImages": []
     }
   ],
   "spriteMap": {
