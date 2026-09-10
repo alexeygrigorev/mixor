@@ -1,11 +1,11 @@
 # Session input audit — 2026-09-10
 
-This is a source audit, not a reconstruction from an assistant summary. It preserves every submitted input for session `01a08a5f-9498-7212-ade6-7cee67aca745` through 2026-09-10 14:30:46 UTC. Repeated submissions, the bundled feedback message and goal commands are retained. Original wording is preserved; insignificant trailing spaces are omitted in Markdown.
+This is a source audit, not a reconstruction from an assistant summary. It preserves every submitted input for session `01a08a5f-9498-7212-ade6-7cee67aca745` through 2026-09-10 15:37:27 UTC. Repeated submissions, the bundled feedback message and goal commands are retained. Original wording is preserved; insignificant trailing spaces are omitted in Markdown.
 
 ## Sources and reconciliation
 
-- Submission source: `~/.codex/history.jsonl`, filtered by the exact session ID: **75 entries** (49 in the initial audit, plus U50–U75 during implementation).
-- Delivery cross-check: `~/.codex/sessions/2026/09/10/rollout-2026-09-10T10-11-54-01a08a5f-9498-7212-ade6-7cee67aca745.jsonl`: **61 actual user-text response items**. Environment messages, subagent reports, assistant output and interruption markers are not user feedback.
+- Submission source: `~/.codex/history.jsonl`, filtered by the exact session ID: **76 entries** (49 in the initial audit, plus U50–U76 during implementation).
+- Delivery cross-check: `~/.codex/sessions/2026/09/10/rollout-2026-09-10T10-11-54-01a08a5f-9498-7212-ade6-7cee67aca745.jsonl`: **62 actual user-text response items**. Environment messages, subagent reports, assistant output and interruption markers are not user feedback.
 - Session metadata confirms the working directory `/home/alexey/git/mixer` and the original clone request.
 - **U23–U31 are present in the submission history but absent as user-text items in the inspected rollout.** These include the missing navigation, framing, weather, scene-dependent audio and discovery requests. The files establish this discrepancy; they do not establish why delivery was missing.
 - Three repeated submissions (U33, U42, U48) match the same delivered text as their predecessors. U46 and U49 are goal commands, not ordinary delivered user-text items.
@@ -590,3 +590,11 @@ Source: history line 17587; rollout line 5675. Checklist: FIND-07, ART-02.
 > - ~/.pocketshell/attachments/mixer/mixer-game/20260910-163044-01-image.png
 
 Valid attachment inspected: Tubifera in the birch scene is placed on a living fern, while the lens shows a colony on a woody surface. Audit all fifteen anchors against visible, species-appropriate substrate; do not fix only the marked fern. Background image bytes remain locked by U59. Do not infer that the organism itself is a plant.
+
+### U76 — 15:37:27 UTC
+
+Source: history line 17596; rollout line 6602. Checklist: FIND-07, FIND-03.
+
+> of course these things should be on something they should't be just floating when you zoom in
+
+The enlarged view must show the organism physically joined to its support, not isolated cutouts over a blurred scene. This explicitly reaffirms lens grounding, not just sensible source coordinates. Main inspected the latest stump and leaf contact sheets and found detached feet/bases despite passing pixel-matching tests; that submission remains rejected. Keep the same complete organism-and-substrate composition in both clue and magnifier, with unchanged scene backgrounds.

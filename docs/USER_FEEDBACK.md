@@ -2,16 +2,16 @@
 
 Updated: 2026-09-10. This is the durable record of the user's playtest requests, including corrections to earlier implementations. Read it before changing the game. Latest explicit feedback overrides conflicting older UI/audio defaults; privacy, source attribution and scientific honesty still apply.
 
-The actual session logs have been inspected: [all 75 submitted inputs, with source lines and timestamps](SESSION_INPUTS.md), cross-checked against 61 delivered user-text items. U23–U31 were absent from the earlier recap but present in this session's submission history. Latest requests reopen clue/lens matching and plausible placement; earlier requests for replay, default-on sound, focused organism screens, text removals and stable phone controls remain. Past test/review passes do not imply user approval.
+The actual session logs have been inspected: [all 76 submitted inputs, with source lines and timestamps](SESSION_INPUTS.md), cross-checked against 62 delivered user-text items. U23–U31 were absent from the earlier recap but present in this session's submission history. Latest requests reopen clue/lens matching and plausible placement; earlier requests for replay, default-on sound, focused organism screens, text removals and stable phone controls remain. Past test/review passes do not imply user approval.
 
-## Latest corrections U73–U75
+## Latest corrections U73–U76
 
 - [ ] **FIND-06 — Actual magnification (U73).** Use the same recognizable specimen, crop and orientation for the subtle clue and enlarged circle, not just the same species. The Stemonitis screenshot shows the current mismatch. Preserve subtle resting presentation, selected-circle interaction and current backgrounds.
-- [ ] **FIND-07 — Credible support (U74–U75).** Third-scene Fuligo must not float beside the log; birch-scene Tubifera must not sit on a living fern while its close-up depicts wood. Audit all fifteen positions and organism contact bases against their visible substrate at phone/tablet/landscape sizes. Moving anchors is allowed; changing background images is not.
+- [ ] **FIND-07 — Credible support (U74–U76).** Third-scene Fuligo must not float beside the log; birch-scene Tubifera must not sit on a living fern while its close-up depicts wood. Audit all fifteen positions and organism contact bases against their visible substrate at phone/tablet/landscape sizes. The magnifier must retain a convincing continuous supporting surface beneath feet/bases, not extracted organisms floating above an enlarged background. Moving anchors is allowed; changing background images is not.
 
 All three new attachments were opened and inspected. The source audit retains their exact text, submission times and delivered source lines. The earlier search ACCEPT is historical for these newly rejected dimensions; matching and placement now require a fresh bounded visual review.
 
-Current correction: one shared local composition replaces mismatched clue/lens framing, and ten anchors move onto suitable pictured surfaces. Independent review cleared a Stemonitis carrier artifact, then caught Didymium bodies erased by alpha separation and residual ground around Hemitrichia. Those four finds and two subpixel landscape safety-margin regressions are being corrected before final acceptance. [Implementation, support map and actual test limits](SEARCH_FIDELITY.md).
+Current correction: one shared local composition replaces mismatched clue/lens framing, and ten anchors move onto suitable pictured surfaces. After earlier alpha and safety-margin corrections, the main cross-browser runs passed 14 cases per engine. However U76 and main's contact-sheet inspection reject the extracted-organism approach: matching pixels and anchor coordinates do not establish physical contact. The next revision must retain continuous natural substrate with each colony; full visual acceptance is still pending. [Implementation, support map and actual test limits](SEARCH_FIDELITY.md).
 
 ## Latest corrections U60–U72
 
