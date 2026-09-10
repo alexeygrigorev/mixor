@@ -82,9 +82,12 @@ test("focused keyboard, photo focus return, rotation, large text and reduced mot
     .filter({ hasText: "Columellomycetidae" });
   await group.focus();
   await page.keyboard.press("Enter");
-  await expect(
-    page.getByRole("button", { name: "Рассмотреть: Badhamia polycephala" }),
-  ).toBeHidden();
+  // WebKit preserves descendant geometry inside closed native details.
+  // Its native visibility API correctly reports them unpainted; Playwright's
+  // fallback geometry check otherwise reports a false-positive visible state.
+  await expect.poll(() => page.getByRole("button", {
+    name: "Рассмотреть: Badhamia polycephala", includeHidden: true,
+  }).evaluate((element) => element.checkVisibility())).toBe(false);
   await page.keyboard.press("Enter");
   await page
     .getByRole("button", { name: "Рассмотреть: Badhamia polycephala" })

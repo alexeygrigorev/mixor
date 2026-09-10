@@ -1,5 +1,6 @@
 import { test, expect, type Page, type TestInfo } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
+import { originalsTest } from "./fixtures/originals-persistence";
 
 async function start(page: Page) {
   await page.goto("/");
@@ -72,7 +73,7 @@ test("observe a real photo, save an educational discovery and revisit after relo
   await inViewport(page);
 });
 
-test("native dialog, originals persisted, rotation", async ({
+originalsTest("native dialog, originals persisted, rotation", async ({
   page,
 }, info) => {
   await start(page);
@@ -91,6 +92,7 @@ test("native dialog, originals persisted, rotation", async ({
     page.getByRole("button", { name: "Настройки", exact: true }),
   ).toBeFocused();
   await page.goto("/#journal");
+  await expect(page.locator(".own-observation")).toHaveCount(0);
   await page
     .getByRole("button", { name: "Добавить свою находку", exact: true })
     .click();
@@ -144,12 +146,22 @@ test("native dialog, originals persisted, rotation", async ({
     });
     db.close();
     return {
+      count: records.length,
       blob: records[0].photos[0].blob instanceof Blob,
       size: records[0].photos[0].blob.size,
       type: records[0].photos[0].blob.type,
+      bytes: Array.from(
+        new Uint8Array(await records[0].photos[0].blob.arrayBuffer()),
+      ),
     };
   });
-  expect(stored).toEqual({ blob: true, size: png.length, type: "image/png" });
+  expect(stored).toEqual({
+    count: 1,
+    blob: true,
+    size: png.length,
+    type: "image/png",
+    bytes: Array.from(png),
+  });
   await inViewport(page);
 });
 
