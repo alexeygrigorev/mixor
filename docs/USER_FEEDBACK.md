@@ -123,7 +123,7 @@ These are local attachment references, not files to publish or infer extra requi
 
 ## Additional review findings to retain
 
-- **REVIEW-04 — active compatibility fix:** rapid stage traversal exposed WebKit's `history.replaceState` rate limit. The exception happened before the rendered route advanced; it was not arrow movement. A same-activity navigation throttle/retry is being implemented with cancellation on Back/new navigation. Separately fixed the browser test's welcome-dialog readiness race. The interrupted full WebKit run (65 pass, 3 fail, 2 interrupted, 5 skipped, 19 not run) is not a final pass.
+- **REVIEW-04 — navigation fix verified:** rapid stage traversal exposed WebKit's `history.replaceState` rate limit before the rendered route advanced; it was not arrow movement. Same-activity commit spacing/retry keeps URL/UI together and cancels pending writes on Back/new navigation. Main passed 14 quota cases per engine and all four full position matrices. Separate test-readiness and heavy-capture workload corrections are being rerun; neither the earlier interrupted run nor the later mixed harness run is a full-suite pass. [Evidence and exact limits](HISTORY_NAVIGATION.md).
 
 These are independent review findings, not invented user requests. All three were independently rechecked and cleared in round 2; later user corrections reopen other scope:
 

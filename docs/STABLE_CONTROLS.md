@@ -6,6 +6,8 @@ Checked in Chromium and Linux WebKit 26.5: all eight species × eleven stages ×
 
 Main inspected fresh phone, tablet and short-landscape renders in `tmp/stable-arrows-capture/`. The image remains uncropped and the arrows remain touch-sized. Artwork, biological content and manual navigation are unchanged.
 
+A later full WebKit stress run exposed a History API rate limit, not moving arrows. The navigation commit guard now keeps URL and UI together; main repeated all four all-species/four-size position cases successfully and passed 14 quota/cancellation cases per engine. [Cause, correction and separate capture-test limits](HISTORY_NAVIGATION.md).
+
 An initial mixed-edit regression run found a duplicate selector caused by the hidden caption measurement and excessive counter width under enlarged text; both were corrected. Two other failures occurred while concurrent hot reloads were changing the application. That run is not final regression evidence; the settled full-suite result belongs in the implementation status.
 
 Reproduce position checks:

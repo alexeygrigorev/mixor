@@ -7,6 +7,7 @@ import { Panel, Capture, BlobPhoto } from "./panels";
 import { audioManager, type SoundLevels } from "./audio";
 import { readSoundPreferences, writeSoundPreferences, type SoundPreferences } from "./audio-preferences";
 import { readJourney, writeJourney, type Discovery } from "./game-store";
+import { createHistoryCommitter } from "./history-committer";
 import { listObservations, type StoredObservation } from "./storage";
 import "./styles.css";
 import "./focused.css";
@@ -225,6 +226,7 @@ function Photo({ photo }: { photo: MediaItem }) {
 
 export default function App() {
   const [route, setRoute] = useState(readRoute);
+  const [historyCommits] = useState(createHistoryCommitter);
   const [entered, setEntered] = useState(() => pref("mixor-entered-v2", false));
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [journey, setJourney] = useState(readJourney);
@@ -272,6 +274,7 @@ export default function App() {
 
   useEffect(() => {
     const update = () => {
+      historyCommits.cancel();
       setRoute(readRoute());
       setOverlay(null);
     };
@@ -280,6 +283,7 @@ export default function App() {
     window.addEventListener("popstate", update);
     document.addEventListener("fullscreenchange", full);
     return () => {
+      historyCommits.cancel();
       window.removeEventListener("hashchange", update);
       window.removeEventListener("popstate", update);
       document.removeEventListener("fullscreenchange", full);
@@ -373,10 +377,8 @@ export default function App() {
     returnFocus?: string,
   ) {
     audioManager.playSfx(place === "journal" ? "journal-open" : "ui-press");
-    setDetail(null);
-    requestedReal.current = showPhoto;
-    setReal(showPhoto);
     const sameActivity = place === route.place;
+    if (!sameActivity) historyCommits.cancel();
     const step = {
       place: route.place,
       taxon: route.taxon,
@@ -407,7 +409,7 @@ export default function App() {
     }
     // Moving between stages or woodland scenes keeps one history entry for
     // that activity. Back then returns to the chooser/organism, not each step.
-    history[sameActivity ? "replaceState" : "pushState"](
+    const write = () => history[sameActivity ? "replaceState" : "pushState"](
       {
         ...history.state,
         mixorNavigation: { route: next, trail, parentKey },
@@ -415,10 +417,20 @@ export default function App() {
       "",
       routeKey(next),
     );
-    setOverlay(null);
-    setRoute(next);
+    const publish = () => {
+      setDetail(null);
+      requestedReal.current = showPhoto;
+      setReal(showPhoto);
+      setOverlay(null);
+      setRoute(next);
+    };
+    // Publish only after the URL write succeeds. A quota retry must not leave
+    // the rendered stage ahead of history or overwrite a later navigation.
+    if (sameActivity) historyCommits.request(write, publish);
+    else { write(); publish(); }
   }
   function back() {
+    historyCommits.cancel();
     audioManager.playSfx("ui-press");
     if (history.state?.mixorNavigation?.parentKey === routeKey(parent)) {
       history.back();
