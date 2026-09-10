@@ -15,7 +15,7 @@ export function SceneWeather({ weather }: { weather: Woodland["weather"] }) {
       </span>
       {weather === "rain" && (
         <div className="rain-streaks" aria-hidden="true">
-          {Array.from({ length: 48 }, (_, i) => (
+          {Array.from({ length: 72 }, (_, i) => (
             <span
               key={i}
               style={
@@ -24,8 +24,8 @@ export function SceneWeather({ weather }: { weather: Woodland["weather"] }) {
                   top: `${(i * 23.3) % 100}%`,
                   "--rain-speed": `${0.8 + (i % 7) * 0.17}s`,
                   "--rain-delay": `${-i * 0.21}s`,
-                  "--rain-length": `${8 + (i % 5) * 3}px`,
-                  "--rain-opacity": 0.14 + (i % 4) * 0.04,
+                  "--rain-length": `${15 + (i % 5) * 4}px`,
+                  "--rain-opacity": 0.3 + (i % 4) * 0.08,
                 } as CSSProperties
               }
             />

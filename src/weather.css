@@ -19,7 +19,7 @@
   width: 1px;
   height: var(--rain-length);
   opacity: var(--rain-opacity);
-  background: linear-gradient(transparent, #d3dee1);
+  background: linear-gradient(transparent, #edf3f4 65%, #edf3f480);
   animation: woodland-rain var(--rain-speed) var(--rain-delay) linear infinite;
 }
 
