@@ -1,5 +1,7 @@
 # Embedded search and replay — U59/U63–65/U70
 
+**Reopened by U73–U75:** the user rejected clue/lens matching and two substrate placements after this checkpoint. The verdict and captures below document the earlier submission, not acceptance of those newer requests. [Current checklist](USER_FEEDBACK.md) tracks actual magnification and all-fifteen placement review; the existing backgrounds remain unchanged.
+
 2026-09-10. Independent verdict: **SCOPED U59/U63–65 SEARCH: ACCEPT**, with no finite findings. This accepts the bounded interaction/layout correction, not overall user approval, broader organism realism, audio quality or physical-device behavior.
 
 Small organism details now follow real foreground features in the existing pictures. They use the background's exact source-to-screen transform instead of independent screen placement. Their transparent touch areas remain 56×56 CSS px. Tap opens one circular magnifier with the scientific identity and “Узнать больше”; Close/Escape restores the quiet search view and origin focus. Dismissed finds can be inspected again.

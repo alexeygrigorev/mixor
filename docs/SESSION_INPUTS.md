@@ -1,11 +1,11 @@
 # Session input audit — 2026-09-10
 
-This is a source audit, not a reconstruction from an assistant summary. It preserves every submitted input for session `01a08a5f-9498-7212-ade6-7cee67aca745` through 2026-09-10 13:44:32 UTC. Repeated submissions, the bundled feedback message and goal commands are retained. Original wording is preserved; insignificant trailing spaces are omitted in Markdown.
+This is a source audit, not a reconstruction from an assistant summary. It preserves every submitted input for session `01a08a5f-9498-7212-ade6-7cee67aca745` through 2026-09-10 14:30:46 UTC. Repeated submissions, the bundled feedback message and goal commands are retained. Original wording is preserved; insignificant trailing spaces are omitted in Markdown.
 
 ## Sources and reconciliation
 
-- Submission source: `~/.codex/history.jsonl`, filtered by the exact session ID: **72 entries** (49 in the initial audit, plus U50–U72 during implementation).
-- Delivery cross-check: `~/.codex/sessions/2026/09/10/rollout-2026-09-10T10-11-54-01a08a5f-9498-7212-ade6-7cee67aca745.jsonl`: **58 actual user-text response items**. Environment messages, subagent reports, assistant output and interruption markers are not user feedback.
+- Submission source: `~/.codex/history.jsonl`, filtered by the exact session ID: **75 entries** (49 in the initial audit, plus U50–U75 during implementation).
+- Delivery cross-check: `~/.codex/sessions/2026/09/10/rollout-2026-09-10T10-11-54-01a08a5f-9498-7212-ade6-7cee67aca745.jsonl`: **61 actual user-text response items**. Environment messages, subagent reports, assistant output and interruption markers are not user feedback.
 - Session metadata confirms the working directory `/home/alexey/git/mixer` and the original clone request.
 - **U23–U31 are present in the submission history but absent as user-text items in the inspected rollout.** These include the missing navigation, framing, weather, scene-dependent audio and discovery requests. The files establish this discrepancy; they do not establish why delivery was missing.
 - Three repeated submissions (U33, U42, U48) match the same delivered text as their predecessors. U46 and U49 are goal commands, not ordinary delivered user-text items.
@@ -557,3 +557,36 @@ Source: history line 17582; rollout line 4865. Checklist: DEV-04.
 > - ~/.pocketshell/attachments/mixer/mixer-game/20260910-154417-01-clipboard.png
 
 Valid attachment inspected: Arcyria development stage 11/11. Previous/next controls must not shift horizontally or vertically as stage text changes, including the last-stage restart control.
+
+### U73 — 14:27:09 UTC
+
+Source: history line 17585; rollout line 5649. Checklist: FIND-06, FIND-03.
+
+> they don't match can we make them match - so one is actually magnified version of the other
+>
+> Attached files:
+> - ~/.pocketshell/attachments/mixer/mixer-game/20260910-162652-01-annotated-clipboard-20260910-142652.png
+
+Valid attachment inspected: Stemonitis on the stump, with both the tiny clue and large circular portrait marked. The clue and lens must use the same recognizable specimen, framing and orientation; merely sharing a species or source atlas is insufficient. This reopens the earlier search visual verdict without changing the accepted interaction direction.
+
+### U74 — 14:28:51 UTC
+
+Source: history line 17586; rollout line 5673. Checklist: FIND-07, FIND-03.
+
+> part 3 - it's floating
+>
+> Attached files:
+> - ~/.pocketshell/attachments/mixer/mixer-game/20260910-162846-01-clipboard.png
+
+Valid attachment inspected: yellow Fuligo in the third woodland appears suspended beside the log end. Move the whole clue onto visible support, preserving a credible point of contact through resizing.
+
+### U75 — 14:30:46 UTC
+
+Source: history line 17587; rollout line 5675. Checklist: FIND-07, ART-02.
+
+> make sure the positions make sense. here it doesn't seem to make sense - it's a plant but we show something on leaves
+>
+> Attached files:
+> - ~/.pocketshell/attachments/mixer/mixer-game/20260910-163044-01-image.png
+
+Valid attachment inspected: Tubifera in the birch scene is placed on a living fern, while the lens shows a colony on a woody surface. Audit all fifteen anchors against visible, species-appropriate substrate; do not fix only the marked fern. Background image bytes remain locked by U59. Do not infer that the organism itself is a plant.
