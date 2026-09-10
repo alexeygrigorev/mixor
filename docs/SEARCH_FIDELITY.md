@@ -1,18 +1,18 @@
 # Matching magnification and grounded finds — U73–U76
 
-2026-09-10. **Current extracted-organism rendering is rejected.** U76 and main's inspection of all five contact sheets show that correct positions and identical clue/lens pixels did not produce convincing physical attachment in the close-up. A continuous supporting surface must remain with each organism. This supersedes the matching/placement claims of the earlier [search checkpoint](SEARCH_REVIEW.md), while retaining its discovery and replay flow.
+2026-09-10. **Substrate-preserving revision under review; no final ACCEPT yet.** U76 and main's inspection of all five contact sheets rejected the preceding extracted-organism rendering. Correct positions and identical clue/lens pixels had not produced convincing physical attachment in the close-up. The revision retains a continuous supporting surface with each organism. This supersedes the matching/placement claims of the earlier [search checkpoint](SEARCH_REVIEW.md), while retaining its discovery and replay flow.
 
 ## What changed
 
-The clue and lens now use the same [SearchSpecimen](../src/search-specimen.tsx) composition: the same generated specimen, inset atlas crop, mask, orientation and local woodland pixels. Only display size changes. The lens no longer substitutes the full unrotated portrait for a clipped, rotated fragment.
+The clue and lens now use the same [SearchSpecimen](../src/search-specimen.tsx) composition: the same generated specimen together with its native wood or leaf, contact texture and shadows. Both use the same inset atlas crop, edge treatment and orientation; only display size changes. The lens no longer substitutes a different portrait for a clipped, rotated fragment. Body extraction and colour-key filters have been removed.
 
 Each location is registered by its contact with the surface, not just its visual center. The colony's base is placed at the same source-image point through resizing. Ten anchors were moved; all fifteen were rechecked. Stable find IDs, species, weather, photos, saved data and all five background images remain unchanged. No new artwork was generated for this correction.
 
-The reported Fuligo now meets the broken log face. The birch-scene Tubifera has moved off the living fern, and the other Tubifera location has also moved onto the foreground log. Stemonitis uses a closer outline around its colony and stalk bases so the old angular piece of atlas ground does not travel with it.
+The reported Fuligo now meets the broken log face. The birch-scene Tubifera has moved off the living fern, and the other Tubifera location has also moved onto the foreground log. All eight taxa retain their actual pictured supporting surface; Didymium retains its dead leaf, while the other seven retain wood. This is a local composition on an appropriate existing scene feature, not a new full-background image.
 
 ## Support map
 
-Coordinates are percentages of the existing 1536×1024 illustrations, not geographic locations or measured biological scale. The exact tile outlines and contact landmarks are in `specimenFrames`; [search-data.ts](../src/search-data.ts) supplies the anchors. Both display sizes register that contact at `(50, 68)` in the composite's 100-unit square.
+Coordinates are percentages of the existing 1536×1024 illustrations, not geographic locations or measured biological scale. Native contact landmarks are in `specimenFrames`; [search-data.ts](../src/search-data.ts) supplies the anchors. `specimenContact` projects the landmark through the shared macro framing; both display sizes register the same contact against the same scene anchor. Resting organism scale is preserved when restoring the substrate.
 
 | Find | Source anchor | Visible support |
 | --- | --- | --- |
@@ -36,9 +36,25 @@ The wood placements are consistent with the specimen-based habitat descriptions 
 
 ## Verification
 
-The [fidelity test](../tests/browser/search-fidelity.spec.ts) independently rasterizes the clue and lens compositions at a common size for every find, compares their pixels, and exercises select/dismiss/reselect/learn/return. Matching pixels establish correspondence, not believable placement; the visual review checks the latter separately.
+The [fidelity test](../tests/browser/search-fidelity.spec.ts) independently rasterizes the clue and lens compositions at a common size for every find, compares their pixels, and exercises select/dismiss/reselect/learn/return. It removes the scene-context layer and checks native support samples below/between the bases against the unmasked source, so an unrelated background cannot conceal missing support. Didymium's six bodies and Hemitrichia's nine heads are sampled too. Matching pixels establish correspondence, not believable placement; the visual review checks the latter separately.
 
 [Embedded-search checks](../tests/browser/embedded-search.spec.ts) pin all ten source/runtime background hashes and cover five scenes at phone, tablet and short-landscape sizes, a wide forest, keyboard/Escape, rotation, 200% text, small phones and the replay boundary without deleting an original photo. The three reported finds are selected in every size of the rendered matrix. The original 56px touch areas remain independent of the smaller visible colonies.
+
+The frozen U76 revision passes **10 Chromium cases** (implementer-run, 1.2 minutes) and **14 WebKit cases** (main-run, 2.2 minutes), with four intentional redundant-project skips per engine. WebKit additionally covers four navigation/context cases. Each engine checks all fifteen image pairs, retained source support/head texture, the finite responsive matrix, keyboard/rotation/200% text, small-phone actions and original-photo/replay boundaries. All measured support/head RGBA differences are zero; the tolerance is 4/255. Native wood alpha varies, so the check preserves the actual source rather than requiring invented opacity. Eight domain/content tests, typecheck, production build, asset validation and offline smoke pass. Current production cache: `mixor-public-a870d5f6d0678a30`, 74 public assets.
+
+Main inspected the updated native lenses for all eight taxa, all five fifteen-find contact sheets, and representative phone/tablet frames. Independent R7 locally cleared the Didymium perimeter correction. Full-family R8 then confirmed continuous support in all fifteen lenses and passed F1/F2/F4–F6. It requests only SF-R8-01: blend the round peripheral join of `forest-network` and `roots-physarum` into their wood. The same implementer is correcting these two edges without changing the other thirteen finds. Final full-contract acceptance remains pending; these checks do not imply physical-device, listening or general artistic acceptance.
+
+## Retained current evidence
+
+Each sheet shows all three finds in that place: attachment context, native lens, then independently rasterized clue/lens at the same size.
+
+- [Forest pairs](screenshots/search-fidelity/forest-pairs.png), [stump pairs](screenshots/search-fidelity/stump-pairs.png), [leaf-litter pairs](screenshots/search-fidelity/leaves-pairs.png), [roots pairs](screenshots/search-fidelity/roots-pairs.png), [birch pairs](screenshots/search-fidelity/bark-pairs.png).
+- Phone: [stump](screenshots/search-fidelity/phone-stump-selected.png), [log-end Fuligo](screenshots/search-fidelity/phone-leaves-selected.png), [birch Tubifera](screenshots/search-fidelity/phone-bark-selected.png).
+- [Tablet roots](screenshots/search-fidelity/tablet-roots-selected.png), [short-landscape birch](screenshots/search-fidelity/landscape-bark-selected.png).
+
+The five pair sheets are Chromium evidence; the five native viewport captures are WebKit evidence. Full per-engine native files, fifteen-row projected mapping and source/evidence hashes remain in `tmp/search-fidelity/` and `tmp/embedded-search/`. No audio, life-cycle, portrait, taxonomy, source artwork or full-background files changed in this correction.
+
+## Rejected intermediate attempts
 
 Before U76, main passed typecheck, eight domain/content tests, production build and asset validation. The updated offline check explicitly decodes both raster images referenced by the SVG magnifier: SVG `<image>` elements are not part of `document.images`. That production cache was `mixor-public-9f09a7b7ba3b90aa`, with 74 public files. The settled affected search/navigation batch passed **14 Chromium and 14 WebKit cases**, with four deliberate redundant-project skips per engine. These are historical functional results for the rejected extraction approach, not visual approval or final evidence for the next revision.
 
