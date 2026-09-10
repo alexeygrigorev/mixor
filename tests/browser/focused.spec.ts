@@ -112,9 +112,16 @@ test("five places, embedded clues, selected circles and replay after woodland ex
       await expect(target).toHaveAccessibleName(`Осмотреть: ${spot.label}`);
       await expect(target).toHaveCSS("border-radius", "50%");
       expect((await target.boundingBox())!.width).toBe(56);
-      expect(
-        (await target.locator(".search-clue").boundingBox())!.width,
-      ).toBeLessThan(56);
+      // The shared patch includes unchanged scene pixels outside the colony.
+      // Measure the actual organism frame, not that larger registered patch.
+      const specimen = target.locator(".search-composite");
+      const organismWidth = await specimen.evaluate((root) => {
+        const frame = root.querySelector<SVGSVGElement>("[data-macro-frame]")!;
+        // SVG getBoundingClientRect can include the atlas beyond its clipped
+        // viewport. Its declared viewport is the actual visible frame.
+        return root.getBoundingClientRect().width * frame.width.baseVal.value / 100;
+      });
+      expect(organismWidth).toBeLessThan(56);
       await expect(target).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
       await target.tap();
       await expect(target).toHaveAttribute("aria-pressed", "true");
@@ -125,11 +132,29 @@ test("five places, embedded clues, selected circles and replay after woodland ex
       await expect(page.getByRole("dialog")).toHaveAccessibleName(
         scientificNames[spot.taxon].name,
       );
-      await expect(page.locator(".search-magnified-image > .art")).toHaveCSS(
+      const tileByTaxon = {physarum:0, arcyria:1, fuligo:2, lycogala:3, stemonitis:4, trichia:5, tubifera:6, didymium:7};
+      const enlarged = page.locator(".search-magnified-image > .search-composite");
+      for (const rendered of [specimen, enlarged]) {
+        await expect(rendered).toHaveAttribute("data-specimen", spot.id);
+        await expect(rendered).toHaveAttribute("data-source-tile", String(tileByTaxon[spot.taxon]));
+        await expect(rendered).toHaveAttribute("data-patch-size", String(spot.size * 8 * (spot.taxon === "physarum" ? .64 : .7) / .92));
+        await expect(rendered).toHaveAttribute("data-contact", (await specimen.getAttribute("data-contact"))!);
+        await expect(rendered).toHaveAttribute("data-support", spot.taxon === "didymium" ? "leaf" : "wood");
+      }
+      const contactOffset = await target.evaluate((button) => {
+        const root = button.querySelector<SVGSVGElement>(".search-composite")!;
+        const contact = root.dataset.contact!.split(",").map(Number);
+        const patch = root.getBoundingClientRect();
+        const hit = button.getBoundingClientRect();
+        return Math.hypot(patch.x + patch.width * contact[0] / 100 - hit.x - hit.width / 2,
+          patch.y + patch.height * contact[1] / 100 - hit.y - hit.height / 2);
+      });
+      expect(contactOffset).toBeLessThan(1);
+      await expect(page.locator(".search-magnified-image > .search-composite")).toHaveCSS(
         "border-radius",
         "50%",
       );
-      await expect(page.locator(".search-magnified-image > .art")).toHaveCSS(
+      await expect(page.locator(".search-magnified-image > .search-composite")).toHaveCSS(
         "mask-image",
         "none",
       );

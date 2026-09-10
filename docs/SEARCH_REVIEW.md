@@ -1,6 +1,6 @@
 # Embedded search and replay — U59/U63–65/U70
 
-**Reopened by U73–U75:** the user rejected clue/lens matching and two substrate placements after this checkpoint. The verdict and captures below document the earlier submission, not acceptance of those newer requests. [Current checklist](USER_FEEDBACK.md) tracks actual magnification and all-fifteen placement review; the existing backgrounds remain unchanged.
+**Historical checkpoint, superseded for matching/placement by U73–U76:** the user rejected clue/lens matching, two placements and floating close-ups. Those newer requirements are now implemented and accepted in [the R9 fidelity/support review](SEARCH_FIDELITY.md). The verdict and captures below retain the earlier interaction evidence; backgrounds remain unchanged.
 
 2026-09-10. Independent verdict: **SCOPED U59/U63–65 SEARCH: ACCEPT**, with no finite findings. This accepts the bounded interaction/layout correction, not overall user approval, broader organism realism, audio quality or physical-device behavior.
 

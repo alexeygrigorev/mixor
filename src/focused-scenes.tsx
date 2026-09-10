@@ -11,6 +11,7 @@ import {
 import { woodlands, type Woodland } from "./search-data";
 import { scientificNames, taxonomyTree, type TaxonomyNode } from "./taxonomy";
 import { SceneWeather } from "./weather";
+import { SearchSpecimen, specimenPatchSize, specimenContact } from "./search-specimen";
 
 export function BackButton({
   back,
@@ -324,14 +325,11 @@ export function SearchScene({
               className="search-clue"
               aria-hidden="true"
               style={{
-                width: Math.max(
-                  24,
-                  Math.min(44, (worldWidth * spot.size) / 2800),
-                ),
-                transform: `rotate(${spot.turn}deg)`,
+                width: worldWidth * specimenPatchSize(spot) / 1536,
+                transform: `translate(-${specimenContact(spot)[0]}%, -${specimenContact(spot)[1]}%)`,
               }}
             >
-              <Art taxon={spot.taxon} label="" />
+              <SearchSpecimen woodland={woodland} spot={spot} />
             </span>
             {found && <span className="search-clue-found" aria-hidden="true" />}
           </button>
@@ -357,8 +355,9 @@ export function SearchScene({
             style={{ left: lensLeft, top: lensTop }}
           >
             <div className="search-magnified-image">
-              <Art
-                taxon={selected.taxon}
+              <SearchSpecimen
+                woodland={woodland}
+                spot={selected}
                 label={`${scientificNames[selected.taxon].name}: увеличение, иллюстрация ИИ`}
               />
               <button

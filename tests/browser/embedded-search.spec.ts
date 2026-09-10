@@ -14,10 +14,16 @@ async function capture(page: Page, name: string) {
   await page.evaluate(async () => {
     await document.fonts.ready;
     await Promise.all([...document.images].map((image) => image.decode()));
+    await Promise.all([...new Set([...document.querySelectorAll("svg image")].map(image => image.getAttribute("href")!))].map(async path => {
+      const image = new Image();
+      image.src = path;
+      await image.decode();
+    }));
     await new Promise(requestAnimationFrame);
     await new Promise(requestAnimationFrame);
   });
-  await page.screenshot({ path: `tmp/embedded-search/${name}.png` });
+  const engine = page.context().browser()?.browserType().name() ?? "persistent";
+  await page.screenshot({ path: `tmp/embedded-search/${engine}/${name}.png` });
 }
 async function anchored(page: Page, scene: (typeof woodlands)[number]) {
   await expect
@@ -147,17 +153,22 @@ test("embedded search: unchanged backgrounds and finite rendered evidence", asyn
         "none",
       );
       await capture(page, `${viewport.name}-${scene.id}-resting`);
-      await page.locator(".hiding-place").first().tap();
+      const reported = {stump:"stump-stemonitis", leaves:"leaves-fuligo", bark:"bark-tubifera"};
+      const selectedId = reported[scene.id as keyof typeof reported] ?? scene.spots[0].id;
+      await page.locator(`[data-find="${selectedId}"]`).tap();
       await magnifierFits(page);
       await capture(page, `${viewport.name}-${scene.id}-selected`);
       await page.getByRole("button", { name: "Закрыть увеличение" }).click();
     }
   }
   await page.setViewportSize({ width: 1536, height: 864 });
+  // Reset the forest itself, not the last woodland visited by the matrix.
+  await page.goto("/#world/physarum/forest");
   await page.getByRole("button", { name: "Назад к выбору места" }).click();
   await page
     .getByRole("button", { name: `Искать: ${woodlands[0].title}`, exact: true })
     .click();
+  await expect(page.locator(".hiding-place.is-found")).toHaveCount(0);
   await anchored(page, woodlands[0]);
   await capture(page, "wide-forest-resting");
   await page.locator(".hiding-place").first().click();

@@ -299,20 +299,16 @@
   box-shadow: 0 0 0 6px #10271f;
 }
 .search-clue {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -68%);
   display: block;
   aspect-ratio: 1;
-  opacity: 0.87;
-  /* A tiny colony detail, feathered into its local bark/leaf support. No rim,
-     shadow or magnified landscape at rest. Full morphology is in the lens. */
-  mask-image: radial-gradient(
-    ellipse 48% 40% at 50% 54%,
-    #000 28%,
-    #000b 52%,
-    transparent 100%
-  );
   pointer-events: none;
 }
-.search-clue .art {
+.search-composite {
+  display: block;
   width: 100%;
   height: 100%;
 }
@@ -361,7 +357,7 @@
   flex: 0 0 auto;
   position: relative;
 }
-.search-magnified-image > .art {
+.search-magnified-image > .search-composite {
   width: 100%;
   height: 100%;
   border: 2px solid #d2d5bda3;

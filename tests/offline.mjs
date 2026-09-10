@@ -117,6 +117,21 @@ try {
   assert.equal(await page.locator(".hiding-place.is-found").count(), 0);
   await page.locator(".hiding-place").first().click();
   await page.locator(".search-magnifier").waitFor();
+  // The clue/lens now share an SVG composite. document.images does not include
+  // its <image> nodes, so verify both referenced rasters decode from the cache.
+  const magnifiedSources = await page.locator(".search-magnifier image").evaluateAll(
+    async (images) => Promise.all(images.map(async (node) => {
+      const source = node.getAttribute("href");
+      const image = new Image();
+      image.src = source;
+      await image.decode();
+      return { source, width: image.naturalWidth, height: image.naturalHeight };
+    })),
+  );
+  assert.equal(magnifiedSources.length, 2);
+  assert.ok(magnifiedSources.some(({ source }) => source === "/assets/art/organisms-v2.webp"));
+  assert.ok(magnifiedSources.some(({ source }) => source.startsWith("/assets/art/search-")));
+  assert.ok(magnifiedSources.every(({ width, height }) => width > 0 && height > 0));
   await page.getByRole("button", { name: "Закрыть увеличение", exact: true }).click();
   await page.getByRole("button", { name: /^Следующее место:/ }).click();
   assert.equal(await page.locator(".scene-weather").getAttribute("data-weather"), "clear");
