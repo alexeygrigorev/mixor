@@ -6,6 +6,44 @@
   "scope": "Generated educational reconstructions at different unspecified scales, not specimen photographs, measurements, identification keys or time-lapse. Habitat scenes use natural photographic styling. Each taxon now has a separately generated early-development plate; early biology remains a group-level reconstruction, not species-diagnostic anatomy.",
   "assets": [
     {
+      "id": "walk-wetland-path-v2",
+      "runtimePath": "public/assets/art/walk-wetland-path-v2.webp",
+      "sourcePath": "content/artwork/walk-wetland-path-v2.png",
+      "prompt": "Create one 1536x1024 landscape image: a NEW CAMERA POSITION several walking steps FORWARD in this exact place, for a Street View style walking game. The provided reference is the previous station. It is NOT the output framing to enlarge. This must show TRANSLATIONAL PARALLAX and newly revealed space, NOT a zoom, crop, or closer lens.\nSpatial layout of reference: loose grey rectangular paving stones with patchy moss in foreground; on left a scrubby willow bank with diagonally fallen branches; narrow muddy trail goes forward and bends left around willow; on right a dense tall cattail wall; one short gnarled root/log sits at the right edge of the trail around reference x=31%,y=55%; distant deciduous trees and a strip of overcast sky.\nNEW station: the photographer has WALKED ABOUT THREE METRES FORWARD along the muddy trail, past ALL the loose paving stones. Camera still handheld at roughly 1.4m height, SAME ordinary smartphone wide lens (no zoom), looking forward along the trail, slightly left.\nMandatory parallax:\n- Original foreground paving stones are now BEHIND THE PHOTOGRAPHER and must NOT be visible anywhere in new foreground.\n- The small gnarled broken root formerly halfway up the old frame is now close at the LOWER RIGHT EDGE, seen from above and slightly from its side, partially cut by frame.\n- The old fallen branch pile is now nearly behind the photographer on the LEFT: only the ends of the SAME grey-brown branches protrude into the far lower LEFT edge, mostly outside the view.\n- Nearest reed blades now pass close to camera at RIGHT frame edge, some cropped by edge; do not scale up the entire old reed wall. Their view changes relative to the distant trees.\n- Keep the SAME recognisable distant tree forks and grey cloud gap, at approximately the SAME apparent scale (no more than 10% larger), with slight sideways shift. Background must not magnify with foreground.\n- The same willow trunk/bank now sits to LEFT and the path's previously partly hidden bend is visible beyond it. Reveal an ordinary continuation of this SAME muddy narrow path between willow scrub and reeds, about a few metres more. Do not invent architecture, bridges, streams, people or an unrelated destination.\nMost of frame now contains muddy leaf-scattered path underfoot, reeds at right and willow scrub at left. Plausible geometry for walking along a real path. Camera translation, occlusion changes, foreground moving past camera, distant background retained. This is an actual new perspective in a reconstructed place.\nUNPOLISHED EVERYDAY PHONE SNAPSHOT: cheap smartphone main lens, flat drab overcast light, imperfect casual framing, subdued slightly brownish olive greens, unremarkable exposure, mildly soft small foliage details, realistic modest dynamic range, no dramatic composition, no professional lighting, no HDR, no polished nature photography, no saturated emerald moss, no ultra-sharp leaves, no cinematic bokeh. Real dirt, uneven litter, grey brown dead vegetation. No artificial heavy noise filter or vignette.\nNo interface, arrows, text, symbols or annotations. This is generated environment art, not documentary evidence.",
+      "tool": "built-in image_gen",
+      "createdAt": "2026-09-11",
+      "typeLabel": "Сгенерированное окружение",
+      "scope": "Adjacent reconstructed view of the existing wetland scene, not documentary photography or measured geographic space. Requested casual phone-snapshot appearance.",
+      "inputImages": [
+        "content/artwork/search-wetland-v1.png"
+      ],
+      "builtinOutput": "exec-0c1c5f6e-34bd-43a3-9fdb-ea34c4bfe1ee.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "runtimePreparation": "ImageMagick WebP quality 88, metadata stripped. Source PNG unchanged."
+    },
+    {
+      "id": "walk-wetland-branches-v1",
+      "runtimePath": "public/assets/art/walk-wetland-branches-v1.webp",
+      "sourcePath": "content/artwork/walk-wetland-branches-v1.png",
+      "prompt": "Edit the supplied woodland image to create ONE adjacent leftward viewpoint for a point-and-click walking game. OUTPUT ONE landscape 3:2 image, 1536x1024, no panels.\nReconstruct the space JUST TO THE LEFT of this EXACT scene using the existing left edge as an overlap anchor. The camera takes ONE small step left and turns slightly left toward the fallen branch pile, with no change of location, weather, season, or time. Preserve and enlarge the rough diagonal fallen branches visible at source x=0–16%, y=44–58%, preserving their angular crossing and broken grey bark. They now extend from the lower left toward the centre against the same scruffy bank and same willow stems. Reveal a little previously unseen dull leaf litter and twig-covered ground to the left around these EXISTING branches. The same distinctive loose rectangular grey granite blocks at source bottom left remain visible now across lower middle/right, with patchy imperfect moss between them. Keep the original narrow muddy path visible at the RIGHT of this new view and the SAME tall reed wall farther right, so the viewer immediately recognises they merely stepped beside the path. Retain a few original willow canopy forks upper centre/right. Never invent a new log, new boulder, different forest, magically carpeted moss or new trail. Do not mirror.\nOrdinary casual PHONE SNAPSHOT taken seconds after the source: unplanned imperfect framing, flat grey cloudy daylight, slightly dull olive green and muddy grey-brown colors, modest dynamic range, mild sensor grain in dark areas and soft fine detail on distant foliage. Deep practical phone focus. No portrait-mode blur, no cinematic lighting, no professional composition, no glossy wet surfaces, no HDR, no sharpening halos, no surreal tiny detail, no artificial vignette. Same lighting and identity of existing objects is more important than prettiness. No interface, text, arrows, circles, annotations, people or visible camera. Generated spatial environment art, not a claimed documentary observation.",
+      "tool": "built-in image_gen",
+      "createdAt": "2026-09-11",
+      "typeLabel": "Сгенерированное окружение",
+      "scope": "Adjacent reconstructed view of the existing wetland scene, not documentary photography or measured geographic space. Requested casual phone-snapshot appearance.",
+      "inputImages": [
+        "content/artwork/search-wetland-v1.png"
+      ],
+      "builtinOutput": "exec-8f7b0ddd-0221-49a7-a2a0-47776877705e.png",
+      "dimensions": {
+        "width": 1536,
+        "height": 1024
+      },
+      "runtimePreparation": "ImageMagick WebP quality 88, metadata stripped. Source PNG unchanged."
+    },
+    {
       "id": "early-physarum-v3",
       "taxonId": "physarum",
       "runtimePath": "public/assets/art/early-physarum-v3.webp",

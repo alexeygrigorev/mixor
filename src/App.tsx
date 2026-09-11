@@ -11,6 +11,7 @@ import { createHistoryCommitter } from "./history-committer";
 import { listObservations, type StoredObservation } from "./storage";
 import "./styles.css";
 import "./focused.css";
+import "./street-view.css";
 import {
   ActivityHome,
   BackButton,
@@ -654,8 +655,9 @@ export default function App() {
         )}
         {route.place === "world" && (
           <SearchScene
-            key={route.stage}
+            key={findWoodland(route.stage).id}
             woodland={findWoodland(route.stage)}
+            viewId={route.stage}
             finds={finds}
             reveal={reveal}
             inspect={(id, findId) => go("portrait", id, "spore", false, findId)}

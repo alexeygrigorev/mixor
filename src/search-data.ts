@@ -1,4 +1,5 @@
 import type { TaxonId } from "./data";
+import { getWalkView } from "./street-view-data";
 
 export type HidingPlace = {
   id: string;
@@ -215,7 +216,7 @@ export const woodlands: Woodland[] = [
   },
 ];
 export const findWoodland = (id: string) =>
-  woodlands.find((w) => w.id === id) ?? woodlands[0];
+  woodlands.find((w) => w.id === (getWalkView(id)?.woodlandId ?? id)) ?? woodlands[0];
 const key = "mixor-search-v1";
 const validIds = new Set(woodlands.flatMap((w) => w.spots.map((s) => s.id)));
 export function readFinds(): string[] {

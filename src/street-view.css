@@ -1,0 +1,90 @@
+.walk-directions {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  animation: walk-markers-appear 180ms ease-out both;
+}
+.walk-arrow {
+  position: absolute;
+  width: 88px;
+  height: 76px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  color: #f6f4e9;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  -webkit-tap-highlight-color: transparent;
+}
+.walk-arrow > svg {
+  width: 112px;
+  height: 112px;
+  overflow: visible;
+  transform: scaleY(.38);
+  fill: #f8f7edd6;
+  stroke: #152018ad;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+.walk-arrow > span {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 10px;
+  border-radius: 7px;
+  background: #122019e8;
+  color: #f6f4e9;
+  font-size: 14px;
+  line-height: 1.3;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 140ms;
+}
+.walk-arrow:hover:not(:disabled),
+.walk-arrow:focus-visible {
+  background: transparent;
+  filter: none;
+  color: white;
+}
+.walk-arrow:hover:not(:disabled) > svg,
+.walk-arrow:focus-visible > svg { fill: #fffef5ed; }
+.walk-arrow:hover:not(:disabled) > span,
+.walk-arrow:focus-visible > span {
+  opacity: 1;
+}
+.walk-arrow:focus-visible {
+  outline: 2px solid #f6f4e9;
+  outline-offset: 5px;
+}
+.walk-arrow:disabled {
+  opacity: .35;
+  cursor: default;
+}
+.walk-arrow.is-loading {
+  opacity: .75;
+  cursor: progress;
+}
+.walk-transition {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+@keyframes walk-markers-appear {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.calm .walk-directions { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .walk-directions { animation: none; }
+  .walk-arrow > span { transition: none; }
+}

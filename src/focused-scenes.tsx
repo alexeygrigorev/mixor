@@ -12,6 +12,8 @@ import { woodlands, type Woodland } from "./search-data";
 import { scientificNames, taxonomyTree, type TaxonomyNode } from "./taxonomy";
 import { SceneWeather } from "./weather";
 import { SearchSpecimen, specimenPatchSize, specimenContact } from "./search-specimen";
+import { getWalkView, type WalkLink } from "./street-view-data";
+import { StreetViewTransition } from "./street-view-transition";
 
 export function BackButton({
   back,
@@ -177,6 +179,7 @@ export function SpeciesChooser({
 
 export function SearchScene({
   woodland,
+  viewId = woodland.id,
   finds,
   reveal,
   inspect,
@@ -184,6 +187,7 @@ export function SearchScene({
   back,
 }: {
   woodland: Woodland;
+  viewId?: string;
   finds: string[];
   reveal: (id: string) => void;
   inspect: (taxon: TaxonId, findId: string) => void;
@@ -195,10 +199,58 @@ export function SearchScene({
   const [announcement, setAnnouncement] = useState("");
   const [failed, setFailed] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const walkView = getWalkView(viewId);
+  const sceneImage = walkView?.image ?? woodland.image;
+  const visibleSpots = !walkView || walkView.id === woodland.id ? woodland.spots : [];
+  const [walkingTo, setWalkingTo] = useState<string | null>(null);
+  const [walkError, setWalkError] = useState("");
+  const [leaving, setLeaving] = useState<{ from: string; to: string } | null>(null);
+  const walkRequest = useRef(0);
+  const walking = useRef(false);
+  useEffect(() => {
+    setFailed(false);
+    setSelectedId(null);
+    setWalkingTo(null);
+    setWalkError("");
+    walking.current = false;
+    // Only the adjacent prepared views are warmed; navigation waits for decode.
+    walkView?.links.forEach((link) => {
+      const next = getWalkView(link.to);
+      if (next) {
+        const image = new Image();
+        image.src = next.image;
+        void image.decode().catch(() => undefined);
+      }
+    });
+    return () => { walkRequest.current += 1; };
+  }, [sceneImage, walkView]);
+  const takeStep = async (link: WalkLink) => {
+    const next = getWalkView(link.to);
+    if (!next || walking.current) return;
+    walking.current = true;
+    const request = ++walkRequest.current;
+    setWalkingTo(link.to);
+    setWalkError("");
+    setSelectedId(null);
+    try {
+      const image = new Image();
+      image.src = next.image;
+      await image.decode();
+      if (request !== walkRequest.current) return;
+      setLeaving({ from: viewId, to: next.id });
+      change(next.id);
+      setAnnouncement(next.title);
+    } catch {
+      if (request !== walkRequest.current) return;
+      setWalkError("Этот ракурс не загрузился. Нажми на стрелку ещё раз.");
+      setWalkingTo(null);
+      walking.current = false;
+    }
+  };
   const magnifier = useRef<HTMLDivElement>(null);
   const dismissButton = useRef<HTMLButtonElement>(null);
   const [lensSize, setLensSize] = useState({ width: 300, height: 370 });
-  const selected = woodland.spots.find((spot) => spot.id === selectedId);
+  const selected = visibleSpots.find((spot) => spot.id === selectedId);
   const dismiss = () => {
     setSelectedId(null);
     host.current
@@ -244,7 +296,7 @@ export function SearchScene({
   const worldHeight = worldWidth / 1.5;
   // The clue and its support share the SAME source-to-screen transform.
   // Only the deliberately opened magnifier is clamped into the viewport.
-  const project = (spot: Woodland["spots"][number]) => ({
+  const project = (spot: { x: number; y: number }) => ({
     x: (worldWidth * spot.x) / 100 - (worldWidth - size.width) / 2,
     y: (worldHeight * spot.y) / 100 - (worldHeight - size.height) / 2,
   });
@@ -274,22 +326,53 @@ export function SearchScene({
   return (
     <section
       ref={host}
-      className="search-scene"
-      aria-label={`${woodland.title}: поиск миксомицетов`}
+      className={`search-scene ${walkView ? "street-view-scene" : ""}`}
+      aria-label={walkView ? `${woodland.title}: ${walkView.title}` : `${woodland.title}: поиск миксомицетов`}
+      data-view={walkView?.id}
     >
       <div
         className="search-world"
         style={{ width: worldWidth, height: worldWidth / 1.5 }}
       >
         <img
+          key={sceneImage}
           className="search-environment"
-          src={woodland.image}
+          src={sceneImage}
           alt=""
+          draggable={false}
           onError={() => setFailed(true)}
         />
+        {leaving && (
+          <StreetViewTransition from={leaving.from} to={leaving.to}
+            complete={() => setLeaving(null)} />
+        )}
       </div>
       <SceneWeather weather={woodland.weather} />
-      {woodland.spots.map((spot) => {
+      {walkView && !selected && !leaving && walkingTo === null && (
+        <nav className="walk-directions" aria-label="Прогулка по тропе" aria-busy={walkingTo !== null}>
+          {walkView.links.map((link) => {
+            const point = project(link);
+            return (
+              <button
+                key={`${walkView.id}-${link.to}`}
+                className={`walk-arrow ${walkingTo === link.to ? "is-loading" : ""}`}
+                style={{ left: point.x, top: point.y }}
+                aria-label={link.label}
+                disabled={walkingTo !== null || leaving !== null}
+                onClick={() => void takeStep(link)}
+              >
+                <svg viewBox="0 0 100 100" aria-hidden="true">
+                  <g transform={`rotate(${link.angle} 50 50)`}>
+                    <path d="M50 15 84 64 71 72 50 43 29 72 16 64Z" />
+                  </g>
+                </svg>
+                <span>{link.label}</span>
+              </button>
+            );
+          })}
+        </nav>
+      )}
+      {!leaving && visibleSpots.map((spot) => {
         const found = finds.includes(spot.id);
         const point = project(spot);
         const isSelected = spot.id === selectedId;
@@ -415,6 +498,7 @@ export function SearchScene({
           Лес не загрузился. Вернись и открой это место ещё раз.
         </p>
       )}
+      {walkError && <p className="search-error" role="alert">{walkError}</p>}
     </section>
   );
 }

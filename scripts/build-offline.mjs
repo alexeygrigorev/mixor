@@ -10,6 +10,7 @@ const files = [
   "/favicon.svg",
   "/icon-192.png",
   "/icon-512.png",
+  "/assets/art/search-wetland-v1.webp",
 ];
 for (const entry of readdirSync("dist/assets", { withFileTypes: true })) {
   if (entry.isFile() && /\.(js|css|woff2)$/.test(entry.name))
