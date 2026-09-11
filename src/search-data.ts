@@ -8,6 +8,9 @@ export type HidingPlace = {
   y: number;
   size: number;
   label: string;
+  // Some scenes contain the tiny discovery in the background artwork itself;
+  // keep the touch target, but do not paste a second macro over it.
+  visibleClue?: boolean;
 };
 export type Woodland = {
   id: string;
@@ -180,6 +183,33 @@ export const woodlands: Woodland[] = [
         y: 50.5,
         size: 7,
         label: "Потемневший конец упавшей берёзы",
+      },
+    ],
+  },
+  {
+    id: "wetland",
+    title: "Камышовая тропа",
+    description: "Мох, поваленная ветка и высокая трава у тропы",
+    image: "/assets/art/search-wetland-v1.webp",
+    weather: "overcast",
+    spots: [
+      {
+        id: "wetland-tubifera",
+        taxon: "tubifera",
+        x: 6.5,
+        y: 51,
+        size: 4,
+        label: "Кора поваленной ветки слева",
+        visibleClue: false,
+      },
+      {
+        id: "wetland-didymium",
+        taxon: "didymium",
+        x: 49,
+        y: 86,
+        size: 4,
+        label: "Мёртвые листья в мшистом шве",
+        visibleClue: false,
       },
     ],
   },

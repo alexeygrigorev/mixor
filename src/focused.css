@@ -268,7 +268,7 @@
   place-items: center;
   width: 48px;
   min-height: 48px;
-  border-radius: 50%;
+  border-radius: 12px;
   padding: 8px;
 }
 .search-places > span {
@@ -286,7 +286,7 @@
   padding: 0;
   background: transparent;
   border: 0;
-  border-radius: 50%;
+  border-radius: 12px;
   isolation: isolate;
   z-index: 2;
 }
@@ -311,18 +311,6 @@
   display: block;
   width: 100%;
   height: 100%;
-}
-.search-clue-found {
-  position: absolute;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 1px solid #e2e1c36b;
-  pointer-events: none;
-}
-.is-selected .search-clue-found {
-  border-color: #f2eed6;
-  border-width: 2px;
 }
 .search-origin-line {
   position: absolute;
@@ -361,7 +349,8 @@
   width: 100%;
   height: 100%;
   border: 2px solid #d2d5bda3;
-  border-radius: 50%;
+  border-radius: 18px;
+  overflow: hidden;
   box-shadow: 0 4px 14px #071b1699;
 }
 .search-dismiss {
@@ -372,7 +361,7 @@
   min-height: 48px;
   display: grid;
   place-items: center;
-  border-radius: 50%;
+  border-radius: 12px;
   border: 1px solid #d2d5bd80;
   background: #10271ff5;
 }

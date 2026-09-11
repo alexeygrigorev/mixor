@@ -67,7 +67,9 @@ export function SearchSpecimen({ woodland, spot, label = "" }: {
     data-contact={contact.join(",")} data-patch-size={patch}
     data-support={frame.support}>
     <defs>
-      <clipPath id={boundary}><circle cx="50" cy="50" r="50" /></clipPath>
+      <clipPath id={boundary}>
+        <rect x="0" y="0" width="100" height="100" rx="10" />
+      </clipPath>
       {frame.support === "leaf" && <>
         <filter id={leafEdge} x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="3.5" />

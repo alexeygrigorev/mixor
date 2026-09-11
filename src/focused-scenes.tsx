@@ -321,17 +321,18 @@ export function SearchScene({
               setSelectedId(spot.id);
             }}
           >
-            <span
-              className="search-clue"
-              aria-hidden="true"
-              style={{
-                width: worldWidth * specimenPatchSize(spot) / 1536,
-                transform: `translate(-${specimenContact(spot)[0]}%, -${specimenContact(spot)[1]}%)`,
-              }}
-            >
-              <SearchSpecimen woodland={woodland} spot={spot} />
-            </span>
-            {found && <span className="search-clue-found" aria-hidden="true" />}
+            {spot.visibleClue !== false && (
+              <span
+                className="search-clue"
+                aria-hidden="true"
+                style={{
+                  width: worldWidth * specimenPatchSize(spot) / 1536,
+                  transform: `translate(-${specimenContact(spot)[0]}%, -${specimenContact(spot)[1]}%)`,
+                }}
+              >
+                <SearchSpecimen woodland={woodland} spot={spot} />
+              </span>
+            )}
           </button>
         );
       })}
