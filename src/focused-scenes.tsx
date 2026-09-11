@@ -342,7 +342,7 @@ export function SearchScene({
           draggable={false}
           onError={() => setFailed(true)}
         />
-        {leaving && (
+        {leaving && viewId === leaving.to && (
           <StreetViewTransition from={leaving.from} to={leaving.to}
             complete={() => setLeaving(null)} />
         )}
