@@ -35,12 +35,27 @@ const fragmentSource = `
   uniform vec3 camera;
   uniform float aspect;
   uniform float blend;
-  const float PI = 3.141592653589793;
-  vec4 panoramaSample(sampler2D image, vec2 uv) {
-    // Feather the small capture overlap at the back of the panorama.
-    // Both sides of longitude ±180 sample the same edge blend.
-    float overlap = 0.5 * (1.0 - smoothstep(0.0, 0.012, min(uv.x, 1.0 - uv.x)));
-    return mix(texture2D(image, uv), texture2D(image, vec2(1.0 - uv.x, uv.y)), overlap);
+  // Six 110-degree rectilinear views, in a 3 x 2 atlas.
+  // A 20-degree overlap joins neighboring faces in camera space.
+  vec4 faceSample(sampler2D image, vec3 faceRay, vec2 tile) {
+    float depth = max(faceRay.z, 0.00001);
+    vec2 projected = faceRay.xy / depth;
+    float extent = 1.428148; // tan(55 degrees)
+    float edge = extent - max(abs(projected.x), abs(projected.y));
+    float weight = smoothstep(0.0, 0.30, edge) * pow(max(faceRay.z, 0.0), 8.0);
+    vec2 local = clamp(vec2(0.5 + projected.x / (2.0 * extent),
+      0.5 - projected.y / (2.0 * extent)), 0.002, 0.998);
+    vec3 color = texture2D(image, (tile + local) / vec2(3.0, 2.0)).rgb;
+    return vec4(color * weight, weight);
+  }
+  vec4 panoramaSample(sampler2D image, vec3 ray) {
+    vec4 sum = faceSample(image, ray, vec2(0.0, 0.0));
+    sum += faceSample(image, vec3(-ray.z, ray.y, ray.x), vec2(1.0, 0.0));
+    sum += faceSample(image, vec3(-ray.x, ray.y, -ray.z), vec2(2.0, 0.0));
+    sum += faceSample(image, vec3(ray.z, ray.y, -ray.x), vec2(0.0, 1.0));
+    sum += faceSample(image, vec3(ray.x, -ray.z, ray.y), vec2(1.0, 1.0));
+    sum += faceSample(image, vec3(ray.x, ray.z, -ray.y), vec2(2.0, 1.0));
+    return vec4(sum.rgb / max(sum.a, 0.00001), 1.0);
   }
   void main() {
     vec3 ray = normalize(vec3(screen.x * camera.z, screen.y * camera.z / aspect, 1.0));
@@ -48,8 +63,7 @@ const fragmentSource = `
     ray = vec3(ray.x, ray.y * cp + ray.z * sp, ray.z * cp - ray.y * sp);
     float cy = cos(camera.x), sy = sin(camera.x);
     ray = vec3(ray.x * cy + ray.z * sy, ray.y, ray.z * cy - ray.x * sy);
-    vec2 uv = vec2(fract(0.5 + atan(ray.x, ray.z) / (2.0 * PI)), 0.5 - asin(clamp(ray.y, -1.0, 1.0)) / PI);
-    gl_FragColor = mix(panoramaSample(previous, uv), panoramaSample(next, uv), blend);
+    gl_FragColor = mix(panoramaSample(previous, ray), panoramaSample(next, ray), blend);
   }
 `;
 
@@ -113,7 +127,7 @@ export function createPanoramaRenderer(canvas: HTMLCanvasElement) {
   const blendLocation = gl.getUniformLocation(program!, "blend");
   const previousLocation = gl.getUniformLocation(program!, "previous");
   const nextLocation = gl.getUniformLocation(program!, "next");
-  let direction: ViewDirection = { yaw: -26, pitch: -12, fov: 95 };
+  let direction: ViewDirection = { yaw: 0, pitch: 0, fov: 80 };
   let current = 0;
   let incoming = 0;
   let blend = 1;
@@ -144,7 +158,7 @@ export function createPanoramaRenderer(canvas: HTMLCanvasElement) {
     incoming = 1 - current;
     gl!.activeTexture(gl!.TEXTURE0 + incoming);
     gl!.bindTexture(gl!.TEXTURE_2D, textures[incoming]);
-    if (image.naturalWidth > gl!.getParameter(gl!.MAX_TEXTURE_SIZE)) throw new Error("PANORAMA_TEXTURE_TOO_LARGE");
+    if (Math.max(image.naturalWidth, image.naturalHeight) > gl!.getParameter(gl!.MAX_TEXTURE_SIZE)) throw new Error("PANORAMA_TEXTURE_TOO_LARGE");
     gl!.texImage2D(gl!.TEXTURE_2D, 0, gl!.RGB, gl!.RGB, gl!.UNSIGNED_BYTE, image);
     if (!hasImage || duration === 0 || document.hidden) {
       hasImage = true;

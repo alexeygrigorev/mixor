@@ -3,9 +3,9 @@ import { wrapAngle } from "./street-view-renderer";
 
 // Local, illustrative scene coordinates; never geographic observations.
 export const panoramaPoints: Record<string, { image: string; x: number; z: number; yaw: number }> = {
-  "6-3d": { image: "/assets/art/wetland-360-stones-v1.webp", x: 0, z: 0, yaw: -28 },
-  "6-3d-path": { image: "/assets/art/wetland-360-path-v1.webp", x: -2, z: 4, yaw: -28 },
-  "6-3d-branches": { image: "/assets/art/wetland-360-branches-v1.webp", x: -3, z: 1, yaw: 18 },
+  "6-3d": { image: "/assets/art/wetland-cube-stones-v2.webp", x: 0, z: 0, yaw: 0 },
+  "6-3d-path": { image: "/assets/art/wetland-cube-path-v2.webp", x: -2, z: 4, yaw: 0 },
+  "6-3d-branches": { image: "/assets/art/wetland-cube-branches-v2.webp", x: -3, z: 1, yaw: 0 },
 };
 
 export function panoramaLinks(view: WalkView) {

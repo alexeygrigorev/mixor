@@ -20,7 +20,7 @@ export function StreetViewScene({ view, woodland, finds, reveal, inspect, change
   const host = useRef<HTMLElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const renderer = useRef<PanoramaRenderer | null>(null);
-  const [camera, setCamera] = useState<ViewDirection>(() => ({ yaw: panoramaPoints[view.id].yaw, pitch: -12, fov: 95 }));
+  const [camera, setCamera] = useState<ViewDirection>(() => ({ yaw: panoramaPoints[view.id].yaw, pitch: 0, fov: 80 }));
   const cameraRef = useRef(camera);
   cameraRef.current = camera;
   const cameraTarget = useRef(camera);
@@ -304,7 +304,7 @@ export function StreetViewScene({ view, woodland, finds, reveal, inspect, change
       <div className="panorama-turn">
         <button disabled={!ready || busy} aria-label="Посмотреть налево" onClick={() => look(-30)}><Icon name="back" size={18} /></button>
         <button className="panorama-compass" disabled={!ready || busy} aria-label="Вернуть исходное направление" title="Исходное направление"
-          onClick={() => animateCamera({ yaw: panoramaPoints[view.id].yaw, pitch: -12, fov: 95 })}>
+          onClick={() => animateCamera({ yaw: panoramaPoints[view.id].yaw, pitch: 0, fov: 80 })}>
           <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19" />
             <g transform={`rotate(${panoramaPoints[view.id].yaw - camera.yaw} 24 24)`}><path d="M24 7 30 27 24 24 18 27Z" /><path className="compass-tail" d="M24 41 18 21 24 24 30 21Z" /></g>
           </svg>
