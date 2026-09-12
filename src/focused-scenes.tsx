@@ -14,6 +14,7 @@ import { SceneWeather } from "./weather";
 import { SearchSpecimen, specimenPatchSize, specimenContact } from "./search-specimen";
 import { getWalkView, type WalkLink } from "./street-view-data";
 import { StreetViewTransition } from "./street-view-transition";
+import { StreetViewScene } from "./street-view-scene";
 
 export function BackButton({
   back,
@@ -177,7 +178,12 @@ export function SpeciesChooser({
   );
 }
 
-export function SearchScene({
+export function SearchScene(props: Parameters<typeof FlatSearchScene>[0]) {
+  const view = getWalkView(props.viewId ?? props.woodland.id);
+  return view ? <StreetViewScene {...props} view={view} /> : <FlatSearchScene {...props} />;
+}
+
+function FlatSearchScene({
   woodland,
   viewId = woodland.id,
   finds,
@@ -416,11 +422,20 @@ export function SearchScene({
                 <SearchSpecimen woodland={woodland} spot={spot} />
               </span>
             )}
+            {isSelected && (
+              <span className="search-clue-selected" aria-hidden="true" />
+            )}
           </button>
         );
       })}
       {selected && (
         <>
+          <button
+            type="button"
+            className="search-dismiss-surface"
+            onClick={dismiss}
+            aria-label="Закрыть увеличение"
+          />
           <svg className="search-origin-line" aria-hidden="true">
             <line
               x1={origin.x}
@@ -466,6 +481,11 @@ export function SearchScene({
         </>
       )}
       <BackButton back={back} label="Назад к выбору места" />
+      {woodland.id === "wetland" && (
+        <button className="wetland-experiment-link" onClick={() => change("6-3d")}>
+          6-3d · эксперимент 360°
+        </button>
+      )}
       <nav
         className="search-places"
         aria-label={`Места поиска. Сейчас: ${woodland.title}`}
