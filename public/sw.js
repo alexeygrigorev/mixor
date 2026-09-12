@@ -1,6 +1,7 @@
 // The build script injects only public app assets, never family observations.
 const PRECACHE_URLS = /* MIXOR_PRECACHE */ [];
 const CACHE_NAME = /* MIXOR_CACHE */ "mixor-public-v2";
+const BASE = /* MIXOR_BASE */ "/";
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(PRECACHE_URLS)));
   // An update waits for old tabs to close; never reload an unsaved field form.
@@ -18,9 +19,10 @@ self.addEventListener("fetch", event => {
   const url = new URL(request.url);
   if (request.method !== "GET" || request.headers.has("authorization") || url.origin !== self.location.origin || url.search) return;
   if (request.mode === "navigate") {
-    event.respondWith(fetch(request).catch(async () => (await caches.match("/index.html")) || new Response("Mixor is not available offline yet.", { status: 503 })));
+    event.respondWith(fetch(request).catch(async () => (await caches.match(BASE + "index.html")) || new Response("Mixor is not available offline yet.", { status: 503 })));
     return;
   }
   if (!PRECACHE_URLS.includes(url.pathname)) return;
   event.respondWith(caches.match(url.pathname).then(cached => cached || fetch(request)));
 });
+

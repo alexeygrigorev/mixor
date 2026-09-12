@@ -1,3 +1,5 @@
+import { publicUrl } from "./public-url.ts";
+import { defaultSoundLevels, type SoundLevels } from "./audio-preferences";
 export type SfxId =
   | "ui-press"
   | "uncover"
@@ -5,7 +7,6 @@ export type SfxId =
   | "lens-open"
   | "discovery"
   | "save-local";
-import { defaultSoundLevels, type SoundLevels } from "./audio-preferences";
 export { defaultSoundLevels, type SoundLevels } from "./audio-preferences";
 export type PlaybackState = "off" | "paused" | "idle" | "starting" | "playing" | "blocked" | "failed";
 
@@ -134,7 +135,7 @@ class AudioManager {
       // excerpt, not the user-rejected wood contact or pitched reward cues.
       const file = id === "uncover" ? "uncover-mix"
         : id === "journal-open" ? "journal-open" : "leaf-friction-v3-mix";
-      audio = new Audio("/assets/audio/sfx/" + file + ".mp3");
+      audio = new Audio(publicUrl("/assets/audio/sfx/" + file + ".mp3"));
       this.sfx.set(id, audio);
     }
     audio.currentTime = 0;
@@ -173,7 +174,7 @@ class AudioManager {
     for (const id of wanted) {
       if (this.loops.has(id)) continue;
       const { path, channel, gain } = TRACKS[id];
-      const audio = new Audio("/assets/audio/" + path + ".mp3");
+      const audio = new Audio(publicUrl("/assets/audio/" + path + ".mp3"));
       audio.loop = true;
       audio.preload = "metadata";
       this.loops.set(id, { id, audio, channel, gain });

@@ -1,5 +1,6 @@
 import { useId } from "react";
 import type { TaxonId } from "./data";
+import { publicUrl } from "./public-url.ts";
 import type { HidingPlace, Woodland } from "./search-data";
 
 // Original atlas contact landmarks. Each macro frame retains the complete
@@ -128,7 +129,7 @@ export function SearchSpecimen({ woodland, spot, label = "" }: {
         <g mask={"url(#" + horizontalMask + ")"}>
           <g mask={"url(#" + verticalMask + ")"}>
             <g mask={frame.support === "leaf" ? "url(#" + leafMask + ")" : isNetwork ? "url(#" + networkMask + ")" : undefined}>
-            <image href="/assets/art/organisms-v2.webp"
+            <image href={publicUrl("/assets/art/organisms-v2.webp")}
               x={-(frame.tile % 4) * 102 - 1}
               y={-Math.floor(frame.tile / 4) * 102 - 1}
               width="408" height="204" preserveAspectRatio="none" />

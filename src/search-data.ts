@@ -1,5 +1,6 @@
 import type { TaxonId } from "./data";
-import { getWalkView } from "./street-view-data";
+import { publicUrl } from "./public-url.ts";
+import { getWalkView } from "./street-view-data.ts";
 
 export type HidingPlace = {
   id: string;
@@ -215,6 +216,7 @@ export const woodlands: Woodland[] = [
     ],
   },
 ];
+for (const woodland of woodlands) woodland.image = publicUrl(woodland.image);
 export const findWoodland = (id: string) =>
   woodlands.find((w) => w.id === (getWalkView(id)?.woodlandId ?? id)) ?? woodlands[0];
 const key = "mixor-search-v1";

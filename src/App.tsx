@@ -23,6 +23,7 @@ import {
 } from "./focused-scenes";
 import { readFinds, writeFinds, findWoodland } from "./search-data";
 import { scientificNames, taxonomySources } from "./taxonomy";
+import { publicUrl } from "./public-url.ts";
 
 type Place =
   | "home"
@@ -571,7 +572,15 @@ export default function App() {
           audioManager.playSfx("ui-press");
       }}
     >
-      <div className="forest-background" aria-hidden="true" />
+      <div
+        className="forest-background"
+        aria-hidden="true"
+        style={
+          {
+            "--forest-world-image": `url("${publicUrl("/assets/art/forest-world.webp")}")`,
+          } as CSSProperties
+        }
+      />
       <div className="forest-shade" aria-hidden="true" />
       {route.place === "home" && (
         <header className="hud">

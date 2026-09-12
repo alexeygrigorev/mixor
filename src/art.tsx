@@ -1,6 +1,7 @@
 import { useState, type CSSProperties } from "react";
 import type { TaxonId } from "./data";
 import type { LifeIllustration } from "./life-data";
+import { publicUrl } from "./public-url.ts";
 
 export function Art({
   taxon,
@@ -70,7 +71,7 @@ export function Art({
       {!failed ? (
         <img
           key={file}
-          src={`/assets/art/${file}.webp`}
+          src={publicUrl(`/assets/art/${file}.webp`)}
           alt=""
           draggable={false}
           onError={() => setFailed(true)}

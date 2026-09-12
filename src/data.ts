@@ -1,3 +1,5 @@
+import { publicUrl } from "./public-url.ts";
+
 export type TaxonId =
   | "physarum"
   | "arcyria"
@@ -350,6 +352,8 @@ export const media: MediaItem[] = [
     licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
   },
 ];
+
+for (const item of media) item.src = publicUrl(item.src);
 
 export const taxa: Taxon[] = [
   {

@@ -1,3 +1,5 @@
+import { publicUrl } from "./public-url.ts";
+
 export type WalkLink = {
   to: string;
   label: string;
@@ -48,5 +50,6 @@ export const walkViews: WalkView[] = [
     ],
   },
 ];
+for (const view of walkViews) view.image = publicUrl(view.image);
 
 export const getWalkView = (id: string) => walkViews.find((view) => view.id === id);

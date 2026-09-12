@@ -122,8 +122,7 @@ img {
   pointer-events: none;
 }
 .forest-background {
-  background: #203c2b url("/assets/art/forest-world.webp") center/cover
-    no-repeat;
+  background: #203c2b var(--forest-world-image) center/cover no-repeat;
 }
 .forest-shade {
   z-index: -1;
