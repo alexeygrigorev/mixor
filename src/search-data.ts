@@ -1,6 +1,7 @@
 import type { TaxonId } from "./data";
 import { publicUrl } from "./public-url.ts";
 import { getWalkView } from "./street-view-data.ts";
+import { getPhotoWalkView } from "./photo-walk-data.ts";
 
 export type HidingPlace = {
   id: string;
@@ -215,10 +216,18 @@ export const woodlands: Woodland[] = [
       },
     ],
   },
+  {
+    id: "video-forest",
+    title: "Лесная прогулка",
+    description: "Шесть настоящих ракурсов: пни, ветки и край тропы",
+    image: "/assets/scene-07/slope.webp",
+    weather: "clear",
+    spots: [], // Scene 07 is exploration only; organisms will be authored later.
+  },
 ];
 for (const woodland of woodlands) woodland.image = publicUrl(woodland.image);
 export const findWoodland = (id: string) =>
-  woodlands.find((w) => w.id === (getWalkView(id)?.woodlandId ?? id)) ?? woodlands[0];
+  woodlands.find((w) => w.id === (getPhotoWalkView(id)?.woodlandId ?? getWalkView(id)?.woodlandId ?? id)) ?? woodlands[0];
 const key = "mixor-search-v1";
 const validIds = new Set(woodlands.flatMap((w) => w.spots.map((s) => s.id)));
 export function readFinds(): string[] {

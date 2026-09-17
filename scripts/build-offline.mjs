@@ -46,6 +46,11 @@ files.push(
     "sfx/journal-open",
   ].map((name) => publicPath(`/assets/audio/${name}.mp3`)),
 );
+// Real frame assets have their own provenance manifest, not an AI-art license.
+const photoWalk = JSON.parse(readFileSync("content/scene-07.manifest.json", "utf8"));
+for (const asset of photoWalk.assets) {
+  files.push(publicPath("/" + asset.path.replace(/^public\//, "")));
+}
 const unique = [...new Set(files)];
 const hash = createHash("sha256");
 for (const file of unique) hash.update(readFileSync(distPath(file)));

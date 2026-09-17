@@ -109,8 +109,8 @@ test("classification has species leaves under real intermediate groups", () => {
   assert.match(scientificNames.stemonitis.placementNote, /incertae sedis/);
 });
 test("unique environments cover all taxa; corrupted search data is contained", () => {
-  assert.equal(woodlands.length, 6);
-  assert.equal(new Set(woodlands.map((w) => w.image)).size, 6);
+  assert.equal(woodlands.length, 7);
+  assert.equal(new Set(woodlands.map((w) => w.image)).size, 7);
   const spots = woodlands.flatMap((w) => w.spots);
   assert.equal(new Set(spots.map((s) => s.id)).size, 17);
   assert.equal(new Set(spots.map((s) => s.taxon)).size, 8);
@@ -135,6 +135,6 @@ test("unique environments cover all taxa; corrupted search data is contained", (
 test("weather is scene-specific, with rain only at roots and birch", () => {
   assert.deepEqual(
     Object.fromEntries(woodlands.map((w) => [w.id, w.weather])),
-    { forest: "clear", stump: "overcast", leaves: "overcast", roots: "rain", bark: "rain", wetland: "overcast" },
+    { forest: "clear", stump: "overcast", leaves: "overcast", roots: "rain", bark: "rain", wetland: "overcast", "video-forest": "clear" },
   );
 });

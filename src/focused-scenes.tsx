@@ -15,6 +15,8 @@ import { SearchSpecimen, specimenPatchSize, specimenContact } from "./search-spe
 import { getWalkView, type WalkLink } from "./street-view-data";
 import { StreetViewTransition } from "./street-view-transition";
 import { StreetViewScene } from "./street-view-scene";
+import { PhotoWalkScene } from "./photo-walk-scene";
+import { getPhotoWalkView } from "./photo-walk-data";
 
 export function BackButton({
   back,
@@ -44,7 +46,7 @@ export function ActivityHome({
     {
       id: "woods",
       name: "Найти в лесу",
-      hint: "Пять мест, полных маленькой жизни",
+      hint: "Лесные места, полные маленькой жизни",
       icon: "lens",
     },
     {
@@ -119,16 +121,18 @@ export function WoodlandChooser({
                 <strong>{w.title}</strong>
                 <span>{w.description}</span>
               </span>
-              <span className="find-count" aria-label="Найдено">
-                {w.spots.filter((s) => finds.includes(s.id)).length} /{" "}
-                {w.spots.length}
-              </span>
+              {w.spots.length > 0 ? (
+                <span className="find-count" aria-label="Найдено">
+                  {w.spots.filter((s) => finds.includes(s.id)).length} /{" "}
+                  {w.spots.length}
+                </span>
+              ) : <span className="find-count">Прогулка</span>}
             </span>
           </button>
         ))}
       </div>
       <p className="chooser-note">
-        Учебные сцены созданы с ИИ; размещение условное, не карта находок. Без
+        Сцены 1–6 созданы с ИИ; сцена 7 — кадры видео. Размещение условное, не карта находок. Без
         таймеров и штрафов.
         {sessionOnly &&
           " Прогресс этой вкладки не удалось сохранить на устройстве."}
@@ -179,6 +183,8 @@ export function SpeciesChooser({
 }
 
 export function SearchScene(props: Parameters<typeof FlatSearchScene>[0]) {
+  const photoView = getPhotoWalkView(props.viewId ?? props.woodland.id);
+  if (photoView) return <PhotoWalkScene view={photoView} change={props.change} back={props.back} />;
   const view = getWalkView(props.viewId ?? props.woodland.id);
   return view ? <StreetViewScene {...props} view={view} /> : <FlatSearchScene {...props} />;
 }

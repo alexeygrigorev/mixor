@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "sceneId": "video-forest",
+  "source": {
+    "kind": "user-provided-video",
+    "fileName": "1000022837.mp4",
+    "originalIncluded": false,
+    "copyrightHolder": "Not independently verified",
+    "license": "No public redistribution license asserted",
+    "note": "Extracted for the user-requested game prototype. Confirm publication rights before deploying publicly."
+  },
+  "processing": {
+    "generated": false,
+    "retouching": false,
+    "colorGrading": false,
+    "audioIncluded": false,
+    "metadata": "Decoded pixels only; no EXIF/GPS or source audio copied.",
+    "selection": "Manual visual selection among sharp frames; no visible people in selected images."
+  },
+  "assets": [
+    {
+      "id": "slope",
+      "requestedTimeSeconds": 18.9,
+      "sourceTimeSeconds": 18.914556,
+      "path": "public/assets/scene-07/slope.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 761498,
+      "sha256": "e95035d9a42e20a02fdad1bc7a2ab3694fefc59314f948e2aba2082ec3a24bd8"
+    },
+    {
+      "id": "moss-stump",
+      "requestedTimeSeconds": 30.7,
+      "sourceTimeSeconds": 30.731967,
+      "path": "public/assets/scene-07/moss-stump.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 718862,
+      "sha256": "0690404448f4889633872c6f8aaeb2cbbf9a4bce955f7a705bfe7a6cd1af1315"
+    },
+    {
+      "id": "clearing",
+      "requestedTimeSeconds": 43.5,
+      "sourceTimeSeconds": 43.520211,
+      "path": "public/assets/scene-07/clearing.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 675490,
+      "sha256": "d083f58989a51c4c5a0163926480c9c9e1a47476d79db83e1b82aa8eb0fca3b3"
+    },
+    {
+      "id": "deadwood",
+      "requestedTimeSeconds": 56.3,
+      "sourceTimeSeconds": 56.331944,
+      "path": "public/assets/scene-07/deadwood.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 830136,
+      "sha256": "f98acae27b3f4e0e09e6e41fbf2b5327aca5075609b959502bbfd634a405ba2c"
+    },
+    {
+      "id": "trail",
+      "requestedTimeSeconds": 45.7,
+      "sourceTimeSeconds": 45.7297,
+      "path": "public/assets/scene-07/trail.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 809458,
+      "sha256": "e376bf09d928e85c006488f1e3190cb8b4419e07516ca18a4d98941dbe6f9651"
+    },
+    {
+      "id": "old-stump",
+      "requestedTimeSeconds": 68.7,
+      "sourceTimeSeconds": 68.728456,
+      "path": "public/assets/scene-07/old-stump.webp",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 733734,
+      "sha256": "c4d1f0780d3bdaf38102538d21db347b99ddb2062b6716cadbb30062c91dac7a"
+    }
+  ]
+}
