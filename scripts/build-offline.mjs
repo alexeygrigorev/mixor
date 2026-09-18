@@ -23,10 +23,10 @@ for (const entry of readdirSync("dist/assets", { withFileTypes: true })) {
   if (entry.isFile() && /\.(js|css|woff2)$/.test(entry.name))
     files.push(publicPath("/assets/" + entry.name));
 }
-for (const photo of photoManifest.assets.filter(
-  (a) => a.kind === "reference_photo",
+for (const asset of photoManifest.assets.filter(
+  (a) => a.kind === "reference_photo" || a.kind === "game_art",
 ))
-  files.push(publicPath("/" + photo.path.replace(/^public\//, "")));
+  files.push(publicPath("/" + asset.path.replace(/^public\//, "")));
 const artwork = JSON.parse(
   readFileSync("content/generated-art.manifest.json", "utf8"),
 );
@@ -63,4 +63,3 @@ writeFileSync("dist/sw.js", worker);
 copyFileSync("dist/index.html", "dist/404.html");
 writeFileSync("dist/.nojekyll", "");
 console.log(`Offline shell: ${unique.length} public assets, ${cacheName}`);
-

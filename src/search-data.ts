@@ -219,10 +219,10 @@ export const woodlands: Woodland[] = [
   {
     id: "video-forest",
     title: "Лесная прогулка",
-    description: "Шесть настоящих ракурсов: пни, ветки и край тропы",
+    description: "Шесть настоящих ракурсов: пни, ветки и скрытые детали",
     image: "/assets/scene-07/slope.webp",
     weather: "clear",
-    spots: [], // Scene 07 is exploration only; organisms will be authored later.
+    spots: [], // Scene 07 uses its own session-only PhotoWalkObject search layer.
   },
 ];
 for (const woodland of woodlands) woodland.image = publicUrl(woodland.image);

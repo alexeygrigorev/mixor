@@ -5,10 +5,22 @@ import { createHash } from "node:crypto";
 import { photoWalkViews, validatePhotoWalk, getPhotoWalkView, PHOTO_WALK_ENTRY } from "../src/photo-walk-data.ts";
 import { fitPhoto } from "../src/photo-walk-core.ts";
 
-test("scene 07 has six different real frames and no invented organisms", () => {
+test("scene 07 has six different real frames and searchable forest details", () => {
   assert.equal(photoWalkViews.length, 6);
   assert.equal(new Set(photoWalkViews.map(view => view.image)).size, 6);
-  assert(photoWalkViews.every(view => view.objects.length === 0));
+  const objects = photoWalkViews.flatMap(view => view.objects);
+  assert.equal(objects.length, 21);
+  assert.equal(new Set(objects.map(object => object.id)).size, objects.length);
+  assert.deepEqual(new Set(objects.map(object => object.kind)), new Set(["myxomycete", "lichen", "fungus", "creature"]));
+  assert(objects.every(object => object.image.startsWith("/assets/scene-07/objects/") && object.title && object.description));
+  const assets = JSON.parse(readFileSync(new URL("../content/assets.manifest.json", import.meta.url)));
+  for (const id of ["scene-07-myxomycete-clue", "scene-07-lichen-clue", "scene-07-fungus-clue", "scene-07-woodlouse-clue"]) {
+    const asset = assets.assets.find(item => item.id === id);
+    assert(asset, `${id}: registered generated overlay`);
+    assert.equal(asset.kind, "game_art");
+    assert.equal(asset.isGenerated, true);
+    assert(readFileSync(new URL(`../${asset.path}`, import.meta.url)).length > 0);
+  }
   assert.equal(getPhotoWalkView(PHOTO_WALK_ENTRY)?.woodlandId, "video-forest");
   assert.equal(getPhotoWalkView("not-a-scene"), undefined);
 });

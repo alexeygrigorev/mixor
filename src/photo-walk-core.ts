@@ -12,6 +12,7 @@ export type PhotoWalkOptions = {
   onPreviousPlace?: () => void;
   onNextPlace?: () => void;
   onObject?: (object: PhotoWalkObject, view: PhotoWalkView) => void;
+  onObjectFound?: (object: PhotoWalkObject, view: PhotoWalkView) => void;
 };
 export type PhotoWalkController = {
   setView: (id: string) => Promise<void>;
@@ -63,6 +64,7 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
   let currentLayer: HTMLElement | null = null;
   let detail: PhotoWalkDetail | null = null;
   let detailReturn: HTMLElement | null = null;
+  let objectReturn: HTMLButtonElement | null = null;
   let dead = false, busy = false, revision = 0;
   let transition: Animation | null = null;
   let retry: (() => void) | null = null;
@@ -71,6 +73,8 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
   const images = new Map<string, Promise<HTMLImageElement>>();
   const pendingImages = new Set<() => void>();
   const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const foundObjects = new Set<string>();
+  const objectTotal = options.views.reduce((total, view) => total + view.objects.length, 0);
   const reduced = () => media.matches || options.reducedMotion?.() === true;
   root.classList.add("photo-walk-scene");
   root.setAttribute("role", "region");
@@ -107,10 +111,11 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
   caption.append(eyebrow, title);
   const steps = element("div", "pw-progress");
   const counter = element("span", "pw-counter");
+  const findCounter = element("span", "pw-find-counter");
   const dots = element("div", "pw-dots");
   dots.setAttribute("aria-hidden", "true");
-  steps.append(dots, counter);
-  const instruction = element("p", "pw-instruction", "Стрелки — пройти · Лупа — рассмотреть");
+  steps.append(dots, counter, findCounter);
+  const instruction = element("p", "pw-instruction", "Стрелки — пройти · Лупа — рассмотреть · Ищи детали");
   footer.append(caption, steps, instruction);
   const status = element("div", "pw-status");
   status.setAttribute("role", "status");
@@ -187,15 +192,18 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
     composite.append(image);
     const objects = element("div", "pw-objects");
     for (const object of view.objects) {
-      const objectNode = options.onObject
-        ? button("pw-object", object.label, "", () => options.onObject?.(object, view))
-        : element("div", "pw-object");
-      objectNode.replaceChildren();
+      const objectNode = element("button", "pw-object") as HTMLButtonElement;
+      objectNode.type = "button";
+      objectNode.setAttribute("aria-label", `Найти: ${object.label}`);
+      objectNode.setAttribute("aria-pressed", String(foundObjects.has(object.id)));
+      objectNode.setAttribute("aria-expanded", "false");
+      objectNode.addEventListener("click", () => openObject(object, view, objectNode));
       objectNode.dataset.object = object.id;
+      objectNode.classList.toggle("is-found", foundObjects.has(object.id));
       position(objectNode, object.x, object.y);
       objectNode.style.width = `${object.width}%`; objectNode.style.height = `${object.height}%`;
       const artwork = element("img", "");
-      artwork.src = resolve(object.image); artwork.alt = object.label; artwork.draggable = false;
+      artwork.src = resolve(object.image); artwork.alt = ""; artwork.draggable = false;
       objectNode.append(artwork); objects.append(objectNode);
     }
     composite.append(objects);
@@ -227,9 +235,11 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
     const index = options.views.findIndex((view) => view.id === current!.id);
     title.textContent = detail?.title ?? current.title;
     eyebrow.textContent = detail ? `УВЕЛИЧЕНИЕ КАДРА · ${(100 / detail.width).toFixed(1).replace(".", ",")}×` : `ОСТАНОВКА ${String(index + 1).padStart(2, "0")}`;
-    instruction.textContent = detail ? "Цифровое увеличение · Esc — общий вид" : "Стрелки — пройти · Лупа — рассмотреть";
+    instruction.textContent = detail ? "Цифровое увеличение · Esc — общий вид" : "Стрелки — пройти · Лупа — рассмотреть · Ищи детали";
     counter.textContent = `${visited.size} / ${options.views.length} мест`;
     counter.setAttribute("aria-label", `Посещено ${visited.size} из ${options.views.length} мест`);
+    findCounter.textContent = objectTotal ? `Находки ${foundObjects.size} / ${objectTotal}` : "";
+    findCounter.setAttribute("aria-label", `Найдено скрытых деталей: ${foundObjects.size} из ${objectTotal}`);
     dots.replaceChildren(...options.views.map((view) => {
       const dot = element("span", "pw-dot");
       dot.classList.toggle("is-current", current!.id === view.id);
@@ -262,6 +272,14 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
   }
   function closeDialog() {
     if (dialog.open) dialog.close();
+    else restoreDialogFocus();
+  }
+  function restoreDialogFocus() {
+    const trigger = objectReturn;
+    objectReturn = null;
+    if (!trigger?.isConnected) return;
+    trigger.setAttribute("aria-expanded", "false");
+    trigger.focus({ preventScroll: true });
   }
   function showDialog(heading: string, contents: HTMLElement[]) {
     closeDialog();
@@ -270,6 +288,38 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
     dialog.setAttribute("aria-labelledby", h.id);
     dialogContent.replaceChildren(h, ...contents);
     dialog.showModal();
+  }
+  function openObject(item: PhotoWalkObject, view: PhotoWalkView, trigger: HTMLButtonElement) {
+    if (busy || dead || detail) return;
+    const isNew = !foundObjects.has(item.id);
+    if (isNew) {
+      foundObjects.add(item.id);
+      trigger.classList.add("is-found");
+      trigger.setAttribute("aria-pressed", "true");
+      options.onObjectFound?.(item, view);
+      updateCaption();
+    }
+    options.onObject?.(item, view);
+    const card = element("div", "pw-object-card");
+    const visual = element("div", "pw-object-visual");
+    const image = element("img", "pw-object-image");
+    image.src = resolve(item.image);
+    image.alt = item.title;
+    image.draggable = false;
+    visual.append(image);
+    const copy = element("div", "pw-object-copy");
+    copy.append(
+      element("p", "pw-object-kind", "СКРЫТАЯ ДЕТАЛЬ"),
+      element("h4", "pw-object-title", item.title),
+      element("p", "pw-object-description", item.description),
+      element("p", "pw-dialog-note", "Иллюстрация для игры. Кадр видео оставлен без изменений; размещение условное и не является семейным наблюдением."),
+    );
+    card.append(visual, copy);
+    showDialog("Найдена деталь", [card]);
+    objectReturn = trigger;
+    trigger.setAttribute("aria-expanded", "true");
+    closeDialogButton.focus({ preventScroll: true });
+    announcement.textContent = `Найдена деталь: ${item.title}`;
   }
   function openMap() {
     if (!current) return;
@@ -294,7 +344,7 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
   function openInfo() {
     const description = element("p", "", "Шесть реальных кадров из вашего видео. Перемещение меняет точку съёмки; лупа только увеличивает фрагмент того же кадра. Это не панорама 360°.");
     const controls = element("p", "", "Нажимайте на стрелки в лесу. На клавиатуре: Tab и Enter; ↑ — вперёд, ← и → — в стороны, ↓ — назад, Esc — закрыть увеличение или окно.");
-    const source = element("p", "pw-dialog-note", "Исходник: 1000022837.mp4. Организмы пока не добавлены. Звук, люди и метаданные исходного видео в эту сцену не перенесены. Публичная лицензия на видео не заявляется.");
+    const source = element("p", "pw-dialog-note", "Исходник: 1000022837.mp4. Скрытые миксомицеты, лишайники, маленькие грибы и мокрицы — условные игровые иллюстрации; они не заявлены как найденные в исходном видео. Звук, люди и метаданные видео не перенесены. Публичная лицензия на видео не заявляется.");
     showDialog("О прогулке", [description, controls, source]);
   }
   async function step(link: PhotoWalkLink) {
@@ -382,6 +432,7 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
   const finishAnimation = () => { if (document.hidden || reduced()) transition?.finish(); };
   root.addEventListener("keydown", keydown);
   dialog.addEventListener("click", (event) => { if (event.target === dialog) closeDialog(); });
+  dialog.addEventListener("close", restoreDialogFocus);
   media.addEventListener("change", finishAnimation);
   document.addEventListener("visibilitychange", finishAnimation);
   return {

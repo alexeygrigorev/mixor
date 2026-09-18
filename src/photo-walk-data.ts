@@ -22,11 +22,14 @@ export type PhotoWalkDetail = {
   anchorX: number;
   anchorY: number;
 };
+export type PhotoWalkObjectKind = "myxomycete" | "lichen" | "fungus" | "creature";
 export type PhotoWalkObject = {
   id: string;
-  kind: "myxomycete" | "lichen" | "creature";
+  kind: PhotoWalkObjectKind;
   image: string;
   label: string;
+  title: string;
+  description: string;
   x: number;
   y: number;
   width: number;
@@ -46,6 +49,41 @@ export type PhotoWalkView = {
 };
 export const PHOTO_WALK_ENTRY = "video-forest";
 export const PHOTO_WALK_FADE_MS = 240;
+const objectArt = {
+  myxomycete: "/assets/scene-07/objects/myxomycete-clue.webp",
+  lichen: "/assets/scene-07/objects/lichen-clue.webp",
+  fungus: "/assets/scene-07/objects/fungus-clue.webp",
+  creature: "/assets/scene-07/objects/woodlouse-clue.webp",
+} as const;
+const objectCopy = {
+  myxomycete: {
+    title: "Миксомицет",
+    description: "Условная игровая иллюстрация скрытой формы на влажной древесине. Вид и стадия по ней не определяются.",
+  },
+  lichen: {
+    title: "Лишайник",
+    description: "Условная игровая иллюстрация лишайника на коре. Это подсказка для поиска, а не определение вида в видео.",
+  },
+  fungus: {
+    title: "Небольшой гриб",
+    description: "Условная игровая иллюстрация маленьких плодовых тел. Не пробуй грибы и не считай эту подсказку определением.",
+  },
+  creature: {
+    title: "Мокрица",
+    description: "Условная игровая иллюстрация маленького обитателя подстилки. Точный вид и присутствие в исходном видео не утверждаются.",
+  },
+} as const;
+function object(
+  id: string,
+  kind: PhotoWalkObjectKind,
+  label: string,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+): PhotoWalkObject {
+  return { id, kind, image: objectArt[kind], label, ...objectCopy[kind], x, y, width, height };
+}
 export const photoWalkViews: PhotoWalkView[] = [
   {
     id: PHOTO_WALK_ENTRY,
@@ -59,7 +97,12 @@ export const photoWalkViews: PhotoWalkView[] = [
     details: [
       { id: "slope-wood", title: "Небольшой пень", x: 34, y: 45, width: 40, height: 40, anchorX: 55, anchorY: 66 },
     ],
-    objects: [],
+    objects: [
+      object("slope-myxomycete", "myxomycete", "Скрытый миксомицет у пня", 49, 59, 9, 10),
+      object("slope-lichen", "lichen", "Лишайник на поваленной ветке", 62, 41, 8, 8),
+      object("slope-fungus", "fungus", "Небольшие грибы в листовой подстилке", 72, 68, 8, 10),
+      object("slope-woodlouse", "creature", "Мокрица под сухими листьями", 27, 72, 7, 7),
+    ],
   },
   {
     id: "video-moss-stump",
@@ -74,7 +117,11 @@ export const photoWalkViews: PhotoWalkView[] = [
     details: [
       { id: "moss-surface", title: "Мох и древесина", x: 25, y: 43, width: 44, height: 44, anchorX: 45, anchorY: 64 },
     ],
-    objects: [],
+    objects: [
+      object("moss-myxomycete", "myxomycete", "Миксомицет у мшистого пня", 39, 64, 9, 10),
+      object("moss-lichen", "lichen", "Лишайник на коре слева", 30, 52, 8, 8),
+      object("moss-fungus", "fungus", "Маленькие грибы у ветки", 21, 76, 8, 10),
+    ],
   },
   {
     id: "video-clearing",
@@ -90,7 +137,12 @@ export const photoWalkViews: PhotoWalkView[] = [
     details: [
       { id: "clearing-leaf-floor", title: "Мох среди листвы", x: 29, y: 45, width: 44, height: 44, anchorX: 49, anchorY: 71 },
     ],
-    objects: [],
+    objects: [
+      object("clearing-myxomycete", "myxomycete", "Миксомицет на мшистом островке", 44, 66, 9, 10),
+      object("clearing-lichen", "lichen", "Лишайник на низкой ветке", 29, 56, 8, 8),
+      object("clearing-fungus", "fungus", "Небольшие грибы у края поляны", 68, 67, 8, 10),
+      object("clearing-woodlouse", "creature", "Мокрица в тени ветвей", 75, 56, 7, 7),
+    ],
   },
   {
     id: "video-deadwood",
@@ -104,7 +156,11 @@ export const photoWalkViews: PhotoWalkView[] = [
     details: [
       { id: "deadwood-moss", title: "Мшистая ветка", x: 36, y: 36, width: 48, height: 48, anchorX: 60, anchorY: 63 },
     ],
-    objects: [],
+    objects: [
+      object("deadwood-myxomycete", "myxomycete", "Миксомицет на мшистой древесине", 70, 72, 9, 10),
+      object("deadwood-lichen", "lichen", "Лишайник на поваленном стволе", 22, 57, 8, 8),
+      object("deadwood-fungus", "fungus", "Небольшие грибы у папоротника", 52, 64, 8, 10),
+    ],
   },
   {
     id: "video-trail",
@@ -119,7 +175,11 @@ export const photoWalkViews: PhotoWalkView[] = [
     details: [
       { id: "trail-stump", title: "Низкий пень у тропы", x: 5, y: 41, width: 44, height: 44, anchorX: 25, anchorY: 66 },
     ],
-    objects: [],
+    objects: [
+      object("trail-myxomycete", "myxomycete", "Миксомицет на мшистом пне", 16, 65, 9, 10),
+      object("trail-lichen", "lichen", "Лишайник на большом пне", 80, 54, 8, 8),
+      object("trail-fungus", "fungus", "Небольшие грибы у передней ветки", 48, 79, 8, 10),
+    ],
   },
   {
     id: "video-old-stump",
@@ -133,7 +193,12 @@ export const photoWalkViews: PhotoWalkView[] = [
     details: [
       { id: "stump-wood", title: "Древесина у основания", x: 36, y: 44, width: 44, height: 44, anchorX: 65, anchorY: 72 },
     ],
-    objects: [],
+    objects: [
+      object("stump-myxomycete", "myxomycete", "Миксомицет у основания пня", 41, 60, 9, 10),
+      object("stump-lichen", "lichen", "Лишайник на правом стволе", 85, 56, 8, 8),
+      object("stump-fungus", "fungus", "Небольшие грибы на поваленном бревне", 64, 73, 9, 10),
+      object("stump-woodlouse", "creature", "Мокрица в траве у тропы", 26, 78, 7, 7),
+    ],
   },
 ];
 export function getPhotoWalkView(id: string): PhotoWalkView | undefined {
@@ -146,6 +211,7 @@ export function validatePhotoWalk(views: readonly PhotoWalkView[]): void {
   const fail = (message: string): never => { throw new Error(`Photo walk: ${message}`); };
   const percent = (v: number) => Number.isFinite(v) && v >= 0 && v <= 100;
   if (!views.length || ids.size !== views.length || !ids.has(PHOTO_WALK_ENTRY)) fail("invalid view ids");
+  const objectIds = new Set<string>();
   for (const view of views) {
     if (view.width !== 1920 || view.height !== 1080 || !view.image || !view.title) fail(`invalid image: ${view.id}`);
     const destinations = new Set<string>();
@@ -158,8 +224,13 @@ export function validatePhotoWalk(views: readonly PhotoWalkView[]): void {
     const localIds = new Set<string>();
     for (const item of [...view.details, ...view.objects]) {
       if (!item.id || localIds.has(item.id)) fail(`duplicate hotspot: ${view.id}`);
+      if (objectIds.has(item.id)) fail(`duplicate object: ${item.id}`);
       localIds.add(item.id);
       if (![item.x, item.y, item.width, item.height].every(percent) || item.width <= 0 || item.height <= 0 || item.x + item.width > 100 || item.y + item.height > 100) fail(`invalid rectangle: ${item.id}`);
+    }
+    for (const item of view.objects) {
+      objectIds.add(item.id);
+      if (!Object.hasOwn(objectCopy, item.kind) || !item.image || !item.title || !item.description) fail(`invalid object: ${item.id}`);
     }
     for (const detail of view.details) {
       if (![detail.anchorX, detail.anchorY].every(percent) || Math.abs(detail.width - detail.height) > .001) fail(`invalid detail: ${detail.id}`);

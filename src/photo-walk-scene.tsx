@@ -3,6 +3,7 @@ import { publicUrl } from "./public-url";
 import { woodlands } from "./search-data";
 import { mountPhotoWalk, type PhotoWalkController } from "./photo-walk-core";
 import { photoWalkViews, PHOTO_WALK_ENTRY, PHOTO_WALK_FADE_MS, validatePhotoWalk, type PhotoWalkView } from "./photo-walk-data";
+import { audioManager } from "./audio";
 import "./photo-walk.css";
 
 validatePhotoWalk(photoWalkViews);
@@ -27,6 +28,7 @@ export function PhotoWalkScene({ view, change, back }: {
       reducedMotion: () => !!root.closest(".calm"),
       onNavigate: (id) => actions.current.change(id),
       onBack: () => actions.current.back(),
+      onObjectFound: () => audioManager.playSfx("uncover"),
       onPreviousPlace: () => actions.current.change(woodlands[(index + woodlands.length - 1) % woodlands.length].id),
       onNextPlace: () => actions.current.change(woodlands[(index + 1) % woodlands.length].id),
     });

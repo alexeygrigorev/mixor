@@ -567,7 +567,7 @@ export default function App() {
           !muted &&
           event.target instanceof Element &&
           event.target.closest("button") &&
-          !event.target.closest(".hiding-place")
+          !event.target.closest(".hiding-place, .pw-object")
         )
           audioManager.playSfx("ui-press");
       }}

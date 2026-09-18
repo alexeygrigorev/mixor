@@ -8,6 +8,8 @@ const manifestPath = path.join(root, "content/assets.manifest.json");
 const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
 const errors = [];
 const photos = manifest.assets.filter((asset) => asset.kind === "reference_photo");
+const gameArt = manifest.assets.filter((asset) => asset.kind === "game_art");
+const audio = manifest.assets.filter((asset) => ["music", "ambience", "sfx"].includes(asset.kind));
 const publishedPhotoIds = new Set();
 const checksums = new Set();
 
@@ -44,4 +46,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`assets valid: ${photos.length} reference photos / 8 taxa, ${art.assets.length} generated plates, ${manifest.assets.length - photos.length} local audio assets`);
+console.log(`assets valid: ${photos.length} reference photos / 8 taxa, ${art.assets.length} generated plates, ${gameArt.length} generated overlays, ${audio.length} registered audio assets`);

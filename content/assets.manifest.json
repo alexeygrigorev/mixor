@@ -1445,6 +1445,94 @@
       "userAccepted": false
     },
     {
+      "id": "scene-07-myxomycete-clue",
+      "kind": "game_art",
+      "status": "prepared_local_demo",
+      "role": "search_overlay",
+      "path": "public/assets/scene-07/objects/myxomycete-clue.webp",
+      "isGenerated": true,
+      "checksum": "8917d174376c15012eccf6ea8e636bc3154aefce280f8d1a86deaa1cd568b86d",
+      "bytes": 40406,
+      "width": 640,
+      "height": 427,
+      "mime": "image/webp",
+      "source": {
+        "provider": "OpenAI built-in image generation tool",
+        "generatedAt": "2026-09-18",
+        "promptSummary": "Transparent restrained macro game illustration of an orange and cream myxomycete cluster on decaying bark; no species claim."
+      },
+      "rights": {
+        "licenseReview": "Generated game art; not a documentary photograph and not used as evidence of an organism in the user video."
+      },
+      "science": null
+    },
+    {
+      "id": "scene-07-lichen-clue",
+      "kind": "game_art",
+      "status": "prepared_local_demo",
+      "role": "search_overlay",
+      "path": "public/assets/scene-07/objects/lichen-clue.webp",
+      "isGenerated": true,
+      "checksum": "90a3923bbad4d851cd8d483a5d897ff8563ef1689f9dea563cbdc7efe352e290",
+      "bytes": 40718,
+      "width": 640,
+      "height": 427,
+      "mime": "image/webp",
+      "source": {
+        "provider": "OpenAI built-in image generation tool",
+        "generatedAt": "2026-09-18",
+        "promptSummary": "Transparent restrained macro game illustration of a muted foliose lichen patch on bark; no species claim."
+      },
+      "rights": {
+        "licenseReview": "Generated game art; not a documentary photograph and not used as evidence of an organism in the user video."
+      },
+      "science": null
+    },
+    {
+      "id": "scene-07-fungus-clue",
+      "kind": "game_art",
+      "status": "prepared_local_demo",
+      "role": "search_overlay",
+      "path": "public/assets/scene-07/objects/fungus-clue.webp",
+      "isGenerated": true,
+      "checksum": "d6f5540b3ee5b053fc939987e5ffb4169ed368b7c8989f23ddb675a168c54b71",
+      "bytes": 38788,
+      "width": 640,
+      "height": 586,
+      "mime": "image/webp",
+      "source": {
+        "provider": "OpenAI built-in image generation tool",
+        "generatedAt": "2026-09-18",
+        "promptSummary": "Transparent restrained macro game illustration of a tiny brown woodland mushroom cluster on decaying wood; no species or edibility claim."
+      },
+      "rights": {
+        "licenseReview": "Generated game art; not a documentary photograph and not used as evidence of an organism in the user video."
+      },
+      "science": null
+    },
+    {
+      "id": "scene-07-woodlouse-clue",
+      "kind": "game_art",
+      "status": "prepared_local_demo",
+      "role": "search_overlay",
+      "path": "public/assets/scene-07/objects/woodlouse-clue.webp",
+      "isGenerated": true,
+      "checksum": "4b22c47c8cea297552d75f88a9816c54ad98b1f38dd81f4be57227ea1f896b34",
+      "bytes": 30616,
+      "width": 640,
+      "height": 427,
+      "mime": "image/webp",
+      "source": {
+        "provider": "OpenAI built-in image generation tool",
+        "generatedAt": "2026-09-18",
+        "promptSummary": "Transparent restrained macro game illustration of a small brown-grey woodlouse beside bark; no species claim."
+      },
+      "rights": {
+        "licenseReview": "Generated game art; not a documentary photograph and not used as evidence of an organism in the user video."
+      },
+      "science": null
+    },
+    {
       "id": "ambience-distant-birds-long",
       "kind": "ambience",
       "status": "prepared_local_demo",
