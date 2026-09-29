@@ -1,5 +1,7 @@
 # Локальная игра Mixor: состояние реализации
 
+> 2026-09-29 update: generated woodland stages 1–6 are retired. The active forest is the movable real-frame walk, with mobile controls, fixed travel choices, saved progress and replay. See [current implementation and checks](PHOTO_WALK_MOBILE.md); older scene-specific results below are historical.
+
 Дата: 2026-09-12. Это локальная игра, не AWS deployment и не завершённый семейный выпуск. Статическая демо-сборка публикуется на GitHub Pages по адресу `https://alexeygrigorev.com/mixor/`. [Все 76 отправленных сообщений](SESSION_INPUTS.md) сверены с настоящими логами; последние требования имеют приоритет над старыми defaults и review-контрактами. [Рабочий checklist](USER_FEEDBACK.md) отделяет реализацию от пользовательской приёмки.
 
 U73–U76 реализованы: все пятнадцать подсказок и увеличений показывают одинаковую композицию организма вместе с древесиной или листом под ним. Исправлены десять положений, включая Fuligo на торце бревна и Tubifera вне живого папоротника. Убраны вырезанные «парящие» ножки и резкие края листовой/сетчатой вставки; текущие фоны не менялись. Независимый R9 принял ограниченный контракт F1–F6. [Карта всех опор, кадры и проверки](SEARCH_FIDELITY.md).

@@ -5,7 +5,7 @@ import { createHash } from "node:crypto";
 import { taxa, media } from "../src/data.ts";
 import { lifeCycles, stageSequence } from "../src/life-data.ts";
 import { taxonomyTree, scientificNames } from "../src/taxonomy.ts";
-import { woodlands, readFinds, writeFinds } from "../src/search-data.ts";
+import { woodlands, archivedWoodlands, findWoodland, readFinds, writeFinds } from "../src/search-data.ts";
 
 test("each taxon has its own eight-panel early-development original and runtime plate", () => {
   const manifest = JSON.parse(readFileSync(new URL("../content/generated-art.manifest.json", import.meta.url)));
@@ -108,10 +108,17 @@ test("classification has species leaves under real intermediate groups", () => {
   assert.equal(scientificNames.stemonitis.genusProvisional, true);
   assert.match(scientificNames.stemonitis.placementNote, /incertae sedis/);
 });
-test("unique environments cover all taxa; corrupted search data is contained", () => {
-  assert.equal(woodlands.length, 7);
-  assert.equal(new Set(woodlands.map((w) => w.image)).size, 7);
-  const spots = woodlands.flatMap((w) => w.spots);
+test("only the photo walk is playable and retired bookmarks resolve to it", () => {
+  assert.deepEqual(woodlands.map((place) => place.id), ["video-forest"]);
+  assert.equal(archivedWoodlands.length, 6);
+  for (const id of ["forest", "stump", "leaves", "roots", "bark", "wetland", "wetland-forward", "unknown"]) {
+    assert.equal(findWoodland(id).id, "video-forest");
+    assert.deepEqual(findWoodland(id).spots, [], "exiting a retired bookmark cannot clear its historical finds");
+  }
+});
+
+test("archived discoveries retain all taxa; corrupted search data is contained", () => {
+  const spots = archivedWoodlands.flatMap((w) => w.spots);
   assert.equal(new Set(spots.map((s) => s.id)).size, 17);
   assert.equal(new Set(spots.map((s) => s.taxon)).size, 8);
   let value = "bad json";
@@ -126,15 +133,19 @@ test("unique environments cover all taxa; corrupted search data is contained", (
   assert.deepEqual(readFinds(), [spots[0].id]);
   assert.equal(writeFinds([spots[0].id, spots[0].id]), true);
   assert.deepEqual(readFinds(), [spots[0].id]);
+  const historicalFinds = spots.map((spot) => spot.id);
+  assert.equal(writeFinds(historicalFinds), true);
+  assert.deepEqual(readFinds(), historicalFinds, "retiring a playable scene preserves every saved discovery");
   localStorage.setItem = () => {
     throw new Error("quota");
   };
   assert.equal(writeFinds([spots[1].id]), false);
 });
 
-test("weather is scene-specific, with rain only at roots and birch", () => {
+test("the active photo walk has clear weather; retired weather metadata remains available", () => {
+  assert.equal(woodlands[0].weather, "clear");
   assert.deepEqual(
-    Object.fromEntries(woodlands.map((w) => [w.id, w.weather])),
-    { forest: "clear", stump: "overcast", leaves: "overcast", roots: "rain", bark: "rain", wetland: "overcast", "video-forest": "clear" },
+    Object.fromEntries(archivedWoodlands.map((w) => [w.id, w.weather])),
+    { forest: "clear", stump: "overcast", leaves: "overcast", roots: "rain", bark: "rain", wetland: "overcast" },
   );
 });

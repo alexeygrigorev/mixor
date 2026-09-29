@@ -1,7 +1,5 @@
 import type { TaxonId } from "./data";
 import { publicUrl } from "./public-url.ts";
-import { getWalkView } from "./street-view-data.ts";
-import { getPhotoWalkView } from "./photo-walk-data.ts";
 
 export type HidingPlace = {
   id: string;
@@ -23,7 +21,9 @@ export type Woodland = {
   weather: "clear" | "overcast" | "rain";
   spots: HidingPlace[];
 };
-export const woodlands: Woodland[] = [
+// Historical metadata remains readable so saved discoveries are never discarded.
+// These places are no longer playable or offered by navigation.
+export const archivedWoodlands: Woodland[] = [
   {
     id: "forest",
     title: "Лесная поляна",
@@ -216,20 +216,24 @@ export const woodlands: Woodland[] = [
       },
     ],
   },
+];
+
+export const woodlands: Woodland[] = [
   {
     id: "video-forest",
     title: "Лесная прогулка",
-    description: "Шесть настоящих ракурсов: пни, ветки и скрытые детали",
+    description: "Осмотрись вокруг, пройди по тропе и найди маленьких обитателей леса",
     image: "/assets/scene-07/slope.webp",
     weather: "clear",
-    spots: [], // Scene 07 uses its own session-only PhotoWalkObject search layer.
+    spots: [], // The photo walk owns its separate exploration progress.
   },
 ];
-for (const woodland of woodlands) woodland.image = publicUrl(woodland.image);
-export const findWoodland = (id: string) =>
-  woodlands.find((w) => w.id === (getPhotoWalkView(id)?.woodlandId ?? getWalkView(id)?.woodlandId ?? id)) ?? woodlands[0];
+for (const woodland of [...archivedWoodlands, ...woodlands]) woodland.image = publicUrl(woodland.image);
+// Bookmarked retired stages also open the current woodland. Archived finds are
+// deliberately not attached here: leaving the walk must not erase old progress.
+export const findWoodland = (_id: string) => woodlands[0];
 const key = "mixor-search-v1";
-const validIds = new Set(woodlands.flatMap((w) => w.spots.map((s) => s.id)));
+const validIds = new Set([...archivedWoodlands, ...woodlands].flatMap((w) => w.spots.map((s) => s.id)));
 export function readFinds(): string[] {
   try {
     const value: unknown = JSON.parse(localStorage.getItem(key) ?? "[]");

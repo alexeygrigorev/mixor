@@ -1,11 +1,12 @@
 import { test, expect } from "@playwright/test";
 import { mkdirSync, writeFileSync } from "node:fs";
-import { woodlands } from "../../src/search-data";
+import { archivedWoodlands as woodlands } from "../../src/search-data";
 import { scientificNames } from "../../src/taxonomy";
 
 // Evidence is rasterized from each actual DOM composition independently.
 // No replacement artwork, repainting, contrast adjustment or generated upscale.
 test("all fifteen clues enlarge the same pixels, framing and local support", async ({page}, info) => {
+  test.skip(true, "Generated stages 1–6 were retired on 2026-09-29; current exploration is covered by photo-walk tests.");
   test.skip(info.project.name !== "phone", "One complete fifteen-pair diagnostic.");
   test.setTimeout(90000);
   const engine = page.context().browser()?.browserType().name() ?? "persistent";

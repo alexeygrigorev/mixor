@@ -155,12 +155,14 @@ test("taps and forest uncovering decode, have separate cues, and obey effects an
 }) => {
   await instrument(page);
   // Silent play never starts even an uncover cue.
-  await changeRoute(page, "#world/physarum/forest");
-  await page.locator('.hiding-place[aria-pressed="false"]').first().click();
+  await changeRoute(page, "#world/physarum/video-forest");
+  await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-busy", "false");
+  await page.getByRole("button", { name: "Подсказка", exact: true }).click();
+  await page.locator('.pw-object.is-hinted').click();
   expect(await page.evaluate(() => (window as any).__audioTest.plays)).toEqual(
     [],
   );
-  await page.getByRole("button", { name: /Назад/ }).click();
+  await page.getByRole("button", { name: "Продолжить поиск", exact: true }).click();
   await changeRoute(page, "#base");
   await enable(page);
   await page.getByRole("button", { name: "Настройки", exact: true }).click();
@@ -178,8 +180,10 @@ test("taps and forest uncovering decode, have separate cues, and obey effects an
     )
     .toBe(true);
   await page.getByRole("button", { name: "Закрыть", exact: true }).click();
-  await changeRoute(page, "#world/physarum/stump");
-  const target = page.locator('.hiding-place[aria-pressed="false"]').first();
+  await changeRoute(page, "#world/physarum/video-moss-stump");
+  await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-busy", "false");
+  await page.getByRole("button", { name: "Подсказка", exact: true }).click();
+  const target = page.locator('.pw-object.is-hinted');
   await target.click();
   await expect
     .poll(() =>
@@ -200,8 +204,8 @@ test("taps and forest uncovering decode, have separate cues, and obey effects an
         src.includes("uncover-mix"),
       ).length,
   );
-  await page.getByRole("button", { name: "Закрыть увеличение", exact: true }).click();
-  await page.locator('.hiding-place[aria-pressed="true"]').first().click();
+  await page.getByRole("button", { name: "Продолжить поиск", exact: true }).click();
+  await page.locator('.pw-object[aria-pressed="true"]').first().click();
   expect(
     await page.evaluate(
       () =>
@@ -210,7 +214,7 @@ test("taps and forest uncovering decode, have separate cues, and obey effects an
         ).length,
     ),
   ).toBe(count);
-  await page.getByRole("button", { name: /Назад/ }).click();
+  await page.getByRole("button", { name: "Продолжить поиск", exact: true }).click();
   await changeRoute(page, "#base");
   await page.getByRole("button", { name: "Настройки", exact: true }).click();
   await page.getByRole("slider", { name: "Касания и инструменты" }).fill("0");
@@ -218,13 +222,15 @@ test("taps and forest uncovering decode, have separate cues, and obey effects an
   const plays = await page.evaluate(
     () => (window as any).__audioTest.plays.length,
   );
-  await changeRoute(page, "#world/physarum/leaves");
-  await page.locator('.hiding-place[aria-pressed="false"]').first().click();
+  await changeRoute(page, "#world/physarum/video-clearing");
+  await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-busy", "false");
+  await page.getByRole("button", { name: "Подсказка", exact: true }).click();
+  await page.locator('.pw-object.is-hinted').click();
   expect(
     await page.evaluate(() => (window as any).__audioTest.plays.length),
   ).toBe(plays);
   expect((await loops(page)).every((a: any) => !a.paused)).toBe(true);
-  await page.getByRole("button", { name: /Назад/ }).click();
+  await page.getByRole("button", { name: "Продолжить поиск", exact: true }).click();
   await changeRoute(page, "#base");
   await page
     .getByRole("button", { name: "Выключить звук", exact: true })
@@ -239,8 +245,10 @@ test("taps and forest uncovering decode, have separate cues, and obey effects an
   const mutedPlays = await page.evaluate(
     () => (window as any).__audioTest.plays.length,
   );
-  await changeRoute(page, "#world/physarum/roots");
-  await page.locator('.hiding-place[aria-pressed="false"]').first().click();
+  await changeRoute(page, "#world/physarum/video-deadwood");
+  await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-busy", "false");
+  await page.getByRole("button", { name: "Подсказка", exact: true }).click();
+  await page.locator('.pw-object.is-hinted').click();
   expect(
     await page.evaluate(() => (window as any).__audioTest.plays.length),
   ).toBe(mutedPlays);
@@ -355,6 +363,7 @@ async function setScene(page: Page, scene: string | null) {
 }
 
 test("scene audio uses rain only for roots and bark, without restarting shared stems", async ({ page }) => {
+  test.skip(true, "Generated stages 1–6 are retired; their rainy scene routes and discovery return flow are no longer offered.");
   await instrument(page);
   await enable(page);
   const before = await loops(page);
@@ -385,6 +394,7 @@ test("scene audio uses rain only for roots and bark, without restarting shared s
 });
 
 test("rain respects consent, mute, hidden state and zero nature level", async ({ page }) => {
+  test.skip(true, "Generated stages 1–6 are retired; their rainy scene routes and discovery return flow are no longer offered.");
   await instrument(page);
   await setScene(page, "roots");
   expect(await page.evaluate(() => (window as any).__audioTest.plays)).toEqual([]);
@@ -419,6 +429,7 @@ test("rain respects consent, mute, hidden state and zero nature level", async ({
 });
 
 test("visible scene weather and discovery return context drive the actual rain layer", async ({ page }) => {
+  test.skip(true, "Generated stages 1–6 are retired; their rainy scene routes and discovery return flow are no longer offered.");
   await instrument(page);
   await enable(page);
   for (const [id, weather] of [["forest", "clear"], ["stump", "overcast"], ["leaves", "overcast"], ["roots", "rain"], ["bark", "rain"]]) {

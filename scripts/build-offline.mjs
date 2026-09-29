@@ -17,7 +17,6 @@ const files = [
   "/favicon.svg",
   "/icon-192.png",
   "/icon-512.png",
-  "/assets/art/search-wetland-v1.webp",
 ].map(publicPath);
 for (const entry of readdirSync("dist/assets", { withFileTypes: true })) {
   if (entry.isFile() && /\.(js|css|woff2)$/.test(entry.name))
@@ -51,7 +50,8 @@ const photoWalk = JSON.parse(readFileSync("content/scene-07.manifest.json", "utf
 for (const asset of photoWalk.assets) {
   files.push(publicPath("/" + asset.path.replace(/^public\//, "")));
 }
-const unique = [...new Set(files)];
+// Retired generated search stages remain in source history, not the offline download.
+const unique = [...new Set(files)].filter((path) => !/\/assets\/art\/(search-|walk-wetland-)/.test(path));
 const hash = createHash("sha256");
 for (const file of unique) hash.update(readFileSync(distPath(file)));
 const cacheName = "mixor-public-" + hash.digest("hex").slice(0, 16);

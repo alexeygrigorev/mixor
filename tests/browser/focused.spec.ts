@@ -1,5 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
-import { woodlands } from "../../src/search-data";
+import { archivedWoodlands as woodlands } from "../../src/search-data";
 import { taxa } from "../../src/data";
 import { stageSequence } from "../../src/life-data";
 import { scientificNames } from "../../src/taxonomy";
@@ -63,6 +63,7 @@ async function readyToCapture(page: Page) {
 test("five places, embedded clues, selected circles and replay after woodland exit", async ({
   page,
 }, testInfo) => {
+  test.skip(true, "Generated stages 1–6 were retired on 2026-09-29; current exploration is covered by photo-walk tests.");
   test.setTimeout(90000);
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
@@ -211,6 +212,7 @@ test("five places, embedded clues, selected circles and replay after woodland ex
 test("forest circles uncover with keyboard and reduced motion", async ({
   page,
 }) => {
+  test.skip(true, "Generated stages 1–6 were retired on 2026-09-29; current exploration is covered by photo-walk tests.");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/#world/physarum/forest");
   await page

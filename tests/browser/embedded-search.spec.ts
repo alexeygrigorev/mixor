@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
-import { woodlands } from "../../src/search-data";
+import { archivedWoodlands as woodlands } from "../../src/search-data";
 import { originalsTest } from "./fixtures/originals-persistence";
 
 async function start(page: Page, scene = "forest") {
@@ -84,6 +84,7 @@ async function magnifierFits(page: Page) {
 test("embedded search: unchanged backgrounds and finite rendered evidence", async ({
   page,
 }, info) => {
+  test.skip(true, "Generated stages 1–6 were retired on 2026-09-29; current exploration is covered by photo-walk tests.");
   test.skip(
     info.project.name !== "phone",
     "One finite matrix covers all required viewports.",
@@ -179,6 +180,7 @@ test("embedded search: unchanged backgrounds and finite rendered evidence", asyn
 test("embedded search: all-found collapsed, keyboard, rotation and enlarged text", async ({
   page,
 }, info) => {
+  test.skip(true, "Generated stages 1–6 were retired on 2026-09-29; current exploration is covered by photo-walk tests.");
   test.skip(info.project.name !== "phone", "Includes phone and rotated phone.");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await start(page, "roots");
@@ -234,7 +236,7 @@ test("embedded search: all-found collapsed, keyboard, rotation and enlarged text
 });
 
 originalsTest(
-  "embedded search: reset only exited place, preserve other finds, originals and development",
+  "photo walk exit preserves archived finds, originals and development",
   async ({ page }) => {
     await start(page);
     const journey = {
@@ -282,43 +284,26 @@ originalsTest(
       });
     }, journey);
     await page.reload();
-    for (const clue of await page.locator(".hiding-place").all()) {
-      await clue.click();
-      await page.getByRole("button", { name: "Закрыть увеличение" }).click();
-    }
-    await page.getByRole("button", { name: /^Следующее место:/ }).click();
-    await page.getByRole("button", { name: /^Предыдущее место:/ }).click();
-    await expect(page.locator(".hiding-place.is-found")).toHaveCount(3);
+    await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", "video-forest");
+    await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-busy", "false");
+    await page.getByRole("button", { name: "Перейти: К мшистому пню", exact: true }).click();
+    await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", "video-moss-stump");
     await page.reload();
-    await expect(page.locator(".hiding-place.is-found")).toHaveCount(3);
-    await page.getByRole("button", { name: "Назад к выбору места" }).click();
-    expect(
-      await page.evaluate(() =>
-        JSON.parse(localStorage.getItem("mixor-search-v1")!),
-      ),
-    ).toEqual(["roots-tubifera"]);
-    expect(
-      await page.evaluate(() =>
-        JSON.parse(localStorage.getItem("mixor-journey-v2")!),
-      ),
-    ).toEqual(journey);
-    await page
-      .getByRole("button", {
-        name: `Искать: ${woodlands[0].title}`,
-        exact: true,
-      })
-      .click();
-    await expect(page.locator(".hiding-place.is-found")).toHaveCount(0);
-    await page.locator(".hiding-place").first().click();
+    await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-busy", "false");
+    await page.getByRole("button", { name: "Назад к выбору места", exact: true }).click();
+    await expect(page.locator(".woodland-chooser")).toBeVisible();
+    await page.getByRole("button", { name: "Искать: Лесная прогулка", exact: true }).click();
+    await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-busy", "false");
     await page.goBack();
     await expect(page.locator(".woodland-chooser")).toBeVisible();
     await page.goForward();
-    await expect(page.locator(".hiding-place.is-found")).toHaveCount(0);
+    await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-busy", "false");
     expect(
-      await page.evaluate(() =>
-        JSON.parse(localStorage.getItem("mixor-search-v1")!),
-      ),
+      await page.evaluate(() => JSON.parse(localStorage.getItem("mixor-search-v1")!)),
     ).toEqual(["roots-tubifera"]);
+    expect(
+      await page.evaluate(() => JSON.parse(localStorage.getItem("mixor-journey-v2")!)),
+    ).toEqual(journey);
     const original = await page.evaluate(async () => {
       const modulePath = "/src/storage.ts";
       const { listObservations } = await import(/* @vite-ignore */ modulePath);
@@ -339,6 +324,7 @@ originalsTest(
 test("embedded search: small phone hit areas and every magnifier action fit", async ({
   page,
 }, info) => {
+  test.skip(true, "Generated stages 1–6 were retired on 2026-09-29; current exploration is covered by photo-walk tests.");
   test.skip(info.project.name !== "phone", "Includes both small phone sizes.");
   await start(page);
   for (const viewport of [

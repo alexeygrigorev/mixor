@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { createHistoryCommitter } from "../../src/history-committer";
 import { stageSequence } from "../../src/life-data";
-import { woodlands } from "../../src/search-data";
+import { photoWalkViews } from "../../src/photo-walk-data";
 
 test("history committer keeps first/latest commits, retry backoff and cancellation deterministic", () => {
   let now = 0;
@@ -83,12 +83,12 @@ test("rapid native stage and scene traversal keeps URL/render aligned without hi
   const attempts = await page.evaluate(() => (window as any).__historyQuota.attempts);
   expect(attempts).toHaveLength(112);
   for (let i = 1; i < attempts.length; i++) expect(attempts[i].at - attempts[i - 1].at).toBeGreaterThanOrEqual(149);
-  await page.goto("/#world/physarum/forest");
+  await page.goto("/#world/physarum/video-forest");
   for (let i = 0; i < 12; i++) {
-    await page.getByRole("button", { name: /^Следующее место:/ }).click();
-    const woodland = woodlands[(i + 1) % woodlands.length];
-    await expect(page.locator(".search-scene")).toHaveAccessibleName(`${woodland.title}: поиск миксомицетов`);
-    await expect(page).toHaveURL(new RegExp(`#world/physarum/${woodland.id}$`));
+    const view = photoWalkViews[i % 2 === 0 ? 1 : 0];
+    await page.locator(".pw-path").first().click();
+    await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", view.id);
+    await expect(page).toHaveURL(new RegExp(`#world/physarum/${view.id}$`));
   }
   expect(errors).toEqual([]);
 });
@@ -112,6 +112,7 @@ test("modeled SecurityError retries real history writes without desynchronizing 
 
 for (const navigation of ["app Back", "browser Back", "new activity", "hashchange"] as const) {
   test(`pending history retry cannot overwrite ${navigation}`, async ({ page }) => {
+    test.skip(navigation === "new activity", "Retired stages 1–6 had selected magnifier → species navigation; stage 7 discovery dialogs do not offer that activity.");
     if (navigation === "new activity") {
       await start(page, "/#world/physarum/forest");
       await page.locator(".hiding-place").first().click();
@@ -133,8 +134,8 @@ for (const navigation of ["app Back", "browser Back", "new activity", "hashchang
     else if (navigation === "new activity") {
       await page.getByRole("button", { name: "Узнать больше", exact: true }).click();
     }
-    else await page.evaluate(() => { location.hash = "#world/physarum/roots"; });
-    const expected = navigation === "new activity" ? /#portrait\/[^/]+\/spore$/ : navigation === "hashchange" ? /#world\/physarum\/roots$/ : /#species\/physarum\/spore$/;
+    else await page.evaluate(() => { location.hash = "#world/physarum/video-forest"; });
+    const expected = navigation === "new activity" ? /#portrait\/[^/]+\/spore$/ : navigation === "hashchange" ? /#world\/physarum\/video-forest$/ : /#species\/physarum\/spore$/;
     await expect(page).toHaveURL(expected);
     const calls = await page.evaluate(() => (window as any).__historyQuota.attempts.length);
     // Observe past the retry deadline; this does not slow the stress clicks.
@@ -145,7 +146,7 @@ for (const navigation of ["app Back", "browser Back", "new activity", "hashchang
     if (navigation === "new activity") {
       await page.goBack();
       await expect(page).toHaveURL(/#world\/physarum\/forest$/);
-      await expect(page.locator(".search-scene")).toHaveAccessibleName(`${woodlands[0].title}: поиск миксомицетов`);
+      await expect(page.locator(".search-scene")).toHaveAccessibleName("Лесная прогулка");
     }
   });
 }

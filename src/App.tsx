@@ -11,7 +11,6 @@ import { createHistoryCommitter } from "./history-committer";
 import { listObservations, type StoredObservation } from "./storage";
 import "./styles.css";
 import "./focused.css";
-import "./street-view.css";
 import {
   ActivityHome,
   BackButton,
@@ -666,6 +665,7 @@ export default function App() {
           <SearchScene
             key={findWoodland(route.stage).id}
             woodland={findWoodland(route.stage)}
+            settings={() => setOverlay("settings")}
             viewId={route.stage}
             finds={finds}
             reveal={reveal}

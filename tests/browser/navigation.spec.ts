@@ -1,5 +1,5 @@
 import { test, expect, type Page, type TestInfo } from "@playwright/test";
-import { woodlands } from "../../src/search-data";
+import { archivedWoodlands as woodlands } from "../../src/search-data";
 import { scientificNames } from "../../src/taxonomy";
 
 async function start(page: Page, path = "/") {
@@ -33,6 +33,7 @@ async function forest(page: Page, index: number) {
 test("in-mode scene switching wraps both ways, retains finds and returns through the chooser", async ({
   page,
 }) => {
+  test.skip(true, "Generated stages 1–6 were retired on 2026-09-29; current exploration is covered by photo-walk tests.");
   await start(page);
   await page
     .getByRole("button", { name: "Найти в лесу", exact: false })
@@ -88,6 +89,7 @@ test("in-mode scene switching wraps both ways, retains finds and returns through
 test("found information, photos and development preserve originating woodland through reload and browser Back", async ({
   page,
 }, info) => {
+  test.skip(true, "Generated stages 1–6 were retired on 2026-09-29; current exploration is covered by photo-walk tests.");
   const woodland = woodlands[3];
   const spot = woodland.spots[0];
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -212,6 +214,7 @@ test("direct links have activity parents and a tree portrait retains its tree co
 test("woodland ambience continues through found information and photos, and uncover fires only once", async ({
   page,
 }) => {
+  test.skip(true, "Generated stages 1–6 were retired on 2026-09-29; current exploration is covered by photo-walk tests.");
   await page.addInitScript(() => {
     const audio: HTMLAudioElement[] = [];
     const plays: string[] = [];
@@ -390,6 +393,7 @@ test("enlarged development header and photo attribution stay readable and reacha
 test("enlarged search controls and discovered information remain reachable", async ({
   page,
 }, info) => {
+  test.skip(true, "Generated stages 1–6 were retired on 2026-09-29; current exploration is covered by photo-walk tests.");
   await start(page, "/#world/physarum/forest");
   const enlarge = async () =>
     page.locator("main").evaluate((main) => {

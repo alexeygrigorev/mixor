@@ -68,14 +68,15 @@ test("focused keyboard, photo focus return, rotation, large text and reduced mot
   await page
     .getByRole("button", { name: "Найти в лесу", exact: false })
     .click();
-  await page.getByRole("button", { name: "Искать: Лесная поляна" }).click();
-  const target = page.locator(".hiding-place").first();
+  await page.getByRole("button", { name: "Искать: Лесная прогулка" }).click();
+  const target = page.locator(".pw-object").first();
   await target.focus();
   await page.keyboard.press("Enter");
   await expect(target).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator(".search-scene [role=status]")).toContainText(
-    "Badhamia polycephala",
-  );
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 21");
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(target).toBeFocused();
   await page.goto("/#tree");
   const group = page
     .locator("summary")

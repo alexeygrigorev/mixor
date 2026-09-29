@@ -10,13 +10,8 @@ import {
 } from "./life-data";
 import { woodlands, type Woodland } from "./search-data";
 import { scientificNames, taxonomyTree, type TaxonomyNode } from "./taxonomy";
-import { SceneWeather } from "./weather";
-import { SearchSpecimen, specimenPatchSize, specimenContact } from "./search-specimen";
-import { getWalkView, type WalkLink } from "./street-view-data";
-import { StreetViewTransition } from "./street-view-transition";
-import { StreetViewScene } from "./street-view-scene";
 import { PhotoWalkScene } from "./photo-walk-scene";
-import { getPhotoWalkView } from "./photo-walk-data";
+import { getPhotoWalkView, PHOTO_WALK_ENTRY } from "./photo-walk-data";
 
 export function BackButton({
   back,
@@ -46,7 +41,7 @@ export function ActivityHome({
     {
       id: "woods",
       name: "Найти в лесу",
-      hint: "Лесные места, полные маленькой жизни",
+      hint: "Осмотрись, пройди по тропе, найди скрытые детали",
       icon: "lens",
     },
     {
@@ -90,7 +85,6 @@ export function ActivityHome({
   );
 }
 export function WoodlandChooser({
-  finds,
   choose,
   sessionOnly,
 }: {
@@ -98,45 +92,26 @@ export function WoodlandChooser({
   choose: (id: string) => void;
   sessionOnly: boolean;
 }) {
+  const woodland = woodlands[0];
   return (
-    <section className="woodland-chooser">
+    <section className="woodland-chooser woodland-chooser-walk">
       <div className="chooser-heading">
-        <h1>Куда отправимся?</h1>
-        <p>
-          Ищи маленькие формы среди коры, мха и листьев. Коснись, чтобы
-          рассмотреть.
-        </p>
+        <h1>В лес за открытиями</h1>
+        <p>Двигай фотографию, заглядывай к пням и веткам, замечай маленьких обитателей.</p>
       </div>
       <div className="woodland-choices">
-        {woodlands.map((w, i) => (
-          <button
-            key={w.id}
-            onClick={() => choose(w.id)}
-            aria-label={`Искать: ${w.title}`}
-          >
-            <img src={w.image} alt="" />
-            <span className="woodland-choice-caption">
-              <span>
-                <small>0{i + 1}</small>
-                <strong>{w.title}</strong>
-                <span>{w.description}</span>
-              </span>
-              {w.spots.length > 0 ? (
-                <span className="find-count" aria-label="Найдено">
-                  {w.spots.filter((s) => finds.includes(s.id)).length} /{" "}
-                  {w.spots.length}
-                </span>
-              ) : <span className="find-count">Прогулка</span>}
+        <button onClick={() => choose(woodland.id)} aria-label="Искать: Лесная прогулка">
+          <img src={woodland.image} alt="" />
+          <span className="woodland-choice-caption">
+            <span>
+              <strong>{woodland.title}</strong>
+              <span>{woodland.description}</span>
             </span>
-          </button>
-        ))}
+            <Icon name="next" size={24} />
+          </span>
+        </button>
       </div>
-      <p className="chooser-note">
-        Сцены 1–6 созданы с ИИ; сцена 7 — кадры видео. Размещение условное, не карта находок. Без
-        таймеров и штрафов.
-        {sessionOnly &&
-          " Прогресс этой вкладки не удалось сохранить на устройстве."}
-      </p>
+      {sessionOnly && <p className="chooser-note">Прогресс этой вкладки не удалось сохранить на устройстве.</p>}
     </section>
   );
 }
@@ -182,22 +157,7 @@ export function SpeciesChooser({
   );
 }
 
-export function SearchScene(props: Parameters<typeof FlatSearchScene>[0]) {
-  const photoView = getPhotoWalkView(props.viewId ?? props.woodland.id);
-  if (photoView) return <PhotoWalkScene view={photoView} change={props.change} back={props.back} />;
-  const view = getWalkView(props.viewId ?? props.woodland.id);
-  return view ? <StreetViewScene {...props} view={view} /> : <FlatSearchScene {...props} />;
-}
-
-function FlatSearchScene({
-  woodland,
-  viewId = woodland.id,
-  finds,
-  reveal,
-  inspect,
-  change,
-  back,
-}: {
+export function SearchScene(props: {
   woodland: Woodland;
   viewId?: string;
   finds: string[];
@@ -205,328 +165,12 @@ function FlatSearchScene({
   inspect: (taxon: TaxonId, findId: string) => void;
   change: (woodlandId: string) => void;
   back: () => void;
+  settings?: () => void;
 }) {
-  const host = useRef<HTMLElement>(null);
-  const [size, setSize] = useState({ width: 1536, height: 1024 });
-  const [announcement, setAnnouncement] = useState("");
-  const [failed, setFailed] = useState(false);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const walkView = getWalkView(viewId);
-  const sceneImage = walkView?.image ?? woodland.image;
-  const visibleSpots = !walkView || walkView.id === woodland.id ? woodland.spots : [];
-  const [walkingTo, setWalkingTo] = useState<string | null>(null);
-  const [walkError, setWalkError] = useState("");
-  const [leaving, setLeaving] = useState<{ from: string; to: string } | null>(null);
-  const walkRequest = useRef(0);
-  const walking = useRef(false);
-  useEffect(() => {
-    setFailed(false);
-    setSelectedId(null);
-    setWalkingTo(null);
-    setWalkError("");
-    walking.current = false;
-    // Only the adjacent prepared views are warmed; navigation waits for decode.
-    walkView?.links.forEach((link) => {
-      const next = getWalkView(link.to);
-      if (next) {
-        const image = new Image();
-        image.src = next.image;
-        void image.decode().catch(() => undefined);
-      }
-    });
-    return () => { walkRequest.current += 1; };
-  }, [sceneImage, walkView]);
-  const takeStep = async (link: WalkLink) => {
-    const next = getWalkView(link.to);
-    if (!next || walking.current) return;
-    walking.current = true;
-    const request = ++walkRequest.current;
-    setWalkingTo(link.to);
-    setWalkError("");
-    setSelectedId(null);
-    try {
-      const image = new Image();
-      image.src = next.image;
-      await image.decode();
-      if (request !== walkRequest.current) return;
-      setLeaving({ from: viewId, to: next.id });
-      change(next.id);
-      setAnnouncement(next.title);
-    } catch {
-      if (request !== walkRequest.current) return;
-      setWalkError("Этот ракурс не загрузился. Нажми на стрелку ещё раз.");
-      setWalkingTo(null);
-      walking.current = false;
-    }
-  };
-  const magnifier = useRef<HTMLDivElement>(null);
-  const dismissButton = useRef<HTMLButtonElement>(null);
-  const [lensSize, setLensSize] = useState({ width: 300, height: 370 });
-  const selected = visibleSpots.find((spot) => spot.id === selectedId);
-  const dismiss = () => {
-    setSelectedId(null);
-    host.current
-      ?.querySelector<HTMLButtonElement>(`[data-find="${selectedId}"]`)
-      ?.focus({ preventScroll: true });
-  };
-  useLayoutEffect(() => {
-    if (!selectedId || !magnifier.current) return;
-    dismissButton.current?.focus({ preventScroll: true });
-    const observer = new ResizeObserver(([entry]) => {
-      const box = entry.target.getBoundingClientRect();
-      setLensSize({ width: box.width, height: box.height });
-    });
-    observer.observe(magnifier.current);
-    return () => observer.disconnect();
-  }, [selectedId]);
-  useEffect(() => {
-    if (!selectedId) return;
-    const escape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        setSelectedId(null);
-        host.current
-          ?.querySelector<HTMLButtonElement>(`[data-find="${selectedId}"]`)
-          ?.focus({ preventScroll: true });
-      }
-    };
-    window.addEventListener("keydown", escape);
-    return () => window.removeEventListener("keydown", escape);
-  }, [selectedId]);
-  useLayoutEffect(() => {
-    const el = host.current!;
-    const observer = new ResizeObserver(([entry]) => {
-      setSize({
-        width: entry.contentRect.width,
-        height: entry.contentRect.height,
-      });
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-  const worldWidth = Math.max(size.width, size.height * 1.5);
-  const worldHeight = worldWidth / 1.5;
-  // The clue and its support share the SAME source-to-screen transform.
-  // Only the deliberately opened magnifier is clamped into the viewport.
-  const project = (spot: { x: number; y: number }) => ({
-    x: (worldWidth * spot.x) / 100 - (worldWidth - size.width) / 2,
-    y: (worldHeight * spot.y) / 100 - (worldHeight - size.height) / 2,
-  });
-  const origin = selected ? project(selected) : { x: 0, y: 0 };
-  const lensLeft = Math.max(
-    16,
-    Math.min(
-      size.width - lensSize.width - 16,
-      origin.x < size.width / 2
-        ? origin.x + 42
-        : origin.x - lensSize.width - 42,
-    ),
-  );
-  const lensTop = Math.max(
-    84,
-    Math.min(
-      size.height - lensSize.height - 16,
-      origin.y - lensSize.height / 2,
-    ),
-  );
-  const woodlandIndex = woodlands.findIndex(
-    (place) => place.id === woodland.id,
-  );
-  const previous =
-    woodlands[(woodlandIndex + woodlands.length - 1) % woodlands.length];
-  const next = woodlands[(woodlandIndex + 1) % woodlands.length];
-  return (
-    <section
-      ref={host}
-      className={`search-scene ${walkView ? "street-view-scene" : ""}`}
-      aria-label={walkView ? `${woodland.title}: ${walkView.title}` : `${woodland.title}: поиск миксомицетов`}
-      data-view={walkView?.id}
-    >
-      <div
-        className="search-world"
-        style={{ width: worldWidth, height: worldWidth / 1.5 }}
-      >
-        <img
-          key={sceneImage}
-          className="search-environment"
-          src={sceneImage}
-          alt=""
-          draggable={false}
-          onError={() => setFailed(true)}
-        />
-        {leaving && viewId === leaving.to && (
-          <StreetViewTransition from={leaving.from} to={leaving.to}
-            complete={() => setLeaving(null)} />
-        )}
-      </div>
-      <SceneWeather weather={woodland.weather} />
-      {walkView && !selected && !leaving && walkingTo === null && (
-        <nav className="walk-directions" aria-label="Прогулка по тропе" aria-busy={walkingTo !== null}>
-          {walkView.links.map((link) => {
-            const point = project(link);
-            return (
-              <button
-                key={`${walkView.id}-${link.to}`}
-                className={`walk-arrow ${walkingTo === link.to ? "is-loading" : ""}`}
-                style={{ left: point.x, top: point.y }}
-                aria-label={link.label}
-                disabled={walkingTo !== null || leaving !== null}
-                onClick={() => void takeStep(link)}
-              >
-                <svg viewBox="0 0 100 100" aria-hidden="true">
-                  <g transform={`rotate(${link.angle} 50 50)`}>
-                    <path d="M50 15 84 64 71 72 50 43 29 72 16 64Z" />
-                  </g>
-                </svg>
-                <span>{link.label}</span>
-              </button>
-            );
-          })}
-        </nav>
-      )}
-      {!leaving && visibleSpots.map((spot) => {
-        const found = finds.includes(spot.id);
-        const point = project(spot);
-        const isSelected = spot.id === selectedId;
-        return (
-          <button
-            key={spot.id}
-            data-find={spot.id}
-            className={`hiding-place ${found ? "is-found" : ""} ${isSelected ? "is-selected" : ""}`}
-            aria-label={
-              found
-                ? `Рассмотреть находку: ${scientificNames[spot.taxon].name}`
-                : `Осмотреть: ${spot.label}`
-            }
-            aria-pressed={found}
-            aria-expanded={isSelected}
-            aria-controls={isSelected ? "search-magnifier" : undefined}
-            aria-describedby="search-material"
-            style={{
-              left: point.x,
-              top: point.y,
-            }}
-            onClick={() => {
-              if (!found) {
-                reveal(spot.id);
-                setAnnouncement(
-                  `Найдено: ${scientificNames[spot.taxon].name}. Открыто увеличение.`,
-                );
-              }
-              setSelectedId(spot.id);
-            }}
-          >
-            {spot.visibleClue !== false && (
-              <span
-                className="search-clue"
-                aria-hidden="true"
-                style={{
-                  width: worldWidth * specimenPatchSize(spot) / 1536,
-                  transform: `translate(-${specimenContact(spot)[0]}%, -${specimenContact(spot)[1]}%)`,
-                }}
-              >
-                <SearchSpecimen woodland={woodland} spot={spot} />
-              </span>
-            )}
-            {isSelected && (
-              <span className="search-clue-selected" aria-hidden="true" />
-            )}
-          </button>
-        );
-      })}
-      {selected && (
-        <>
-          <button
-            type="button"
-            className="search-dismiss-surface"
-            onClick={dismiss}
-            aria-label="Закрыть увеличение"
-          />
-          <svg className="search-origin-line" aria-hidden="true">
-            <line
-              x1={origin.x}
-              y1={origin.y}
-              x2={lensLeft + lensSize.width / 2}
-              y2={lensTop + lensSize.height / 2}
-            />
-          </svg>
-          <div
-            ref={magnifier}
-            className="search-magnifier"
-            id="search-magnifier"
-            role="dialog"
-            aria-modal="false"
-            aria-label={scientificNames[selected.taxon].name}
-            style={{ left: lensLeft, top: lensTop }}
-          >
-            <div className="search-magnified-image">
-              <SearchSpecimen
-                woodland={woodland}
-                spot={selected}
-                label={`${scientificNames[selected.taxon].name}: увеличение, иллюстрация ИИ`}
-              />
-              <button
-                ref={dismissButton}
-                className="search-dismiss"
-                onClick={dismiss}
-                aria-label="Закрыть увеличение"
-              >
-                <Icon name="close" />
-              </button>
-            </div>
-            <div className="search-magnified-caption">
-              <i>{scientificNames[selected.taxon].name}</i>
-              <button
-                className="search-learn"
-                onClick={() => inspect(selected.taxon, selected.id)}
-              >
-                Узнать больше <Icon name="next" size={20} />
-              </button>
-            </div>
-          </div>
-        </>
-      )}
-      <BackButton back={back} label="Назад к выбору места" />
-      {woodland.id === "wetland" && (
-        <button className="wetland-experiment-link" onClick={() => change("6-3d")}>
-          6-3d · эксперимент 360°
-        </button>
-      )}
-      <nav
-        className="search-places"
-        aria-label={`Места поиска. Сейчас: ${woodland.title}`}
-      >
-        <button
-          onClick={() => change(previous.id)}
-          aria-label={`Предыдущее место: ${previous.title}`}
-        >
-          <Icon name="back" size={20} />
-        </button>
-        <span aria-label={`Место ${woodlandIndex + 1} из ${woodlands.length}`}>
-          {woodlandIndex + 1} / {woodlands.length}
-        </span>
-        <button
-          onClick={() => change(next.id)}
-          aria-label={`Следующее место: ${next.title}`}
-        >
-          <Icon name="next" size={20} />
-        </button>
-      </nav>
-      <span className="sr-only" id="search-material">
-        Коснись детали, чтобы рассмотреть организм в увеличении. Сведения — по
-        кнопке «Узнать больше». Закрыть увеличение — Escape.
-      </span>
-      <span className="sr-only" role="status">
-        {announcement}
-      </span>
-      {failed && (
-        <p className="search-error" role="alert">
-          Лес не загрузился. Вернись и открой это место ещё раз.
-        </p>
-      )}
-      {walkError && <p className="search-error" role="alert">{walkError}</p>}
-    </section>
-  );
+  // Old bookmarks remain usable, but never revive the retired generated scenes.
+  const view = getPhotoWalkView(props.viewId ?? props.woodland.id)
+    ?? getPhotoWalkView(PHOTO_WALK_ENTRY)!;
+  return <PhotoWalkScene view={view} change={props.change} back={props.back} settings={props.settings} />;
 }
 
 export function DevelopmentScene({

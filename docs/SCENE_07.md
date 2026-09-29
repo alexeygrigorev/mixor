@@ -1,5 +1,7 @@
 # Scene 07: прогулка по кадрам видео
 
+> Updated 2026-09-29: the active camera, controls, progress and mobile contract is [PHOTO_WALK_MOBILE.md](PHOTO_WALK_MOBILE.md). The original implementation record below is historical.
+
 Дата подготовки: 2026-09-19. Основание: запрос пользователя на новую седьмую сцену из нескольких экранов предоставленного видео, с переходами и скрытыми объектами для поиска. В этой итерации нет 360° и генерации окружения.
 
 ## Статус переноса в GitHub

@@ -2,7 +2,7 @@ import { test, expect, type Page, type TestInfo } from "@playwright/test";
 import { mkdir, writeFile } from "node:fs/promises";
 import { taxa } from "../../src/data";
 import { scientificNames } from "../../src/taxonomy";
-import { woodlands } from "../../src/search-data";
+import { archivedWoodlands as woodlands } from "../../src/search-data";
 
 const output = "tmp/portrait-u66";
 const evidenceRoot = (info: TestInfo) => `${output}/${info.project.use.browserName || "chromium"}`;
@@ -159,7 +159,8 @@ test("portrait landscape, wide and enlarged text preserve usable image and contr
   await expect(page).toHaveURL(/#life\/physarum\/spore$/);
 });
 
-test("portrait returns preserve the finding, browser history, tree and direct-link parent", async ({ page }) => {
+test("retired woodland portrait returns preserve the finding and browser history", async ({ page }) => {
+  test.skip(true, "Generated stages 1–6 were retired on 2026-09-29; current exploration is covered by photo-walk tests.");
   await enter(page);
   const woodland = woodlands[0];
   const spot = woodland.spots[1];
@@ -186,6 +187,10 @@ test("portrait returns preserve the finding, browser history, tree and direct-li
   await page.getByRole("button", { name: `Назад: ${woodland.title}`, exact: true }).click();
   await expect(clue).toHaveAttribute("aria-pressed", "true");
 
+});
+
+test("portrait returns preserve tree context and direct-link parent", async ({ page }) => {
+  await enter(page);
   await page.goto("/#portrait/stemonitis/spore");
   await page.getByRole("button", { name: "Назад к дереву", exact: true }).click();
   await expect(page.locator(".classification-scene")).toBeVisible();

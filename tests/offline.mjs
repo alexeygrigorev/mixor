@@ -37,7 +37,8 @@ try {
   assert(!keys.includes("/assets/audio/sfx/ui-press-soft-mix.mp3"));
   assert(!keys.includes("/assets/audio/sfx/fingertip-wood-v2-mix.mp3"));
   assert(keys.includes("/assets/audio/sfx/uncover-mix.mp3"));
-  assert(keys.includes("/assets/art/search-bark.webp"));
+  assert(!keys.some((path) => /\/assets\/art\/(search-|walk-wetland-)/.test(path)));
+  assert(keys.includes("/assets/scene-07/slope.webp"));
   assert(keys.includes("/assets/art/growth-early.webp"));
   const earlyArt = ["physarum", "arcyria", "fuligo", "lycogala", "stemonitis", "trichia", "tubifera", "didymium"];
   for (const id of earlyArt) assert(keys.includes(`/assets/art/early-${id}-v3.webp`));
@@ -100,41 +101,25 @@ try {
   await page
     .getByRole("button", { name: "Найти в лесу", exact: false })
     .click();
-  await page.getByRole("button", { name: "Искать: В тени берёзы" }).click();
-  await page.locator(".hiding-place").first().click();
-  assert(
-    (await page
-      .locator(".hiding-place")
-      .first()
-      .getAttribute("aria-pressed")) === "true",
-  );
-  await page.getByRole("button", { name: "Узнать больше", exact: true }).click();
-  await page.locator(".portrait-scene").waitFor();
-  await page.getByRole("button", { name: "Назад: В тени берёзы", exact: true }).click();
-  assert.equal(await page.locator(".hiding-place.is-found").count(), 1);
-  await page.getByRole("button", { name: "Назад к выбору места", exact: true }).click();
-  await page.getByRole("button", { name: "Искать: В тени берёзы", exact: true }).click();
-  assert.equal(await page.locator(".hiding-place.is-found").count(), 0);
-  await page.locator(".hiding-place").first().click();
-  await page.locator(".search-magnifier").waitFor();
-  // The clue/lens now share an SVG composite. document.images does not include
-  // its <image> nodes, so verify both referenced rasters decode from the cache.
-  const magnifiedSources = await page.locator(".search-magnifier image").evaluateAll(
-    async (images) => Promise.all(images.map(async (node) => {
-      const source = node.getAttribute("href");
-      const image = new Image();
-      image.src = source;
-      await image.decode();
-      return { source, width: image.naturalWidth, height: image.naturalHeight };
-    })),
-  );
-  assert.equal(magnifiedSources.length, 2);
-  assert.ok(magnifiedSources.some(({ source }) => source === "/assets/art/organisms-v2.webp"));
-  assert.ok(magnifiedSources.some(({ source }) => source.startsWith("/assets/art/search-")));
-  assert.ok(magnifiedSources.every(({ width, height }) => width > 0 && height > 0));
-  await page.getByRole("button", { name: "Закрыть увеличение", exact: true }).click();
-  await page.getByRole("button", { name: /^Следующее место:/ }).click();
-  assert.equal(await page.locator(".scene-weather").getAttribute("data-weather"), "clear");
+  await page.getByRole("button", { name: "Искать: Лесная прогулка" }).click();
+  await page.locator('.photo-walk-scene[data-busy="false"]').waitFor();
+  await page.getByRole("button", { name: "Подсказка", exact: true }).click();
+  await page.locator(".pw-object").first().click();
+  await page.getByRole("dialog").waitFor();
+  assert.equal(await page.locator(".pw-object").first().getAttribute("aria-pressed"), "true");
+  await page.getByRole("button", { name: "Продолжить поиск", exact: true }).click();
+  await page.getByRole("button", { name: "Перейти: К мшистому пню", exact: true }).click();
+  await page.locator('.photo-walk-scene[data-view="video-moss-stump"][data-busy="false"]').waitFor();
+  await page.reload();
+  await page.locator('.photo-walk-scene[data-view="video-moss-stump"][data-busy="false"]').waitFor();
+  assert.equal(await page.locator(".pw-find-counter").textContent(), "Находки 1 / 21");
+  const frames = await page.evaluate(async () => Promise.all(
+    ["slope", "moss-stump", "clearing", "deadwood", "trail", "old-stump"].map(async (name) => {
+      const image = new Image(); image.src = `/assets/scene-07/${name}.webp`;
+      await image.decode(); return image.naturalWidth;
+    }),
+  ));
+  assert(frames.every((width) => width === 1920));
   const missing = await page.evaluate(async () => {
     try {
       const response = await fetch("/assets/nonexistent.webp");

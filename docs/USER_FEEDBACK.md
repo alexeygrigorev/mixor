@@ -1,6 +1,15 @@
 # User feedback and active acceptance checklist
 
-Updated: 2026-09-11. This is the durable record of the user's playtest requests, including corrections to earlier implementations. Read it before changing the game. Latest explicit feedback overrides conflicting older UI/audio defaults; privacy, source attribution and scientific honesty still apply.
+Updated: 2026-09-29. This is the durable record of the user's playtest requests, including corrections to earlier implementations. Read it before changing the game. Latest explicit feedback overrides conflicting older UI/audio defaults; privacy, source attribution and scientific honesty still apply.
+
+## Current request, 2026-09-29
+
+- Remove generated search scenes 1–6 from the playable flow and focus on scene 7. This refers to woodland scenes, not organism development stages.
+- On mobile, fill the screen and allow moving the view to explore; the supplied screenshot's large empty bands are unacceptable.
+- Improve the discovery loop and mobile controls. On desktop, make the scene more natural and replace awkwardly placed arrows.
+- Follow-up: make the result neat. Keep controls visually quiet, labels concise and aligned, and discovery cards free of repeated explanation.
+- Implemented in this change: movable full-screen forest, fixed named travel controls, optional hints, per-stop search goals, persistent game progress and confirmed replay. [Current contract and validation](PHOTO_WALK_MOBILE.md).
+- Earlier large-screen-only/no-phone scope and generated-scene selection expectations are superseded. Historical discovery data is retained. Automated checks do not establish subjective user approval; physical devices and listening remain unverified.
 
 ## Street-view request, 2026-09-11
 

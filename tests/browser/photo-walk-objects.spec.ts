@@ -13,6 +13,7 @@ test("scene 07 hides and reveals illustrated forest details without changing the
   await expect(page.locator('.photo-walk-scene[data-view="video-forest"]')).toBeVisible();
   await expect(page.locator(".pw-object")).toHaveCount(4);
   await expect(page.locator(".pw-find-counter")).toHaveText("Находки 0 / 21");
+  await page.getByRole("button", { name: "Весь кадр", exact: true }).click();
 
   const first = page.locator(".pw-object").first();
   await expect(first).toHaveAttribute("aria-pressed", "false");
@@ -37,4 +38,5 @@ test("scene 07 hides and reveals illustrated forest details without changing the
   await expect(page.locator(".pw-object")).toHaveCount(3);
   await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 21");
   await expect(page.locator(".pw-image")).toHaveAttribute("src", /moss-stump\.webp/);
+  await expect(page.locator(".pw-arrow")).toHaveCount(0);
 });
