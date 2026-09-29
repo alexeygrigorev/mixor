@@ -30,6 +30,9 @@ export type PhotoWalkObject = {
   label: string;
   title: string;
   description: string;
+  /** Visible support and art angle are required authoring evidence, not biological identification. */
+  support: string;
+  rotation: number;
   x: number;
   y: number;
   width: number;
@@ -50,10 +53,10 @@ export type PhotoWalkView = {
 export const PHOTO_WALK_ENTRY = "video-forest";
 export const PHOTO_WALK_FADE_MS = 240;
 const objectArt = {
-  myxomycete: "/assets/scene-07/objects/myxomycete-clue.webp",
-  lichen: "/assets/scene-07/objects/lichen-clue.webp",
-  fungus: "/assets/scene-07/objects/fungus-clue.webp",
-  creature: "/assets/scene-07/objects/woodlouse-clue.webp",
+  myxomycete: "/assets/scene-07/objects/myxomycete-natural.png",
+  lichen: "/assets/scene-07/objects/lichen-natural.png",
+  fungus: "/assets/scene-07/objects/fungus-natural.png",
+  creature: "/assets/scene-07/objects/woodlouse-natural.png",
 } as const;
 const objectCopy = {
   myxomycete: {
@@ -81,8 +84,10 @@ function object(
   y: number,
   width: number,
   height: number,
+  rotation: number,
+  support: string,
 ): PhotoWalkObject {
-  return { id, kind, image: objectArt[kind], label, ...objectCopy[kind], x, y, width, height };
+  return { id, kind, image: objectArt[kind], label, ...objectCopy[kind], x, y, width, height, rotation, support };
 }
 export const photoWalkViews: PhotoWalkView[] = [
   {
@@ -98,10 +103,10 @@ export const photoWalkViews: PhotoWalkView[] = [
       { id: "slope-wood", title: "Небольшой пень", x: 34, y: 45, width: 40, height: 40, anchorX: 55, anchorY: 66 },
     ],
     objects: [
-      object("slope-myxomycete", "myxomycete", "Скрытый миксомицет у пня", 49, 59, 9, 10),
-      object("slope-lichen", "lichen", "Лишайник на поваленной ветке", 62, 41, 8, 8),
-      object("slope-fungus", "fungus", "Небольшие грибы в листовой подстилке", 72, 68, 8, 10),
-      object("slope-woodlouse", "creature", "Мокрица под сухими листьями", 27, 72, 7, 7),
+      object("slope-myxomycete", "myxomycete", "Скрытый миксомицет у пня", 53.180, 56.797, 1.440, 1.706, 5, "Top lip of foreground broken stump"),
+      object("slope-lichen", "lichen", "Лишайник на поваленной ветке", 22.695, 58.188, 2.210, 0.924, 11, "Diagonal fallen branch left of middle stump"),
+      object("slope-fungus", "fungus", "Небольшие грибы в листовой подстилке", 58.312, 70.344, 1.875, 3.053, 0, "Leaf floor at right foot of foreground stump"),
+      object("slope-woodlouse", "creature", "Мокрица под сухими листьями", 26.741, 78.818, 1.317, 1.564, -8, "Dark leaf and wood crease below left stump"),
     ],
   },
   {
@@ -118,9 +123,9 @@ export const photoWalkViews: PhotoWalkView[] = [
       { id: "moss-surface", title: "Мох и древесина", x: 25, y: 43, width: 44, height: 44, anchorX: 45, anchorY: 64 },
     ],
     objects: [
-      object("moss-myxomycete", "myxomycete", "Миксомицет у мшистого пня", 39, 64, 9, 10),
-      object("moss-lichen", "lichen", "Лишайник на коре слева", 30, 52, 8, 8),
-      object("moss-fungus", "fungus", "Маленькие грибы у ветки", 21, 76, 8, 10),
+      object("moss-myxomycete", "myxomycete", "Миксомицет у мшистого пня", 42.591, 61.600, 1.520, 1.800, 6, "Exposed top lip of large foreground stump"),
+      object("moss-lichen", "lichen", "Лишайник на коре слева", 23.970, 78.102, 2.460, 1.495, -26, "Diagonal fallen branch entering left of foreground stump"),
+      object("moss-fungus", "fungus", "Маленькие грибы у ветки", 33.620, 71.869, 2.160, 3.521, 0, "Shaded leaf floor at left stump foot"),
     ],
   },
   {
@@ -138,10 +143,10 @@ export const photoWalkViews: PhotoWalkView[] = [
       { id: "clearing-leaf-floor", title: "Мох среди листвы", x: 29, y: 45, width: 44, height: 44, anchorX: 49, anchorY: 71 },
     ],
     objects: [
-      object("clearing-myxomycete", "myxomycete", "Миксомицет на мшистом островке", 44, 66, 9, 10),
-      object("clearing-lichen", "lichen", "Лишайник на низкой ветке", 29, 56, 8, 8),
-      object("clearing-fungus", "fungus", "Небольшие грибы у края поляны", 68, 67, 8, 10),
-      object("clearing-woodlouse", "creature", "Мокрица в тени ветвей", 75, 56, 7, 7),
+      object("clearing-myxomycete", "myxomycete", "Миксомицет на сломанном пне", 44.4, 71.275, 1.4, 1.65, 0, "Pale exposed lip of nearer broken stump"),
+      object("clearing-lichen", "lichen", "Лишайник на низкой ветке", 57, 91.15, 2.6, 2.2, -18, "Foreground diagonal fallen branch near bottom edge"),
+      object("clearing-fungus", "fungus", "Небольшие грибы у края поляны", 52.75, 71.25, 1.9, 3.1, 0, "Shaded leaf floor right of rear moss stump"),
+      object("clearing-woodlouse", "creature", "Мокрица в тени ветвей", 40.2, 80.57, 1.4, 1.66, -12, "Dark leaf crease lower left of broken stump"),
     ],
   },
   {
@@ -157,9 +162,9 @@ export const photoWalkViews: PhotoWalkView[] = [
       { id: "deadwood-moss", title: "Мшистая ветка", x: 36, y: 36, width: 48, height: 48, anchorX: 60, anchorY: 63 },
     ],
     objects: [
-      object("deadwood-myxomycete", "myxomycete", "Миксомицет на мшистой древесине", 70, 72, 9, 10),
-      object("deadwood-lichen", "lichen", "Лишайник на поваленном стволе", 22, 57, 8, 8),
-      object("deadwood-fungus", "fungus", "Небольшие грибы у папоротника", 52, 64, 8, 10),
+      object("deadwood-myxomycete", "myxomycete", "Миксомицет на мшистой древесине", 92.2, 71.42, 1.4, 1.66, 0, "Upper edge of near right section of fallen log"),
+      object("deadwood-lichen", "lichen", "Лишайник на поваленном стволе", 78.7, 63.675, 2.2, 1.85, 15, "Bark on curved nearer fallen log section"),
+      object("deadwood-fungus", "fungus", "Небольшие грибы у папоротника", 49.975, 58.45, 1.9, 3.1, 0, "Clear leaf litter lower left of fern, not on fronds"),
     ],
   },
   {
@@ -176,9 +181,9 @@ export const photoWalkViews: PhotoWalkView[] = [
       { id: "trail-stump", title: "Низкий пень у тропы", x: 5, y: 41, width: 44, height: 44, anchorX: 25, anchorY: 66 },
     ],
     objects: [
-      object("trail-myxomycete", "myxomycete", "Миксомицет на мшистом пне", 16, 65, 9, 10),
-      object("trail-lichen", "lichen", "Лишайник на большом пне", 80, 54, 8, 8),
-      object("trail-fungus", "fungus", "Небольшие грибы у передней ветки", 48, 79, 8, 10),
+      object("trail-myxomycete", "myxomycete", "Миксомицет на мшистом пне", 13.852, 69.483, 1.296, 1.534, 0, "Broken foreground stump lip"),
+      object("trail-lichen", "lichen", "Лишайник на поваленной ветке", 31.600, 89.053, 2.800, 1.494, -30, "Foreground diagonal decaying branch"),
+      object("trail-fungus", "fungus", "Небольшие грибы у передней ветки", 40.462, 80.974, 1.875, 3.053, 0, "Floor alongside upper right end of foreground branch"),
     ],
   },
   {
@@ -194,10 +199,10 @@ export const photoWalkViews: PhotoWalkView[] = [
       { id: "stump-wood", title: "Древесина у основания", x: 36, y: 44, width: 44, height: 44, anchorX: 65, anchorY: 72 },
     ],
     objects: [
-      object("stump-myxomycete", "myxomycete", "Миксомицет у основания пня", 41, 60, 9, 10),
-      object("stump-lichen", "lichen", "Лишайник на правом стволе", 85, 56, 8, 8),
-      object("stump-fungus", "fungus", "Небольшие грибы на поваленном бревне", 64, 73, 9, 10),
-      object("stump-woodlouse", "creature", "Мокрица в траве у тропы", 26, 78, 7, 7),
+      object("stump-myxomycete", "myxomycete", "Миксомицет на поваленной древесине", 55.637, 64.476, 1.224, 1.447, 0, "Exposed top lip of large fallen log"),
+      object("stump-lichen", "lichen", "Лишайник на поваленном стволе", 79.000, 64.293, 3.400, 1.814, -10, "Barked right section of horizontal log"),
+      object("stump-fungus", "fungus", "Небольшие грибы у поваленного бревна", 73.562, 75.974, 1.875, 3.053, 0, "Shaded ground at log foot; existing bracket fungus unobscured"),
+      object("stump-woodlouse", "creature", "Мокрица среди корней и листьев", 29.341, 89.218, 1.317, 1.564, 18, "Shaded root and leaf seam left of standing stump"),
     ],
   },
 ];
@@ -230,6 +235,7 @@ export function validatePhotoWalk(views: readonly PhotoWalkView[]): void {
     }
     for (const item of view.objects) {
       objectIds.add(item.id);
+      if (!item.support?.trim() || !Number.isFinite(item.rotation) || Math.abs(item.rotation) > 180) fail(`invalid support: ${item.id}`);
       if (!Object.hasOwn(objectCopy, item.kind) || !item.image || !item.title || !item.description) fail(`invalid object: ${item.id}`);
     }
     for (const detail of view.details) {

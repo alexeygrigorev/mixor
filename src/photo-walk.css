@@ -334,3 +334,52 @@
 .game.scene-world { padding: 0; }
 .pw-camera-tools { right: max(24px, env(safe-area-inset-right)); }
 @media (max-width: 800px) { .pw-camera-tools { right: max(12px, env(safe-area-inset-right)); } }
+
+/* Art uses image coordinates; the invisible touch target never enlarges it. */
+.pw-composite { container-type: size; }
+.pw-object { transform: translate(-50%, -50%); opacity: 1; filter: none; cursor: inherit; }
+.pw-object img,
+.pw-object:hover img,
+.pw-object:focus-visible img,
+.pw-object.is-found img,
+.pw-object.is-hinted img {
+  position: absolute; left: 50%; top: 50%; max-width: none;
+  transform: translate(-50%, -50%) rotate(var(--clue-angle, 0deg));
+  opacity: .86; filter: saturate(.68) brightness(.84) blur(.25px);
+  transition: none; pointer-events: none;
+}
+.pw-object:hover, .pw-object:focus-visible, .pw-object.is-found { opacity: 1; filter: none; }
+.pw-object::before, .pw-object.is-found::before { display: none; }
+.pw-object.is-hinted { outline: 1px solid #f5dc90b0; outline-offset: 4px; }
+/* A discovery teaches through a short explanation and an observation task. */
+.pw-learning, .pw-learning-intro { font-size: 14px; line-height: 1.65; }
+.pw-learning-intro { margin: 0; }
+.pw-learning { margin-top: 18px; }
+.pw-learning-facts { padding-left: 20px; }
+.pw-learning-facts li { margin: 6px 0; }
+.pw-learning-sources summary { cursor: pointer; min-height: 44px; padding-top: 12px; color: #d9d1b5; font-size: 12px; }
+.pw-learning-sources a { display: block; color: #e6d69d; min-height: 44px; padding: 10px 0; font-size: 12px; }
+@media (max-width: 480px) {
+  .pw-object-card { display: block; }
+  .pw-object-visual { width: 110px; height: 110px; float: right; margin: 0 0 12px 14px; }
+  .pw-object-card::after { content: ""; display: block; clear: both; }
+  .pw-object-title { font-size: 23px; }
+}
+/* Match the video frame's optical softness at every zoom, not a fixed screen blur. */
+.pw-object img,
+.pw-object:hover img,
+.pw-object:focus-visible img,
+.pw-object.is-found img,
+.pw-object.is-hinted img {
+  opacity: .94;
+  filter: saturate(.65) brightness(.86) blur(.03cqw);
+}
+.pw-object[data-kind="fungus"] img,
+.pw-object[data-kind="myxomycete"] img {
+  mask-image: linear-gradient(to bottom, #000 66%, #000c 82%, transparent 96%);
+}
+.pw-object[data-kind="lichen"] img { object-fit: fill; }
+.pw-learning-link { display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 10px 0; background: none; border: 0; color: #e6d69d !important; text-align: left; }
+.pw-learning-link svg { width: 22px; height: 22px; flex-shrink: 0; }
+/* Leaf litter is dark; retain enough body contrast to spot a grounded woodlouse. */
+.pw-object[data-kind="creature"] img { filter: saturate(.65) brightness(1.04) blur(.03cqw); }

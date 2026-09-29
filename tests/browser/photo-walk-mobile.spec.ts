@@ -115,6 +115,8 @@ test("touch swipe pans the photograph without activating its discovery", async (
 });
 
 test("all six real stops remain reachable through anchored travel controls", async ({ page }, testInfo) => {
+  // This full walk opens 21 discoveries, traverses ten paths and checks reload.
+  test.setTimeout(90000);
   if (testInfo.project.name === "tablet") await page.setViewportSize({ width: 1440, height: 900 });
   await startWalk(page);
   const path = [
@@ -142,7 +144,8 @@ test("all six real stops remain reachable through anchored travel controls", asy
       await expect(page.getByRole("button", { name: "Подсказка", exact: true, includeHidden: true })).toBeDisabled();
     }
     const link = view.links.find((candidate) => candidate.to === destination)!;
-    const control = page.locator(".pw-travel").getByRole("button", { name: `Перейти: ${link.label}`, exact: true });
+    const control = page.locator(".pw-ground-nav").getByRole("button", { name: `Перейти: ${link.label}`, exact: true });
+    await control.focus();
     await expect(control).toBeInViewport({ ratio: 1 });
     const box = (await control.boundingBox())!;
     expect(box.height).toBeGreaterThanOrEqual(44);
@@ -154,7 +157,14 @@ test("all six real stops remain reachable through anchored travel controls", asy
   await expect(page.locator(".pw-arrow")).toHaveCount(0);
   await expect(page.locator(".pw-counter")).toHaveText("6 / 6 мест");
   await expect(page.locator(".pw-find-counter")).toHaveText("Находки 21 / 21");
-  await expect(page.getByText("Все детали найдены. Лес можно исследовать снова.", { exact: true })).toBeVisible();
+  await expect(page.locator(".pw-mission-text")).toHaveText("Все детали найдены. Лес можно исследовать снова.");
+  // The compact HUD puts visible per-stop progress inside the route dialog.
+  await page.getByRole("button", { name: "Открыть маршрут", exact: true }).click();
+  for (const view of photoWalkViews) {
+    await expect(page.locator(".pw-map-row").filter({ hasText: view.title }))
+      .toContainText(`Детали ${view.objects.length} / ${view.objects.length}`);
+  }
+  await page.getByRole("button", { name: "Закрыть окно", exact: true }).click();
   await page.reload();
   await expect(page.locator(".pw-find-counter")).toHaveText("Находки 21 / 21");
   await expect(page.locator(".pw-counter")).toHaveText("6 / 6 мест");
@@ -176,11 +186,13 @@ test("a discovery survives rotation, reload and returning from another stop", as
   await page.setViewportSize({ width: portrait.height, height: portrait.width });
   await expect.poll(async () => (await bounds(page)).covers).toBe(true);
   await expect(first).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Перейти: К мшистому пню", exact: true }).focus();
   await page.getByRole("button", { name: "Перейти: К мшистому пню", exact: true }).tap();
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", "video-moss-stump");
   await page.reload();
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", "video-moss-stump");
   await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 21");
+  await page.getByRole("button", { name: "Перейти: Назад на склон", exact: true }).focus();
   await page.getByRole("button", { name: "Перейти: Назад на склон", exact: true }).tap();
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", "video-forest");
   await expect(page.locator(".pw-object").first()).toHaveAttribute("aria-pressed", "true");

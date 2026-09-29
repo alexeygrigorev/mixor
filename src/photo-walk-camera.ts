@@ -1,5 +1,8 @@
 import type { PhotoWalkCamera } from "./photo-walk-progress";
 
+// Keep the pure camera geometry importable by the native Node unit tests.
+if (typeof document !== "undefined") void import("./photo-walk-interaction.css");
+
 const clamp = (value: number, low: number, high: number) => Math.min(high, Math.max(low, value));
 export function cameraBox(width: number, height: number, camera: PhotoWalkCamera, overview = false) {
   const scale = (overview ? Math.min(width / 1920, height / 1080) : Math.max(width / 1920, height / 1080)) * (overview ? 1 : camera.zoom);
@@ -57,9 +60,23 @@ export function mountPhotoCamera(viewport: HTMLElement, surface: HTMLElement, on
   }
   viewport.addEventListener("pointerdown", (event) => {
     if (event.button !== 0 || viewport.closest('[data-busy="true"], [data-detail]')) return;
+    // A press may become a pan: don't focus/reveal the hotspot or start native
+    // selection before we know whether the user intended a tap. Click remains
+    // the activation event, including on touch; keyboard focus is unaffected.
+    // Cancelling a touch pointerdown also suppresses its eventual tap in some
+    // engines. Touch selection is blocked by touch-action/CSS/selectstart.
+    if (event.pointerType === "mouse") event.preventDefault();
+    const focused = document.activeElement;
+    if (focused instanceof HTMLElement && viewport.contains(focused) && focused !== viewport) focused.blur();
     if (!pointers.size) { dragged = false; suppressClick = false; start = { x: event.clientX, y: event.clientY }; }
     pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    // Capture on the original hit target so a tiny movement out of the frame
+    // still finishes the gesture, while an ordinary tap keeps its button target.
+    if (event.target instanceof Element) event.target.setPointerCapture(event.pointerId);
   }, { signal: signal.signal });
+  const preventNativeSelection = (event: Event) => event.preventDefault();
+  viewport.addEventListener("dragstart", preventNativeSelection, { capture: true, signal: signal.signal });
+  viewport.addEventListener("selectstart", preventNativeSelection, { capture: true, signal: signal.signal });
   viewport.addEventListener("pointermove", (event) => {
     const previous = pointers.get(event.pointerId);
     if (!previous) return;
@@ -86,7 +103,8 @@ export function mountPhotoCamera(viewport: HTMLElement, surface: HTMLElement, on
   viewport.addEventListener("pointercancel", end, { signal: signal.signal });
   viewport.addEventListener("lostpointercapture", (event) => { if (event.target === viewport) end(event); }, { signal: signal.signal });
   viewport.addEventListener("click", (event) => {
-    if (suppressClick) { event.preventDefault(); event.stopImmediatePropagation(); suppressClick = false; }
+    // Keyboard/assistive activation must still work after a cancelled drag.
+    if (suppressClick && event.detail !== 0) { event.preventDefault(); event.stopImmediatePropagation(); suppressClick = false; }
   }, { capture: true, signal: signal.signal });
   viewport.addEventListener("wheel", (event) => {
     if (viewport.closest('[data-busy="true"], [data-detail]')) return;
@@ -104,12 +122,13 @@ export function mountPhotoCamera(viewport: HTMLElement, surface: HTMLElement, on
   // Keyboard focus reveals off-screen targets without scrolling the app shell.
   viewport.addEventListener("focusin", (event) => {
     const node = event.target;
-    if (!(node instanceof HTMLElement) || !node.matches(".pw-object, .pw-lens")) return;
+    if (!(node instanceof HTMLElement) || !node.matches(".pw-object, .pw-lens, .pw-ground-link")) return;
     viewport.scrollLeft = 0; viewport.scrollTop = 0;
     const rect = node.getBoundingClientRect(), frame = viewport.getBoundingClientRect();
     if (rect.left < frame.left + 10 || rect.right > frame.right - 10 || rect.top < frame.top + 80 || rect.bottom > frame.bottom - 150) {
-      const x = (parseFloat(node.style.left) + parseFloat(node.style.width || "0") / 2) / 100;
-      const y = (parseFloat(node.style.top) + parseFloat(node.style.height || "0") / 2) / 100;
+      const centered = node.dataset.anchorCentered === "true" || node.matches(".pw-ground-link");
+      const x = (parseFloat(node.style.left) + (centered ? 0 : parseFloat(node.style.width || "0") / 2)) / 100;
+      const y = (parseFloat(node.style.top) + (centered ? 0 : parseFloat(node.style.height || "0") / 2)) / 100;
       focusAt(x, y);
     }
   }, { signal: signal.signal });

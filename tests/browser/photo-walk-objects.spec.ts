@@ -11,6 +11,7 @@ test("scene 07 hides and reveals illustrated forest details without changing the
   await page.getByRole("button", { name: "Искать: Лесная прогулка", exact: true }).click();
 
   await expect(page.locator('.photo-walk-scene[data-view="video-forest"]')).toBeVisible();
+  await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-busy", "false");
   await expect(page.locator(".pw-object")).toHaveCount(4);
   await expect(page.locator(".pw-find-counter")).toHaveText("Находки 0 / 21");
   await page.getByRole("button", { name: "Весь кадр", exact: true }).click();
@@ -21,7 +22,7 @@ test("scene 07 hides and reveals illustrated forest details without changing the
   await page.screenshot({ path: testInfo.outputPath("scene-07-hidden.png") });
   await first.tap();
   await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(page.getByRole("dialog")).toContainText("Иллюстрация для игры");
+  await expect(page.getByRole("dialog")).toContainText("ИГРОВОЙ РИСУНОК");
   await expect(first).toHaveAttribute("aria-pressed", "true");
   await expect(first).toHaveAttribute("aria-expanded", "true");
   await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 21");
@@ -33,6 +34,7 @@ test("scene 07 hides and reveals illustrated forest details without changing the
   await page.getByRole("button", { name: "Закрыть окно", exact: true }).click();
   await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 21");
 
+  await page.getByRole("button", { name: "Перейти: К мшистому пню", exact: true }).focus();
   await page.getByRole("button", { name: "Перейти: К мшистому пню", exact: true }).tap();
   await expect(page.locator('.photo-walk-scene[data-view="video-moss-stump"]')).toBeVisible();
   await expect(page.locator(".pw-object")).toHaveCount(3);

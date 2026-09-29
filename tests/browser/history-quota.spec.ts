@@ -86,7 +86,8 @@ test("rapid native stage and scene traversal keeps URL/render aligned without hi
   await page.goto("/#world/physarum/video-forest");
   for (let i = 0; i < 12; i++) {
     const view = photoWalkViews[i % 2 === 0 ? 1 : 0];
-    await page.locator(".pw-path").first().click();
+    await page.locator(".pw-ground-link").first().focus();
+    await page.locator(".pw-ground-link").first().click();
     await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", view.id);
     await expect(page).toHaveURL(new RegExp(`#world/physarum/${view.id}$`));
   }

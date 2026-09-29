@@ -2,6 +2,20 @@
 
 Updated: 2026-09-29. This is the durable record of the user's playtest requests, including corrections to earlier implementations. Read it before changing the game. Latest explicit feedback overrides conflicting older UI/audio defaults; privacy, source attribution and scientific honesty still apply.
 
+## Playtest corrections, 2026-09-29 (latest)
+
+- Navigation must belong to the photographed scene: subtle ground directions, not a row of external travel cards. Keep an unobtrusive route fallback for off-screen exits.
+- Hints must toggle off. Mouse dragging must work repeatedly and must not select text/images, focus hidden targets, or reveal their positions. Preserve touch panning, pinch, and keyboard access.
+- The annotated screenshot removes the large scene title, stop label, mission text, progress dots/counts, instructions, and travel cards. Route and camera controls should be quiet edge icons; the forest must not be hidden by broad dark shading.
+- All 21 placements are reopened. Floating lichen/bark, suspended woodlice, misplaced mushrooms and sharp macro cutouts on soft video are rejected. Review **each placement at maximum zoom**, revise failures and capture again until physical support, perspective, scale, lighting, contact and sharpness are credible. Repeat before/after discovery; an automated position check is not visual approval.
+- Small deliberate edits to the original scene are allowed to support believable placement. Preserve a natural photographed appearance; no invented decorative AI forest.
+- Super-resolution is a separate, stricter operation: add no objects, move none, and change no scene content. Compare original/candidate before installation. The first imagegen attempt was rejected: 1672×941 versus the 1920×1080 original, with synthesized leaf, twig and bark detail. It is not shipped as a resolution upgrade.
+- Remove the exact discovery sentence “Иллюстрация для игры. Вид и присутствие в исходном видео не подтверждены.” Discoveries must teach useful biology, habitat and observation, not just name the object. A short artwork label remains; no species is inferred from an illustration.
+- Document scene authoring and the per-placement review/iteration process. See [authoring guide](PHOTO_WALK_AUTHORING.md), [learning content](PHOTO_WALK_LEARNING.md), and the [current correction report](PHOTO_WALK_REVIEW.md).
+- Parallel work explicitly requested. Prior deployment authorization remains; publish tested corrections. User visual acceptance and physical-device checks remain open.
+
+The valid lichen, stump, woodlouse and annotated UI screenshots were inspected. The attachment ending `160933-01-clipboard.png` contained literal `null`, so no visual evidence is inferred from it. These are local attachment references, not assets to publish.
+
 ## Current request, 2026-09-29
 
 - Remove generated search scenes 1–6 from the playable flow and focus on scene 7. This refers to woodland scenes, not organism development stages.

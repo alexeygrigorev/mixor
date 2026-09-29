@@ -1,0 +1,173 @@
+/* Directions belong to the photographed ground and move with the camera. */
+.pw-ground-nav {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+.photo-walk-scene .pw-ground-link {
+  position: absolute;
+  width: 64px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #eee8d1;
+  pointer-events: auto;
+  touch-action: none;
+  opacity: .77;
+  transition: opacity 140ms ease;
+}
+.pw-ground-link::before {
+  content: "";
+  position: absolute;
+  width: 54px;
+  height: 23px;
+  border-radius: 50%;
+  background: #15231730;
+  box-shadow: 0 2px 7px #08130b35;
+}
+.pw-ground-link > svg {
+  position: relative;
+  width: 43px;
+  height: 43px;
+  stroke-width: 2.2;
+  transform: scaleY(.53) rotate(var(--ground-angle));
+  filter: drop-shadow(0 2px 1px #172416c9);
+}
+.pw-ground-link:hover,
+.pw-ground-link:focus-visible { opacity: 1; }
+.pw-ground-link:hover::before,
+.pw-ground-link:focus-visible::before { background: #15231760; }
+.pw-ground-caption {
+  position: absolute;
+  top: calc(100% - 1px);
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 180px;
+  width: max-content;
+  padding: 4px 8px;
+  border-radius: 5px;
+  color: #f6f1df;
+  background: #15251bd9;
+  font-size: 11px;
+  line-height: 1.3;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+}
+.pw-ground-link:hover .pw-ground-caption,
+.pw-ground-link:focus-visible .pw-ground-caption { opacity: 1; }
+.photo-walk-scene[data-busy="true"] .pw-ground-nav { visibility: hidden; }
+.photo-walk-scene .pw-hint[aria-pressed="true"] { color: #fff0bc !important; }
+@media (max-width: 800px) {
+  .photo-walk-scene .pw-instruction { grid-row: 3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pw-ground-link { transition: none; }
+}
+
+/* The annotated review asks for the photograph itself, without a footer panel. */
+.photo-walk-scene .pw-edge-shade { background: none; }
+.photo-walk-scene .pw-scene-label,
+.photo-walk-scene .pw-caption,
+.photo-walk-scene .pw-progress,
+.photo-walk-scene .pw-instruction,
+.photo-walk-scene .pw-mission-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.photo-walk-scene .pw-header {
+  top: max(4px, env(safe-area-inset-top));
+  left: max(4px, env(safe-area-inset-left));
+  right: max(4px, env(safe-area-inset-right));
+  gap: 0;
+}
+.photo-walk-scene .pw-tools { gap: 0; }
+.photo-walk-scene .pw-header .pw-tool {
+  min-width: 48px;
+  min-height: 48px;
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+  border-radius: 50%;
+  filter: drop-shadow(0 1px 2px #0c160ed9);
+}
+.photo-walk-scene .pw-route-button span { display: none; }
+.photo-walk-scene .pw-header .pw-tool:hover,
+.photo-walk-scene .pw-header .pw-tool:focus-visible { background: #14241b75; }
+.photo-walk-scene .pw-camera-tools {
+  top: 50%;
+  right: max(2px, env(safe-area-inset-right));
+  padding: 0;
+  gap: 0;
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+  border-radius: 0;
+  flex-direction: column;
+}
+.photo-walk-scene .pw-camera-tools .pw-tool {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 13px;
+  color: #f4f0df;
+  background: transparent;
+  filter: drop-shadow(0 1px 2px #0c160ee6);
+}
+.photo-walk-scene .pw-camera-tools .pw-tool:hover,
+.photo-walk-scene .pw-camera-tools .pw-tool:focus-visible,
+.photo-walk-scene .pw-camera-tools .pw-tool[aria-pressed="true"] { background: #14241b75; }
+.photo-walk-scene .pw-footer {
+  display: block;
+  top: auto;
+  left: auto;
+  right: max(4px, env(safe-area-inset-right));
+  bottom: max(4px, env(safe-area-inset-bottom));
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  margin: 0;
+}
+.photo-walk-scene .pw-mission { display: contents; }
+.photo-walk-scene .pw-hint {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 12px;
+  justify-content: center;
+  border-radius: 50%;
+  color: #e8dfbc !important;
+  filter: drop-shadow(0 1px 2px #0c160ee6);
+}
+.photo-walk-scene .pw-hint span { display: none; }
+.photo-walk-scene .pw-hint:hover,
+.photo-walk-scene .pw-hint:focus-visible,
+.photo-walk-scene .pw-hint[aria-pressed="true"] { background: #14241b75; }
+@media (max-height: 500px) and (min-width: 600px) {
+  .photo-walk-scene .pw-camera-tools {
+    top: auto;
+    bottom: max(4px, env(safe-area-inset-bottom));
+    right: max(58px, calc(env(safe-area-inset-right) + 54px));
+    transform: none;
+    flex-direction: row;
+  }
+}

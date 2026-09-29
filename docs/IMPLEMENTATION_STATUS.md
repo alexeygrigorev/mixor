@@ -1,5 +1,7 @@
 # Локальная игра Mixor: состояние реализации
 
+Latest correction (2026-09-29): the user reopened navigation, HUD, object placement and learning. Ground directions, hideable hints, quiet edge controls, corrected mouse input and reviewed placements supersede the initial footer-navigation contract below. See [current correction and evidence](PHOTO_WALK_REVIEW.md) and [scene-authoring procedure](PHOTO_WALK_AUTHORING.md). Earlier artistic acceptance is historical.
+
 > 2026-09-29 update: generated woodland stages 1–6 are retired. The active forest is the movable real-frame walk, with mobile controls, fixed travel choices, saved progress and replay. See [current implementation and checks](PHOTO_WALK_MOBILE.md); older scene-specific results below are historical.
 
 Дата: 2026-09-12. Это локальная игра, не AWS deployment и не завершённый семейный выпуск. Статическая демо-сборка публикуется на GitHub Pages по адресу `https://alexeygrigorev.com/mixor/`. [Все 76 отправленных сообщений](SESSION_INPUTS.md) сверены с настоящими логами; последние требования имеют приоритет над старыми defaults и review-контрактами. [Рабочий checklist](USER_FEEDBACK.md) отделяет реализацию от пользовательской приёмки.

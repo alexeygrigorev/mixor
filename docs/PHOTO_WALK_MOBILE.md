@@ -1,5 +1,7 @@
 # Stage 7: a forest you can explore
 
+Latest correction (2026-09-29): the user reopened navigation, HUD, object placement and learning. Ground directions, hideable hints, quiet edge controls, corrected mouse input and reviewed placements supersede the initial footer-navigation contract below. See [current correction and evidence](PHOTO_WALK_REVIEW.md) and [scene-authoring procedure](PHOTO_WALK_AUTHORING.md). Earlier artistic acceptance is historical.
+
 2026-09-29. Implements the user's request to remove generated search stages 1–6, focus on stage 7, support moving the view on phones, and replace awkward desktop arrows. This supersedes the stage-selection, fixed-letterbox and ground-arrow contracts in SCENE_07.md and earlier street-view reviews. It does not retire organism development stages.
 
 ## Implemented

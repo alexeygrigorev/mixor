@@ -1,3 +1,6 @@
+import type { TaxonId } from "./data.ts";
+import { getLearning } from "./photo-walk-learning.ts";
+import { photoClarityFilter } from "./photo-walk-clarity.ts";
 import { mountPhotoCamera } from "./photo-walk-camera.ts";
 import { readPhotoWalkProgress, writePhotoWalkProgress, resetPhotoWalkProgress } from "./photo-walk-progress.ts";
 import type { PhotoWalkView, PhotoWalkObject, PhotoWalkLink } from "./photo-walk-data";
@@ -12,6 +15,7 @@ export type PhotoWalkOptions = {
   onBack: () => void;
   backLabel?: string;
   onSettings?: () => void;
+  onLearn?: (taxonId: TaxonId, objectId: string) => void;
   onObject?: (object: PhotoWalkObject, view: PhotoWalkView) => void;
   onObjectFound?: (object: PhotoWalkObject, view: PhotoWalkView) => void;
 };
@@ -25,12 +29,6 @@ export function fitPhoto(width: number, height: number, imageWidth = 1920, image
   const w = imageWidth * scale, h = imageHeight * scale;
   return { width: w, height: h, left: (width - w) / 2, top: (height - h) / 2 };
 }
-const objectQuestions: Record<PhotoWalkObject["kind"], string> = {
-  myxomycete: "Рассмотри рисунок: форма похожа на сеть или на отдельные шарики?",
-  lichen: "Рассмотри рисунок: край гладкий или разветвлённый?",
-  fungus: "Рассмотри рисунок: сколько шляпок ты различаешь?",
-  creature: "Рассмотри рисунок: видишь повторяющиеся сегменты?",
-};
 const svg = (name: string) => {
   const paths: Record<string, string> = {
     back: '<path d="m14 6-6 6 6 6M8 12h13"/>',
@@ -74,6 +72,7 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
   let current: PhotoWalkView | null = null;
   let currentLayer: HTMLElement | null = null;
   let objectReturn: HTMLButtonElement | null = null;
+  let hintedObject: string | null = null;
   let dead = false, busy = false, revision = 0;
   let transition: Animation | null = null;
   let retry: (() => void) | null = null;
@@ -91,6 +90,8 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
   root.setAttribute("aria-label", "Лесная прогулка");
   root.tabIndex = -1;
   root.innerHTML = "";
+  const clarity = photoClarityFilter();
+  root.append(clarity.element);
   const viewport = element("div", "pw-viewport");
   viewport.tabIndex = 0;
   viewport.setAttribute("role", "group");
@@ -124,14 +125,15 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
   dots.setAttribute("aria-hidden", "true");
   steps.append(dots, counter, findCounter);
   const instruction = element("p", "pw-instruction", "Стрелки — пройти · Лупа — рассмотреть · Ищи детали");
-  const travel = element("nav", "pw-travel");
+  const travel = element("nav", "pw-ground-nav");
   travel.setAttribute("aria-label", "Куда пойти дальше");
   const mission = element("div", "pw-mission");
   const missionText = element("span", "pw-mission-text");
   const hintButton = button("pw-hint", "Подсказка", "hint", showHint);
   hintButton.append(element("span", "", "Подсказка"));
+  hintButton.setAttribute("aria-pressed", "false");
   mission.append(missionText, hintButton);
-  footer.append(caption, steps, mission, travel, instruction);
+  footer.append(caption, steps, mission, instruction);
   const cameraTools = element("div", "pw-camera-tools");
   const zoomIn = button("pw-tool", "Приблизить", "lens", () => { camera.zoom(.3); overviewButton.setAttribute("aria-pressed", "false"); });
   const zoomOut = button("pw-tool", "Отдалить", "minus", () => { camera.zoom(-.3); overviewButton.setAttribute("aria-pressed", "false"); });
@@ -161,31 +163,58 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
     storageNote.hidden = saved;
     storageNote.textContent = saved ? "" : "Прогресс не сохранён: хранилище недоступно.";
   }
+  function clearHint() {
+    hintedObject = null;
+    currentLayer?.querySelectorAll(".is-hinted").forEach((node) => node.classList.remove("is-hinted"));
+    hintButton.setAttribute("aria-pressed", "false");
+    hintButton.setAttribute("aria-label", "Подсказка");
+    hintButton.querySelector("span")!.textContent = "Подсказка";
+    hintButton.querySelector("svg")!.outerHTML = svg("hint");
+    updateCaption();
+  }
   function showHint() {
     if (!current || busy) return;
+    if (hintedObject) {
+      clearHint();
+      announcement.textContent = "Подсказка скрыта";
+      return;
+    }
     const item = current.objects.find((candidate) => !foundObjects.has(candidate.id));
     if (!item) return;
+    hintedObject = item.id;
     camera.focus((item.x + item.width / 2) / 100, (item.y + item.height / 2) / 100);
-    currentLayer?.querySelectorAll(".is-hinted").forEach((node) => node.classList.remove("is-hinted"));
     const node = Array.from(currentLayer?.querySelectorAll<HTMLElement>(".pw-object") ?? []).find((node) => node.dataset.object === item.id);
     node?.classList.add("is-hinted");
+    hintButton.setAttribute("aria-pressed", "true");
+    hintButton.setAttribute("aria-label", "Скрыть подсказку");
+    hintButton.querySelector("span")!.textContent = "Скрыть";
+    hintButton.querySelector("svg")!.outerHTML = svg("close");
     missionText.textContent = item.label;
     announcement.textContent = `Подсказка: ${item.label}`;
   }
   function updateTravel() {
+    // Authored positions sit on visible ground in the original video frames.
+    // They indicate a playable direction, not measured geographic coordinates.
+    const ground: Record<string, Record<string, [number, number, number]>> = {
+      "video-forest": { "video-moss-stump": [42, 57, -28] },
+      "video-moss-stump": { "video-forest": [56, 77, 155], "video-clearing": [67, 48, 52] },
+      "video-clearing": { "video-moss-stump": [38, 78, -150], "video-deadwood": [28, 61, -55], "video-trail": [67, 69, 65] },
+      "video-deadwood": { "video-clearing": [44, 77, 150] },
+      "video-trail": { "video-clearing": [40, 66, -70], "video-old-stump": [67, 69, 45] },
+      "video-old-stump": { "video-trail": [27, 77, -145] },
+    };
     travel.replaceChildren();
     for (const link of current?.links ?? []) {
-      const control = button("pw-path", `Перейти: ${link.label}`, "back", () => void step(link));
+      const control = button("pw-ground-link", `Перейти: ${link.label}`, "chevron", () => void step(link));
       control.dataset.motion = link.motion;
-      const shortLabels: Record<string, string> = {
-        "video-forest": "На склон", "video-moss-stump": "К мшистому пню",
-        "video-clearing": "Под ветви", "video-deadwood": "К веткам",
-        "video-trail": "К тропе", "video-old-stump": "К большому пню",
-      };
-      const label = (current?.links.length ?? 0) > 2 && link.to === "video-moss-stump" ? "К пню" : shortLabels[link.to] ?? link.label;
-      control.append(element("span", "", label));
+      control.dataset.destination = link.to;
+      const [x, y, angle] = ground[current!.id]?.[link.to] ?? [link.x, link.y, link.angle];
+      position(control, x, y);
+      control.style.setProperty("--ground-angle", `${angle}deg`);
+      control.append(element("span", "pw-ground-caption", link.label));
       travel.append(control);
     }
+    currentLayer?.append(travel);
   }
 
   function setBusy(value: boolean) {
@@ -244,6 +273,7 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
     const image = element("img", "pw-image");
     image.src = resolve(view.image);
     image.alt = view.title;
+    image.style.filter = clarity.url;
     image.draggable = false;
     composite.append(image);
     const objects = element("div", "pw-objects");
@@ -255,11 +285,16 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
       objectNode.setAttribute("aria-expanded", "false");
       objectNode.addEventListener("click", () => openObject(object, view, objectNode));
       objectNode.dataset.object = object.id;
+      objectNode.dataset.kind = object.kind;
       objectNode.classList.toggle("is-found", foundObjects.has(object.id));
-      position(objectNode, object.x, object.y);
+      position(objectNode, object.x + object.width / 2, object.y + object.height / 2);
+      objectNode.dataset.anchorCentered = "true";
       objectNode.style.width = `${object.width}%`; objectNode.style.height = `${object.height}%`;
       const artwork = element("img", "");
       artwork.src = resolve(object.image); artwork.alt = ""; artwork.draggable = false;
+      artwork.style.width = `${object.width}cqw`;
+      artwork.style.height = `${object.height}cqh`;
+      artwork.style.setProperty("--clue-angle", `${object.rotation}deg`);
       objectNode.append(artwork); objects.append(objectNode);
     }
     composite.append(objects);
@@ -311,6 +346,7 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
   }
   function openObject(item: PhotoWalkObject, view: PhotoWalkView, trigger: HTMLButtonElement) {
     if (busy || dead) return;
+    clearHint();
     const isNew = !foundObjects.has(item.id);
     if (isNew) {
       foundObjects.add(item.id);
@@ -328,18 +364,37 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
     image.alt = item.title;
     image.draggable = false;
     visual.append(image);
+    const learning = getLearning(item.kind);
     const copy = element("div", "pw-object-copy");
     copy.append(
-      element("p", "pw-object-kind", "ТВОЯ НАХОДКА"),
+      element("p", "pw-object-kind", "ИГРОВОЙ РИСУНОК"),
       element("h4", "pw-object-title", item.title),
-      element("p", "pw-object-question", objectQuestions[item.kind]),
-      element("p", "pw-dialog-note", "Иллюстрация для игры. Вид и присутствие в исходном видео не подтверждены."),
+      element("p", "pw-learning-intro", learning.paragraphs[0]),
     );
-    if (item.kind === "fungus") copy.append(element("p", "pw-dialog-note", "Грибы не пробуем и не собираем."));
+
     card.append(visual, copy);
+    const lesson = element("div", "pw-learning");
+    lesson.append(element("p", "", learning.paragraphs[1]));
+    const facts = element("ul", "pw-learning-facts");
+    facts.append(...learning.facts.map((fact) => element("li", "", fact)));
+    lesson.append(facts, element("p", "pw-object-question", learning.observation));
+    const sources = element("details", "pw-learning-sources");
+    sources.append(element("summary", "", "Источники"));
+    for (const source of learning.sources) {
+      const link = element("a", "", source.organization);
+      link.href = source.url; link.target = "_blank"; link.rel = "noopener noreferrer";
+      sources.append(link);
+    }
+    lesson.append(sources);
+    if (options.onLearn) for (const related of learning.atlasLinks) {
+      const link = button("pw-learning-link", related.label, "lens", () => {
+        closeDialog(); options.onLearn?.(related.taxonId, item.id);
+      });
+      link.append(element("span", "", related.label)); lesson.append(link);
+    }
     const continueButton = button("pw-continue", "Продолжить поиск", "lens", closeDialog);
     continueButton.append(element("span", "", "Продолжить поиск"));
-    showDialog("Найдена деталь", [card, continueButton]);
+    showDialog("Найдена деталь", [card, lesson, continueButton]);
     objectReturn = trigger;
     trigger.setAttribute("aria-expanded", "true");
     closeDialogButton.focus({ preventScroll: true });
@@ -388,7 +443,7 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
   }
   function openInfo() {
     const description = element("p", "", "Шесть реальных кадров из вашего видео. Переход по тропе меняет точку съёмки; приближение увеличивает тот же кадр. Это не панорама 360°.");
-    const controls = element("p", "", "Перетаскивайте лес пальцем или мышью. Сведите или разведите два пальца для масштаба; доступны также кнопки − и +. «Весь кадр» показывает границы снимка. Выбирайте тропы внизу. Tab и Enter — действия; стрелки на изображении — осмотреться; Esc — закрыть окно.");
+    const controls = element("p", "", "Перетаскивайте лес пальцем или мышью. Сведите или разведите два пальца для масштаба; доступны также кнопки − и +. «Весь кадр» показывает границы снимка. Нажимайте стрелки на земле, чтобы идти дальше. Если стрелка за краем кадра, откройте «Маршрут». Tab и Enter — действия; стрелки на изображении — осмотреться; Esc — закрыть окно.");
     const source = element("p", "pw-dialog-note", "Исходник: 1000022837.mp4. Скрытые миксомицеты, лишайники, маленькие грибы и мокрицы — условные игровые иллюстрации; они не заявлены как найденные в исходном видео. Звук, люди и метаданные видео не перенесены. Публичная лицензия на видео не заявляется.");
     showDialog("О прогулке", [description, controls, source]);
   }
@@ -419,7 +474,7 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
     // A browser Back during a fade must not leave an orphan layer on screen.
     for (const layer of Array.from(surface.children)) if (layer !== currentLayer) layer.remove();
     if (currentLayer) { currentLayer.style.opacity = "1"; currentLayer.removeAttribute("inert"); }
-    closeDialog();
+    closeDialog(); clearHint();
     setBusy(true); message(current ? "Открываем следующее место…" : "Открываем лес…");
     try {
       await loadImage(next.image);
@@ -431,7 +486,7 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
       current = next; currentLayer = layer;
       root.dataset.view = next.id;
       visited.add(next.id); updateCaption(); updateTravel(); message("");
-      camera.set(progress.cameras[next.id] ?? { x: .5, y: .56, zoom: 1 });
+      camera.set(progress.cameras[next.id] ?? { x: .5, y: .5, zoom: 1.12 });
       overviewButton.setAttribute("aria-pressed", "false");
       saveProgress();
       if (old && previousId !== next.id) {
@@ -447,8 +502,9 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
       transition = null; setBusy(false);
       announcement.textContent = next.title;
       if (restoreFocus) {
-        const returnArrow = Array.from(travel.querySelectorAll<HTMLButtonElement>("button")).find((control) => control.dataset.motion === "back");
-        (returnArrow ?? travel.querySelector<HTMLButtonElement>("button") ?? root).focus({ preventScroll: true });
+        // Keep the new photograph still after a step. Tab can reveal each
+        // ground marker; the route remains reachable without moving the camera.
+        viewport.focus({ preventScroll: true });
       }
       // Warm adjacent views, not the whole game. Failed prefetches remain retryable.
       next.links.forEach((link) => {

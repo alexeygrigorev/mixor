@@ -1449,17 +1449,17 @@
       "kind": "game_art",
       "status": "prepared_local_demo",
       "role": "search_overlay",
-      "path": "public/assets/scene-07/objects/myxomycete-clue.webp",
+      "path": "public/assets/scene-07/objects/myxomycete-natural.png",
       "isGenerated": true,
-      "checksum": "8917d174376c15012eccf6ea8e636bc3154aefce280f8d1a86deaa1cd568b86d",
-      "bytes": 40406,
-      "width": 640,
-      "height": 427,
-      "mime": "image/webp",
+      "checksum": "a8bfaac30192fe19bbd8040f2444371b31478805453fcdfb6bf31c6ed26d0b5f",
+      "bytes": 1283810,
+      "width": 1535,
+      "height": 1024,
+      "mime": "image/png",
       "source": {
         "provider": "OpenAI built-in image generation tool",
-        "generatedAt": "2026-09-18",
-        "promptSummary": "Transparent restrained macro game illustration of an orange and cream myxomycete cluster on decaying bark; no species claim."
+        "generatedAt": "2026-09-29",
+        "promptSummary": "Photographic myxomycete cutout with transparent alpha; substrate pedestal removed for support-specific compositing. Woodlouse pose low and walking. General educational illustration, no species claim."
       },
       "rights": {
         "licenseReview": "Generated game art; not a documentary photograph and not used as evidence of an organism in the user video."
@@ -1471,17 +1471,17 @@
       "kind": "game_art",
       "status": "prepared_local_demo",
       "role": "search_overlay",
-      "path": "public/assets/scene-07/objects/lichen-clue.webp",
+      "path": "public/assets/scene-07/objects/lichen-natural.png",
       "isGenerated": true,
-      "checksum": "90a3923bbad4d851cd8d483a5d897ff8563ef1689f9dea563cbdc7efe352e290",
-      "bytes": 40718,
-      "width": 640,
-      "height": 427,
-      "mime": "image/webp",
+      "checksum": "cdcccb8035eaa3371079d873e8479f17990579d16a5558a6febe4938348c3ba9",
+      "bytes": 1812862,
+      "width": 1535,
+      "height": 1024,
+      "mime": "image/png",
       "source": {
         "provider": "OpenAI built-in image generation tool",
-        "generatedAt": "2026-09-18",
-        "promptSummary": "Transparent restrained macro game illustration of a muted foliose lichen patch on bark; no species claim."
+        "generatedAt": "2026-09-29",
+        "promptSummary": "Photographic lichen cutout with transparent alpha; substrate pedestal removed for support-specific compositing. Woodlouse pose low and walking. General educational illustration, no species claim."
       },
       "rights": {
         "licenseReview": "Generated game art; not a documentary photograph and not used as evidence of an organism in the user video."
@@ -1493,17 +1493,17 @@
       "kind": "game_art",
       "status": "prepared_local_demo",
       "role": "search_overlay",
-      "path": "public/assets/scene-07/objects/fungus-clue.webp",
+      "path": "public/assets/scene-07/objects/fungus-natural.png",
       "isGenerated": true,
-      "checksum": "d6f5540b3ee5b053fc939987e5ffb4169ed368b7c8989f23ddb675a168c54b71",
-      "bytes": 38788,
-      "width": 640,
-      "height": 586,
-      "mime": "image/webp",
+      "checksum": "a088d6e071c3f7c353645761b85817880c8afa9f20ed943642ddbfc5c81abb33",
+      "bytes": 954370,
+      "width": 1311,
+      "height": 1200,
+      "mime": "image/png",
       "source": {
         "provider": "OpenAI built-in image generation tool",
-        "generatedAt": "2026-09-18",
-        "promptSummary": "Transparent restrained macro game illustration of a tiny brown woodland mushroom cluster on decaying wood; no species or edibility claim."
+        "generatedAt": "2026-09-29",
+        "promptSummary": "Photographic fungus cutout with transparent alpha; substrate pedestal removed for support-specific compositing. Woodlouse pose low and walking. General educational illustration, no species claim."
       },
       "rights": {
         "licenseReview": "Generated game art; not a documentary photograph and not used as evidence of an organism in the user video."
@@ -1515,17 +1515,17 @@
       "kind": "game_art",
       "status": "prepared_local_demo",
       "role": "search_overlay",
-      "path": "public/assets/scene-07/objects/woodlouse-clue.webp",
+      "path": "public/assets/scene-07/objects/woodlouse-natural.png",
       "isGenerated": true,
-      "checksum": "4b22c47c8cea297552d75f88a9816c54ad98b1f38dd81f4be57227ea1f896b34",
-      "bytes": 30616,
-      "width": 640,
-      "height": 427,
-      "mime": "image/webp",
+      "checksum": "a4f10db6ad3c064af60e55dc76ac8344f2c32d8230d987c011e3b08f6e976728",
+      "bytes": 1063721,
+      "width": 1535,
+      "height": 1024,
+      "mime": "image/png",
       "source": {
         "provider": "OpenAI built-in image generation tool",
-        "generatedAt": "2026-09-18",
-        "promptSummary": "Transparent restrained macro game illustration of a small brown-grey woodlouse beside bark; no species claim."
+        "generatedAt": "2026-09-29",
+        "promptSummary": "Photographic woodlouse cutout with transparent alpha; substrate pedestal removed for support-specific compositing. Woodlouse pose low and walking. General educational illustration, no species claim."
       },
       "rights": {
         "licenseReview": "Generated game art; not a documentary photograph and not used as evidence of an organism in the user video."

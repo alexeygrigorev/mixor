@@ -73,3 +73,11 @@ test("manifest files match the actual extracted bytes and frame timestamps", () 
     assert.equal(asset.height, 1080);
   }
 });
+test("new placements require a visible support description and a finite art angle", () => {
+  const unsupported = structuredClone(photoWalkViews);
+  unsupported[0].objects[0].support = " ";
+  assert.throws(() => validatePhotoWalk(unsupported), /invalid support/);
+  const invalidAngle = structuredClone(photoWalkViews);
+  invalidAngle[0].objects[0].rotation = Number.NaN;
+  assert.throws(() => validatePhotoWalk(invalidAngle), /invalid support/);
+});
