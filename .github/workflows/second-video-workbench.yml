@@ -1,0 +1,23 @@
+name: Second video workbench
+on:
+  push:
+    branches: [workbench/second-video-walk]
+    paths: [.github/workflows/second-video-workbench.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Snapshot source and existing October frames
+        run: |
+          git archive --format=zip --output=/tmp/current-walk.zip HEAD AGENTS.md SPECIFICATION.md README.md src docs tests scripts content/*.json public/assets/scene-08 package.json package-lock.json tsconfig.json vite.config.ts playwright.config.ts playwright.webkit.config.ts .github
+      - uses: actions/upload-artifact@v4
+        with:
+          name: second-video-source
+          path: /tmp/current-walk.zip
+          retention-days: 1
