@@ -1,8 +1,17 @@
 # User feedback and active acceptance checklist
 
-Updated: 2026-09-29. This is the durable record of the user's playtest requests, including corrections to earlier implementations. Read it before changing the game. Latest explicit feedback overrides conflicting older UI/audio defaults; privacy, source attribution and scientific honesty still apply.
+Updated: 2026-10-03. This is the durable record of the user's playtest requests, including corrections to earlier implementations. Read it before changing the game. Latest explicit feedback overrides conflicting older UI/audio defaults; privacy, source attribution and scientific honesty still apply.
 
-## Playtest corrections, 2026-09-29 (latest)
+## New scene request, 2026-10-03 (latest)
+
+- Add a new scene using the supplied forest video, with **many frames and transitions**, not one still.
+- User explicitly approved public publication of selected forest-only frames without people, source video/audio or metadata.
+- Implement as the separate «Светлый лес» walk: 28 full distinct video frames, reversible links and lightweight map thumbnails. Preserve the original 6 frames, 21 discoveries, saved progress and private family journal.
+- Keep the calm, unobtrusive controls and stationary opacity fade. Actual camera turns in the recording do not establish measured walking distance or geographic adjacency to the older recording.
+- New illustrations remain educational game art, not species records from the video. Document exact timestamps, checksums and all placement-review states in [October review](OCTOBER_WALK_REVIEW.md).
+- This request does not close any reopened visual-quality issues below. Independent visual acceptance and physical-device testing remain open.
+
+## Playtest corrections, 2026-09-29
 
 - Navigation must belong to the photographed scene: subtle ground directions, not a row of external travel cards. Keep an unobtrusive route fallback for off-screen exits.
 - Hints must toggle off. Mouse dragging must work repeatedly and must not select text/images, focus hidden targets, or reveal their positions. Preserve touch panning, pinch, and keyboard access.

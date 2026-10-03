@@ -129,3 +129,12 @@ An expressly requested local composition edit may change the specified area of a
 A strict super-resolution request has a narrower contract: increase resolution while preserving the existing content, positions, geometry and texture identity. Do not add, remove, move or reinterpret leaves, bark, organisms or lighting. Compare aligned full frames and local crops against the source before installing a candidate. Increased nominal dimensions alone do not prove recovered detail, and an image generator's successful response does not prove fidelity.
 
 During this correction, an image-generation candidate was rejected: it was **1672 × 941** against the **1920 × 1080** source and altered textures. It was neither higher-resolution output nor a faithful strict enhancement. Keep it out of the runtime frame replacement and retain the rejection in the review record. Generate and review transparent organism artwork as a separate operation; it does not validate or authorize a background enhancement.
+
+
+## October 2026 expansion
+
+The current runtime includes scene 07 (6 views / 21 objects) and scene 08, **Светлый лес** (28 views / 8 objects): 34 views, 29 objects, 66 directed links. The earlier 6-view/21-placement review descriptions above are historical scene-07 scope, not the full new runtime.
+
+Author new video views in `src/photo-walk-october.ts`; their source pixels and map thumbnails are described in `content/scene-08.manifest.json`. Every new view uses a distinct full frame and all next/back connections are reversible. A `thumbnail` is a map-only derivative; never substitute it for the 1920×1080 play surface. Frame-by-frame review details and reproducible commands are in [OCTOBER_WALK_REVIEW.md](OCTOBER_WALK_REVIEW.md).
+
+`scripts/capture-photo-walk-placements.mjs` now accepts `VIEW_PREFIX`, `VIEWPORT_WIDTH`, `VIEWPORT_HEIGHT`, `TEST_BROWSER_PATH` and `OUTPUT_DIR`. A scoped capture records its prefix in the report. No prefix means all 29 placements / 116 before-and-after state captures; `VIEW_PREFIX=october-` means all 8 new placements / 32 captures per viewport. Do not describe the latter as a full review of scene 07.

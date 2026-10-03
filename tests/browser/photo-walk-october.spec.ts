@@ -45,7 +45,10 @@ test("all 28 new frames navigate forward and back with all eight finds preserved
     if (index) await travel(page, view.id);
     await expect(page.locator(".pw-image")).toHaveAttribute("src", view.image);
     await expect(page.locator(".pw-object")).toHaveCount(view.objects.length);
-    if (!view.objects.length) await expect(page.getByRole("button", { name: "Подсказка", exact: true })).toBeDisabled();
+    if (!view.objects.length) {
+      await expect(page.locator(".pw-hint")).toBeDisabled();
+      await expect(page.locator(".pw-hint")).toBeHidden();
+    }
     for (const object of view.objects) {
       const target = page.locator(`[data-object="${object.id}"]`);
       await target.focus(); await target.tap();
@@ -94,7 +97,7 @@ test("a failed adjacent frame leaves the old view usable and can be retried", as
   await enter(page);
   const arrow = page.locator('.pw-ground-link[data-destination="october-02"]');
   await arrow.focus(); await arrow.click();
-  await expect(page.locator(".pw-status")).toContainText("Не удалось открыть кадр");
+  await expect(page.locator(".pw-status")).toContainText("Кадр не загрузился");
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", "october-01");
   await page.unroute("**/assets/scene-08/view-02.webp");
   await page.locator(".pw-status button").click();
