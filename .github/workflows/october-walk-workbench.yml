@@ -1,0 +1,22 @@
+name: October walk workbench
+on:
+  push:
+    branches: [feature/october-forest-walk]
+    paths: [.github/workflows/october-walk-workbench.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Archive tracked source for isolated scene review
+        run: git archive --format=zip --output=/tmp/mixor-source.zip HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: october-walk-source
+          path: /tmp/mixor-source.zip
+          retention-days: 1
