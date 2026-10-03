@@ -108,8 +108,10 @@ test("classification has species leaves under real intermediate groups", () => {
   assert.equal(scientificNames.stemonitis.genusProvisional, true);
   assert.match(scientificNames.stemonitis.placementNote, /incertae sedis/);
 });
-test("only the photo walk is playable and retired bookmarks resolve to it", () => {
-  assert.deepEqual(woodlands.map((place) => place.id), ["video-forest"]);
+test("only real photo walks are playable and retired bookmarks resolve to the original", () => {
+  assert.deepEqual(woodlands.map((place) => place.id), ["video-forest", "october-01", "clearing-01"]);
+  assert.equal(findWoodland("october-01").id, "october-01");
+  assert.equal(findWoodland("clearing-32").id, "clearing-01");
   assert.equal(archivedWoodlands.length, 6);
   for (const id of ["forest", "stump", "leaves", "roots", "bark", "wetland", "wetland-forward", "unknown"]) {
     assert.equal(findWoodland(id).id, "video-forest");

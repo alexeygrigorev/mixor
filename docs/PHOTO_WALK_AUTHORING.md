@@ -1,6 +1,6 @@
 # Adding and reviewing forest scenes
 
-Updated: 2026-09-29. Follow the latest [user feedback](USER_FEEDBACK.md) before changing a frame, route, control or organism. The active walk currently contains six video frames and 21 illustrated discoveries. Review every placement in its actual scene, including repeated uses of the same artwork. A good cutout can still look wrong on a different branch.
+Updated: 2026-10-03. Follow the latest [user feedback](USER_FEEDBACK.md) before changing a frame, route, control or organism. The runtime now contains three walks (66 full frames, 37 illustrated discoveries); older six-frame descriptions below refer to the original scene 07. Review every placement in its actual scene, including repeated uses of the same artwork. A good cutout can still look wrong on a different branch.
 
 This guide sets the authoring and review requirements. It does not declare the current artwork accepted. Record actual results and unresolved defects in the change's review report.
 
@@ -129,3 +129,19 @@ An expressly requested local composition edit may change the specified area of a
 A strict super-resolution request has a narrower contract: increase resolution while preserving the existing content, positions, geometry and texture identity. Do not add, remove, move or reinterpret leaves, bark, organisms or lighting. Compare aligned full frames and local crops against the source before installing a candidate. Increased nominal dimensions alone do not prove recovered detail, and an image generator's successful response does not prove fidelity.
 
 During this correction, an image-generation candidate was rejected: it was **1672 × 941** against the **1920 × 1080** source and altered textures. It was neither higher-resolution output nor a faithful strict enhancement. Keep it out of the runtime frame replacement and retain the rejection in the review record. Generate and review transparent organism artwork as a separate operation; it does not validate or authorize a background enhancement.
+
+
+## October 2026 expansion
+
+The current runtime includes scene 07 (6 views / 21 objects), scene 08, **Светлый лес** (28 views / 8 objects), and scene 09, **Тихая поляна** (32 views / 8 objects): 66 views, 37 objects, 130 directed links. The earlier 6-view/21-placement review descriptions above are historical scene-07 scope, not the full new runtime.
+
+Author new video views in `src/photo-walk-october.ts`; their source pixels and map thumbnails are described in `content/scene-08.manifest.json`. Every new view uses a distinct full frame and all next/back connections are reversible. A `thumbnail` is a map-only derivative; never substitute it for the 1920×1080 play surface. Frame-by-frame review details and reproducible commands are in [OCTOBER_WALK_REVIEW.md](OCTOBER_WALK_REVIEW.md).
+
+`scripts/capture-photo-walk-placements.mjs` now accepts `VIEW_PREFIX`, `VIEWPORT_WIDTH`, `VIEWPORT_HEIGHT`, `TEST_BROWSER_PATH` and `OUTPUT_DIR`. A scoped capture records its prefix in the report. No prefix means all 37 placements / 148 before-and-after state captures; `VIEW_PREFIX=october-` means all 8 new placements / 32 captures per viewport. Do not describe the latter as a full review of scene 07.
+
+
+## Second recording and deferred cleanup
+
+Author the 32 second-video views in `src/photo-walk-clearing.ts`; provenance and reproducible file hashes are in `content/scene-09.manifest.json`. `VIEW_PREFIX=clearing-` captures all eight new placements in four before/after, normal/maximum-zoom states per viewport. Run for desktop and phone; inspect the actual PNGs, not only the success flag.
+
+The user explicitly permits incidental people and items in this recording for now. `content/scene-09.cleanup.json` is a developer-only pending-review index with approximate full-frame percentage regions. Distant ambiguous details are marked uncertain. Do not create gameplay finds on people or bags. No removal or retouching has been performed. On later replacement, keep scene/find IDs, update the full image **and** map thumbnail plus their manifest hashes, inspect the old/new pairs and nearby arrow/find placement, and rerun navigation, save-preservation and offline tests. Removing media from a later game build does not erase prior public Git history.

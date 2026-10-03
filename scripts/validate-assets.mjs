@@ -41,9 +41,26 @@ for (const asset of art.assets) {
   if (!asset.prompt || !fs.existsSync(path.join(root, asset.runtimePath)) || !fs.existsSync(path.join(root, asset.sourcePath))) errors.push(`${asset.id}: generated artwork missing prompt/source/runtime file`);
 }
 
+// User-approved video stills have their own provenance, not a stock-photo license.
+let realFrameCount = 0;
+for (const name of ["scene-07", "scene-08", "scene-09"]) {
+  const walk = JSON.parse(fs.readFileSync(path.join(root, `content/${name}.manifest.json`), "utf8"));
+  for (const frame of walk.assets) {
+    realFrameCount++;
+    for (const item of [frame, frame.thumbnail].filter(Boolean)) {
+      const file = path.join(root, item.path);
+      if (!fs.existsSync(file)) { errors.push(`${item.path}: missing real frame`); continue; }
+      const bytes = fs.readFileSync(file);
+      if (bytes.length !== item.bytes || createHash("sha256").update(bytes).digest("hex") !== item.sha256) {
+        errors.push(`${item.path}: real-frame size/checksum mismatch`);
+      }
+    }
+  }
+}
+
 if (errors.length) {
   console.error(errors.map((error) => `- ${error}`).join("\n"));
   process.exit(1);
 }
 
-console.log(`assets valid: ${photos.length} reference photos / 8 taxa, ${art.assets.length} generated plates, ${gameArt.length} generated overlays, ${audio.length} registered audio assets`);
+console.log(`assets valid: ${photos.length} reference photos / 8 taxa, ${art.assets.length} generated plates, ${gameArt.length} generated overlays, ${audio.length} registered audio assets, ${realFrameCount} real forest frames`);

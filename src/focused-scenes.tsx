@@ -92,7 +92,6 @@ export function WoodlandChooser({
   choose: (id: string) => void;
   sessionOnly: boolean;
 }) {
-  const woodland = woodlands[0];
   return (
     <section className="woodland-chooser woodland-chooser-walk">
       <div className="chooser-heading">
@@ -100,7 +99,7 @@ export function WoodlandChooser({
         <p>Двигай фотографию, заглядывай к пням и веткам, замечай маленьких обитателей.</p>
       </div>
       <div className="woodland-choices">
-        <button onClick={() => choose(woodland.id)} aria-label="Искать: Лесная прогулка">
+        {woodlands.map((woodland) => <button key={woodland.id} onClick={() => choose(woodland.id)} aria-label={`Искать: ${woodland.title}`}>
           <img src={woodland.image} alt="" />
           <span className="woodland-choice-caption">
             <span>
@@ -109,7 +108,7 @@ export function WoodlandChooser({
             </span>
             <Icon name="next" size={24} />
           </span>
-        </button>
+        </button>)}
       </div>
       {sessionOnly && <p className="chooser-note">Прогресс этой вкладки не удалось сохранить на устройстве.</p>}
     </section>

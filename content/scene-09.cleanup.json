@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "scene": "scene-09",
+  "sourceVideo": "PXL_20261003_133858340.TS.mp4",
+  "status": "retained-as-authorized",
+  "permission": "2026-10-03: user explicitly permitted incidental people, including a child, and bags/items in the scene for now; removal can be done later.",
+  "notes": [
+    "Developer review markers only; not gameplay targets or object identifications.",
+    "Regions are approximate percentages of the normalized full frame, not pixel masks.",
+    "Uncertain distant details are marked for review, not asserted to be people.",
+    "No retouching or removal has been performed. This list is not an exhaustive privacy audit.",
+    "Replace image and thumbnail with reviewed assets, update their manifest hashes, and keep view/find IDs and transitions stable."
+  ],
+  "candidates": [
+    {
+      "viewId": "clearing-14",
+      "image": "/assets/scene-09/view-14.webp",
+      "status": "pending-review",
+      "category": "uncertain",
+      "note": "Светлый предмет у основания большого ствола справа; происхождение не установлено.",
+      "approximateRegionPercent": {
+        "x": 78,
+        "y": 86,
+        "width": 12,
+        "height": 12
+      }
+    },
+    {
+      "viewId": "clearing-21",
+      "image": "/assets/scene-09/view-21.webp",
+      "status": "pending-review",
+      "category": "possible-person",
+      "note": "Дальний тёмный силуэт у берёзы справа, частично скрытый ветвями; проверить перед очисткой.",
+      "approximateRegionPercent": {
+        "x": 68,
+        "y": 35,
+        "width": 10,
+        "height": 20
+      }
+    },
+    {
+      "viewId": "clearing-22",
+      "image": "/assets/scene-09/view-22.webp",
+      "status": "pending-review",
+      "category": "possible-person-and-items",
+      "note": "Дальний силуэт за берёзой и небольшие цветные предметы на земле справа; детали не установлены.",
+      "approximateRegionPercent": {
+        "x": 64,
+        "y": 28,
+        "width": 15,
+        "height": 22
+      }
+    },
+    {
+      "viewId": "clearing-23",
+      "image": "/assets/scene-09/view-23.webp",
+      "status": "pending-review",
+      "category": "possible-person-and-items",
+      "note": "Частично скрытый силуэт у дальней берёзы и синий предмет правее неё.",
+      "approximateRegionPercent": {
+        "x": 35,
+        "y": 38,
+        "width": 13,
+        "height": 22
+      }
+    },
+    {
+      "viewId": "clearing-26",
+      "image": "/assets/scene-09/view-26.webp",
+      "status": "pending-review",
+      "category": "person-and-items",
+      "note": "Частично скрытый человек за берёзой слева; синие и тёмные вещи на земле ближе к центру.",
+      "approximateRegionPercent": {
+        "x": 8,
+        "y": 31,
+        "width": 52,
+        "height": 32
+      }
+    },
+    {
+      "viewId": "clearing-28",
+      "image": "/assets/scene-09/view-28.webp",
+      "status": "pending-review",
+      "category": "items",
+      "note": "Тёмный рюкзак у центрального ствола и цветные вещи слева.",
+      "approximateRegionPercent": {
+        "x": 5,
+        "y": 57,
+        "width": 40,
+        "height": 15
+      }
+    },
+    {
+      "viewId": "clearing-30",
+      "image": "/assets/scene-09/view-30.webp",
+      "status": "pending-review",
+      "category": "person-and-items",
+      "note": "Человек рядом с берёзой в средней правой части кадра; цветные вещи на земле справа внизу.",
+      "approximateRegionPercent": {
+        "x": 51,
+        "y": 39,
+        "width": 33,
+        "height": 58
+      }
+    },
+    {
+      "viewId": "clearing-31",
+      "image": "/assets/scene-09/view-31.webp",
+      "status": "pending-review",
+      "category": "items",
+      "note": "Цветные вещи на земле у верхнего правого края кадра.",
+      "approximateRegionPercent": {
+        "x": 77,
+        "y": 5,
+        "width": 23,
+        "height": 19
+      }
+    }
+  ]
+}
