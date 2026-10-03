@@ -20,7 +20,7 @@ jobs:
         run: |
           gh api repos/alexeygrigorev/mixor/issues/comments/5969323338 > /tmp/scene-transfer.json
           python3 - <<'PY'
-          import json, re, io, zipfile, hashlib, urllib.request, urllib.parse, urllib.error, pathlib, stat
+          import json, re, io, zipfile, hashlib, urllib.parse, pathlib, stat, subprocess
           comment = json.load(open('/tmp/scene-transfer.json'))
           assert comment['user']['login'] == 'alexeygrigorev'
           package = json.loads(re.search(r'```json\s*(.*?)\s*```', comment['body'], re.S).group(1))
@@ -28,16 +28,8 @@ jobs:
           assert package['sha256'] == expected
           url = urllib.parse.urlsplit(package['url'])
           assert url.scheme == 'https' and url.hostname.endswith('.oaiusercontent.com')
-          try:
-              with urllib.request.urlopen(package['url'], timeout=60) as response:
-                  data = response.read(25000001)
-          except urllib.error.HTTPError as error:
-              print('Transfer HTTP status:', error.code)
-              print(error.read(1500).decode('utf8', 'replace'))
-              raise SystemExit(1)
-          except urllib.error.URLError as error:
-              print('Transfer network error:', type(error.reason).__name__, str(error.reason))
-              raise SystemExit(1)
+          subprocess.run(['curl', '--fail', '--silent', '--show-error', '--location', '--max-time', '90', '--output', '/tmp/public-scene.zip', '--config', '-'], input='url = ' + json.dumps(package['url']) + '\n', text=True, check=True)
+          data = pathlib.Path('/tmp/public-scene.zip').read_bytes()
           assert len(data) == 19093037 and hashlib.sha256(data).hexdigest() == expected
           with zipfile.ZipFile(io.BytesIO(data)) as archive:
               assert len(archive.infolist()) == 72
@@ -51,7 +43,7 @@ jobs:
               archive.extractall('.')
           print('Imported 28 approved forest frames, thumbnails and implementation; checksum verified.')
           PY
-          rm /tmp/scene-transfer.json
+          rm /tmp/scene-transfer.json /tmp/public-scene.zip
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add src scripts content tests public/assets/scene-08
