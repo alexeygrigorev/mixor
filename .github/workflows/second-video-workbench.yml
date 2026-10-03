@@ -1,11 +1,11 @@
-name: Pine arrow correction review
+name: Final pine route review
 on:
   push:
     branches: [workbench/second-video-walk]
 permissions:
   contents: read
 concurrency:
-  group: pine-arrow-correction
+  group: final-pine-review
   cancel-in-progress: true
 jobs:
   review:
@@ -14,55 +14,45 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: 1ba2bc591b8329e3c451d6c859b34cd411d6d213
           persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
           cache: npm
       - run: npm ci
-      - run: npm run typecheck && npm run assets:validate && npm run test:photo-walk && npm run build
+      - run: npm run typecheck && npm run assets:validate && node --test tests/domain.test.mjs tests/content.test.mjs tests/photo-walk.test.mjs tests/photo-walk-progress.test.mjs tests/photo-walk-camera.test.mjs && npm run build
       - run: npx playwright install --with-deps chromium webkit
-      - name: Capture the corrected arrow and full-height default views
+      - name: Record corrected cross-walk arrow at desktop and 320px
         run: |
           npm run dev -- --host 127.0.0.1 --port 4173 > /tmp/pine-vite.log 2>&1 &
           for i in $(seq 1 30); do curl -sf http://127.0.0.1:4173 >/dev/null && break; sleep 1; done
-          VIEW_PREFIX=pine-19 OUTPUT_DIR=tmp/pine-correction/desktop node scripts/capture-photo-walk-placements.mjs
-          VIEW_PREFIX=pine-19 VIEWPORT_WIDTH=390 VIEWPORT_HEIGHT=844 OUTPUT_DIR=tmp/pine-correction/phone node scripts/capture-photo-walk-placements.mjs
-          node --input-type=module <<'JS'
-          import { chromium } from '@playwright/test';
-          import { mkdir } from 'node:fs/promises';
-          const browser = await chromium.launch();
-          for (const viewport of [{width:390,height:844},{width:1440,height:900}]) {
-            const dir = `tmp/pine-correction/default-${viewport.width}`;
-            await mkdir(dir,{recursive:true});
-            for (const id of ['pine-01','pine-09','pine-16','pine-19','pine-28','pine-33','pine-34','pine-36']) {
-              const context = await browser.newContext({viewport,reducedMotion:'reduce'});
-              const page = await context.newPage();
-              await page.addInitScript(()=>{localStorage.setItem('mixor-entered-v2','true');localStorage.setItem('mixor-muted','true');});
-              await page.goto(`http://127.0.0.1:4173/#world/physarum/${id}`);
-              await page.locator(`.photo-walk-scene[data-view="${id}"][data-busy="false"]`).waitFor();
-              await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(i=>i.decode()));});
-              await page.screenshot({path:`${dir}/${id}.png`});
-              await context.close();
-            }
-          }
-          await browser.close();
-          JS
+          VIEW_PREFIX=october-28 OUTPUT_DIR=tmp/pine-final-cross/desktop node scripts/capture-photo-walk-placements.mjs
+          VIEW_PREFIX=october-28 VIEWPORT_WIDTH=320 VIEWPORT_HEIGHT=568 OUTPUT_DIR=tmp/pine-final-cross/phone node scripts/capture-photo-walk-placements.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: pine-arrow-correction
-          path: tmp/pine-correction/
+          name: pine-final-cross
+          path: tmp/pine-final-cross/
           retention-days: 7
-      - name: Chromium complete pine traversal and 320px hit targets
-        run: npx playwright test tests/browser/photo-walk-pine*.spec.ts
-      - name: WebKit complete pine traversal and 320px hit targets
+      - name: Chromium all pine views and both 320px routes
+        run: npx playwright test tests/browser/photo-walk-october-overview.spec.ts tests/browser/photo-walk-pine*.spec.ts
+      - name: WebKit all pine views and both 320px routes
         if: always()
-        run: npx playwright test --config playwright.webkit.config.ts tests/browser/photo-walk-pine*.spec.ts
+        run: npx playwright test --config playwright.webkit.config.ts tests/browser/photo-walk-october-overview.spec.ts tests/browser/photo-walk-pine*.spec.ts
+      - name: Production offline traversal
+        if: always()
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4174 > /tmp/pine-preview.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:4174 >/dev/null && break; sleep 1; done
+          npm run test:offline
+      - name: Pages base-path build
+        if: always()
+        run: npm run build:pages
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: pine-correction-browser
+          name: pine-final-browser
           path: |
             tmp/**/*.png
             tmp/**/review-index.json
