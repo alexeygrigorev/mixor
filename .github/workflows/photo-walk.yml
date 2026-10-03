@@ -31,7 +31,7 @@ jobs:
       - name: Domain, content and full Chromium regressions
         run: npm test
       - name: Capture both new walks on desktop and phone
-        if: ${{ always() && steps.browsers.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.browsers.outcome == 'success' }}
         run: |
           npm run dev -- --host 127.0.0.1 --port 4173 > /tmp/mixor-vite.log 2>&1 &
           for i in $(seq 1 30); do curl -sf http://127.0.0.1:4173 >/dev/null && break; sleep 1; done
@@ -40,10 +40,10 @@ jobs:
             VIEW_PREFIX=${walk}- VIEWPORT_WIDTH=390 VIEWPORT_HEIGHT=844 OUTPUT_DIR=tmp/${walk}-review/phone node scripts/capture-photo-walk-placements.mjs
           done
       - name: WebKit navigation and complete new routes
-        if: ${{ always() && steps.browsers.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.browsers.outcome == 'success' }}
         run: npx playwright test --config playwright.webkit.config.ts tests/browser/photo-walk-navigation.spec.ts tests/browser/photo-walk-october*.spec.ts tests/browser/photo-walk-clearing*.spec.ts
       - name: Production offline traversal
-        if: ${{ always() && steps.browsers.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.browsers.outcome == 'success' }}
         run: |
           npm run preview -- --host 127.0.0.1 --port 4174 > /tmp/mixor-preview.log 2>&1 &
           for i in $(seq 1 30); do curl -sf http://127.0.0.1:4174 >/dev/null && break; sleep 1; done
