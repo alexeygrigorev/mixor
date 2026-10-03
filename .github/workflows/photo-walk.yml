@@ -1,7 +1,7 @@
 name: Photo walk regression
 on:
   push:
-    branches: [main, feature/october-forest-walk]
+    branches: [main]
     paths-ignore: ['docs/**', 'README.md']
   pull_request:
     paths-ignore: ['docs/**', 'README.md']

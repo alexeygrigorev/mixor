@@ -13,7 +13,9 @@ async function enter(page: Page, id = "october-01") {
 async function travel(page: Page, id: string) {
   const arrow = page.locator(`.pw-ground-link[data-destination="${id}"]`);
   await arrow.focus();
-  await expect(arrow).toBeInViewport({ ratio: 1 });
+  // Chromium's intersection ratio can be 0.99999946 for a fully visible
+  // transformed button. Allow subpixel rounding, but still require a real tap.
+  await expect(arrow).toBeInViewport({ ratio: 0.999 });
   await arrow.tap();
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", id);
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-busy", "false");
