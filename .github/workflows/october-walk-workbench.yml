@@ -8,15 +8,20 @@ permissions:
 jobs:
   snapshot:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - name: Archive tracked source for isolated scene review
-        run: git archive --format=zip --output=/tmp/mixor-source.zip HEAD
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: npm run typecheck && npm run test:photo-walk && npm run build
+      - name: Archive locked dependencies for isolated local review
+        run: tar -czf /tmp/mixor-dependencies.tar.gz node_modules
       - uses: actions/upload-artifact@v4
         with:
-          name: october-walk-source
-          path: /tmp/mixor-source.zip
+          name: october-walk-dependencies
+          path: /tmp/mixor-dependencies.tar.gz
           retention-days: 1
