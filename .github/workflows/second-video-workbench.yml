@@ -2,22 +2,97 @@ name: Second video workbench
 on:
   push:
     branches: [workbench/second-video-walk]
-    paths: [.github/workflows/second-video-workbench.yml]
 permissions:
-  contents: read
+  contents: write
+  issues: read
+concurrency:
+  group: second-video-workbench
+  cancel-in-progress: true
 jobs:
-  snapshot:
+  review:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false
-      - name: Snapshot source and existing October frames
+          ref: workbench/second-video-walk
+      - name: Import only the approved checksum-pinned scene bundle
+        if: ${{ hashFiles('content/scene-09.manifest.json') == '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          git archive --format=zip --output=/tmp/current-walk.zip HEAD AGENTS.md SPECIFICATION.md README.md src docs tests scripts content/*.json public/assets/scene-08 package.json package-lock.json tsconfig.json vite.config.ts playwright.config.ts playwright.webkit.config.ts .github
-      - uses: actions/upload-artifact@v4
+          gh api repos/alexeygrigorev/mixor/issues/comments/5969954608 > /tmp/pine-transfer.json
+          python3 - <<'PY'
+          import json, re, io, zipfile, hashlib, urllib.parse, pathlib, stat, subprocess
+          comment = json.load(open('/tmp/pine-transfer.json'))
+          assert comment['user']['login'] == 'alexeygrigorev'
+          package = json.loads(re.search(r'```json\s*(.*?)\s*```', comment['body'], re.S).group(1))
+          expected = '9404dcb952100451003bef759f581360d19bec04c98958d8d46db4e1975d6b73'
+          assert package['sha256'] == expected
+          url = urllib.parse.urlsplit(package['url'])
+          assert url.scheme == 'https' and url.hostname == 'sdmntprdenmarkeast.oaiusercontent.com'
+          subprocess.run(['curl','--fail','--silent','--show-error','--location','--max-time','90','--output','/tmp/pine-public.zip','--config','-'],input='url = '+json.dumps(package['url'])+'\n',text=True,check=True)
+          data = pathlib.Path('/tmp/pine-public.zip').read_bytes()
+          assert len(data) == 22155127 and hashlib.sha256(data).hexdigest() == expected
+          text = {'.github/workflows/photo-walk.yml','README.md','content/scene-09.manifest.json','docs/PHOTO_WALK_AUTHORING.md','docs/PINE_WALK_REVIEW.md','docs/USER_FEEDBACK.md','scripts/build-offline.mjs','scripts/capture-photo-walk-placements.mjs','scripts/extract-pine-frames.py','scripts/validate-assets.mjs','src/focused-scenes.tsx','src/photo-walk-data.ts','src/photo-walk-pine.ts','src/search-data.ts','tests/browser/accessibility.spec.ts','tests/browser/photo-walk-learning.spec.ts','tests/browser/photo-walk-mobile.spec.ts','tests/browser/photo-walk-navigation.spec.ts','tests/browser/photo-walk-objects.spec.ts','tests/browser/photo-walk-october.spec.ts','tests/browser/photo-walk-pine-overview.spec.ts','tests/browser/photo-walk-pine.spec.ts','tests/content.test.mjs','tests/offline.mjs','tests/photo-walk-progress.test.mjs','tests/photo-walk.test.mjs'}
+          images = {f'public/assets/scene-09/{folder}view-{i:02}.webp' for folder in ('','thumbs/') for i in range(1,37)}
+          allowed = text | images
+          with zipfile.ZipFile(io.BytesIO(data)) as archive:
+              assert len(archive.infolist()) == 98 and set(archive.namelist()) == allowed
+              for item in archive.infolist():
+                  p = pathlib.PurePosixPath(item.filename)
+                  assert not p.is_absolute() and '..' not in p.parts
+                  assert not stat.S_ISLNK(item.external_attr >> 16) and item.file_size < 2000000
+              archive.extractall('.')
+          subprocess.run(['git','add','--',*sorted(allowed)],check=True)
+          print('Imported 36 user-approved full frames, 36 thumbnails and scoped source changes; SHA-256 verified.')
+          PY
+          rm /tmp/pine-public.zip /tmp/pine-transfer.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'feat: add 36-frame pine forest walk and optional transit-frame cleanup'
+          git push origin HEAD:workbench/second-video-walk
+      - uses: actions/setup-node@v4
         with:
-          name: second-video-source
-          path: /tmp/current-walk.zip
-          retention-days: 1
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck && npm run assets:validate && npm run build
+      - name: Install browser engines
+        id: browsers
+        run: npx playwright install --with-deps chromium webkit
+      - name: Capture six new placements before and after discovery
+        run: |
+          npm run dev -- --host 127.0.0.1 --port 4173 > /tmp/pine-vite.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:4173 >/dev/null && break; sleep 1; done
+          VIEW_PREFIX=pine- OUTPUT_DIR=tmp/pine-review/desktop node scripts/capture-photo-walk-placements.mjs
+          VIEW_PREFIX=pine- VIEWPORT_WIDTH=390 VIEWPORT_HEIGHT=844 OUTPUT_DIR=tmp/pine-review/phone node scripts/capture-photo-walk-placements.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pine-placements
+          path: tmp/pine-review/
+          retention-days: 7
+      - name: Domain, content and full Chromium regression
+        run: npm test
+      - name: WebKit navigation and both new routes
+        if: ${{ always() && steps.browsers.outcome == 'success' }}
+        run: npx playwright test --config playwright.webkit.config.ts tests/browser/photo-walk-navigation.spec.ts tests/browser/photo-walk-october*.spec.ts tests/browser/photo-walk-pine*.spec.ts
+      - name: Production offline traversal through all pine frames
+        if: ${{ always() && steps.browsers.outcome == 'success' }}
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4174 > /tmp/pine-preview.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:4174 >/dev/null && break; sleep 1; done
+          npm run test:offline
+      - name: Verify Pages base path build
+        if: ${{ always() && steps.browsers.outcome == 'success' }}
+        run: npm run build:pages
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pine-browser-review
+          path: |
+            tmp/**/*.png
+            tmp/**/review-index.json
+            tmp/**/error-context.md
+          retention-days: 7
