@@ -1,0 +1,35 @@
+name: Second video evidence subsets
+on:
+  push:
+    branches: [review/second-video-evidence]
+    paths: [.github/workflows/second-video-evidence.yml]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  subset:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: photo-walk-review
+          run-id: 37129335988
+          github-token: ${{ github.token }}
+          path: /tmp/recorded
+      - uses: actions/upload-artifact@v4
+        with:
+          name: second-video-placements
+          path: |
+            /tmp/recorded/clearing-review/**/*.png
+            /tmp/recorded/clearing-review/**/review-index.json
+            /tmp/recorded/october-review/**/*.png
+            /tmp/recorded/october-review/**/review-index.json
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        with:
+          name: second-video-diagnostics
+          path: |
+            /tmp/recorded/**/error-context.md
+            /tmp/recorded/**/chooser-*.png
+          retention-days: 7
