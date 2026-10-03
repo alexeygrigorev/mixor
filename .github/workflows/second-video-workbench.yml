@@ -4,27 +4,48 @@ on:
     branches: [workbench/second-video]
     paths: [.github/workflows/second-video-workbench.yml]
 permissions:
-  contents: read
+  contents: write
+  issues: read
 jobs:
-  snapshot:
+  import:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-      - run: npm ci
-      - name: Snapshot source and locked dependencies for local scene authoring
+          ref: feature/october-forest-walk
+      - name: Import the authorized public scene package
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          git archive --format=tar --output=/tmp/mixor-source.tar HEAD
-          tar -czf /tmp/mixor-dependencies.tar.gz node_modules
-      - uses: actions/upload-artifact@v4
-        with:
-          name: second-video-workbench
-          path: |
-            /tmp/mixor-source.tar
-            /tmp/mixor-dependencies.tar.gz
-          retention-days: 1
+          test "$(git rev-parse HEAD)" = c3f2c8a9b1d5b0950ab6874cafa519b1f14c64f3
+          gh api repos/alexeygrigorev/mixor/issues/comments/5969970311 > /tmp/scene-transfer.json
+          python3 - <<'PY'
+          import json, re, io, zipfile, hashlib, urllib.parse, pathlib, stat, subprocess
+          comment = json.load(open('/tmp/scene-transfer.json'))
+          assert comment['user']['login'] == 'alexeygrigorev'
+          package = json.loads(re.search(r'```json\s*(.*?)\s*```', comment['body'], re.S).group(1))
+          expected = 'be056c1ecf8f04e4aa8676fe5ca42a0a38c7084512ab57763166db26525cfff5'
+          assert package['sha256'] == expected
+          url = urllib.parse.urlsplit(package['url'])
+          assert url.scheme == 'https' and url.hostname == 'sdmntprdenmarkeast.oaiusercontent.com'
+          subprocess.run(['curl', '--fail', '--silent', '--show-error', '--location', '--max-time', '90', '--output', '/tmp/public-scene.zip', '--config', '-'], input='url = ' + json.dumps(package['url']) + '\n', text=True, check=True)
+          data = pathlib.Path('/tmp/public-scene.zip').read_bytes()
+          assert len(data) == 20982929 and hashlib.sha256(data).hexdigest() == expected
+          allowed = {'README.md', 'content/scene-09.cleanup.json', 'content/scene-09.manifest.json', 'docs/CLEARING_WALK_REVIEW.md', 'docs/PHOTO_WALK_AUTHORING.md', 'docs/USER_FEEDBACK.md', 'scripts/build-offline.mjs', 'scripts/capture-photo-walk-placements.mjs', 'scripts/extract-clearing-frames.py', 'scripts/validate-assets.mjs', 'src/photo-walk-clearing.ts', 'src/photo-walk-data.ts', 'src/photo-walk-october.ts', 'src/photo-walk.css', 'src/search-data.ts', 'tests/browser/accessibility.spec.ts', 'tests/browser/photo-walk-clearing-overview.spec.ts', 'tests/browser/photo-walk-clearing.spec.ts', 'tests/browser/photo-walk-learning.spec.ts', 'tests/browser/photo-walk-mobile.spec.ts', 'tests/browser/photo-walk-navigation.spec.ts', 'tests/browser/photo-walk-objects.spec.ts', 'tests/browser/photo-walk-october.spec.ts', 'tests/content.test.mjs', 'tests/offline.mjs', 'tests/photo-walk-progress.test.mjs', 'tests/photo-walk.test.mjs'}
+          for i in range(1, 33):
+              for folder in ('', 'thumbs/'):
+                  allowed.add(f'public/assets/scene-09/{folder}view-{i:02d}.webp')
+          with zipfile.ZipFile(io.BytesIO(data)) as archive:
+              assert len(archive.infolist()) == 91 and set(archive.namelist()) == allowed
+              for item in archive.infolist():
+                  assert not stat.S_ISLNK(item.external_attr >> 16) and item.file_size < 2000000
+              archive.extractall('.')
+          subprocess.run(['git', 'add', '--', *sorted(allowed)], check=True)
+          print('Imported 32 full frames, 32 thumbnails and scoped code/tests/docs; checksum and base verified.')
+          PY
+          rm /tmp/scene-transfer.json /tmp/public-scene.zip
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'feat: add 32-frame Тихая поляна walk and deferred cleanup index'
+          git push origin HEAD:feature/october-forest-walk
