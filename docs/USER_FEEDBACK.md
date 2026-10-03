@@ -2,7 +2,16 @@
 
 Updated: 2026-10-03. This is the durable record of the user's playtest requests, including corrections to earlier implementations. Read it before changing the game. Latest explicit feedback overrides conflicting older UI/audio defaults; privacy, source attribution and scientific honesty still apply.
 
-## New scene request, 2026-10-03 (latest)
+## Second video and relaxed scene-cleanup request, 2026-10-03 (latest)
+
+- Add another many-frame walk from `PXL_20261003_133858340.TS.mp4`.
+- The user explicitly says that belongings such as backpacks and people, including a child, are acceptable in these scene frames for now; cleanup can happen later. Do not reject, crop, blur or retouch an otherwise useful frame just for this reason. This supersedes the earlier people-free selection constraint for the new recording.
+- «Сосновый бор» adds 36 distinct full video frames with reversible transitions and 6 educational illustrated discoveries. The existing 34 views / 29 discoveries and private family data must remain intact.
+- Retain people/belongings as photographed, mark relevant frame IDs for optional later cleanup, and allow safe route omissions without renumbering surviving IDs or severing next/back links. Dropping a discovery-bearing frame requires an explicit replacement/relocation decision.
+- Publish only approved stills and thumbnails, never the original video, sound, private data streams, EXIF, GPS or transport URLs. A route omission is not removal from old Git commits, downloaded caches or published media.
+- See [Pine walk review](PINE_WALK_REVIEW.md) for exact scope, checks and remaining visual review. Neither this permission nor automated tests constitute subjective visual acceptance.
+
+## First new scene request, 2026-10-03 (historical scope)
 
 - Add a new scene using the supplied forest video, with **many frames and transitions**, not one still.
 - User explicitly approved public publication of selected forest-only frames without people, source video/audio or metadata.

@@ -134,3 +134,21 @@ test("adding the October walk retains all original visits, finds and cameras", (
   assert.equal(readPhotoWalkProgress(photoWalkViews, storage).found.length, 21);
   assert.equal(storage.data.get("family-observations"), "untouched");
 });
+
+test("adding the second recording preserves all 34 existing visits and 29 finds", () => {
+  const previous = photoWalkViews.filter(view => !view.id.startsWith("pine-"));
+  const saved = { version: 1, visited: previous.map(view => view.id),
+    found: previous.flatMap(view => view.objects.map(object => object.id)),
+    cameras: { "video-forest": { x: .3, y: .6, zoom: 1.5 }, "october-28": { x: .7, y: .6, zoom: 2 } } };
+  assert.equal(saved.visited.length, 34); assert.equal(saved.found.length, 29);
+  const storage = storageWith(JSON.stringify(saved));
+  storage.data.set("family-observations", "originals-unchanged");
+  const next = readPhotoWalkProgress(photoWalkViews, storage);
+  assert.deepEqual(next, saved);
+  next.visited.push("pine-01"); next.found.push("pine-01-myxomycete");
+  assert.equal(writePhotoWalkProgress(next, photoWalkViews, storage), true);
+  const reloaded = readPhotoWalkProgress(photoWalkViews, storage);
+  assert.equal(reloaded.visited.length, 35); assert.equal(reloaded.found.length, 30);
+  assert.deepEqual(reloaded.cameras, saved.cameras);
+  assert.equal(storage.data.get("family-observations"), "originals-unchanged");
+});

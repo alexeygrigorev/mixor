@@ -1,3 +1,4 @@
+import { pineWalkViews, PINE_WALK_ENTRY, PINE_WALK_RETURN } from "./photo-walk-pine.ts";
 import { octoberWalkViews } from "./photo-walk-october.ts";
 
 /** Scene 07: real, unretouched frames from the user-supplied video.
@@ -45,7 +46,7 @@ export type PhotoWalkView = {
   thumbnail?: string;
   sourceVideo?: string;
   id: string;
-  woodlandId: "video-forest" | "october-01";
+  woodlandId: "video-forest" | "october-01" | "pine-01";
   title: string;
   image: string;
   width: number;
@@ -211,7 +212,11 @@ export const photoWalkViews: PhotoWalkView[] = [
       object("stump-woodlouse", "creature", "Мокрица среди корней и листьев", 29.341, 89.218, 1.317, 1.564, 18, "Shaded root and leaf seam left of standing stump"),
     ],
   },
-  ...octoberWalkViews,
+  ...octoberWalkViews.map(view => view.id === PINE_WALK_RETURN ? {
+    ...view, links: [...view.links, { to: PINE_WALK_ENTRY,
+      label: "В другую прогулку: Сосновый бор", x: 86, y: 87, angle: 45, motion: "forward" as const }],
+  } : view),
+  ...pineWalkViews,
 ];
 export function getPhotoWalkView(id: string): PhotoWalkView | undefined {
   return photoWalkViews.find((view) => view.id === id);
