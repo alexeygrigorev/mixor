@@ -161,8 +161,10 @@ test("all six real stops remain reachable through anchored travel controls", asy
   // The compact HUD puts visible per-stop progress inside the route dialog.
   await page.getByRole("button", { name: "Открыть маршрут", exact: true }).click();
   for (const view of photoWalkViews.filter((view) => collected.has(view.id))) {
-    await expect(page.locator(".pw-map-row").filter({ hasText: view.title }))
-      .toContainText(`Детали ${view.objects.length} / ${view.objects.length}`);
+    // Match the registered frame, not a title shared by different walks.
+    await expect(page.locator(".pw-map-row").filter({
+      has: page.locator(`img[src$="${view.thumbnail ?? view.image}"]`),
+    })).toContainText(`Детали ${view.objects.length} / ${view.objects.length}`);
   }
   await page.getByRole("button", { name: "Закрыть окно", exact: true }).click();
   await page.reload();

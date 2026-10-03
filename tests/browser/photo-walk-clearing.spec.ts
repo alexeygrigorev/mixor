@@ -39,7 +39,9 @@ test("the new walk is selectable beside the original, including on a small phone
 });
 
 test("all 32 new frames navigate forward and back with all eight finds preserved", async ({ page }, info) => {
-  test.setTimeout(150000);
+  // Budget covers 64 route taps, eight discoveries and 32 full screenshots in
+  // slower WebKit runs; individual tap/arrival assertions keep their own limits.
+  test.setTimeout(240000);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await enter(page);
   let found = 0;

@@ -39,6 +39,17 @@ jobs:
             VIEW_PREFIX=${walk}- OUTPUT_DIR=tmp/${walk}-review/desktop node scripts/capture-photo-walk-placements.mjs
             VIEW_PREFIX=${walk}- VIEWPORT_WIDTH=390 VIEWPORT_HEIGHT=844 OUTPUT_DIR=tmp/${walk}-review/phone node scripts/capture-photo-walk-placements.mjs
           done
+      - name: Retain placement evidence separately from other regression images
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: photo-walk-placements
+          path: |
+            tmp/clearing-review/**/*.png
+            tmp/clearing-review/**/review-index.json
+            tmp/october-review/**/*.png
+            tmp/october-review/**/review-index.json
+          retention-days: 7
       - name: WebKit navigation and complete new routes
         if: ${{ !cancelled() && steps.browsers.outcome == 'success' }}
         run: npx playwright test --config playwright.webkit.config.ts tests/browser/photo-walk-navigation.spec.ts tests/browser/photo-walk-october*.spec.ts tests/browser/photo-walk-clearing*.spec.ts
@@ -51,9 +62,10 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: photo-walk-review
+          name: photo-walk-regression-images
           path: |
             tmp/**/*.png
-            tmp/**/review-index.json
             tmp/**/error-context.md
+            !tmp/clearing-review/**
+            !tmp/october-review/**
           retention-days: 7

@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import { photoWalkViews } from "../../src/photo-walk-data";
 
 async function enter(page: Page, view = "video-forest") {
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -38,7 +39,11 @@ test("ground directions move with the photograph and route remains a fallback", 
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", "video-moss-stump");
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-busy", "false");
   await page.getByRole("button", { name: "Открыть маршрут", exact: true }).click();
-  await page.locator(".pw-map-row").filter({ hasText: "Под низкими ветвями" }).click();
+  // Titles can repeat across recordings; the registered image uniquely identifies this stop.
+  const destination = photoWalkViews.find((view) => view.id === "video-clearing")!;
+  await page.locator(".pw-map-row").filter({
+    has: page.locator(`img[src$="${destination.thumbnail ?? destination.image}"]`),
+  }).click();
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", "video-clearing");
 });
 
