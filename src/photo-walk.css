@@ -244,8 +244,8 @@
 .pw-dialog { max-height: calc(100dvh - 32px); overflow: auto; }
 .pw-detail-close { top: 80px; }
 .photo-walk-scene[data-busy="true"] .pw-travel { pointer-events: none; opacity: .5; }
-.woodland-chooser-walk .woodland-choices { display: block; max-width: 840px; margin: 0 auto; }
-.woodland-chooser-walk .woodland-choices > button { width: 100%; min-height: min(48dvh, 450px); }
+.woodland-chooser-walk .woodland-choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 18px; max-width: 1100px; margin: 0 auto; }
+.woodland-chooser-walk .woodland-choices > button { width: 100%; min-height: min(42dvh, 420px); }
 @media (max-width: 800px) {
   .pw-header { top: 12px; left: 12px; right: 12px; }
   .pw-scene-label { display: none; }

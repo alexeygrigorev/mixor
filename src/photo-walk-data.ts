@@ -1,3 +1,5 @@
+import { octoberWalkViews } from "./photo-walk-october.ts";
+
 /** Scene 07: real, unretouched frames from the user-supplied video.
  * Coordinates are percentages of the ORIGINAL 1920 × 1080 image.
  * Links are an authored exploration graph, not measured geographic positions.
@@ -39,8 +41,11 @@ export type PhotoWalkObject = {
   height: number;
 };
 export type PhotoWalkView = {
+  /** Lightweight route preview; never used as the main frame. */
+  thumbnail?: string;
+  sourceVideo?: string;
   id: string;
-  woodlandId: "video-forest";
+  woodlandId: "video-forest" | "october-01";
   title: string;
   image: string;
   width: number;
@@ -194,6 +199,7 @@ export const photoWalkViews: PhotoWalkView[] = [
     width: 1920, height: 1080, sourceTimeSeconds: 68.728456,
     links: [
       { to: "video-trail", label: "Отойти к краю тропы", x: 16, y: 82, angle: -145, motion: "back" },
+      { to: "october-01", label: "В другую прогулку: Светлый лес", x: 84, y: 87, angle: 45, motion: "forward" },
     ],
     details: [
       { id: "stump-wood", title: "Древесина у основания", x: 36, y: 44, width: 44, height: 44, anchorX: 65, anchorY: 72 },
@@ -205,6 +211,7 @@ export const photoWalkViews: PhotoWalkView[] = [
       object("stump-woodlouse", "creature", "Мокрица среди корней и листьев", 29.341, 89.218, 1.317, 1.564, 18, "Shaded root and leaf seam left of standing stump"),
     ],
   },
+  ...octoberWalkViews,
 ];
 export function getPhotoWalkView(id: string): PhotoWalkView | undefined {
   return photoWalkViews.find((view) => view.id === id);
@@ -218,6 +225,7 @@ export function validatePhotoWalk(views: readonly PhotoWalkView[]): void {
   if (!views.length || ids.size !== views.length || !ids.has(PHOTO_WALK_ENTRY)) fail("invalid view ids");
   const objectIds = new Set<string>();
   for (const view of views) {
+    if (!Number.isFinite(view.sourceTimeSeconds) || view.sourceTimeSeconds < 0) fail(`invalid timestamp: ${view.id}`);
     if (view.width !== 1920 || view.height !== 1080 || !view.image || !view.title) fail(`invalid image: ${view.id}`);
     const destinations = new Set<string>();
     for (const link of view.links) {

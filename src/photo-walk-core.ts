@@ -312,7 +312,7 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
     findCounter.textContent = objectTotal ? `Находки ${foundObjects.size} / ${objectTotal}` : "";
     findCounter.setAttribute("aria-label", `Найдено скрытых деталей: ${foundObjects.size} из ${objectTotal}`);
     const localFound = current.objects.filter((item) => foundObjects.has(item.id)).length;
-    missionText.textContent = localFound === current.objects.length
+    missionText.textContent = current.objects.length === 0 ? "Осмотрись и продолжи прогулку." : localFound === current.objects.length
       ? foundObjects.size === objectTotal ? "Все детали найдены. Лес можно исследовать снова." : "Здесь всё найдено. Продолжим прогулку?"
       : `Ищи лесные детали · ${localFound} / ${current.objects.length}`;
     hintButton.disabled = localFound === current.objects.length;
@@ -411,10 +411,11 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
       row.disabled = busy || !link;
       if (view.id === current.id) row.setAttribute("aria-current", "location");
       const thumb = element("img", "pw-map-thumb");
-      thumb.src = resolve(view.image); thumb.alt = "";
+      thumb.src = resolve(view.thumbnail ?? view.image); thumb.alt = "";
+      thumb.loading = "lazy"; thumb.decoding = "async"; thumb.width = 160; thumb.height = 90;
       const name = element("span", "pw-map-name", `${String(index + 1).padStart(2, "0")}  ${view.title}`);
       name.append(element("small", "", view.id === current.id ? "Вы здесь" : link ? "Рядом · можно пройти" : visited.has(view.id) ? "Уже посещено" : "Ещё не посещено"));
-      name.append(element("small", "", `Детали ${view.objects.filter((item) => foundObjects.has(item.id)).length} / ${view.objects.length}`));
+      name.append(element("small", "", view.objects.length ? `Детали ${view.objects.filter((item) => foundObjects.has(item.id)).length} / ${view.objects.length}` : "Осмотреться и пройти дальше"));
       row.append(thumb, name);
       row.addEventListener("click", () => { if (link) { closeDialog(); void step(link); } });
       list.append(row);
@@ -442,9 +443,9 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
     showDialog("Маршрут", [note, list, mapActions]);
   }
   function openInfo() {
-    const description = element("p", "", "Шесть реальных кадров из вашего видео. Переход по тропе меняет точку съёмки; приближение увеличивает тот же кадр. Это не панорама 360°.");
+    const description = element("p", "", `${options.views.length} реальных кадров из двух прогулок. Стрелки переключают отдельные кадры, в том числе повороты камеры; приближение увеличивает тот же снимок. Связь между прогулками игровая, не географическая. Это не панорама 360°.`);
     const controls = element("p", "", "Перетаскивайте лес пальцем или мышью. Сведите или разведите два пальца для масштаба; доступны также кнопки − и +. «Весь кадр» показывает границы снимка. Нажимайте стрелки на земле, чтобы идти дальше. Если стрелка за краем кадра, откройте «Маршрут». Tab и Enter — действия; стрелки на изображении — осмотреться; Esc — закрыть окно.");
-    const source = element("p", "pw-dialog-note", "Исходник: 1000022837.mp4. Скрытые миксомицеты, лишайники, маленькие грибы и мокрицы — условные игровые иллюстрации; они не заявлены как найденные в исходном видео. Звук, люди и метаданные видео не перенесены. Публичная лицензия на видео не заявляется.");
+    const source = element("p", "pw-dialog-note", `Исходник текущего кадра: ${current?.sourceVideo ?? "1000022837.mp4"}. Скрытые миксомицеты, лишайники, маленькие грибы и мокрицы — условные игровые иллюстрации; они не заявлены как найденные в исходном видео. Звук, люди и метаданные видео не перенесены. Публичная лицензия на видео не заявляется.`);
     showDialog("О прогулке", [description, controls, source]);
   }
   async function step(link: PhotoWalkLink) {
@@ -506,6 +507,12 @@ export function mountPhotoWalk(root: HTMLElement, options: PhotoWalkOptions): Ph
         // ground marker; the route remains reachable without moving the camera.
         viewport.focus({ preventScroll: true });
       }
+      // Release references to decoded images outside this small neighbourhood.
+      // A long walk must not retain every full-resolution frame on a phone.
+      const keep = new Set([resolve(next.image), ...next.links.flatMap((link) => {
+        const target = lookup.get(link.to); return target ? [resolve(target.image)] : [];
+      })]);
+      for (const url of images.keys()) if (!keep.has(url)) images.delete(url);
       // Warm adjacent views, not the whole game. Failed prefetches remain retryable.
       next.links.forEach((link) => {
         const target = lookup.get(link.to);
