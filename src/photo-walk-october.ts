@@ -14,11 +14,11 @@ const captures: readonly (readonly [string, number, number, number, number, Phot
   ["Между молодыми деревьями", 26.249033, 60, 74, 0, "forward"],
   ["Свет сквозь хвою", 30.2655, 28, 77, -60, "left"],
   ["Взгляд на дорожку", 37.261744, 68, 71, 70, "right"],
-  ["Под наклонной веткой", 45.262067, 53, 78, 50, "right"],
+  ["Под наклонной веткой", 45.262067, 80, 78, 50, "right"],
   ["Возле раздвоенного ствола", 50.250033, 29, 80, -50, "left"],
   ["Светлая поляна", 55.7415, 56, 71, 0, "forward"],
   ["За молодой сосной", 58.253022, 67, 76, 65, "right"],
-  ["Поворот от кустарника", 63.743067, 41, 73, -35, "left"],
+  ["Поворот от кустарника", 63.743067, 78, 73, -35, "left"],
   ["Хвойная подстилка", 65.7517, 44, 75, 0, "forward"],
   ["К низкой развилке", 69.7358, 58, 74, 0, "forward"],
   ["Под длинной веткой", 73.250289, 26, 80, -65, "left"],
@@ -53,7 +53,8 @@ export const octoberWalkViews: PhotoWalkView[] = captures.map(([title, sourceTim
   const links: PhotoWalkLink[] = [{
     to: i === 0 ? "video-old-stump" : idAt(i - 1),
     label: i === 0 ? "К прежней прогулке" : `Назад: ${captures[i - 1][0]}`,
-    x: i === 2 ? 76 : i === 8 ? 69 : 22, y: 86, angle: 180, motion: "back",
+    // Keep both directions apart even in a 320 px full-frame overview.
+    x: x < 40 && i + 1 < captures.length ? 80 : 20, y: 86, angle: 180, motion: "back",
   }];
   if (i + 1 < captures.length) links.push({ to: idAt(i + 1), label: captures[i + 1][0], x, y, angle, motion });
   const objects: PhotoWalkObject[] = placements.filter(([stop]) => stop === i + 1).map(([, kind, label, ox, oy, width, height, rotation, support]) => ({
