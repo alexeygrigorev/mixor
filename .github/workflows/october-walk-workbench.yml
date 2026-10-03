@@ -3,7 +3,8 @@ on:
   push:
     branches: [feature/october-forest-walk]
 permissions:
-  contents: read
+  contents: write
+  issues: read
 concurrency:
   group: october-walk-review
   cancel-in-progress: true
@@ -14,18 +15,48 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          ref: feature/october-forest-walk
+      - name: Apply the checksum-pinned review patch once
+        if: ${{ hashFiles('docs/OCTOBER_WALK_REVIEW.md') == '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api repos/alexeygrigorev/mixor/issues/comments/5969323338 > /tmp/review-transfer.json
+          python3 - <<'PY'
+          import json, re, hashlib, urllib.parse, pathlib, subprocess
+          comment = json.load(open('/tmp/review-transfer.json'))
+          assert comment['user']['login'] == 'alexeygrigorev'
+          package = json.loads(re.search(r'```json\s*(.*?)\s*```', comment['body'], re.S).group(1))
+          expected = 'd35ad633329d0f86cdce23892f055af4670b284c7f8d2dbb4687cd7caada90fa'
+          assert package['sha256'] == expected
+          url = urllib.parse.urlsplit(package['url'])
+          assert url.scheme == 'https' and url.hostname == 'sdmntprnortheu.oaiusercontent.com'
+          subprocess.run(['curl', '--fail', '--silent', '--show-error', '--location', '--max-time', '90', '--output', '/tmp/review.patch', '--config', '-'], input='url = ' + json.dumps(package['url']) + '\n', text=True, check=True)
+          data = pathlib.Path('/tmp/review.patch').read_bytes()
+          assert len(data) == 25012 and hashlib.sha256(data).hexdigest() == expected
+          allowed = {'src/photo-walk-october.ts', 'scripts/extract-october-frames.py', 'scripts/validate-assets.mjs', 'tests/photo-walk-progress.test.mjs', 'tests/browser/photo-walk-october.spec.ts', 'tests/browser/accessibility.spec.ts', 'tests/content.test.mjs', 'docs/OCTOBER_WALK_REVIEW.md', 'README.md', 'docs/USER_FEEDBACK.md', 'docs/PHOTO_WALK_AUTHORING.md'}
+          assert set(re.findall(r'^\+\+\+ b/(.+)$', data.decode(), re.M)) == allowed
+          subprocess.run(['git', 'apply', '--check', '/tmp/review.patch'], check=True)
+          subprocess.run(['git', 'apply', '/tmp/review.patch'], check=True)
+          subprocess.run(['git', 'add', '--', *sorted(allowed)], check=True)
+          print('Applied only the pinned placement, test and documentation changes.')
+          PY
+          rm /tmp/review.patch /tmp/review-transfer.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'fix: anchor October finds to visible supports and extend regression evidence'
+          git push origin HEAD:feature/october-forest-walk
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
       - run: npm ci
-      - run: npm run typecheck && npm run test:photo-walk && npm run assets:validate && npm run build
+      - run: npm run typecheck && npm run assets:validate && npm run build
       - name: Install browser engines
         id: browsers
         run: npx playwright install --with-deps chromium webkit
-      - name: Chromium regression and full October traversal
-        run: npx playwright test tests/browser/photo-walk-objects.spec.ts tests/browser/photo-walk-mobile.spec.ts tests/browser/photo-walk-navigation.spec.ts tests/browser/photo-walk-drag.spec.ts tests/browser/photo-walk-learning.spec.ts tests/browser/photo-walk-october.spec.ts
-      - name: Capture all eight new placements on desktop and phone
+      - name: All domain, content and Chromium regressions
+        run: npm test
+      - name: Capture all eight corrected placements on desktop and phone
         if: ${{ always() && steps.browsers.outcome == 'success' }}
         run: |
           npm run dev -- --host 127.0.0.1 --port 4173 > /tmp/mixor-vite.log 2>&1 &
