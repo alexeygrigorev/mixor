@@ -43,7 +43,7 @@ for (const asset of art.assets) {
 
 // User-approved video stills have their own provenance, not a stock-photo license.
 let realFrameCount = 0;
-for (const name of ["scene-07", "scene-08"]) {
+for (const name of ["scene-07", "scene-08", "scene-09"]) {
   const walk = JSON.parse(fs.readFileSync(path.join(root, `content/${name}.manifest.json`), "utf8"));
   for (const frame of walk.assets) {
     realFrameCount++;

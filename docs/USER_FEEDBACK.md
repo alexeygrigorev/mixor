@@ -2,7 +2,15 @@
 
 Updated: 2026-10-03. This is the durable record of the user's playtest requests, including corrections to earlier implementations. Read it before changing the game. Latest explicit feedback overrides conflicting older UI/audio defaults; privacy, source attribution and scientific honesty still apply.
 
-## New scene request, 2026-10-03 (latest)
+## Additional video, 2026-10-03 (latest)
+
+The user supplied `PXL_20261003_133858340.TS.mp4` for another many-frame walk, adding: «Там если на сцене есть какие-то предметы, типа рюкзаки или там люди, типа ребенка, это ничего страшного, мы потом это можем из игры убрать.»
+
+For this second recording, incidental people and personal items may remain temporarily. Do not discard useful views solely for that reason or claim that they have been removed. This clarification supersedes the first video's people-free selection restriction **for the second recording only**. Keep the original video/audio and metadata out of the public repository; no identities or ages are inferred from the frames.
+
+Implement **Тихая поляна**, 32 full frames with reversible transitions, preserving the two earlier walks and their saves. `content/scene-09.cleanup.json` records developer-only cleanup candidates, approximate regions and uncertainty. These marks are neither biological finds nor a completed privacy audit. Keep stable view/find IDs when images are replaced later. See [Clearing review](CLEARING_WALK_REVIEW.md) for scope and evidence. Physical-device and user visual acceptance remain separate from automated tests.
+
+## First new scene request, 2026-10-03
 
 - Add a new scene using the supplied forest video, with **many frames and transitions**, not one still.
 - User explicitly approved public publication of selected forest-only frames without people, source video/audio or metadata.

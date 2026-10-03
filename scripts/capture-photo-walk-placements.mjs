@@ -21,7 +21,7 @@ validatePhotoWalk(photoWalkViews);
 await mkdir(output, { recursive: true });
 const revision = execFileSync("git", ["rev-parse", "HEAD"], { cwd: root, encoding: "utf8" }).trim();
 const trackedDiff = execFileSync("git", ["diff", "HEAD", "--", "src", "scripts", "content"], { cwd: root });
-const inputs = ["src/photo-walk-october.ts", "src/photo-walk-data.ts", "src/photo-walk-core.ts", "src/photo-walk-camera.ts", "src/photo-walk.css", "src/photo-walk-navigation.css"];
+const inputs = ["src/photo-walk-clearing.ts", "src/photo-walk-october.ts", "src/photo-walk-data.ts", "src/photo-walk-core.ts", "src/photo-walk-camera.ts", "src/photo-walk.css", "src/photo-walk-navigation.css"];
 const inputHashes = Object.fromEntries(await Promise.all(inputs.map(async (file) => [file, digest(await readFile(path.join(root, file)))])));
 const views = await Promise.all(selectedViews.map(async (view) => ({
   id: view.id,

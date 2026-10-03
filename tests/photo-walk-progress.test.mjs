@@ -134,3 +134,25 @@ test("adding the October walk retains all original visits, finds and cameras", (
   assert.equal(readPhotoWalkProgress(photoWalkViews, storage).found.length, 21);
   assert.equal(storage.data.get("family-observations"), "untouched");
 });
+
+
+test("adding the clearing retains all 29 prior discoveries and per-view cameras", () => {
+  const prior = photoWalkViews.filter(view => view.woodlandId !== "clearing-01");
+  const oldSave = {
+    version: 1, visited: prior.map(view => view.id),
+    found: prior.flatMap(view => view.objects.map(object => object.id)),
+    cameras: { "video-forest": { x: .3, y: .6, zoom: 1.5 }, "october-28": { x: .7, y: .4, zoom: 2.5 } },
+  };
+  assert.equal(oldSave.found.length, 29);
+  const storage = storageWith(JSON.stringify(oldSave));
+  storage.data.set("family-observations", "private-originals-untouched");
+  const next = readPhotoWalkProgress(photoWalkViews, storage);
+  assert.deepEqual(next, oldSave);
+  next.visited.push("clearing-01");
+  next.found.push("clearing-01-myxomycete");
+  assert.equal(writePhotoWalkProgress(next, photoWalkViews, storage), true);
+  const reloaded = readPhotoWalkProgress(photoWalkViews, storage);
+  assert.equal(reloaded.found.length, 30);
+  assert.deepEqual(reloaded.cameras, oldSave.cameras);
+  assert.equal(storage.data.get("family-observations"), "private-originals-untouched");
+});

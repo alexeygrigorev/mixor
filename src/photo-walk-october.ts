@@ -57,6 +57,7 @@ export const octoberWalkViews: PhotoWalkView[] = captures.map(([title, sourceTim
     x: x < 40 && i + 1 < captures.length ? 80 : 20, y: 86, angle: 180, motion: "back",
   }];
   if (i + 1 < captures.length) links.push({ to: idAt(i + 1), label: captures[i + 1][0], x, y, angle, motion });
+  if (i === captures.length - 1) links.push({ to: "clearing-01", label: "В другую прогулку: Тихая поляна", x: 90, y: 78, angle: 45, motion: "forward" });
   const objects: PhotoWalkObject[] = placements.filter(([stop]) => stop === i + 1).map(([, kind, label, ox, oy, width, height, rotation, support]) => ({
     id: `${id}-${kind}`, kind, label, title: names[kind],
     image: `/assets/scene-07/objects/${art[kind]}-natural.png`,

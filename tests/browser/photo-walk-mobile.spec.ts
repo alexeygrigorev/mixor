@@ -49,7 +49,7 @@ test("forest fills the screen and dragging an object explores without finding it
   await drag(page, { x: box!.x + box!.width / 2, y: box!.y + box!.height / 2 }, -100);
   await expect.poll(async () => Math.abs((await bounds(page)).photo.x - before.photo.x)).toBeGreaterThan(40);
   await expect(page.getByRole("dialog")).not.toBeVisible();
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 0 / 29");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 0 / 37");
 
   // Repeated gestures reach both edges without exposing empty space.
   for (const dx of [-viewport.width + 80, viewport.width - 80]) {
@@ -93,7 +93,7 @@ test("touch swipe pans the photograph without activating its discovery", async (
   await session.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
   await expect.poll(async () => Math.abs((await bounds(page)).photo.x - before.photo.x)).toBeGreaterThan(40);
   await expect(page.getByRole("dialog")).not.toBeVisible();
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 0 / 29");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 0 / 37");
 
   const viewport = page.viewportSize()!;
   const centre = { x: viewport.width / 2, y: viewport.height / 2 };
@@ -111,7 +111,7 @@ test("touch swipe pans the photograph without activating its discovery", async (
   await expect.poll(async () => (await bounds(page)).photo.width).toBeGreaterThan(widthBeforePinch * 1.15);
   await expect.poll(async () => (await bounds(page)).covers).toBe(true);
   await expect(page.getByRole("dialog")).not.toBeVisible();
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 0 / 29");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 0 / 37");
 });
 
 test("all six real stops remain reachable through anchored travel controls", async ({ page }, testInfo) => {
@@ -138,7 +138,7 @@ test("all six real stops remain reachable through anchored travel controls", asy
         await page.getByRole("button", { name: "Закрыть окно", exact: true }).click();
         await expect(target).toBeFocused();
         totalFound++;
-        await expect(page.locator(".pw-find-counter")).toHaveText(`Находки ${totalFound} / 29`);
+        await expect(page.locator(".pw-find-counter")).toHaveText(`Находки ${totalFound} / 37`);
       }
       collected.add(view.id);
       await expect(page.getByRole("button", { name: "Подсказка", exact: true, includeHidden: true })).toBeDisabled();
@@ -155,8 +155,8 @@ test("all six real stops remain reachable through anchored travel controls", asy
     await expect.poll(async () => (await bounds(page)).covers).toBe(true);
   }
   await expect(page.locator(".pw-arrow")).toHaveCount(0);
-  await expect(page.locator(".pw-counter")).toHaveText("6 / 34 мест");
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 21 / 29");
+  await expect(page.locator(".pw-counter")).toHaveText("6 / 66 мест");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 21 / 37");
   await expect(page.locator(".pw-mission-text")).toHaveText("Здесь всё найдено. Продолжим прогулку?");
   // The compact HUD puts visible per-stop progress inside the route dialog.
   await page.getByRole("button", { name: "Открыть маршрут", exact: true }).click();
@@ -166,21 +166,21 @@ test("all six real stops remain reachable through anchored travel controls", asy
   }
   await page.getByRole("button", { name: "Закрыть окно", exact: true }).click();
   await page.reload();
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 21 / 29");
-  await expect(page.locator(".pw-counter")).toHaveText("6 / 34 мест");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 21 / 37");
+  await expect(page.locator(".pw-counter")).toHaveText("6 / 66 мест");
   await page.screenshot({ path: testInfo.outputPath("walk-route-complete.png") });
 });
 
 test("a discovery survives rotation, reload and returning from another stop", async ({ page }, testInfo) => {
   await startWalk(page);
   await page.getByRole("button", { name: "Подсказка", exact: true }).click();
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 0 / 29");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 0 / 37");
   const first = page.locator(".pw-object").first();
   await first.focus();
   await first.tap();
   await expect(page.getByRole("dialog")).toBeVisible();
   await page.getByRole("button", { name: "Закрыть окно", exact: true }).click();
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 29");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 37");
 
   const portrait = page.viewportSize()!;
   await page.setViewportSize({ width: portrait.height, height: portrait.width });
@@ -191,7 +191,7 @@ test("a discovery survives rotation, reload and returning from another stop", as
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", "video-moss-stump");
   await page.reload();
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", "video-moss-stump");
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 29");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 37");
   await page.getByRole("button", { name: "Перейти: Назад на склон", exact: true }).focus();
   await page.getByRole("button", { name: "Перейти: Назад на склон", exact: true }).tap();
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", "video-forest");
@@ -214,17 +214,17 @@ test("confirmed replay resets the walk and preserves the field journal", async (
   await page.getByRole("button", { name: "Подсказка", exact: true }).click();
   await page.locator(".pw-object").first().tap();
   await page.getByRole("button", { name: "Продолжить поиск", exact: true }).click();
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 29");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 37");
   await page.getByRole("button", { name: "Открыть маршрут", exact: true }).click();
   await page.getByRole("button", { name: "Новая прогулка", exact: true }).click();
   await expect(page.getByRole("dialog")).toContainText("Фотографии и полевой журнал сохранятся");
   // Merely opening the confirmation must not erase anything.
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 29");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 37");
   await page.getByRole("button", { name: "Начать поиск заново", exact: true }).click();
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 0 / 29");
-  await expect(page.locator(".pw-counter")).toHaveText("1 / 34 мест");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 0 / 37");
+  await expect(page.locator(".pw-counter")).toHaveText("1 / 66 мест");
   await page.reload();
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 0 / 29");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 0 / 37");
   const preserved = await page.evaluate(async () => {
     const storageModule = "/src/storage.ts";
     const { listObservations } = await import(storageModule);

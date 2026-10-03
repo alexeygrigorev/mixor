@@ -1,4 +1,5 @@
 import { octoberWalkViews } from "./photo-walk-october.ts";
+import { clearingWalkViews } from "./photo-walk-clearing.ts";
 
 /** Scene 07: real, unretouched frames from the user-supplied video.
  * Coordinates are percentages of the ORIGINAL 1920 × 1080 image.
@@ -45,7 +46,7 @@ export type PhotoWalkView = {
   thumbnail?: string;
   sourceVideo?: string;
   id: string;
-  woodlandId: "video-forest" | "october-01";
+  woodlandId: "video-forest" | "october-01" | "clearing-01";
   title: string;
   image: string;
   width: number;
@@ -212,6 +213,7 @@ export const photoWalkViews: PhotoWalkView[] = [
     ],
   },
   ...octoberWalkViews,
+  ...clearingWalkViews,
 ];
 export function getPhotoWalkView(id: string): PhotoWalkView | undefined {
   return photoWalkViews.find((view) => view.id === id);

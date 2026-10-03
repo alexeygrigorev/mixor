@@ -39,10 +39,12 @@ try {
   assert(keys.includes("/assets/audio/sfx/uncover-mix.mp3"));
   assert(!keys.some((path) => /\/assets\/art\/(search-|walk-wetland-)/.test(path)));
   assert(keys.includes("/assets/scene-07/slope.webp"));
-  for (let i = 1; i <= 28; i++) {
+  for (const [scene, count] of [["scene-08", 28], ["scene-09", 32]]) {
+   for (let i = 1; i <= count; i++) {
     const name = `view-${String(i).padStart(2, "0")}.webp`;
-    assert(keys.includes(`/assets/scene-08/${name}`));
-    assert(keys.includes(`/assets/scene-08/thumbs/${name}`));
+    assert(keys.includes(`/assets/${scene}/${name}`));
+    assert(keys.includes(`/assets/${scene}/thumbs/${name}`));
+  }
   }
   assert(keys.includes("/assets/art/growth-early.webp"));
   const earlyArt = ["physarum", "arcyria", "fuligo", "lycogala", "stemonitis", "trichia", "tubifera", "didymium"];
@@ -117,7 +119,7 @@ try {
   await page.locator('.photo-walk-scene[data-view="video-moss-stump"][data-busy="false"]').waitFor();
   await page.reload();
   await page.locator('.photo-walk-scene[data-view="video-moss-stump"][data-busy="false"]').waitFor();
-  assert.equal(await page.locator(".pw-find-counter").textContent(), "Находки 1 / 29");
+  assert.equal(await page.locator(".pw-find-counter").textContent(), "Находки 1 / 37");
   const frames = await page.evaluate(async () => Promise.all(
     ["slope", "moss-stump", "clearing", "deadwood", "trail", "old-stump"].map(async (name) => {
       const image = new Image(); image.src = `/assets/scene-07/${name}.webp`;
@@ -141,6 +143,23 @@ try {
     return true;
   });
   assert(october, "All 28 October frames decode offline");
+  await page.goto((process.env.TEST_PREVIEW_URL || "http://127.0.0.1:4174") + "/#world/physarum/clearing-32");
+  await page.locator('.photo-walk-scene[data-view="clearing-32"][data-busy="false"]').waitFor();
+  const clearingBack = page.locator('.pw-ground-link[data-destination="clearing-31"]');
+  await clearingBack.focus(); await clearingBack.click();
+  await page.locator('.photo-walk-scene[data-view="clearing-31"][data-busy="false"]').waitFor();
+  await page.reload();
+  await page.locator('.photo-walk-scene[data-view="clearing-31"][data-busy="false"]').waitFor();
+  const clearing = await page.evaluate(async () => {
+    for (let i = 1; i <= 32; i++) {
+      for (const folder of ["", "thumbs/"]) {
+        const image = new Image(); image.src = `/assets/scene-09/${folder}view-${String(i).padStart(2, "0")}.webp`;
+        await image.decode(); if (image.naturalWidth !== (folder ? 320 : 1920)) return false;
+      }
+    }
+    return true;
+  });
+  assert(clearing, "All 32 second-video frames and their 32 thumbnails decode offline");
   const missing = await page.evaluate(async () => {
     try {
       const response = await fetch("/assets/nonexistent.webp");

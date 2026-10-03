@@ -236,11 +236,19 @@ export const woodlands: Woodland[] = [
     spots: [],
   },
 ];
+woodlands.push({
+  id: "clearing-01",
+  title: "Тихая поляна",
+  description: "32 ракурса: хвойные проходы, поляна и поваленный ствол",
+  image: "/assets/scene-09/view-01.webp",
+  weather: "clear",
+  spots: [],
+});
 for (const woodland of [...archivedWoodlands, ...woodlands]) woodland.image = publicUrl(woodland.image);
 // Bookmarked retired stages also open the current woodland. Archived finds are
 // deliberately not attached here: leaving the walk must not erase old progress.
 export const findWoodland = (id: string) => woodlands.find((woodland) => woodland.id === id)
-  ?? (id.startsWith("october-") ? woodlands[1] : woodlands[0]);
+  ?? (id.startsWith("clearing-") ? woodlands[2] : id.startsWith("october-") ? woodlands[1] : woodlands[0]);
 const key = "mixor-search-v1";
 const validIds = new Set([...archivedWoodlands, ...woodlands].flatMap((w) => w.spots.map((s) => s.id)));
 export function readFinds(): string[] {

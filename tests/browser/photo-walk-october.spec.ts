@@ -61,12 +61,12 @@ test("all 28 new frames navigate forward and back with all eight finds preserved
     }
     await page.screenshot({ path: info.outputPath(`${view.id}.png`) });
   }
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 8 / 29");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 8 / 37");
   for (const view of octoberWalkViews.slice(0, -1).reverse()) await travel(page, view.id);
-  await expect(page.locator(".pw-counter")).toHaveText("28 / 34 мест");
+  await expect(page.locator(".pw-counter")).toHaveText("28 / 66 мест");
   await page.reload();
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", "october-01");
-  await expect(page.locator(".pw-find-counter")).toHaveText(`Находки ${found} / 29`);
+  await expect(page.locator(".pw-find-counter")).toHaveText(`Находки ${found} / 37`);
   await travel(page, "video-old-stump");
   await travel(page, "october-01");
 });
@@ -89,7 +89,7 @@ test("new route keeps real-image anchored arrows, map thumbnails and a stationar
   await travel(page, "october-15");
   expect(animations.some(item => item.duration === 240 && item.keys.join() === "opacity")).toBe(true);
   await page.getByRole("button", { name: "Открыть маршрут", exact: true }).click();
-  await expect(page.locator(".pw-map-row")).toHaveCount(34);
+  await expect(page.locator(".pw-map-row")).toHaveCount(66);
   await expect(page.locator('.pw-map-row img[src*="scene-08/thumbs/"]')).toHaveCount(28);
   await expect(page.locator('.pw-map-row:not(:disabled)')).toHaveCount(2);
 });
