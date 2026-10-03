@@ -1,0 +1,199 @@
+{
+  "run": 37125163774,
+  "revision": "315e5bc926f93866903264e8cd5f12e0184dbdd0",
+  "note": "Contact sheets of actual screenshots; no source video, audio, metadata or font files. Navigation target positions changed later; organism placement coordinates did not. This is review evidence, not independent acceptance.",
+  "comparisons": [
+    {
+      "device": "desktop",
+      "object": "october-02-myxomycete",
+      "state": "normal",
+      "beforeAfterPixelIdentical": false
+    },
+    {
+      "device": "desktop",
+      "object": "october-03-lichen",
+      "state": "normal",
+      "beforeAfterPixelIdentical": false
+    },
+    {
+      "device": "desktop",
+      "object": "october-09-fungus",
+      "state": "normal",
+      "beforeAfterPixelIdentical": false
+    },
+    {
+      "device": "desktop",
+      "object": "october-13-creature",
+      "state": "normal",
+      "beforeAfterPixelIdentical": false
+    },
+    {
+      "device": "desktop",
+      "object": "october-16-myxomycete",
+      "state": "normal",
+      "beforeAfterPixelIdentical": false
+    },
+    {
+      "device": "desktop",
+      "object": "october-22-myxomycete",
+      "state": "normal",
+      "beforeAfterPixelIdentical": false
+    },
+    {
+      "device": "desktop",
+      "object": "october-25-lichen",
+      "state": "normal",
+      "beforeAfterPixelIdentical": false
+    },
+    {
+      "device": "desktop",
+      "object": "october-28-myxomycete",
+      "state": "normal",
+      "beforeAfterPixelIdentical": false
+    },
+    {
+      "device": "desktop",
+      "object": "october-02-myxomycete",
+      "state": "zoom",
+      "beforeAfterPixelIdentical": true
+    },
+    {
+      "device": "desktop",
+      "object": "october-03-lichen",
+      "state": "zoom",
+      "beforeAfterPixelIdentical": true
+    },
+    {
+      "device": "desktop",
+      "object": "october-09-fungus",
+      "state": "zoom",
+      "beforeAfterPixelIdentical": true
+    },
+    {
+      "device": "desktop",
+      "object": "october-13-creature",
+      "state": "zoom",
+      "beforeAfterPixelIdentical": true
+    },
+    {
+      "device": "desktop",
+      "object": "october-16-myxomycete",
+      "state": "zoom",
+      "beforeAfterPixelIdentical": true
+    },
+    {
+      "device": "desktop",
+      "object": "october-22-myxomycete",
+      "state": "zoom",
+      "beforeAfterPixelIdentical": true
+    },
+    {
+      "device": "desktop",
+      "object": "october-25-lichen",
+      "state": "zoom",
+      "beforeAfterPixelIdentical": true
+    },
+    {
+      "device": "desktop",
+      "object": "october-28-myxomycete",
+      "state": "zoom",
+      "beforeAfterPixelIdentical": true
+    },
+    {
+      "device": "phone",
+      "object": "october-02-myxomycete",
+      "state": "normal",
+      "beforeAfterPixelIdentical": false
+    },
+    {
+      "device": "phone",
+      "object": "october-03-lichen",
+      "state": "normal",
+      "beforeAfterPixelIdentical": false
+    },
+    {
+      "device": "phone",
+      "object": "october-09-fungus",
+      "state": "normal",
+      "beforeAfterPixelIdentical": false
+    },
+    {
+      "device": "phone",
+      "object": "october-13-creature",
+      "state": "normal",
+      "beforeAfterPixelIdentical": false
+    },
+    {
+      "device": "phone",
+      "object": "october-16-myxomycete",
+      "state": "normal",
+      "beforeAfterPixelIdentical": false
+    },
+    {
+      "device": "phone",
+      "object": "october-22-myxomycete",
+      "state": "normal",
+      "beforeAfterPixelIdentical": false
+    },
+    {
+      "device": "phone",
+      "object": "october-25-lichen",
+      "state": "normal",
+      "beforeAfterPixelIdentical": false
+    },
+    {
+      "device": "phone",
+      "object": "october-28-myxomycete",
+      "state": "normal",
+      "beforeAfterPixelIdentical": false
+    },
+    {
+      "device": "phone",
+      "object": "october-02-myxomycete",
+      "state": "zoom",
+      "beforeAfterPixelIdentical": true
+    },
+    {
+      "device": "phone",
+      "object": "october-03-lichen",
+      "state": "zoom",
+      "beforeAfterPixelIdentical": true
+    },
+    {
+      "device": "phone",
+      "object": "october-09-fungus",
+      "state": "zoom",
+      "beforeAfterPixelIdentical": true
+    },
+    {
+      "device": "phone",
+      "object": "october-13-creature",
+      "state": "zoom",
+      "beforeAfterPixelIdentical": true
+    },
+    {
+      "device": "phone",
+      "object": "october-16-myxomycete",
+      "state": "zoom",
+      "beforeAfterPixelIdentical": true
+    },
+    {
+      "device": "phone",
+      "object": "october-22-myxomycete",
+      "state": "zoom",
+      "beforeAfterPixelIdentical": true
+    },
+    {
+      "device": "phone",
+      "object": "october-25-lichen",
+      "state": "zoom",
+      "beforeAfterPixelIdentical": true
+    },
+    {
+      "device": "phone",
+      "object": "october-28-myxomycete",
+      "state": "zoom",
+      "beforeAfterPixelIdentical": true
+    }
+  ]
+}
