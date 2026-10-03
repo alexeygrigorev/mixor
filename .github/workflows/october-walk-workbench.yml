@@ -1,52 +1,49 @@
-name: October walk workbench
+name: October walk review
 on:
   push:
     branches: [feature/october-forest-walk]
-    paths: [.github/workflows/october-walk-workbench.yml]
 permissions:
-  contents: write
-  issues: write
+  contents: read
+concurrency:
+  group: october-walk-review
+  cancel-in-progress: true
 jobs:
-  import:
+  review:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: feature/october-forest-walk
-      - name: Import the checksum-pinned public scene
-        env:
-          GH_TOKEN: ${{ github.token }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci
+      - run: npm run typecheck && npm run test:photo-walk && npm run assets:validate && npm run build
+      - name: Install browser engines
+        id: browsers
+        run: npx playwright install --with-deps chromium webkit
+      - name: Chromium regression and full October traversal
+        run: npx playwright test tests/browser/photo-walk-objects.spec.ts tests/browser/photo-walk-mobile.spec.ts tests/browser/photo-walk-navigation.spec.ts tests/browser/photo-walk-drag.spec.ts tests/browser/photo-walk-learning.spec.ts tests/browser/photo-walk-october.spec.ts
+      - name: Capture all eight new placements on desktop and phone
+        if: ${{ always() && steps.browsers.outcome == 'success' }}
         run: |
-          gh api repos/alexeygrigorev/mixor/issues/comments/5969323338 > /tmp/scene-transfer.json
-          python3 - <<'PY'
-          import json, re, io, zipfile, hashlib, urllib.parse, pathlib, stat, subprocess
-          comment = json.load(open('/tmp/scene-transfer.json'))
-          assert comment['user']['login'] == 'alexeygrigorev'
-          package = json.loads(re.search(r'```json\s*(.*?)\s*```', comment['body'], re.S).group(1))
-          expected = '19ea4428b1ae8b42c012a2624cc46b98904de55cb81c02d16d2a14c8b390703e'
-          assert package['sha256'] == expected
-          url = urllib.parse.urlsplit(package['url'])
-          assert url.scheme == 'https' and url.hostname.endswith('.oaiusercontent.com')
-          subprocess.run(['curl', '--fail', '--silent', '--show-error', '--location', '--max-time', '90', '--output', '/tmp/public-scene.zip', '--config', '-'], input='url = ' + json.dumps(package['url']) + '\n', text=True, check=True)
-          data = pathlib.Path('/tmp/public-scene.zip').read_bytes()
-          assert len(data) == 19093037 and hashlib.sha256(data).hexdigest() == expected
-          with zipfile.ZipFile(io.BytesIO(data)) as archive:
-              assert len(archive.infolist()) == 72
-              for item in archive.infolist():
-                  p = pathlib.PurePosixPath(item.filename)
-                  assert not p.is_absolute() and '..' not in p.parts
-                  assert p.parts[0] in ('src', 'scripts', 'content', 'tests', 'public')
-                  if p.parts[0] == 'public':
-                      assert item.filename.startswith('public/assets/scene-08/') and p.suffix == '.webp'
-                  assert not stat.S_ISLNK(item.external_attr >> 16) and item.file_size < 2000000
-              archive.extractall('.')
-          print('Imported 28 approved forest frames, thumbnails and implementation; checksum verified.')
-          PY
-          rm /tmp/scene-transfer.json /tmp/public-scene.zip
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add src scripts content tests public/assets/scene-08
-          git commit -m 'feat: add 28-frame October forest walk with reversible routes'
-          git push origin HEAD:feature/october-forest-walk
-          gh api --method PATCH repos/alexeygrigorev/mixor/issues/comments/5969323338 -f body='The approved public scene package has been imported and its SHA-256 verified. The temporary transfer link has been removed. No source video, audio or metadata was transferred.' >/dev/null
+          npm run dev -- --host 127.0.0.1 --port 4173 > /tmp/mixor-vite.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:4173 >/dev/null && break; sleep 1; done
+          VIEW_PREFIX=october- OUTPUT_DIR=tmp/october-review/desktop node scripts/capture-photo-walk-placements.mjs
+          VIEW_PREFIX=october- VIEWPORT_WIDTH=390 VIEWPORT_HEIGHT=844 OUTPUT_DIR=tmp/october-review/phone node scripts/capture-photo-walk-placements.mjs
+      - name: WebKit route and new-frame checks
+        if: ${{ always() && steps.browsers.outcome == 'success' }}
+        run: npx playwright test --config playwright.webkit.config.ts tests/browser/photo-walk-navigation.spec.ts tests/browser/photo-walk-october.spec.ts
+      - name: Production offline traversal
+        if: ${{ always() && steps.browsers.outcome == 'success' }}
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4174 > /tmp/mixor-preview.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:4174 >/dev/null && break; sleep 1; done
+          npm run test:offline
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: october-walk-review
+          path: tmp/
+          retention-days: 7
