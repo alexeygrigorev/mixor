@@ -1,0 +1,30 @@
+name: Second video workbench
+on:
+  push:
+    branches: [workbench/second-video]
+    paths: [.github/workflows/second-video-workbench.yml]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci
+      - name: Snapshot source and locked dependencies for local scene authoring
+        run: |
+          git archive --format=tar --output=/tmp/mixor-source.tar HEAD
+          tar -czf /tmp/mixor-dependencies.tar.gz node_modules
+      - uses: actions/upload-artifact@v4
+        with:
+          name: second-video-workbench
+          path: |
+            /tmp/mixor-source.tar
+            /tmp/mixor-dependencies.tar.gz
+          retention-days: 1
