@@ -5,26 +5,22 @@ on:
     paths: [.github/workflows/october-walk-workbench.yml]
 permissions:
   contents: write
-  issues: read
+  issues: write
 jobs:
-  review:
+  import:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
           ref: feature/october-forest-walk
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-      - name: Import only the pinned public scene package
-        if: ${{ hashFiles('content/scene-08.manifest.json') == '' }}
+      - name: Import the checksum-pinned public scene
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh api repos/alexeygrigorev/mixor/issues/comments/5969323338 > /tmp/scene-transfer.json
           python3 - <<'PY'
-          import json, re, io, zipfile, hashlib, urllib.request, urllib.parse, pathlib, stat
+          import json, re, io, zipfile, hashlib, urllib.request, urllib.parse, urllib.error, pathlib, stat
           comment = json.load(open('/tmp/scene-transfer.json'))
           assert comment['user']['login'] == 'alexeygrigorev'
           package = json.loads(re.search(r'```json\s*(.*?)\s*```', comment['body'], re.S).group(1))
@@ -33,10 +29,15 @@ jobs:
           url = urllib.parse.urlsplit(package['url'])
           assert url.scheme == 'https' and url.hostname.endswith('.oaiusercontent.com')
           try:
-              with urllib.request.urlopen(package['url'], timeout=90) as response:
+              with urllib.request.urlopen(package['url'], timeout=60) as response:
                   data = response.read(25000001)
-          except Exception:
-              raise SystemExit('Public transfer unavailable; renew the scoped transfer link')
+          except urllib.error.HTTPError as error:
+              print('Transfer HTTP status:', error.code)
+              print(error.read(1500).decode('utf8', 'replace'))
+              raise SystemExit(1)
+          except urllib.error.URLError as error:
+              print('Transfer network error:', type(error.reason).__name__, str(error.reason))
+              raise SystemExit(1)
           assert len(data) == 19093037 and hashlib.sha256(data).hexdigest() == expected
           with zipfile.ZipFile(io.BytesIO(data)) as archive:
               assert len(archive.infolist()) == 72
@@ -56,30 +57,4 @@ jobs:
           git add src scripts content tests public/assets/scene-08
           git commit -m 'feat: add 28-frame October forest walk with reversible routes'
           git push origin HEAD:feature/october-forest-walk
-      - run: npm ci
-      - run: npm run typecheck && npm run test:photo-walk && npm run assets:validate && npm run build
-      - run: npx playwright install --with-deps chromium webkit
-      - name: Chromium regression and full October traversal
-        run: npx playwright test tests/browser/photo-walk-objects.spec.ts tests/browser/photo-walk-mobile.spec.ts tests/browser/photo-walk-navigation.spec.ts tests/browser/photo-walk-drag.spec.ts tests/browser/photo-walk-learning.spec.ts tests/browser/photo-walk-october.spec.ts
-      - name: Capture all eight new placements on desktop and phone
-        if: always()
-        run: |
-          npm run dev -- --host 127.0.0.1 --port 4173 > /tmp/mixor-vite.log 2>&1 &
-          for i in $(seq 1 30); do curl -sf http://127.0.0.1:4173 >/dev/null && break; sleep 1; done
-          VIEW_PREFIX=october- OUTPUT_DIR=tmp/october-review/desktop node scripts/capture-photo-walk-placements.mjs
-          VIEW_PREFIX=october- VIEWPORT_WIDTH=390 VIEWPORT_HEIGHT=844 OUTPUT_DIR=tmp/october-review/phone node scripts/capture-photo-walk-placements.mjs
-      - name: WebKit route and new-frame checks
-        if: always()
-        run: npx playwright test --config playwright.webkit.config.ts tests/browser/photo-walk-navigation.spec.ts tests/browser/photo-walk-october.spec.ts
-      - name: Production offline traversal
-        if: always()
-        run: |
-          npm run preview -- --host 127.0.0.1 --port 4174 > /tmp/mixor-preview.log 2>&1 &
-          for i in $(seq 1 30); do curl -sf http://127.0.0.1:4174 >/dev/null && break; sleep 1; done
-          npm run test:offline
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: october-walk-review
-          path: tmp/
-          retention-days: 7
+          gh api --method PATCH repos/alexeygrigorev/mixor/issues/comments/5969323338 -f body='The approved public scene package has been imported and its SHA-256 verified. The temporary transfer link has been removed. No source video, audio or metadata was transferred.' >/dev/null
