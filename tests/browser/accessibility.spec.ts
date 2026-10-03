@@ -73,7 +73,7 @@ test("focused keyboard, photo focus return, rotation, large text and reduced mot
   await target.focus();
   await page.keyboard.press("Enter");
   await expect(target).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 29");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 35");
   await expect(page.getByRole("dialog")).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(target).toBeFocused();

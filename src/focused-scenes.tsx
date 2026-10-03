@@ -168,6 +168,7 @@ export function SearchScene(props: {
 }) {
   // Old bookmarks remain usable, but never revive the retired generated scenes.
   const view = getPhotoWalkView(props.viewId ?? props.woodland.id)
+    ?? getPhotoWalkView(props.woodland.id)
     ?? getPhotoWalkView(PHOTO_WALK_ENTRY)!;
   return <PhotoWalkScene view={view} change={props.change} back={props.back} settings={props.settings} inspect={props.inspect} />;
 }

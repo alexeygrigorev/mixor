@@ -45,11 +45,11 @@ for (const group of groups) {
     await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", "video-forest");
     await expect(target).toHaveAttribute("aria-pressed", "true");
     await expect(target).toBeFocused();
-    await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 29");
+    await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 35");
     await page.keyboard.press("Enter");
     await expect(dialog).toBeVisible();
     await dialog.getByRole("button", { name: "Продолжить поиск", exact: true }).click();
-    await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 29");
+    await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 35");
   });
 }
 
@@ -68,9 +68,9 @@ test("related myxomycete atlas link returns to its originating stop with the fin
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", "video-moss-stump");
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-busy", "false");
   await expect(target).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 29");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 35");
   await page.reload();
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", "video-moss-stump");
   await expect(target).toHaveAttribute("aria-pressed", "true");
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 29");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 1 / 35");
 });
