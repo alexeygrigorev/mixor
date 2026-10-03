@@ -4,24 +4,82 @@ on:
     branches: [feature/october-forest-walk]
     paths: [.github/workflows/october-walk-workbench.yml]
 permissions:
-  contents: read
+  contents: write
+  issues: read
 jobs:
-  snapshot:
+  review:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          ref: feature/october-forest-walk
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
+      - name: Import only the pinned public scene package
+        if: ${{ hashFiles('content/scene-08.manifest.json') == '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api repos/alexeygrigorev/mixor/issues/comments/5969323338 > /tmp/scene-transfer.json
+          python3 - <<'PY'
+          import json, re, io, zipfile, hashlib, urllib.request, urllib.parse, pathlib, stat
+          comment = json.load(open('/tmp/scene-transfer.json'))
+          assert comment['user']['login'] == 'alexeygrigorev'
+          package = json.loads(re.search(r'```json\s*(.*?)\s*```', comment['body'], re.S).group(1))
+          expected = '19ea4428b1ae8b42c012a2624cc46b98904de55cb81c02d16d2a14c8b390703e'
+          assert package['sha256'] == expected
+          url = urllib.parse.urlsplit(package['url'])
+          assert url.scheme == 'https' and url.hostname.endswith('.oaiusercontent.com')
+          try:
+              with urllib.request.urlopen(package['url'], timeout=90) as response:
+                  data = response.read(25000001)
+          except Exception:
+              raise SystemExit('Public transfer unavailable; renew the scoped transfer link')
+          assert len(data) == 19093037 and hashlib.sha256(data).hexdigest() == expected
+          with zipfile.ZipFile(io.BytesIO(data)) as archive:
+              assert len(archive.infolist()) == 72
+              for item in archive.infolist():
+                  p = pathlib.PurePosixPath(item.filename)
+                  assert not p.is_absolute() and '..' not in p.parts
+                  assert p.parts[0] in ('src', 'scripts', 'content', 'tests', 'public')
+                  if p.parts[0] == 'public':
+                      assert item.filename.startswith('public/assets/scene-08/') and p.suffix == '.webp'
+                  assert not stat.S_ISLNK(item.external_attr >> 16) and item.file_size < 2000000
+              archive.extractall('.')
+          print('Imported 28 approved forest frames, thumbnails and implementation; checksum verified.')
+          PY
+          rm /tmp/scene-transfer.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src scripts content tests public/assets/scene-08
+          git commit -m 'feat: add 28-frame October forest walk with reversible routes'
+          git push origin HEAD:feature/october-forest-walk
       - run: npm ci
-      - run: npm run typecheck && npm run test:photo-walk && npm run build
-      - name: Archive locked dependencies for isolated local review
-        run: tar -czf /tmp/mixor-dependencies.tar.gz node_modules
+      - run: npm run typecheck && npm run test:photo-walk && npm run assets:validate && npm run build
+      - run: npx playwright install --with-deps chromium webkit
+      - name: Chromium regression and full October traversal
+        run: npx playwright test tests/browser/photo-walk-objects.spec.ts tests/browser/photo-walk-mobile.spec.ts tests/browser/photo-walk-navigation.spec.ts tests/browser/photo-walk-drag.spec.ts tests/browser/photo-walk-learning.spec.ts tests/browser/photo-walk-october.spec.ts
+      - name: Capture all eight new placements on desktop and phone
+        if: always()
+        run: |
+          npm run dev -- --host 127.0.0.1 --port 4173 > /tmp/mixor-vite.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:4173 >/dev/null && break; sleep 1; done
+          VIEW_PREFIX=october- OUTPUT_DIR=tmp/october-review/desktop node scripts/capture-photo-walk-placements.mjs
+          VIEW_PREFIX=october- VIEWPORT_WIDTH=390 VIEWPORT_HEIGHT=844 OUTPUT_DIR=tmp/october-review/phone node scripts/capture-photo-walk-placements.mjs
+      - name: WebKit route and new-frame checks
+        if: always()
+        run: npx playwright test --config playwright.webkit.config.ts tests/browser/photo-walk-navigation.spec.ts tests/browser/photo-walk-october.spec.ts
+      - name: Production offline traversal
+        if: always()
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4174 > /tmp/mixor-preview.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:4174 >/dev/null && break; sleep 1; done
+          npm run test:offline
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: october-walk-dependencies
-          path: /tmp/mixor-dependencies.tar.gz
-          retention-days: 1
+          name: october-walk-review
+          path: tmp/
+          retention-days: 7
