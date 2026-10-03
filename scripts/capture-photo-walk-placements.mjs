@@ -9,27 +9,33 @@ import { photoWalkViews, validatePhotoWalk } from "../src/photo-walk-data.ts";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const base = process.env.TEST_BASE_URL ?? "http://127.0.0.1:4173";
 const output = path.resolve(root, process.env.OUTPUT_DIR ?? "tmp/photo-walk-placements");
-const viewport = { width: 1440, height: 900 };
+const viewport = { width: Number(process.env.VIEWPORT_WIDTH ?? 1440), height: Number(process.env.VIEWPORT_HEIGHT ?? 900) };
+if (!Number.isInteger(viewport.width) || !Number.isInteger(viewport.height) || viewport.width < 320 || viewport.height < 320) throw new Error("Invalid capture viewport");
+// Omitted filter still captures ALL placements; explicitly record a scoped review.
+const viewPrefix = process.env.VIEW_PREFIX ?? "";
+const selectedViews = photoWalkViews.filter((view) => view.id.startsWith(viewPrefix));
+if (!selectedViews.length) throw new Error("No views match VIEW_PREFIX");
 const digest = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const imageBytes = (url) => readFile(path.join(root, "public", url.replace(/^\//, "")));
 validatePhotoWalk(photoWalkViews);
 await mkdir(output, { recursive: true });
 const revision = execFileSync("git", ["rev-parse", "HEAD"], { cwd: root, encoding: "utf8" }).trim();
 const trackedDiff = execFileSync("git", ["diff", "HEAD", "--", "src", "scripts", "content"], { cwd: root });
-const inputs = ["src/photo-walk-data.ts", "src/photo-walk-core.ts", "src/photo-walk-camera.ts", "src/photo-walk.css", "src/photo-walk-navigation.css"];
+const inputs = ["src/photo-walk-pine.ts", "src/photo-walk-october.ts", "src/photo-walk-data.ts", "src/photo-walk-core.ts", "src/photo-walk-camera.ts", "src/photo-walk.css", "src/photo-walk-navigation.css"];
 const inputHashes = Object.fromEntries(await Promise.all(inputs.map(async (file) => [file, digest(await readFile(path.join(root, file)))])));
-const views = await Promise.all(photoWalkViews.map(async (view) => ({
+const views = await Promise.all(selectedViews.map(async (view) => ({
   id: view.id,
   sourceTimeSeconds: view.sourceTimeSeconds,
   image: view.image,
   sha256: digest(await imageBytes(view.image)),
 })));
-const expectedIds = photoWalkViews.flatMap((view) => view.objects.map((object) => object.id));
+const expectedIds = selectedViews.flatMap((view) => view.objects.map((object) => object.id));
 const report = {
   schemaVersion: 1,
   capturedAt: new Date().toISOString(),
   baseURL: base,
   viewport,
+  viewPrefix,
   engine: "chromium",
   revision,
   trackedWorkingDiffSha256: digest(trackedDiff),
@@ -69,16 +75,16 @@ async function cropAround(target) {
   const box = await target.boundingBox();
   if (!box) throw new Error("Discovery has no rendered bounds");
   return {
-    x: Math.max(0, Math.min(viewport.width - 600, box.x + box.width / 2 - 300)),
-    y: Math.max(0, Math.min(viewport.height - 450, box.y + box.height / 2 - 225)),
-    width: 600,
-    height: 450,
+    x: Math.max(0, Math.min(viewport.width - Math.min(600, viewport.width), box.x + box.width / 2 - Math.min(600, viewport.width) / 2)),
+    y: Math.max(0, Math.min(viewport.height - Math.min(450, viewport.height), box.y + box.height / 2 - Math.min(450, viewport.height) / 2)),
+    width: Math.min(600, viewport.width),
+    height: Math.min(450, viewport.height),
   };
 }
 await writeIndex();
-const browser = await chromium.launch({ args: ["--no-sandbox"] });
+const browser = await chromium.launch({ executablePath: process.env.TEST_BROWSER_PATH, args: ["--no-sandbox"] });
 try {
-  for (const view of photoWalkViews) {
+  for (const view of selectedViews) {
     const source = views.find((candidate) => candidate.id === view.id);
     for (const object of view.objects) {
       const context = await browser.newContext({ viewport, reducedMotion: "reduce" });

@@ -39,6 +39,16 @@ try {
   assert(keys.includes("/assets/audio/sfx/uncover-mix.mp3"));
   assert(!keys.some((path) => /\/assets\/art\/(search-|walk-wetland-)/.test(path)));
   assert(keys.includes("/assets/scene-07/slope.webp"));
+  for (let i = 1; i <= 28; i++) {
+    const name = `view-${String(i).padStart(2, "0")}.webp`;
+    assert(keys.includes(`/assets/scene-08/${name}`));
+    assert(keys.includes(`/assets/scene-08/thumbs/${name}`));
+  }
+  for (let i = 1; i <= 36; i++) {
+    const name = `view-${String(i).padStart(2, "0")}.webp`;
+    assert(keys.includes(`/assets/scene-09/${name}`));
+    assert(keys.includes(`/assets/scene-09/thumbs/${name}`));
+  }
   assert(keys.includes("/assets/art/growth-early.webp"));
   const earlyArt = ["physarum", "arcyria", "fuligo", "lycogala", "stemonitis", "trichia", "tubifera", "didymium"];
   for (const id of earlyArt) assert(keys.includes(`/assets/art/early-${id}-v3.webp`));
@@ -112,7 +122,7 @@ try {
   await page.locator('.photo-walk-scene[data-view="video-moss-stump"][data-busy="false"]').waitFor();
   await page.reload();
   await page.locator('.photo-walk-scene[data-view="video-moss-stump"][data-busy="false"]').waitFor();
-  assert.equal(await page.locator(".pw-find-counter").textContent(), "Находки 1 / 21");
+  assert.equal(await page.locator(".pw-find-counter").textContent(), "Находки 1 / 35");
   const frames = await page.evaluate(async () => Promise.all(
     ["slope", "moss-stump", "clearing", "deadwood", "trail", "old-stump"].map(async (name) => {
       const image = new Image(); image.src = `/assets/scene-07/${name}.webp`;
@@ -120,6 +130,37 @@ try {
     }),
   ));
   assert(frames.every((width) => width === 1920));
+  // The new walk must also decode, navigate and restore while disconnected.
+  await page.goto((process.env.TEST_PREVIEW_URL || "http://127.0.0.1:4174") + "/#world/physarum/october-28");
+  await page.locator('.photo-walk-scene[data-view="october-28"][data-busy="false"]').waitFor();
+  const back = page.locator('.pw-ground-link[data-destination="october-27"]');
+  await back.focus(); await back.click();
+  await page.locator('.photo-walk-scene[data-view="october-27"][data-busy="false"]').waitFor();
+  await page.reload();
+  await page.locator('.photo-walk-scene[data-view="october-27"][data-busy="false"]').waitFor();
+  const october = await page.evaluate(async () => {
+    for (let i = 1; i <= 28; i++) {
+      const image = new Image(); image.src = `/assets/scene-08/view-${String(i).padStart(2, "0")}.webp`;
+      await image.decode(); if (image.naturalWidth !== 1920) return false;
+    }
+    return true;
+  });
+  assert(october, "All 28 October frames decode offline");
+  await page.goto((process.env.TEST_PREVIEW_URL || "http://127.0.0.1:4174") + "/#world/physarum/pine-36");
+  await page.locator('.photo-walk-scene[data-view="pine-36"][data-busy="false"]').waitFor();
+  const pineBack = page.locator('.pw-ground-link[data-destination="pine-35"]');
+  await pineBack.focus(); await pineBack.click();
+  await page.locator('.photo-walk-scene[data-view="pine-35"][data-busy="false"]').waitFor();
+  await page.reload();
+  await page.locator('.photo-walk-scene[data-view="pine-35"][data-busy="false"]').waitFor();
+  const pine = await page.evaluate(async () => {
+    for (let i = 1; i <= 36; i++) {
+      const image = new Image(); image.src = `/assets/scene-09/view-${String(i).padStart(2, "0")}.webp`;
+      await image.decode(); if (image.naturalWidth !== 1920) return false;
+    }
+    return true;
+  });
+  assert(pine, "All 36 second-recording frames decode offline, including retained people/belongings");
   const missing = await page.evaluate(async () => {
     try {
       const response = await fetch("/assets/nonexistent.webp");

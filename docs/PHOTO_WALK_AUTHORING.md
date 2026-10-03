@@ -1,6 +1,6 @@
 # Adding and reviewing forest scenes
 
-Updated: 2026-09-29. Follow the latest [user feedback](USER_FEEDBACK.md) before changing a frame, route, control or organism. The active walk currently contains six video frames and 21 illustrated discoveries. Review every placement in its actual scene, including repeated uses of the same artwork. A good cutout can still look wrong on a different branch.
+Updated: 2026-10-03. Follow the latest [user feedback](USER_FEEDBACK.md) before changing a frame, route, control or organism. The three walks currently contain 70 video frames and 35 illustrated discoveries; the original six-frame inventory below remains a separate historical review scope. Review every placement in its actual scene, including repeated uses of the same artwork. A good cutout can still look wrong on a different branch.
 
 This guide sets the authoring and review requirements. It does not declare the current artwork accepted. Record actual results and unresolved defects in the change's review report.
 
@@ -129,3 +129,20 @@ An expressly requested local composition edit may change the specified area of a
 A strict super-resolution request has a narrower contract: increase resolution while preserving the existing content, positions, geometry and texture identity. Do not add, remove, move or reinterpret leaves, bark, organisms or lighting. Compare aligned full frames and local crops against the source before installing a candidate. Increased nominal dimensions alone do not prove recovered detail, and an image generator's successful response does not prove fidelity.
 
 During this correction, an image-generation candidate was rejected: it was **1672 × 941** against the **1920 × 1080** source and altered textures. It was neither higher-resolution output nor a faithful strict enhancement. Keep it out of the runtime frame replacement and retain the rejection in the review record. Generate and review transparent organism artwork as a separate operation; it does not validate or authorize a background enhancement.
+
+
+## October 2026 expansion
+
+The current runtime includes scene 07 (6 views / 21 objects) and scene 08, **Светлый лес** (28 views / 8 objects): 34 views, 29 objects, 66 directed links. The earlier 6-view/21-placement review descriptions above are historical scene-07 scope, not the full new runtime.
+
+Author new video views in `src/photo-walk-october.ts`; their source pixels and map thumbnails are described in `content/scene-08.manifest.json`. Every new view uses a distinct full frame and all next/back connections are reversible. A `thumbnail` is a map-only derivative; never substitute it for the 1920×1080 play surface. Frame-by-frame review details and reproducible commands are in [OCTOBER_WALK_REVIEW.md](OCTOBER_WALK_REVIEW.md).
+
+`scripts/capture-photo-walk-placements.mjs` now accepts `VIEW_PREFIX`, `VIEWPORT_WIDTH`, `VIEWPORT_HEIGHT`, `TEST_BROWSER_PATH` and `OUTPUT_DIR`. A scoped capture records its prefix in the report. No prefix means all 29 placements / 116 before-and-after state captures; `VIEW_PREFIX=october-` means all 8 new placements / 32 captures per viewport. Do not describe the latter as a full review of scene 07.
+
+## Second October recording: Сосновый бор
+
+`src/photo-walk-pine.ts` defines 36 stable `pine-XX` stops and 6 placements. `content/scene-09.manifest.json` records source frame indices, exact integer presentation timestamps, checksums and optional cleanup tags. People and belongings are intentionally retained under the latest user permission; no image has been retouched. Do not interpret an unflagged frame as a guarantee that it contains no personal items.
+
+To hide an unwanted transit frame, add its stable ID to `PINE_OMITTED_VIEWS`. `buildPineWalk` reconnects both directions and preserves other IDs. Unknown IDs, hiding the entry, and silently omitting a frame with a discovery are rejected. Replace the entry photograph rather than breaking its saved route. A removed deep link falls back to this woodland's entry. Omitting a frame from the route does not erase its photograph, offline copy or repository history. Explicitly remove/replace media and rebuild caches when actual image removal is requested.
+
+Run the existing capture script with `VIEW_PREFIX=pine-` for all six placements at normal and maximum zoom before/after discovery on desktop and phone. See [Pine review](PINE_WALK_REVIEW.md). Source video and sound must remain outside the repository.

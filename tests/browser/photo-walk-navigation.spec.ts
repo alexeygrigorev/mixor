@@ -53,7 +53,7 @@ test("hint can be hidden without finding an object or leaving the scene", async 
   await hide.click();
   await expect(page.locator(".pw-object.is-hinted")).toHaveCount(0);
   await expect(hint).toHaveAttribute("aria-pressed", "false");
-  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 0 / 21");
+  await expect(page.locator(".pw-find-counter")).toHaveText("Находки 0 / 35");
   await expect(page.locator(".photo-walk-scene")).toHaveAttribute("data-view", "video-forest");
 });
 

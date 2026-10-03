@@ -1,0 +1,59 @@
+name: Photo walk regression
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['docs/**', 'README.md']
+  pull_request:
+    paths-ignore: ['docs/**', 'README.md']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: photo-walk-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck && npm run assets:validate && npm run build
+      - name: Install browser engines
+        id: browsers
+        run: npx playwright install --with-deps chromium webkit
+      - name: Domain, content and full Chromium regressions
+        run: npm test
+      - name: Capture every new placement on desktop and phone
+        if: ${{ always() && steps.browsers.outcome == 'success' }}
+        run: |
+          npm run dev -- --host 127.0.0.1 --port 4173 > /tmp/mixor-vite.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:4173 >/dev/null && break; sleep 1; done
+          VIEW_PREFIX=october- OUTPUT_DIR=tmp/october-review/desktop node scripts/capture-photo-walk-placements.mjs
+          VIEW_PREFIX=october- VIEWPORT_WIDTH=390 VIEWPORT_HEIGHT=844 OUTPUT_DIR=tmp/october-review/phone node scripts/capture-photo-walk-placements.mjs
+          VIEW_PREFIX=pine- OUTPUT_DIR=tmp/pine-review/desktop node scripts/capture-photo-walk-placements.mjs
+          VIEW_PREFIX=pine- VIEWPORT_WIDTH=390 VIEWPORT_HEIGHT=844 OUTPUT_DIR=tmp/pine-review/phone node scripts/capture-photo-walk-placements.mjs
+      - name: WebKit navigation and complete new route
+        if: ${{ always() && steps.browsers.outcome == 'success' }}
+        run: npx playwright test --config playwright.webkit.config.ts tests/browser/photo-walk-navigation.spec.ts tests/browser/photo-walk-october*.spec.ts tests/browser/photo-walk-pine*.spec.ts
+      - name: Production offline traversal
+        if: ${{ always() && steps.browsers.outcome == 'success' }}
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4174 > /tmp/mixor-preview.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:4174 >/dev/null && break; sleep 1; done
+          npm run test:offline
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: photo-walk-review
+          path: |
+            tmp/**/*.png
+            tmp/**/review-index.json
+            tmp/**/error-context.md
+          retention-days: 7

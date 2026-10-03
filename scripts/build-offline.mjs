@@ -50,6 +50,13 @@ const photoWalk = JSON.parse(readFileSync("content/scene-07.manifest.json", "utf
 for (const asset of photoWalk.assets) {
   files.push(publicPath("/" + asset.path.replace(/^public\//, "")));
 }
+for (const scene of ["scene-08", "scene-09"]) {
+  const walk = JSON.parse(readFileSync(`content/${scene}.manifest.json`, "utf8"));
+  for (const asset of walk.assets) {
+    files.push(publicPath("/" + asset.path.replace(/^public\//, "")));
+    files.push(publicPath("/" + asset.thumbnail.path.replace(/^public\//, "")));
+  }
+}
 // Retired generated search stages remain in source history, not the offline download.
 const unique = [...new Set(files)].filter((path) => !/\/assets\/art\/(search-|walk-wetland-)/.test(path));
 const hash = createHash("sha256");

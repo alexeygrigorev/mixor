@@ -227,11 +227,28 @@ export const woodlands: Woodland[] = [
     weather: "clear",
     spots: [], // The photo walk owns its separate exploration progress.
   },
+  {
+    id: "october-01",
+    title: "Светлый лес",
+    description: "28 ракурсов из новой прогулки: повороты, мох и тихие лесные проходы",
+    image: "/assets/scene-08/view-01.webp",
+    weather: "clear",
+    spots: [],
+  },
+  {
+    id: "pine-01",
+    title: "Сосновый бор",
+    description: "36 ракурсов: сосновые проходы, светлая поляна и поваленная берёза",
+    image: "/assets/scene-09/view-01.webp",
+    weather: "clear",
+    spots: [],
+  },
 ];
 for (const woodland of [...archivedWoodlands, ...woodlands]) woodland.image = publicUrl(woodland.image);
 // Bookmarked retired stages also open the current woodland. Archived finds are
 // deliberately not attached here: leaving the walk must not erase old progress.
-export const findWoodland = (_id: string) => woodlands[0];
+export const findWoodland = (id: string) => woodlands.find((woodland) => woodland.id === id)
+  ?? (id.startsWith("pine-") ? woodlands[2] : id.startsWith("october-") ? woodlands[1] : woodlands[0]);
 const key = "mixor-search-v1";
 const validIds = new Set([...archivedWoodlands, ...woodlands].flatMap((w) => w.spots.map((s) => s.id)));
 export function readFinds(): string[] {
